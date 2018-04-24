@@ -1,0 +1,9 @@
+Package: rfast99
+Type: Package
+Title: Extended Fourier Amplitude Sensitivity Test with Random Phase Shift
+Version: 0.1.0
+Author: Nan-Hung Hsieh
+Maintainer: Nan-Hung Hsieh <mail@nanhung.pw>
+Depends: R (>= 3.0.0)
+Description: rfast99 implements the "extended-FAST" method (Saltelli et al. 1999) with random phase shift to investigate the converge of sensitivity indices of model parameters under the given sampling number. The base codes were sourced from sensitivity package. 
+License: GPL-2
