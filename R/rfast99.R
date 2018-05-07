@@ -150,20 +150,6 @@ print.rfast99 <- function(x, ...) {
   }
 }
 
-plot.rfast99 <- function(x, ylim = c(0, 1), 
-                             y_col = NULL, y_dim3 = NULL, ...) {
-  if (!is.null(x$y)) {
-    p <- dim(x$a)[3]
-    pch = c(21, 24)
-    
-      nodeplot(x$S, xlim = c(1, p + 1), ylim = ylim, pch = pch[1])
-      nodeplot(x$T, xlim = c(1, p + 1), ylim = ylim, labels = FALSE,
-               pch = pch[2], at = (1:p)+.3, add = TRUE)
-      
-    legend(x = "topright", legend = c("main effect", "total effect"), pch = pch)
-  }
-}
-
 tell2 <- function(x, y){
   
   id <- deparse(substitute(x))
