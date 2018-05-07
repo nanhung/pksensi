@@ -246,3 +246,35 @@ check.rfast99 <- function(x, digits = 4, SI = 0.01, CI = 0.1){
   cat("\ntotal order:", names(which(tCI > CI))) 
   
 }
+
+                
+plot.rfast99 <- function(x, ...){
+  
+  nv <- length(colnames(x$tSI))+1
+  nc <- ceiling(sqrt(nv))
+  nr <- nv/nc
+  
+  par(mfrow = c(nr, nc), mar = c(4,2,4,1))
+  for(i in 1:ncol(x$tSI)){
+    plot(times, x$tSI[,i], ylim = c(0, 1), bty = 'n',
+         type = 'l', lwd = 2, xlab = 'time', ylab = '', 
+         main = colnames(x$tSI)[i])
+    col.transp = adjustcolor('black', alpha = 0.4)
+    polygon(x = c(times, rev(times)),
+            y =c(x$tSI[,i]-x$tCI[,i], rev(x$tSI[,i]+x$tCI[,i])),
+            col = col.transp, border = col.transp)
+    
+    col.transp = adjustcolor('red', alpha = 0.4)
+    lines(times, x$mSI[,i], ylim = c(0, 1), bty = 'n',
+          lwd = 2, col = 'red')
+    polygon(x = c(times, rev(times)),
+            y =c(x$mSI[,i]-x$mCI[,i], rev(x$mSI[,i]+x$mCI[,i])),
+            col = col.transp, border = col.transp)
+  }
+  plot.new()
+  legend('top', legend = c('total order', 'first order'), col = c('black','red'),
+         lty = 'solid', lwd = 1, pch = NA, bty = 'n',
+         text.col = 'black', 
+         fill = adjustcolor(c('black', 'red'), alpha = 0.4), border = NA, cex = 1.2)
+}
+                
