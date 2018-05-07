@@ -19,20 +19,34 @@ tidy_index <- function (x, index = "CI") {
 }
 
 ggfast <- function(x, index =  "SI"){
-  X <- tidy_index(x, index = index) %>% 
-    mutate(category = cut(value, breaks=c(-Inf, 0.01, 0.05, Inf), 
-                          labels=c("0-0.01","0.01-0.05",">0.05")))
   
-  cols <- c("0-0.01" = "grey", "4" = "pink", "0.01-0.05" = "pink", ">0.05" = "red")
-  
-  ggplot(X, aes(time, parameter)) + 
+  if (index ==  "SI"){
+    X <- tidy_index(x, index = index) %>% 
+      mutate(category = cut(value, breaks=c(-Inf, 0.01, 0.05, Inf), 
+                            labels=c("0 - 0.01","0.01 - 0.05"," > 0.05")))
+    
+    cols <- c("0 - 0.01" = "grey", "4" = "pink", "0.01 - 0.05" = "pink", " > 0.05" = "red")
+  } else if ((index == "CI")) {
+    X <- tidy_index(x, index = index) %>% 
+      mutate(category = cut(value, breaks=c(-Inf, 0.05, 0.1, Inf), 
+                            labels=c("0 - 0.05","0.05 - 0.1"," > 0.1")))
+    
+    cols <- c("0 - 0.05" = "grey", "4" = "pink", "0.05 - 0.1" = "pink", " > 0.1" = "red")
+  }
+
+  p <- ggplot(X, aes(time, parameter)) + 
     geom_tile(aes(fill = category), colour = "white") +
     scale_fill_manual(values= cols)+
     scale_x_continuous(expand=c(0,0)) +
     scale_y_discrete(expand=c(0,0)) + 
     facet_grid(~order) +
-    labs(title="Sensitivity index", x="Time", y="Parameters") + 
     theme(axis.text.x = element_text(size=10, hjust = 1), 
           axis.text.y = element_text(size=10), legend.title=element_blank(),
           legend.position="top")
+  
+  if (index ==  "SI"){
+    p + labs(title="Sensitivity index", x="time", y="parameters")
+  } else if ((index == "CI")) {
+    p + labs(title="Convergence index", x="time", y="parameters")
+  }
 }
