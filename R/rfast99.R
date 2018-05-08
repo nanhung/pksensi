@@ -135,14 +135,21 @@ tell.rfast99 <- function(x, y = NULL, ...) {
   assign(id, x, parent.frame())
 }
 
-pksim <- function(y){
+pksim <- function(y, log = F, ...){
   y.mean <- apply(y, c(1,3), mean)
   VarY <- apply(y.mean, 2, var)
   quantY <- apply(y.mean ,2, quantile,c(0.50, 0, 1, 0.1, 0.9, 0.25,0.75),na.rm=TRUE)
   ytck <- pretty(c(min(y.mean,na.rm=TRUE),max(y.mean,na.rm=TRUE)))
+  
+  if (log == T){
+    VarY <- log(VarY)
+    quantY <- log(quantY)
+    ytck <- pretty(c(min(log(y.mean),na.rm=TRUE),max(log(y.mean),na.rm=TRUE)))
+  }
+  
   col.transp = adjustcolor('black', alpha = 0.2)
-  plot(1:length(VarY), quantY[1,], type="l", xlab="time", ylab="", bty = "n",
-       ylim=c(min(ytck),max(ytck)), lty=1, las=1, lwd=2, col = 1)
+  plot(1:length(VarY), quantY[1,], type="l", xlab="time", ylab="",
+       ylim=c(min(ytck),max(ytck)), lty=1, las=1, lwd=2, col = 1, ...)
   polygon(c(1:length(VarY),seq(from=length(VarY),to=1,by=-1)),c(quantY[2,],quantY[3,seq(from=length(VarY),to=1,by=-1)]),col=col.transp,lty=0)
   polygon(c(1:length(VarY),seq(from=length(VarY),to=1,by=-1)),c(quantY[4,],quantY[5,seq(from=length(VarY),to=1,by=-1)]),col=col.transp,lty=0)
   polygon(c(1:length(VarY),seq(from=length(VarY),to=1,by=-1)),c(quantY[6,],quantY[7,seq(from=length(VarY),to=1,by=-1)]),col=col.transp,lty=0)
