@@ -237,38 +237,20 @@ check.rfast99 <- function(x, digits = 4, SI = 0.01, CI = 0.1){
     tCI <- x$tCI
   }
   
-  cat("\nCall:\n", deparse(x$call), "\n", sep = "")
-  cat("\n")
-  cat("\n==================================")
-  cat("\nSensitivity Indices", "\n")
-  cat("\nfirst order:", "\n")
-  print(round(x$mSI, digits = digits))
-  cat("\ninteraction:", "\n")
-  print(round(x$iSI, digits = digits))
-  cat("\ntotal order:", "\n")
-  print(round(x$tSI, digits = digits))
-  cat("\n----------------------------------")
   cat("\nSensitivity check ( index >", SI, ")\n")
+  cat("----------------------------------")
   cat("\nfirst order:", names(which(mSI > SI)))
   cat("\ninteraction:", names(which(iSI > SI)))
   cat("\ntotal order:", names(which(tSI > SI)), "\n")
   cat("\n")
-  cat("\n=================================")
-  cat("\nConvergence Indices", "\n")
-  cat("\nfirst order:", "\n")
-  print(round(x$mCI, digits = digits))
-  cat("\ninteraction:", "\n")
-  print(round(x$iCI, digits = digits))
-  cat("\ntotal order:", "\n")
-  print(round(x$tCI, digits = digits))
-  cat("\n----------------------------------")
+  
   cat("\nConvergence check ( Index >", CI, ")\n")
+  cat("----------------------------------")
   cat("\nfirst order:", names(which(mCI > CI)))
   cat("\ninteraction:", names(which(iCI > CI)))
   cat("\ntotal order:", names(which(tCI > CI))) 
-  
-}
 
+}
                 
 plot.rfast99 <- function(x, ...){
   
