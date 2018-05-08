@@ -18,7 +18,7 @@ tidy_index <- function (x, index = "CI") {
   return(X)
 }
 
-ggfast <- function(x, index =  "SI", order = F){
+heat_check.rfast99 <- function(x, index =  "SI", order = F){
   
   if (index ==  "SI"){
     X <- tidy_index(x, index = index) %>% 
