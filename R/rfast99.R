@@ -135,7 +135,7 @@ tell.rfast99 <- function(x, y = NULL, ...) {
   assign(id, x, parent.frame())
 }
                 
-print.rfast99 <- function(x, ...) {
+print.rfast99 <- function(x, digits = 4) {
   cat("\nCall:\n", deparse(x$call), "\n", sep = "")
   if (! is.null(x$y) && ! is.null(x$S)) {
     cat("\nModel runs:", dim(x$y)[1], "\n")
@@ -145,10 +145,32 @@ print.rfast99 <- function(x, ...) {
     print(x$I)
     cat("\nTotal order indices:\n")
     print(x$T)
-  } else {
+  } else if (! is.null(x$y) && ! is.null(x$mSI)) {
+    cat("\nModel runs:", dim(x$y)[1], "\n")
+    cat("\n")
+    cat("\n==================================")
+    cat("\nSensitivity Indices", "\n")
+    cat("\nfirst order:", "\n")
+    print(round(x$mSI, digits = digits))
+    cat("\ninteraction:", "\n")
+    print(round(x$iSI, digits = digits))
+    cat("\ntotal order:", "\n")
+    print(round(x$tSI, digits = digits))
+    cat("\n")
+    cat("\n=================================")
+    cat("\nConvergence Indices", "\n")
+    cat("\nfirst order:", "\n")
+    print(round(x$mCI, digits = digits))
+    cat("\ninteraction:", "\n")
+    print(round(x$iCI, digits = digits))
+    cat("\ntotal order:", "\n")
+    print(round(x$tCI, digits = digits))
+  }
+  else {
     cat("(empty)\n")
   }
 }
+
 
 tell2 <- function(x, y){
   
