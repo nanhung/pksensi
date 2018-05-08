@@ -1,3 +1,5 @@
+heat_check <- function(x, index, order) UseMethod("heat_check")
+
 tidy_index <- function (x, index = "CI") {
   if(!("dplyr" %in% (.packages()))){
     if(!require(dplyr)) install.packages("dplyr") else require(dplyr)
@@ -18,7 +20,7 @@ tidy_index <- function (x, index = "CI") {
   return(X)
 }
 
-heat_check.rfast99 <- function(x, index =  "SI", order = F){
+heat_check.rfast99 <- function(x, index = "SI", order = F){
   
   if (index ==  "SI"){
     X <- tidy_index(x, index = index) %>% 
