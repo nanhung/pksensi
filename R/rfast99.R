@@ -135,7 +135,7 @@ tell.rfast99 <- function(x, y = NULL, ...) {
   assign(id, x, parent.frame())
 }
 
-simulate <- function(y){
+pksim <- function(y){
   y.mean <- apply(y, c(1,3), mean)
   VarY <- apply(y.mean, 2, var)
   quantY <- apply(y.mean ,2, quantile,c(0.50, 0, 1, 0.1, 0.9, 0.25,0.75),na.rm=TRUE)
