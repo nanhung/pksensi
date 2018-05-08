@@ -250,9 +250,11 @@ check.rfast99 <- function(x, digits = 4, SI = 0.01, CI = 0.1){
                 
 plot.rfast99 <- function(x, ...){
   
-  nv <- length(colnames(x$tSI))+1
+  nv <- length(colnames(x$tSI))
   nc <- ceiling(sqrt(nv))
-  nr <- nv/nc
+  nr <- ceiling(nv/nc)
+  
+  times <- row.names(x$tSI)
   
   par(mfrow = c(nr, nc), mar = c(4,2,4,1))
   for(i in 1:ncol(x$tSI)){
@@ -271,10 +273,9 @@ plot.rfast99 <- function(x, ...){
             y =c(x$mSI[,i]-x$mCI[,i], rev(x$mSI[,i]+x$mCI[,i])),
             col = col.transp, border = col.transp)
   }
-  plot.new()
   legend('top', legend = c('total order', 'first order'), col = c('black','red'),
          lty = 'solid', lwd = 1, pch = NA, bty = 'n',
          text.col = 'black', 
          fill = adjustcolor(c('black', 'red'), alpha = 0.4), border = NA, cex = 1.2)
 }
-                
+
