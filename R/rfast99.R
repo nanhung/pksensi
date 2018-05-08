@@ -252,7 +252,7 @@ check.rfast99 <- function(x, digits = 4, SI = 0.01, CI = 0.1){
 
 }
                 
-plot.rfast99 <- function(x, ...){
+plot.rfast99 <- function(x, cut.off = F){
   
   nv <- length(colnames(x$tSI))
   nc <- ceiling(sqrt(nv))
@@ -276,10 +276,12 @@ plot.rfast99 <- function(x, ...){
     polygon(x = c(times, rev(times)),
             y =c(x$mSI[,i]-x$mCI[,i], rev(x$mSI[,i]+x$mCI[,i])),
             col = col.transp, border = col.transp)
+    if (is.numeric(cut.off)){
+      abline( cut.off, 0, lty = 2)
+    }
   }
   legend('top', legend = c('total order', 'first order'), col = c('black','red'),
          lty = 'solid', lwd = 1, pch = NA, bty = 'n',
          text.col = 'black', 
          fill = adjustcolor(c('black', 'red'), alpha = 0.4), border = NA, cex = 1.2)
 }
-
