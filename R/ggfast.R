@@ -18,7 +18,7 @@ tidy_index <- function (x, index = "CI") {
   return(X)
 }
 
-ggfast <- function(x, index =  "SI"){
+ggfast <- function(x, index =  "SI", order = F){
   
   if (index ==  "SI"){
     X <- tidy_index(x, index = index) %>% 
@@ -33,9 +33,14 @@ ggfast <- function(x, index =  "SI"){
     
     cols <- c("0 - 0.05" = "grey", "4" = "pink", "0.05 - 0.1" = "pink", " > 0.1" = "red")
   }
-
-  p <- ggplot(X, aes(time, parameter)) + 
-    geom_tile(aes(fill = category), colour = "white") +
+  
+  if (order == F){
+    p <- ggplot(X, aes(time, parameter))
+  } else if (order == T) {
+    p <- ggplot(X, aes(time, reorder(parameter, value)))
+  }
+  
+  p <- p + geom_tile(aes(fill = category), colour = "white") +
     scale_fill_manual(values= cols)+
     scale_x_continuous(expand=c(0,0)) +
     scale_y_discrete(expand=c(0,0)) + 
@@ -43,6 +48,7 @@ ggfast <- function(x, index =  "SI"){
     theme(axis.text.x = element_text(size=10, hjust = 1), 
           axis.text.y = element_text(size=10), legend.title=element_blank(),
           legend.position="top")
+  
   
   if (index ==  "SI"){
     p + labs(title="Sensitivity index", x="time", y="parameters")
