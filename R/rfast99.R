@@ -136,14 +136,13 @@ tell.rfast99 <- function(x, y = NULL, ...) {
 }
 
 pksim <- function(y, log = F, ...){
-  y.mean <- apply(y, c(1,3), mean)
   time <- as.numeric(colnames(y[,1,]))
-  quantY <- apply(y.mean ,2, quantile,c(0.50, 0, 1, 0.1, 0.9, 0.25,0.75),na.rm=TRUE)
-  ytck <- pretty(c(min(y.mean,na.rm=TRUE),max(y.mean,na.rm=TRUE)))
+  quantY <- apply(y, 3, quantile, c(0.50, 0, 1, 0.1, 0.9, 0.25,0.75), na.rm=TRUE)
+  ytck <- pretty(c(min(quantY,na.rm=TRUE),max(quantY,na.rm=TRUE)))
   
   if (log == T){
     quantY <- log(quantY)
-    ytck <- pretty(c(min(log(y.mean),na.rm=TRUE),max(log(y.mean),na.rm=TRUE)))
+    ytck <- pretty(c(min(log(quantY),na.rm=TRUE),max(log(quantY),na.rm=TRUE)))
   }
   
   col.transp = adjustcolor('black', alpha = 0.2)
@@ -161,7 +160,8 @@ pksim <- function(y, log = F, ...){
          pch = NA, bty = 'n', text.col = 'black', 
          fill = adjustcolor(c(NA, 'black', 'grey30','grey'), 
                             alpha = 0.6), border = NA, cex = 1.2)
-}               
+} 
+            
                 
 print.rfast99 <- function(x, digits = 4) {
   cat("\nCall:\n", deparse(x$call), "\n", sep = "")
