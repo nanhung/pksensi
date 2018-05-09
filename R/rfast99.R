@@ -159,7 +159,7 @@ pksim <- function(y, log = F, ...){
          lwd = c(2,NA,NA,NA), 
          pch = NA, bty = 'n', text.col = 'black', 
          fill = adjustcolor(c(NA, 'black', 'grey30','grey'), 
-                            alpha = 0.6), border = NA, cex = 1.2)
+                            alpha = 0.6), border = NA)
 } 
             
                 
