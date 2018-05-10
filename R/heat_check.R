@@ -1,5 +1,3 @@
-heat_check <- function(x, index, order) UseMethod("heat_check")
-
 tidy_index <- function (x, index = "CI") {
   if(!("dplyr" %in% (.packages()))){
     if(!require(dplyr)) install.packages("dplyr") else require(dplyr)
@@ -20,7 +18,7 @@ tidy_index <- function (x, index = "CI") {
   return(X)
 }
 
-heat_check.rfast99 <- function(x, filter = c("first order", "interaction", "total order"),
+heat_check <- function(x, filter = c("first order", "interaction", "total order"),
                                index = "SI", order = F, category = T, text = F){
   
   if (index ==  "SI"){
