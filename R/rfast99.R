@@ -146,7 +146,7 @@ pksim <- function(y, log = F, legend = T, ...){
   }
   
   col.transp = adjustcolor('black', alpha = 0.2)
-  plot(time, quantY[1,], type="l", xlab="time", ylab="",
+  plot(time, quantY[1,], type="l", xlab="", ylab="",
        ylim=c(min(ytck),max(ytck)), lty=1, las=1, lwd=2, col = 1, ...)
   polygon(x = c(times, rev(times)), y = c(quantY[2,],quantY[3,seq(from=length(time),to=1,by=-1)]),col=col.transp,lty=0)
   polygon(x = c(times, rev(times)), y = c(quantY[4,],quantY[5,seq(from=length(time),to=1,by=-1)]),col=col.transp,lty=0)
@@ -162,7 +162,7 @@ pksim <- function(y, log = F, legend = T, ...){
            fill = adjustcolor(c(NA, 'black', 'grey30','grey'), 
                               alpha = 0.5), border = NA, cex = 0.7)    
   }
-}             
+} 
                 
 print.rfast99 <- function(x, digits = 4) {
   cat("\nCall:\n", deparse(x$call), "\n", sep = "")
