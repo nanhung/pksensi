@@ -141,6 +141,8 @@ tell.rfast99 <- function(x, y = NULL, ...) {
   assign(id, x, parent.frame())
 }
 
+#' @rdname print.rfast99
+#' @export
 print.rfast99 <- function(x, digits = 4, ...) {
   cat("\nCall:\n", deparse(x$call), "\n", sep = "")
   if (! is.null(x$y) && ! is.null(x$S)) {
@@ -177,7 +179,8 @@ print.rfast99 <- function(x, digits = 4, ...) {
   }
 }
 
-
+#' @rdname tell2
+#' @export
 tell2 <- function(x, y){
 
   id <- deparse(substitute(x))
@@ -225,6 +228,8 @@ tell2 <- function(x, y){
   assign(id, x, parent.frame())
 }
 
+#' @rdname check.rfast99
+#' @export
 check.rfast99 <- function(x, digits = 4, SI = 0.01, CI = 0.1){
 
   if (class(x$mSI)== "matrix"){
@@ -258,6 +263,8 @@ check.rfast99 <- function(x, digits = 4, SI = 0.01, CI = 0.1){
 
 }
 
+#' @rdname plot.rfast99
+#' @export
 plot.rfast99 <- function(x, cut.off = F, ...){
 
   nv <- length(colnames(x$tSI))
