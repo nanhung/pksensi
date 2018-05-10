@@ -19,7 +19,7 @@ tidy_index <- function (x, index = "CI") {
 }
 
 heat_check <- function(x, filter = c("first order", "interaction", "total order"),
-                               index = "SI", order = F, category = T, text = F){
+                       index = "SI", order = F, category = T, text = F){
   
   if (index ==  "SI"){
     X <- tidy_index(x, index = index) %>% 
@@ -58,13 +58,14 @@ heat_check <- function(x, filter = c("first order", "interaction", "total order"
           axis.text.y = element_text(size=10), legend.title=element_blank(),
           legend.position="top")
   
-  if (text == T){
-  p <- p + geom_text(aes(label = round(value, 2)), size = 2.5)
-  }
-  
   if (index ==  "SI"){
-    p + labs(title="Sensitivity index", x="time", y="parameters")
+    p <- p + labs(title="Sensitivity index", x="time", y="parameters")
   } else if ((index == "CI")) {
-    p + labs(title="Convergence index", x="time", y="parameters")
+    p <- p + labs(title="Convergence index", x="time", y="parameters")
   }
+
+  if (text == T){
+    p + geom_text(aes(label = ifelse(value < 0.01, "", round(value, 2))), size = 2.5)
+  } else p
+
 }
