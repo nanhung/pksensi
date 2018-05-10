@@ -3,8 +3,10 @@
 #' @importFrom magrittr %>%
 #' @import dplyr
 #' @import ggplot2
-#' @export heat_check
+#' @export
 
+#' @rdname heat_check
+#' @export
 heat_check <- function(x, filter = c("first order", "interaction", "total order"),
                        index = "SI", order = F, category = T, text = F){
 
