@@ -20,7 +20,8 @@ tidy_index <- function (x, index = "CI") {
   return(X)
 }
 
-heat_check.rfast99 <- function(x, index = "SI", order = F){
+heat_check.rfast99 <- function(x, filter = c("first order", "interaction", "total order"),
+                               index = "SI", order = F, category = T, text = F){
   
   if (index ==  "SI"){
     X <- tidy_index(x, index = index) %>% 
@@ -36,21 +37,32 @@ heat_check.rfast99 <- function(x, index = "SI", order = F){
     cols <- c("0 - 0.05" = "grey", "4" = "pink", "0.05 - 0.1" = "pink", " > 0.1" = "red")
   }
   
+  X <- filter(X, order %in% filter)
+  
   if (order == F){
     p <- ggplot(X, aes(time, parameter))
   } else if (order == T) {
     p <- ggplot(X, aes(time, reorder(parameter, value)))
   }
   
-  p <- p + geom_tile(aes(fill = category), colour = "white") +
-    scale_fill_manual(values= cols)+
-    scale_x_continuous(expand=c(0,0)) +
+  if (category == T) {
+    p <- p + geom_tile(aes(fill = category), colour = "white") +
+      scale_fill_manual(values= cols)
+  } else if (category == F) {
+    p <- p + geom_tile(aes(fill = value)) +
+      scale_fill_gradient(low = "white", high = "red", limits = c(-0.05,1.05))
+  }
+  
+  p <- p +scale_x_continuous(expand=c(0,0)) +
     scale_y_discrete(expand=c(0,0)) + 
     facet_grid(~order) +
     theme(axis.text.x = element_text(size=10, hjust = 1), 
           axis.text.y = element_text(size=10), legend.title=element_blank(),
           legend.position="top")
   
+  if (text == T){
+  p <- p + geom_text(aes(label = round(value, 2)), size = 2.5)
+  }
   
   if (index ==  "SI"){
     p + labs(title="Sensitivity index", x="time", y="parameters")
