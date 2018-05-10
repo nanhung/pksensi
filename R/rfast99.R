@@ -3,6 +3,8 @@
 #'   rfast99 implements the so-called "extended-FAST" method
 #'   (Saltelli et al. 1999). This method allows the estimation of first
 #'   order and total Sobol' indices for all the factors.
+#'   @export rfast99
+
 
 rfast99 <- function(factors, n, M = 4, omega = NULL,
                     q = NULL, q.arg = NULL, replicate = 1, conf = 0.95, ...) {
