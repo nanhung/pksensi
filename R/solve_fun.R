@@ -1,5 +1,6 @@
 solve_fun <- function(x, times = NULL, parameters, initState, dllname,
-                      func, jacfunc, initfunc, nout = 1, outnames,
+                      func, initfunc, nout = 1, outnames, 
+                      method ="lsoda", rtol=1e-8, atol=1e-12,
                       model = NULL){
   n <- length(x$s)  
   factors <- ifelse (class(x$factors) == "character", length(x$factors), x$factors) 
@@ -21,7 +22,8 @@ solve_fun <- function(x, times = NULL, parameters, initState, dllname,
           
           # Integrate
           tmp <- deSolve::ode(initState, inputs, func = func, parms = parameters, 
-                              jacfunc = jacfunc, dllname = dllname, 
+                              dllname = dllname,  
+                              method = method, rtol=rtol, atol=atol,
                               initfunc = initfunc, nout = nout, outnames = outnames)
           y[j,i,k] <- tmp[2, outnames]
         }
