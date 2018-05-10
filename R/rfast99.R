@@ -300,7 +300,9 @@ plot.rfast99 <- function(x, cut.off = F){
   
   times <- row.names(x$tSI)
   
+  old.par <- par(no.readonly = TRUE)
   par(mfrow = c(nr, nc), mar = c(4,2,4,1))
+  
   for(i in 1:ncol(x$tSI)){
     plot(times, x$tSI[,i], ylim = c(0, 1), bty = 'n',
          type = 'l', lwd = 2, xlab = 'time', ylab = '', 
@@ -324,4 +326,5 @@ plot.rfast99 <- function(x, cut.off = F){
          lty = 'solid', lwd = 1, pch = NA, bty = 'n',
          text.col = 'black', 
          fill = adjustcolor(c('black', 'red'), alpha = 0.4), border = NA, cex = 1.2)
+  par(old.par)
 }
