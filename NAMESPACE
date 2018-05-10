@@ -3,6 +3,7 @@
 S3method(check,rfast99)
 S3method(plot,rfast99)
 S3method(print,rfast99)
+S3method(tell,rfast99)
 export(heat_check)
 export(pksim)
 export(rfast99)

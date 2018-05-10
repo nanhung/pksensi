@@ -81,6 +81,8 @@ rfast99 <- function(factors, n, M = 4, omega = NULL,
   return(x)
 }
 
+#' @rdname tell.rfast99
+#' @export
 tell.rfast99 <- function(x, y = NULL, ...) {
 
 
