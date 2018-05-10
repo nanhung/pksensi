@@ -1,6 +1,6 @@
 Package: pksensi
 Type: Package
-Title: Uncertainty and sensitivity analysis for pharmacokinetic model
+Title: Sensitivity analysis for pharmacokinetic model
 Version: 0.1.0
 Author: Nan-Hung Hsieh
 Maintainer: Nan-Hung Hsieh <nhsieh@cvm.tamu.edu>
