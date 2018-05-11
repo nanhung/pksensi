@@ -307,6 +307,5 @@ plot.rfast99 <- function(x, cut.off = F, ...){
 #' @rdname check
 #' @export
 check <- function(x, digits = 4, SI, CI) UseMethod("check")
-#' @rdname tell
-#' @export
+
 tell <- function(x, y = NULL, ...) UseMethod("tell")
