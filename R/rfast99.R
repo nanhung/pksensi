@@ -143,7 +143,7 @@ tell.rfast99 <- function(x, y = NULL, ...) {
   assign(id, x, parent.frame())
 }
 
-#' @rdname print.rfast99
+#' @method print rfast99
 #' @export
 print.rfast99 <- function(x, digits = 4, ...) {
   cat("\nCall:\n", deparse(x$call), "\n", sep = "")
@@ -265,7 +265,7 @@ check.rfast99 <- function(x, digits = 4, SI = 0.01, CI = 0.1){
 
 }
 
-#' @rdname plot.rfast99
+#' @method plot rfast99
 #' @export
 plot.rfast99 <- function(x, cut.off = F, ...){
 
