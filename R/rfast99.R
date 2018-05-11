@@ -269,39 +269,55 @@ check.rfast99 <- function(x, digits = 4, SI = 0.01, CI = 0.1){
 #' @export
 plot.rfast99 <- function(x, cut.off = F, ...){
 
-  nv <- length(colnames(x$tSI))
-  nc <- ceiling(sqrt(nv))
-  nr <- ceiling(nv/nc)
+  if(is.numeric(x$mSI)){
 
-  times <- row.names(x$tSI)
+    D1 <- apply(x$D1, 1, mean)
+    V <- apply(x$V, 1, mean)
+    Dt <- apply(x$Dt, 1, mean)
 
-  old.par <- par(no.readonly = TRUE)
-  par(mfrow = c(nr, nc), mar = c(4,2,4,1))
+    S <- rbind(D1 / V, 1 - Dt / V - D1 / V)
+    colnames(S) <- names(x$mSI)
+    bar.col <- c("white","grey")
+    barplot(S, ylim = c(0,1), col = bar.col)
+    legend("topright", c("main effect", "interactions"), fill = bar.col)
 
-  for(i in 1:ncol(x$tSI)){
-    plot(times, x$tSI[,i], ylim = c(0, 1), bty = 'n',
-         type = 'l', lwd = 2, xlab = 'time', ylab = '',
-         main = colnames(x$tSI)[i], ...)
-    col.transp = adjustcolor('black', alpha = 0.4)
-    polygon(x = c(times, rev(times)),
-            y =c(x$tSI[,i]-x$tCI[,i], rev(x$tSI[,i]+x$tCI[,i])),
-            col = col.transp, border = col.transp)
+  } else {
 
-    col.transp = adjustcolor('red', alpha = 0.4)
-    lines(times, x$mSI[,i], ylim = c(0, 1), bty = 'n',
-          lwd = 2, col = 'red')
-    polygon(x = c(times, rev(times)),
-            y =c(x$mSI[,i]-x$mCI[,i], rev(x$mSI[,i]+x$mCI[,i])),
-            col = col.transp, border = col.transp)
-    if (is.numeric(cut.off)){
-      abline( cut.off, 0, lty = 2)
+    nv <- length(colnames(x$tSI))
+    nc <- ceiling(sqrt(nv))
+    nr <- ceiling(nv/nc)
+
+    times <- row.names(x$tSI)
+
+    old.par <- par(no.readonly = TRUE)
+    par(mfrow = c(nr, nc), mar = c(4,2,4,1))
+
+    for(i in 1:ncol(x$tSI)){
+      plot(times, x$tSI[,i], ylim = c(0, 1), bty = 'n',
+           type = 'l', lwd = 2, xlab = 'time', ylab = '',
+           main = colnames(x$tSI)[i], ...)
+      col.transp = adjustcolor('black', alpha = 0.4)
+      polygon(x = c(times, rev(times)),
+              y =c(x$tSI[,i]-x$tCI[,i], rev(x$tSI[,i]+x$tCI[,i])),
+              col = col.transp, border = col.transp)
+
+      col.transp = adjustcolor('red', alpha = 0.4)
+      lines(times, x$mSI[,i], ylim = c(0, 1), bty = 'n',
+            lwd = 2, col = 'red')
+      polygon(x = c(times, rev(times)),
+              y =c(x$mSI[,i]-x$mCI[,i], rev(x$mSI[,i]+x$mCI[,i])),
+              col = col.transp, border = col.transp)
+      if (is.numeric(cut.off)){
+        abline( cut.off, 0, lty = 2)
+      }
     }
+    legend('top', legend = c('total order', 'first order'), col = c('black','red'),
+           lty = 'solid', lwd = 1, pch = NA, bty = 'n',
+           text.col = 'black',
+           fill = adjustcolor(c('black', 'red'), alpha = 0.4), border = NA, cex = 1.2)
+    par(old.par)
   }
-  legend('top', legend = c('total order', 'first order'), col = c('black','red'),
-         lty = 'solid', lwd = 1, pch = NA, bty = 'n',
-         text.col = 'black',
-         fill = adjustcolor(c('black', 'red'), alpha = 0.4), border = NA, cex = 1.2)
-  par(old.par)
+
 }
 
 #' @rdname check
