@@ -310,9 +310,3 @@ check <- function(x, digits = 4, SI, CI) UseMethod("check")
 #' @rdname tell
 #' @export
 tell <- function(x, y = NULL, ...) UseMethod("tell")
-#' @rdname print
-#' @export
-print <- function(x, digits = 4, ...) UseMethod("print")
-#' @rdname plot
-#' @export
-plot <- function(x, cut.off = F, ...) UseMethod("plot")
