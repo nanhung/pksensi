@@ -250,7 +250,7 @@ check.rfast99 <- function(x, digits = 4, SI = 0.01, CI = 0.1){
     tCI <- x$tCI
   }
 
-  cat("\nSensitivity check ( index >", SI, ")\n")
+  cat("\nSensitivity check ( Index >", SI, ")\n")
   cat("----------------------------------")
   cat("\nfirst order:", names(which(mSI > SI)))
   cat("\ninteraction:", names(which(iSI > SI)))
@@ -269,19 +269,7 @@ check.rfast99 <- function(x, digits = 4, SI = 0.01, CI = 0.1){
 #' @export
 plot.rfast99 <- function(x, cut.off = F, ...){
 
-  if(is.numeric(x$mSI)){
-
-    D1 <- apply(x$D1, 1, mean)
-    V <- apply(x$V, 1, mean)
-    Dt <- apply(x$Dt, 1, mean)
-
-    S <- rbind(D1 / V, 1 - Dt / V - D1 / V)
-    colnames(S) <- names(x$mSI)
-    bar.col <- c("white","grey")
-    barplot(S, ylim = c(0,1), col = bar.col)
-    legend("topright", c("main effect", "interactions"), fill = bar.col)
-
-  } else {
+  if(is.matrix(x$mSI)){
 
     nv <- length(colnames(x$tSI))
     nc <- ceiling(sqrt(nv))
@@ -316,8 +304,17 @@ plot.rfast99 <- function(x, cut.off = F, ...){
            text.col = 'black',
            fill = adjustcolor(c('black', 'red'), alpha = 0.4), border = NA, cex = 1.2)
     par(old.par)
-  }
+  } else {
+      D1 <- apply(x$D1, 1, mean)
+      V <- apply(x$V, 1, mean)
+      Dt <- apply(x$Dt, 1, mean)
 
+      S <- rbind(D1 / V, 1 - Dt / V - D1 / V)
+      colnames(S) <- names(x$mSI)
+      bar.col <- c("white","grey")
+      barplot(S, ylim = c(0,1), col = bar.col)
+      legend("topright", c("main effect", "interactions"), fill = bar.col)
+  }
 }
 
 #' @rdname check
