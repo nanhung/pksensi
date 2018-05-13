@@ -18,5 +18,3 @@ Suggests:
     testthat,
     viridis,
     covr
-Remotes:
-    nanhung/pksensi    
