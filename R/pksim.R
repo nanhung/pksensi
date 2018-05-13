@@ -1,3 +1,7 @@
+#' @importFrom grDevices adjustcolor
+#' @importFrom graphics plot polygon
+#' @importFrom stats quantile
+#'
 #' @rdname pksim
 #' @export
 pksim <- function(y, log = F, legend = T, ...){
@@ -11,7 +15,7 @@ pksim <- function(y, log = F, legend = T, ...){
     ytck <- pretty(c(min(quantY, na.rm=TRUE),max(quantY, na.rm=TRUE)))
   }
 
-  col.transp = adjustcolor('black', alpha = 0.2)
+  col.transp = adjustcolor('black', alpha.f = 0.2)
   plot(times, quantY[1,], type="l", xlab="", ylab="",
        ylim=c(min(ytck),max(ytck)), lty=1, las=1, lwd=2, col = 1, ...)
   if (any(is.na(quantY[2:3,])) == FALSE)
@@ -35,6 +39,6 @@ pksim <- function(y, log = F, legend = T, ...){
            lwd = c(2,NA,NA,NA),
            pch = NA, bty = 'n', text.col = 'black',
            fill = adjustcolor(c(NA, 'black', 'grey30','grey'),
-                              alpha = 0.5), border = NA, cex = 0.7)
+                              alpha.f = 0.5), border = NA, cex = 0.7)
   }
 }

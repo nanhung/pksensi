@@ -4,7 +4,8 @@
 #'   (Saltelli et al. 1999). This method allows the estimation of first
 #'   order and total Sobol' indices for all the factors.
 #'
-
+#' @importFrom stats runif fft var
+#'
 #' @rdname rfast99
 #' @export
 rfast99 <- function(factors, n, M = 4, omega = NULL,
@@ -266,6 +267,8 @@ check.rfast99 <- function(x, digits = 4, SI = 0.01, CI = 0.1){
 }
 
 #' @method plot rfast99
+#' @importFrom graphics barplot legend lines par abline
+#' @importFrom stats runif fft
 #' @export
 plot.rfast99 <- function(x, cut.off = F, ...){
 
@@ -284,12 +287,12 @@ plot.rfast99 <- function(x, cut.off = F, ...){
       plot(times, x$tSI[,i], ylim = c(0, 1), bty = 'n',
            type = 'l', lwd = 2, xlab = 'time', ylab = '',
            main = colnames(x$tSI)[i], ...)
-      col.transp = adjustcolor('black', alpha = 0.4)
+      col.transp = adjustcolor('black', alpha.f = 0.4)
       polygon(x = c(times, rev(times)),
               y =c(x$tSI[,i]-x$tCI[,i], rev(x$tSI[,i]+x$tCI[,i])),
               col = col.transp, border = col.transp)
 
-      col.transp = adjustcolor('red', alpha = 0.4)
+      col.transp = adjustcolor('red', alpha.f = 0.4)
       lines(times, x$mSI[,i], ylim = c(0, 1), bty = 'n',
             lwd = 2, col = 'red')
       polygon(x = c(times, rev(times)),
@@ -302,7 +305,7 @@ plot.rfast99 <- function(x, cut.off = F, ...){
     legend('top', legend = c('total order', 'first order'), col = c('black','red'),
            lty = 'solid', lwd = 1, pch = NA, bty = 'n',
            text.col = 'black',
-           fill = adjustcolor(c('black', 'red'), alpha = 0.4), border = NA, cex = 1.2)
+           fill = adjustcolor(c('black', 'red'), alpha.f = 0.4), border = NA, cex = 1.2)
     par(old.par)
   } else {
       D1 <- apply(x$D1, 1, mean)

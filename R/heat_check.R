@@ -1,6 +1,7 @@
 #' Create heatmap
 #'
 #' @importFrom magrittr %>%
+#' @importFrom stats reorder time
 #' @import dplyr
 #' @import ggplot2
 #' @export
