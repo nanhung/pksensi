@@ -9,19 +9,19 @@ solve_fun <- function(x, times = NULL, parameters, initState, dllname,
   replicate <- x$rep
   out <- ifelse (is.null(times), 1, length(times))
   y <- array(dim = c(n * factors, replicate, out), NA)
-
+  
   if (is.null(model) == TRUE){
     for (k in 1 : dim(y)[3]) { #outputs
-
+      
       # Specific time or variable
       inputs = c(0, times[k])
-
+      
       for (i in 1 : dim(y)[2]) { # replicate
         for (j in 1 : dim(y)[1]) { # Model evaluation
-          for (p in 1 : factors) { # input individual factors
+          for (p in x$factors) {
             parameters[p] <- ifelse (lnparam == T,  exp(x$a[j,i,p]), x$a[j,i,p])
           }
-
+          
           # Integrate
           tmp <- deSolve::ode(initState, inputs, func = func, parms = parameters,
                               dllname = dllname,
@@ -36,9 +36,9 @@ solve_fun <- function(x, times = NULL, parameters, initState, dllname,
       for (j in 1 : dim(y)[1]) { # Model evaluation
         if (lnparam == T) { parameters <- exp(x$a[j,i,])}
         else if (lnparam == F) { parameters <- x$a[j,i,]}
-
+        
         if (is.null(times)) tmp <- model(parameters) else tmp <- model(parameters, times)
-
+        
         for (k in 1 : dim(y)[3]) { # Output time
           y[j,i,k] <- tmp[k]
         }
