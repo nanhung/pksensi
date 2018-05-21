@@ -1,3 +1,5 @@
+#' Numerical or analytical solution of defined model with parameters
+#'
 #' @rdname solve_fun
 #' @export
 solve_fun <- function(x, times = NULL, parameters, initState, dllname,

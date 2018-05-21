@@ -1,10 +1,14 @@
 #' Extended Fourier Amplitude Sensitivity Test with Random Phase Shift
 #'
-#'   rfast99 implements the so-called "extended-FAST" method
+#'   rfast99 is based on the fast99 function in \pkg{sensitivity} package
+#'   implements the so-called "extended-FAST" method
 #'   (Saltelli et al. 1999). This method allows the estimation of first
 #'   order and total Sobol' indices for all the factors.
 #'
 #' @importFrom stats runif fft var
+#'
+#' @param factors define an integer for the giving number of factors, or a vector of character strings giving their names.
+#' @param n an integer for the sampling number
 #'
 #' @rdname rfast99
 #' @export
@@ -82,7 +86,7 @@ rfast99 <- function(factors, n, M = 4, omega = NULL,
   return(x)
 }
 
-#' @rdname tell.rfast99
+#' @rdname rfast99
 #' @export
 tell.rfast99 <- function(x, y = NULL, ...) {
 
@@ -182,7 +186,7 @@ print.rfast99 <- function(x, digits = 4, ...) {
   }
 }
 
-#' @rdname tell2
+#' @rdname rfast99
 #' @export
 tell2 <- function(x, y){
 
@@ -231,7 +235,7 @@ tell2 <- function(x, y){
   assign(id, x, parent.frame())
 }
 
-#' @rdname check.rfast99
+#' @rdname rfast99
 #' @export
 check.rfast99 <- function(x, digits = 4, SI = 0.01, CI = 0.1){
 
@@ -320,7 +324,7 @@ plot.rfast99 <- function(x, cut.off = F, ...){
   }
 }
 
-#' @rdname check
+
 #' @export
 check <- function(x, digits = 4, SI, CI) UseMethod("check")
 

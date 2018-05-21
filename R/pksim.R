@@ -1,3 +1,5 @@
+#' Pharmacokinetic simulation from sampling parameter
+#'
 #' @importFrom grDevices adjustcolor
 #' @importFrom graphics plot polygon
 #' @importFrom stats quantile

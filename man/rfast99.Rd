@@ -2,13 +2,26 @@
 % Please edit documentation in R/rfast99.R
 \name{rfast99}
 \alias{rfast99}
+\alias{tell.rfast99}
+\alias{tell2}
+\alias{check.rfast99}
 \title{Extended Fourier Amplitude Sensitivity Test with Random Phase Shift}
 \usage{
 rfast99(factors, n, M = 4, omega = NULL, q = NULL, q.arg = NULL,
   replicate = 1, conf = 0.95, ...)
+
+\method{tell}{rfast99}(x, y = NULL, ...)
+
+tell2(x, y)
+
+\method{check}{rfast99}(x, digits = 4, SI = 0.01, CI = 0.1)
+}
+\arguments{
+\item{factors}{input a integer for the giving number of factors, or a vector of character strings giving their names.}
 }
 \description{
-rfast99 implements the so-called "extended-FAST" method
+rfast99 is based on the fast99 function in \pkg{sensitivity} package
+  implements the so-called "extended-FAST" method
   (Saltelli et al. 1999). This method allows the estimation of first
   order and total Sobol' indices for all the factors.
 }
