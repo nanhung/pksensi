@@ -28,7 +28,7 @@ heat_check <- function(x, filter = c("first order", "interaction", "total order"
   X <- filter(X, order %in% filter)
 
   if (order == F){
-    p <- ggplot(X, aes(time, parameter))
+    p <- ggplot(X, aes_string("time", "parameter"))
   } else if (order == T) {
     p <- ggplot(X, aes(time, reorder(parameter, value)))
   }
@@ -37,7 +37,7 @@ heat_check <- function(x, filter = c("first order", "interaction", "total order"
     p <- p + geom_tile(aes(fill = category), colour = "white") +
       scale_fill_manual(values= cols)
   } else if (category == F) {
-    p <- p + geom_tile(aes(fill = value)) +
+    p <- p + geom_tile(aes_string(fill = "value")) +
       scale_fill_gradient(low = "white", high = "red", limits = c(-0.05,1.05))
   }
 
