@@ -9,7 +9,7 @@ init:
 
 environment:
   global:
-    WARNINGS_ARE_ERORRS: 0
+    WARNINGS_ARE_ERORRS: 1
 
 install:
   ps: Bootstrap

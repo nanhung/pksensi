@@ -1,4 +1,14 @@
-#' Create heatmap
+#' Create Heatmap to Detect and Check Parameter Sensitivity
+#'
+#' @description
+#' plot the sensitivity (or convergence) index by heatmap with a given result.
+#'
+#' @param x a list of storing information in the defined sensitivity function.
+#' @param filter a vector of interested output index included \code{first order}, \code{interaction}, and \code{total order}.
+#' @param index a character to choose sensitivity index \code{SI} (default) or convergence index \code{CI}.
+#' @param order a logical value indicating whether the parameter should reorder by the value.
+#' @param level a logical value to use continous or discrete (default) output.
+#' @param text a logical value to display the calculated indices in the plot.
 #'
 #' @importFrom magrittr %>%
 #' @importFrom stats reorder time
@@ -9,17 +19,17 @@
 #' @rdname heat_check
 #' @export
 heat_check <- function(x, filter = c("first order", "interaction", "total order"),
-                       index = "SI", order = F, category = T, text = F){
+                       index = "SI", order = F, level = T, text = F){
 
   if (index ==  "SI"){
     X <- tidy_index(x, index = index) %>%
-      mutate(category = cut(value, breaks=c(-Inf, 0.01, 0.05, Inf),
+      mutate_(level = ~cut(value, breaks=c(-Inf, 0.01, 0.05, Inf),
                             labels=c("0 - 0.01","0.01 - 0.05"," > 0.05")))
 
     cols <- c("0 - 0.01" = "grey", "4" = "pink", "0.01 - 0.05" = "pink", " > 0.05" = "red")
   } else if ((index == "CI")) {
     X <- tidy_index(x, index = index) %>%
-      mutate(category = cut(value, breaks=c(-Inf, 0.05, 0.1, Inf),
+      mutate_(level = ~cut(value, breaks=c(-Inf, 0.05, 0.1, Inf),
                             labels=c("0 - 0.05","0.05 - 0.1"," > 0.1")))
 
     cols <- c("0 - 0.05" = "grey", "4" = "pink", "0.05 - 0.1" = "pink", " > 0.1" = "red")
@@ -30,13 +40,13 @@ heat_check <- function(x, filter = c("first order", "interaction", "total order"
   if (order == F){
     p <- ggplot(X, aes_string("time", "parameter"))
   } else if (order == T) {
-    p <- ggplot(X, aes(time, reorder(parameter, value)))
+    p <- ggplot(X, aes_string("time", "reorder(parameter, value)"))
   }
 
-  if (category == T) {
-    p <- p + geom_tile(aes(fill = category), colour = "white") +
+  if (level == T) {
+    p <- p + geom_tile(aes(fill = level), colour = "white") +
       scale_fill_manual(values= cols)
-  } else if (category == F) {
+  } else if (level == F) {
     p <- p + geom_tile(aes_string(fill = "value")) +
       scale_fill_gradient(low = "white", high = "red", limits = c(-0.05,1.05))
   }
@@ -55,7 +65,7 @@ heat_check <- function(x, filter = c("first order", "interaction", "total order"
   }
 
   if (text == T){
-    p + geom_text(aes(label = ifelse(value < 0.01, "", round(value, 2))), size = 2.5)
+    p + geom_text(aes_string(label = "ifelse(value < 0.01, '', round(value, 2))"), size = 2.5)
   } else p
 
 }

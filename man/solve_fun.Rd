@@ -8,6 +8,36 @@ solve_fun(x, times = NULL, parameters, initState, dllname, func, initfunc,
   outnames, method = "lsode", rtol = 1e-08, atol = 1e-12, model = NULL,
   lnparam = F, output)
 }
+\arguments{
+\item{x}{a list of storing information in the defined sensitivity function.}
+
+\item{times}{a time sequence}
+
+\item{parameters}{parameters passed to func.}
+
+\item{initState}{a vector that define the initial (state) values for the ODE system.}
+
+\item{dllname}{a string giving the name of the shared library (without extension)
+that contains the compiled function (deSolve)}
+
+\item{func}{the name of the function in the dynamically loaded shared library}
+
+\item{initfunc}{the name of the initialisation function (which initialises values of parameters), as provided in dllname (deSolve).}
+
+\item{outnames}{the names of output variables calculated in the compiled function func.}
+
+\item{method}{method used by integrator (deSolve).}
+
+\item{rtol}{argument passed to integrator (deSolve).}
+
+\item{atol}{argument passed to integrator (deSolve).}
+
+\item{model}{the defined function with functional output.}
+
+\item{lnparam}{a logical value that make the statement of the log-transformed parameter (default FALSE).}
+
+\item{output}{a character for the selected output.}
+}
 \description{
-Numerical or analytical solution of defined model with parameters
+The \code{solve_fun} conduct the different steps of a multivariate numerical and sensitivity analysis.
 }

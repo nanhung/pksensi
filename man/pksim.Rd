@@ -2,10 +2,19 @@
 % Please edit documentation in R/pksim.R
 \name{pksim}
 \alias{pksim}
-\title{Pharmacokinetic simulation from sampling parameter}
+\title{Pharmacokinetic Simulation from Sampling Parameter}
 \usage{
 pksim(y, log = F, legend = T, ...)
 }
+\arguments{
+\item{y}{a numeric array created from \code{solve_fun} function.}
+
+\item{log}{a logical value to transform the y-axis to log scale (default is set to FALSE).}
+
+\item{legend}{a logical value to display the legend in the created plot.}
+
+\item{...}{additional arguments to customize the graphical parameters.}
+}
 \description{
-Pharmacokinetic simulation from sampling parameter
+pharmacokinetic plot of the output result based on the given parameter
 }

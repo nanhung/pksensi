@@ -1,4 +1,12 @@
-#' Pharmacokinetic simulation from sampling parameter
+#' Pharmacokinetic Simulation from Sampling Parameter
+#'
+#' @description
+#' pharmacokinetic plot of the output result based on the given parameter
+#'
+#' @param y a numeric array created from \code{solve_fun} function.
+#' @param log a logical value to transform the y-axis to log scale (default is set to FALSE).
+#' @param legend a logical value to display the legend in the created plot.
+#' @param ... additional arguments to customize the graphical parameters.
 #'
 #' @importFrom grDevices adjustcolor
 #' @importFrom graphics plot polygon

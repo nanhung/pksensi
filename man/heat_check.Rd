@@ -2,11 +2,24 @@
 % Please edit documentation in R/heat_check.R
 \name{heat_check}
 \alias{heat_check}
-\title{Create heatmap}
+\title{Create Heatmap to Detect and Check Parameter Sensitivity}
 \usage{
 heat_check(x, filter = c("first order", "interaction", "total order"),
-  index = "SI", order = F, category = T, text = F)
+  index = "SI", order = F, level = T, text = F)
+}
+\arguments{
+\item{x}{a list of storing information in the defined sensitivity function.}
+
+\item{filter}{a vector of interested output index included \code{first order}, \code{interaction}, and \code{total order}.}
+
+\item{index}{a character to choose sensitivity index \code{SI} (default) or convergence index \code{CI}.}
+
+\item{order}{a logical value indicating whether the parameter should reorder by the value.}
+
+\item{level}{a logical value to use continous or discrete (default) output.}
+
+\item{text}{a logical value to display the calculated indices in the plot.}
 }
 \description{
-Create heatmap
+plot the sensitivity (or convergence) index by heatmap with a given result.
 }
