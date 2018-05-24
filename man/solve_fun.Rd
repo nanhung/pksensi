@@ -2,42 +2,45 @@
 % Please edit documentation in R/solve_fun.R
 \name{solve_fun}
 \alias{solve_fun}
-\title{Numerical or analytical solution of defined model with parameters}
+\title{Solved PK model with given parameters space}
 \usage{
-solve_fun(x, times = NULL, parameters, initState, dllname, func, initfunc,
-  outnames, method = "lsode", rtol = 1e-08, atol = 1e-12, model = NULL,
-  lnparam = F, output)
+solve_fun(x, times = NULL, parameters, getParms = "getParms", initState,
+  dllname, func, initfunc, outnames, method = "lsode", rtol = 1e-08,
+  atol = 1e-12, model = NULL, lnparam = F, output)
 }
 \arguments{
 \item{x}{a list of storing information in the defined sensitivity function.}
 
-\item{times}{a time sequence}
+\item{times}{a vector to define the given time sequence.}
 
-\item{parameters}{parameters passed to func.}
+\item{parameters}{parameters passed to \code{func}.}
 
-\item{initState}{a vector that define the initial (state) values for the ODE system.}
+\item{getParms}{a string that call c function to calculate the scaling parameters (default "getParms").}
+
+\item{initState}{a vector that define the initial values of state variables for the ODE system.}
 
 \item{dllname}{a string giving the name of the shared library (without extension)
-that contains the compiled function (deSolve)}
+that contains the compiled function.}
 
-\item{func}{the name of the function in the dynamically loaded shared library}
+\item{func}{the name of the function in the dynamically loaded shared library.}
 
-\item{initfunc}{the name of the initialisation function (which initialises values of parameters), as provided in dllname (deSolve).}
+\item{initfunc}{the name of the initialisation function (which initialises values of parameters), as provided in dllname.}
 
-\item{outnames}{the names of output variables calculated in the compiled function func.}
+\item{outnames}{the names of output variables calculated in the compiled function \code{func}.}
 
-\item{method}{method used by integrator (deSolve).}
+\item{method}{method used by integrator (default "lsode").}
 
-\item{rtol}{argument passed to integrator (deSolve).}
+\item{rtol}{argument passed to integrator (default 1e-8).}
 
-\item{atol}{argument passed to integrator (deSolve).}
+\item{atol}{argument passed to integrator (default 1e-12).}
 
-\item{model}{the defined function with functional output.}
+\item{model}{the defined analytical equation with functional output.}
 
 \item{lnparam}{a logical value that make the statement of the log-transformed parameter (default FALSE).}
 
 \item{output}{a character for the selected output.}
 }
 \description{
-The \code{solve_fun} conduct the different steps of a multivariate numerical and sensitivity analysis.
+The \code{solve_fun} solves for the time-dependent quantity/concentration in different tissues
+through the imported deSolve function. It can also solve the function with analytical function.
 }
