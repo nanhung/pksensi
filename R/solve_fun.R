@@ -7,7 +7,7 @@
 #' @param x a list of storing information in the defined sensitivity function.
 #' @param times a vector to define the given time sequence.
 #' @param parameters parameters passed to \code{func}.
-#' @param getParms a string that call c function to calculate the scaling parameters (default "getParms").
+#' @param initParmsfun a character for the given specific initial parameter function.
 #' @param initState a vector that define the initial values of state variables for the ODE system.
 #' @param dllname a string giving the name of the shared library (without extension)
 #' that contains the compiled function.
@@ -23,7 +23,7 @@
 #'
 #' @rdname solve_fun
 #' @export
-solve_fun <- function(x, times = NULL, parameters, getParms = "getParms", initState, dllname,
+solve_fun <- function(x, times = NULL, parameters, initParmsfun = NULL, initState, dllname,
                       func, initfunc, outnames,
                       method ="lsode", rtol=1e-8, atol=1e-12,
                       model = NULL, lnparam = F, output){
@@ -43,12 +43,17 @@ solve_fun <- function(x, times = NULL, parameters, getParms = "getParms", initSt
         for (p in x$factors) {
           parameters[p] <- ifelse (lnparam == T,  exp(x$a[j,i,p]), x$a[j,i,p])
         }
-        #parms <- initParms(newParms=parameters)
-        parms <- .C(getParms, # "getParms" must actually named in c file
-                    as.double(parameters),
-                    parms=double(length(parameters)),
-                    as.integer(length(parameters)))$parms
-        names(parms) <- names(parameters)
+
+        if (!is.null(initParmsfun) == TRUE){
+          parms <- do.call(initParmsfun, list(parameters)) # Use the initParms function from _inits.R file, if the file had defined
+        } else {
+          stop("The 'initParmsfun' must be defined")
+#          parms <- .C("getParms", # "getParms" must actually named in c file
+#                      as.double(parameters),
+#                      parms=double(length(parameters)),
+#                      as.integer(length(parameters)))$parms
+#          names(parms) <- names(parameters)
+        }
 
         # Integrate
         tmp <- deSolve::ode(initState, inputs, parms = parms, outnames = outnames, nout = length(outnames),
@@ -77,6 +82,3 @@ solve_fun <- function(x, times = NULL, parameters, getParms = "getParms", initSt
   dimnames(y)[[3]]<-times
   return(y)
 }
-
-
-

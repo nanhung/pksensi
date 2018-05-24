@@ -4,7 +4,7 @@
 \alias{solve_fun}
 \title{Solved PK model with given parameters space}
 \usage{
-solve_fun(x, times = NULL, parameters, getParms = "getParms", initState,
+solve_fun(x, times = NULL, parameters, initParmsfun = NULL, initState,
   dllname, func, initfunc, outnames, method = "lsode", rtol = 1e-08,
   atol = 1e-12, model = NULL, lnparam = F, output)
 }
@@ -15,7 +15,7 @@ solve_fun(x, times = NULL, parameters, getParms = "getParms", initState,
 
 \item{parameters}{parameters passed to \code{func}.}
 
-\item{getParms}{a string that call c function to calculate the scaling parameters (default "getParms").}
+\item{initParmsfun}{a character for the given specific initial parameter function.}
 
 \item{initState}{a vector that define the initial values of state variables for the ODE system.}
 
