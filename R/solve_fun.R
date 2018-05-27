@@ -20,13 +20,14 @@
 #' @param model the defined analytical equation with functional output.
 #' @param lnparam a logical value that make the statement of the log-transformed parameter (default FALSE).
 #' @param output a character for the selected output.
+#' @param ... additional arguments for deSolve::ode method.
 #'
 #' @rdname solve_fun
 #' @export
 solve_fun <- function(x, times = NULL, parameters, initParmsfun = NULL, initState, dllname,
                       func, initfunc, outnames,
                       method ="lsode", rtol=1e-8, atol=1e-12,
-                      model = NULL, lnparam = F, output){
+                      model = NULL, lnparam = F, output, ...){
   n <- length(x$s)
   no.factors <- ifelse (class(x$factors) == "character", length(x$factors), x$factors)
   replicate <- x$rep
@@ -48,17 +49,17 @@ solve_fun <- function(x, times = NULL, parameters, initParmsfun = NULL, initStat
           parms <- do.call(initParmsfun, list(parameters)) # Use the initParms function from _inits.R file, if the file had defined
         } else {
           stop("The 'initParmsfun' must be defined")
-#          parms <- .C("getParms", # "getParms" must actually named in c file
-#                      as.double(parameters),
-#                      parms=double(length(parameters)),
-#                      as.integer(length(parameters)))$parms
-#          names(parms) <- names(parameters)
+          #          parms <- .C("getParms", # "getParms" must actually named in c file
+          #                      as.double(parameters),
+          #                      parms=double(length(parameters)),
+          #                      as.integer(length(parameters)))$parms
+          #          names(parms) <- names(parameters)
         }
 
         # Integrate
         tmp <- deSolve::ode(initState, inputs, parms = parms, outnames = outnames, nout = length(outnames),
                             dllname = dllname, func = func, initfunc = initfunc, method = method,
-                            rtol=rtol, atol=atol)
+                            rtol=rtol, atol=atol, ...)
 
         for (k in 1 : dim(y)[3]) { #outputs
           y[j,i,k] <- tmp[k+1, output] # skip zero
