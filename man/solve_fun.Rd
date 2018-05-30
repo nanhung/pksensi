@@ -2,7 +2,7 @@
 % Please edit documentation in R/solve_fun.R
 \name{solve_fun}
 \alias{solve_fun}
-\title{Solved PK model with given parameters space}
+\title{Solved PK model through DeSolve package}
 \usage{
 solve_fun(x, times = NULL, parameters, initParmsfun = NULL, initState,
   dllname, func, initfunc, outnames, method = "lsode", rtol = 1e-08,

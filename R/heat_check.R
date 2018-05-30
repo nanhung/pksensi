@@ -11,6 +11,7 @@
 #' @param level a logical value to use continous or discrete (default) output.
 #' @param text a logical value to display the calculated indices in the plot.
 #'
+#' @importFrom reshape melt
 #' @importFrom magrittr %>%
 #' @importFrom stats reorder time
 #' @import dplyr
