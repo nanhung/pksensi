@@ -28,16 +28,17 @@ heat_check <- function(x, fit = c("first order", "interaction", "total order"),
       mutate_(level = ~cut(value, breaks=c(-Inf, 0.01, 0.05, Inf),
                            labels=c("0 - 0.01","0.01 - 0.05"," > 0.05")))
 
-    cols <- c("0 - 0.01" = "grey", "4" = "pink", "0.01 - 0.05" = "pink", " > 0.05" = "red")
+    cols <- c("0 - 0.01" = "grey90", "0.01 - 0.05" = "pink1", " > 0.05" = "red")
   } else if ((index == "CI")) {
     X <- tidy_index(x, index = index) %>%
       mutate_(level = ~cut(value, breaks=c(-Inf, 0.05, 0.1, Inf),
                            labels=c("0 - 0.05","0.05 - 0.1"," > 0.1")))
 
-    cols <- c("0 - 0.05" = "grey", "4" = "pink", "0.05 - 0.1" = "pink", " > 0.1" = "red")
+    cols <- c("0 - 0.05" = "grey90", "0.05 - 0.1" = "pink1", " > 0.1" = "red")
   }
 
   X$variable = factor(X$variable, levels=dimnames(x$y)[[4]])
+  X$parameter = factor(X$parameter, levels=rev(x$factors))
 
   if (is.null(vars)){
     vars <- dimnames(x$y)[[4]]
@@ -75,7 +76,6 @@ heat_check <- function(x, fit = c("first order", "interaction", "total order"),
   if (text == T){
     p + geom_text(aes_string(label = "ifelse(value < 0.01, '', round(value, 2))"), size = 2.5)
   } else p
-
 }
 
 tidy_index <- function (x, index = "SI") {
