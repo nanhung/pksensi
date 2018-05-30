@@ -12,43 +12,43 @@
 tell2 <- function(x, y){
 
   id <- deparse(substitute(x))
-
-  if (dim(y)[3] == 1){
-    X <- tell.rfast99(x, y[,,1])
-    x$mSI <- X$S[,"original"]
-    x$iSI <- X$I[,"original"]
-    x$tSI <- X$T[,"original"]
-    x$mCI <- X$S[,"max. c.i."] - X$S[,"min. c.i."]
-    x$iCI <- X$I[,"max. c.i."] - X$I[,"min. c.i."]
-    x$tCI <- X$T[,"max. c.i."] - X$T[,"min. c.i."]
-  } else {
-    for ( i in 1:length(dimnames(y)[[3]])){
-      X <- tell.rfast99(x, y[,,i])
-      if ( i == 1) { # initialize
-        x$mSI <- X$S[,"original"]
-        x$iSI <- X$I[,"original"]
-        x$tSI <- X$T[,"original"]
-        x$mCI <- X$S[,"max. c.i."] - X$S[,"min. c.i."]
-        x$iCI <- X$I[,"max. c.i."] - X$I[,"min. c.i."]
-        x$tCI <- X$T[,"max. c.i."] - X$T[,"min. c.i."]
-      } else { # accumulate
-        x$mSI <- rbind(x$mSI, X$S[,"original"])
-        x$iSI <- rbind(x$iSI, X$I[,"original"])
-        x$tSI <- rbind(x$tSI, X$T[,"original"])
-        x$mCI <- rbind(x$mCI, X$S[,"max. c.i."] - X$S[,"min. c.i."])
-        x$iCI <- rbind(x$iCI, X$I[,"max. c.i."] - X$I[,"min. c.i."])
-        x$tCI <- rbind(x$tCI, X$T[,"max. c.i."] - X$T[,"min. c.i."])
-      }
-    }
-  }
+  x$mSI <- x$iSI <- x$tSI <- x$mCI <- x$iCI <- x$tCI <- array(dim = c(dim(y)[3], length(x$factors), dim(y)[4]), NA) #c(tim-points, factors, variables)
+  vars <- dimnames(y)[[4]]
 
   if (dim(y)[3] == 1){
     names(x$mSI) <- names(x$iSI) <- names(x$tSI) <- names(x$mCI) <- names(x$iCI) <- names(x$tCI) <- dimnames(x$a)[[3]]
   } else {
-    rownames(x$mSI) <- rownames(x$iSI) <- rownames(x$tSI) <- rownames(x$mCI) <- rownames(x$iCI) <- rownames(x$tCI) <- dimnames(y)[[3]]
-    colnames(x$mSI) <- colnames(x$iSI) <- colnames(x$tSI) <- colnames(x$mCI) <- colnames(x$iCI) <- colnames(x$tCI) <- rownames(x$S)
+    dimnames(x$mSI)[[1]] <- dimnames(x$iSI)[[1]] <- dimnames(x$tSI)[[1]] <- dimnames(x$mCI)[[1]] <- dimnames(x$iCI)[[1]] <- dimnames(x$tCI)[[1]] <- dimnames(y)[[3]] # time-points
+    dimnames(x$mSI)[[2]] <- dimnames(x$iSI)[[2]] <- dimnames(x$tSI)[[2]] <- dimnames(x$mCI)[[2]] <- dimnames(x$iCI)[[2]] <- dimnames(x$tCI)[[2]] <- x$factors
+    dimnames(x$mSI)[[3]] <- dimnames(x$iSI)[[3]] <- dimnames(x$tSI)[[3]] <- dimnames(x$mCI)[[3]] <- dimnames(x$iCI)[[3]] <- dimnames(x$tCI)[[3]] <- vars
   }
 
+
+  if (dim(y)[3] == 1){ # one time point
+    for (k in vars){ # variables
+      X <- tell.rfast99(x, y[,,1,k])
+      x$mSI <- X$S[,"original"]
+      x$iSI <- X$I[,"original"]
+      x$tSI <- X$T[,"original"]
+      x$mCI <- X$S[,"max. c.i."] - X$S[,"min. c.i."]
+      x$iCI <- X$I[,"max. c.i."] - X$I[,"min. c.i."]
+      x$tCI <- X$T[,"max. c.i."] - X$T[,"min. c.i."]
+    }
+  } else {
+    for (k in vars){ # variables
+      for ( i in 1:length(dimnames(y)[[3]])){  # time-points
+        X <- tell.rfast99(x, y[,,i,k])
+        x$mSI[i,,k] <- X$S[,"original"]
+        x$iSI[i,,k] <- X$I[,"original"]
+        x$tSI[i,,k] <- X$T[,"original"]
+        x$mCI[i,,k] <- X$S[,"max. c.i."] - X$S[,"min. c.i."]
+        x$iCI[i,,k] <- X$I[,"max. c.i."] - X$I[,"min. c.i."]
+        x$tCI[i,,k] <- X$T[,"max. c.i."] - X$T[,"min. c.i."]
+      }
+    }
+  }
+
+  x$y<-y
   x$S<-NULL
   x$I<-NULL
   x$T<-NULL

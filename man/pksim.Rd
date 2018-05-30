@@ -4,10 +4,12 @@
 \alias{pksim}
 \title{Pharmacokinetic Simulation from Sampling Parameter}
 \usage{
-pksim(y, log = F, legend = T, ...)
+pksim(y, vars = 1, log = F, legend = T, ...)
 }
 \arguments{
 \item{y}{a numeric array created from \code{solve_fun} function.}
+
+\item{vars}{a logical value or character to specific the display variable in simulation.}
 
 \item{log}{a logical value to transform the y-axis to log scale (default is set to FALSE).}
 

@@ -4,6 +4,7 @@
 #' pharmacokinetic plot of the output result based on the given parameter
 #'
 #' @param y a numeric array created from \code{solve_fun} function.
+#' @param vars a logical value or character to specific the display variable in simulation.
 #' @param log a logical value to transform the y-axis to log scale (default is set to FALSE).
 #' @param legend a logical value to display the legend in the created plot.
 #' @param ... additional arguments to customize the graphical parameters.
@@ -14,9 +15,13 @@
 #'
 #' @rdname pksim
 #' @export
-pksim <- function(y, log = F, legend = T, ...){
-  times <- as.numeric(colnames(y[,1,]))
-  quantY <- apply(y, 3, quantile, c(0.50, 0, 1, 0.1, 0.9, 0.25,0.75), na.rm=TRUE)
+pksim <- function(y, vars = 1, log = F, legend = T, ...){
+  times <- as.numeric(colnames(y[,1,,vars]))
+
+  if (dim(y)[2] == 1){
+    quantY <- apply(y[,,,vars], 2, quantile, c(0.50, 0, 1, 0.1, 0.9, 0.25,0.75), na.rm=TRUE)
+  } else quantY <- apply(y[,,,vars], 3, quantile, c(0.50, 0, 1, 0.1, 0.9, 0.25,0.75), na.rm=TRUE)
+
   ytck <- pretty(c(min(quantY,na.rm=TRUE),max(quantY,na.rm=TRUE)))
 
   if (log == T){

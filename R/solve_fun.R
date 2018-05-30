@@ -32,7 +32,9 @@ solve_fun <- function(x, times = NULL, parameters, initParmsfun = NULL, initStat
   no.factors <- ifelse (class(x$factors) == "character", length(x$factors), x$factors)
   replicate <- x$rep
   out <- ifelse (is.null(times), 1, length(times))
-  y <- array(dim = c(n * no.factors, replicate, out), NA)
+  n.vars <- length(output)
+  y <- array(dim = c(n * no.factors, replicate, out, n.vars), NA)
+  # c(Model Evaluations, replicates, time points, n.vars)
 
   if (is.null(model) == TRUE){
 
@@ -46,7 +48,8 @@ solve_fun <- function(x, times = NULL, parameters, initParmsfun = NULL, initStat
         }
 
         if (!is.null(initParmsfun) == TRUE){
-          parms <- do.call(initParmsfun, list(parameters)) # Use the initParms function from _inits.R file, if the file had defined
+          parms <- do.call(initParmsfun, list(parameters))
+          # Use the initParms function from _inits.R file, if the file had defined
         } else {
           stop("The 'initParmsfun' must be defined")
           #          parms <- .C("getParms", # "getParms" must actually named in c file
@@ -61,8 +64,10 @@ solve_fun <- function(x, times = NULL, parameters, initParmsfun = NULL, initStat
                             dllname = dllname, func = func, initfunc = initfunc, method = method,
                             rtol=rtol, atol=atol, ...)
 
-        for (k in 1 : dim(y)[3]) { #outputs
-          y[j,i,k] <- tmp[k+1, output] # skip zero
+        for (l in 1:n.vars){
+          for (k in 1 : dim(y)[3]) { #output time
+            y[j,i,k,l] <- tmp[k+1, output[l]] # skip zero
+          }
         }
       }
     }
@@ -81,5 +86,6 @@ solve_fun <- function(x, times = NULL, parameters, initParmsfun = NULL, initStat
     }
   }
   dimnames(y)[[3]]<-times
+  dimnames(y)[[4]]<-output
   return(y)
 }
