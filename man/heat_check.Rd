@@ -4,13 +4,15 @@
 \alias{heat_check}
 \title{Create Heatmap to Detect and Check Parameter Sensitivity}
 \usage{
-heat_check(x, filter = c("first order", "interaction", "total order"),
-  index = "SI", order = F, level = T, text = F)
+heat_check(x, fit = c("first order", "interaction", "total order"),
+  vars = NULL, index = "SI", order = F, level = T, text = F)
 }
 \arguments{
 \item{x}{a list of storing information in the defined sensitivity function.}
 
-\item{filter}{a vector of interested output index included \code{first order}, \code{interaction}, and \code{total order}.}
+\item{fit}{a vector of interested output index included \code{first order}, \code{interaction}, and \code{total order}.}
+
+\item{vars}{a logical value or character to specific the display variable in simulation.}
 
 \item{index}{a character to choose sensitivity index \code{SI} (default) or convergence index \code{CI}.}
 

@@ -4,7 +4,8 @@
 #' plot the sensitivity (or convergence) index by heatmap with a given result.
 #'
 #' @param x a list of storing information in the defined sensitivity function.
-#' @param filter a vector of interested output index included \code{first order}, \code{interaction}, and \code{total order}.
+#' @param fit a vector of interested output index included \code{first order}, \code{interaction}, and \code{total order}.
+#' @param vars a logical value or character to specific the display variable in simulation.
 #' @param index a character to choose sensitivity index \code{SI} (default) or convergence index \code{CI}.
 #' @param order a logical value indicating whether the parameter should reorder by the value.
 #' @param level a logical value to use continous or discrete (default) output.
@@ -18,24 +19,31 @@
 
 #' @rdname heat_check
 #' @export
-heat_check <- function(x, filter = c("first order", "interaction", "total order"),
+heat_check <- function(x, fit = c("first order", "interaction", "total order"),
+                       vars = NULL,
                        index = "SI", order = F, level = T, text = F){
 
   if (index ==  "SI"){
     X <- tidy_index(x, index = index) %>%
       mutate_(level = ~cut(value, breaks=c(-Inf, 0.01, 0.05, Inf),
-                            labels=c("0 - 0.01","0.01 - 0.05"," > 0.05")))
+                           labels=c("0 - 0.01","0.01 - 0.05"," > 0.05")))
 
     cols <- c("0 - 0.01" = "grey", "4" = "pink", "0.01 - 0.05" = "pink", " > 0.05" = "red")
   } else if ((index == "CI")) {
     X <- tidy_index(x, index = index) %>%
       mutate_(level = ~cut(value, breaks=c(-Inf, 0.05, 0.1, Inf),
-                            labels=c("0 - 0.05","0.05 - 0.1"," > 0.1")))
+                           labels=c("0 - 0.05","0.05 - 0.1"," > 0.1")))
 
     cols <- c("0 - 0.05" = "grey", "4" = "pink", "0.05 - 0.1" = "pink", " > 0.1" = "red")
   }
 
-  X <- filter(X, order %in% filter)
+  X$variable = factor(X$variable, levels=dimnames(x$y)[[4]])
+
+  if (is.null(vars)){
+    vars <- dimnames(x$y)[[4]]
+  } else (vars <- vars)
+
+  X <- X %>% filter(order %in% fit) %>% filter_(~variable %in% vars)
 
   if (order == F){
     p <- ggplot(X, aes_string("time", "parameter"))
@@ -53,7 +61,7 @@ heat_check <- function(x, filter = c("first order", "interaction", "total order"
 
   p <- p +scale_x_continuous(expand=c(0,0)) +
     scale_y_discrete(expand=c(0,0)) +
-    facet_grid(~order) +
+    facet_grid(variable~order) +
     theme(axis.text.x = element_text(size=10, hjust = 1),
           axis.text.y = element_text(size=10), legend.title=element_blank(),
           legend.position="top")
@@ -70,7 +78,7 @@ heat_check <- function(x, filter = c("first order", "interaction", "total order"
 
 }
 
-tidy_index <- function (x, index = "CI") {
+tidy_index <- function (x, index = "SI") {
 
   if(index == "CI") {
     m <- reshape::melt(x$mCI) %>% cbind(order = "first order")
@@ -83,8 +91,6 @@ tidy_index <- function (x, index = "CI") {
     t <- reshape::melt(x$tSI) %>% cbind(order = "total order")
     X <- do.call(rbind, list(m, i, t))
   }
-  names(X) <- c("time", "parameter", "value", "order")
+  names(X) <- c("time", "parameter", "variable", "value", "order")
   return(X)
 }
-
-

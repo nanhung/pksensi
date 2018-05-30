@@ -181,55 +181,62 @@ check.rfast99 <- function(x, digits = 4, SI = 0.01, CI = 0.1){
 }
 
 #' @method plot rfast99
-#' @importFrom graphics barplot legend lines par abline
+#' @importFrom graphics barplot legend lines par abline plot.new
 #' @importFrom stats runif fft
 #' @export
-plot.rfast99 <- function(x, cut.off = F, ...){
+plot.rfast99 <- function(x, vars = 1, cut.off = F, ...){
 
-  if(is.matrix(x$mSI)){
+  mSI <- x$mSI[,,vars]
+  iSI <- x$tSI[,,vars]
+  tSI <- x$tSI[,,vars]
+  mCI <- x$mCI[,,vars]
+  iCI <- x$tCI[,,vars]
+  tCI <- x$tCI[,,vars]
 
-    nv <- length(colnames(x$tSI))
+  if(is.matrix(mSI)){
+
+    nv <- length(colnames(tSI))+1
     nc <- ceiling(sqrt(nv))
     nr <- ceiling(nv/nc)
 
-    times <- row.names(x$tSI)
+    times <- row.names(tSI)
 
     old.par <- par(no.readonly = TRUE)
-    par(mfrow = c(nr, nc), mar = c(4,2,4,1))
+    par(mfrow = c(nr, nc), mar = c(4,2,3,1))
 
-    for(i in 1:ncol(x$tSI)){
-      plot(times, x$tSI[,i], ylim = c(0, 1), bty = 'n',
+    for(i in 1:ncol(tSI)){
+      plot(times, tSI[,i], ylim = c(0, 1), bty = 'n',
            type = 'l', lwd = 2, xlab = 'time', ylab = '',
-           main = colnames(x$tSI)[i], ...)
+           main = colnames(tSI)[i], ...)
       col.transp = adjustcolor('black', alpha.f = 0.4)
       polygon(x = c(times, rev(times)),
-              y =c(x$tSI[,i]-x$tCI[,i], rev(x$tSI[,i]+x$tCI[,i])),
+              y =c(tSI[,i]-tCI[,i], rev(tSI[,i]+tCI[,i])),
               col = col.transp, border = col.transp)
 
       col.transp = adjustcolor('red', alpha.f = 0.4)
-      lines(times, x$mSI[,i], ylim = c(0, 1), bty = 'n',
+      lines(times, mSI[,i], ylim = c(0, 1), bty = 'n',
             lwd = 2, col = 'red')
       polygon(x = c(times, rev(times)),
-              y =c(x$mSI[,i]-x$mCI[,i], rev(x$mSI[,i]+x$mCI[,i])),
+              y =c(mSI[,i]-mCI[,i], rev(mSI[,i]+mCI[,i])),
               col = col.transp, border = col.transp)
       if (is.numeric(cut.off)){
         abline( cut.off, 0, lty = 2)
       }
     }
+    plot.new()
     legend('top', legend = c('total order', 'first order'), col = c('black','red'),
-           lty = 'solid', lwd = 1, pch = NA, bty = 'n',
-           text.col = 'black',
-           fill = adjustcolor(c('black', 'red'), alpha.f = 0.4), border = NA, cex = 1.2)
+           lty = 1, lwd = 1, pch = NA, bty = 'n',
+           text.col = 'black')
     par(old.par)
   } else {
-      D1 <- apply(x$D1, 1, mean)
-      V <- apply(x$V, 1, mean)
-      Dt <- apply(x$Dt, 1, mean)
+    D1 <- apply(x$D1, 1, mean)
+    V <- apply(x$V, 1, mean)
+    Dt <- apply(x$Dt, 1, mean)
 
-      S <- rbind(D1 / V, 1 - Dt / V - D1 / V)
-      colnames(S) <- names(x$mSI)
-      bar.col <- c("white","grey")
-      barplot(S, ylim = c(0,1), col = bar.col)
-      legend("topright", c("main effect", "interactions"), fill = bar.col)
+    S <- rbind(D1 / V, 1 - Dt / V - D1 / V)
+    colnames(S) <- names(x$mSI)
+    bar.col <- c("white","grey")
+    barplot(S, ylim = c(0,1), col = bar.col)
+    legend("topright", c("main effect", "interactions"), fill = bar.col)
   }
 }
