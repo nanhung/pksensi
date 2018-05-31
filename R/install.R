@@ -1,19 +1,21 @@
-#' Solved PK model with given parameters space
+#' Install MCSim
 #'
 #' @description
 #' Download the latest or specific version of MCSim from the official website
 #' \url{https://www.gnu.org/software/mcsim/} and install it to the system directory.
 #'
 #' @param version a character of MCSim version number.
-#' @param directory a character to assign the directory to install the MCSim.
+#' @param directory a character to assign the directory to put the MCSim sourced folder.
 #' The default directory is under \code{/home/username} (Linux), \code{/Users/username} (MacOS), and C drive (Windows).
+#' @param mxstep a numeric value to assign the maximum number of (internally defined) steps
+#' allowed during one call to the solver (default is 500). The user may increase mxstep to avoid this error return.
 #'
 #' @import getPass
 #' @importFrom utils download.file
 #'
 #' @rdname install_mcsim
 #' @export
-install_mcsim = function(version = "6.0.1", directory = NULL) {
+install_mcsim = function(version = "6.0.1", directory = NULL, mxstep = 500) {
   if (.Platform$OS.type == "windows") {
     stop("The current function haven't supprot Windows system")
   } else {
@@ -27,11 +29,11 @@ install_mcsim = function(version = "6.0.1", directory = NULL) {
 
     if (is.null(directory)){
       if (Sys.info()[['sysname']] == "Darwin"){
-        exdir <- paste0("/Users/", name, sprintf('/mcsim-%s', version))
+        exdir <- paste0("/Users/", name)
       } else if (Sys.info()[['sysname']] == "Linux") {
-        exdir <- paste0("/home/", name, sprintf('/mcsim-%s', version))
+        exdir <- paste0("/home/", name)
       } else if (Sys.info()[['sysname']] == "Windows") {
-        exdir <- paste0("C:", sprintf('/mcsim-%s', version))
+        exdir <- paste0("C:")
       }
     } else {exdir <- directory}
 
@@ -51,6 +53,14 @@ install_mcsim = function(version = "6.0.1", directory = NULL) {
 
     mcsim.directory <-getwd()
 
+    if (mxstep != 500){
+      file <- paste0(getwd(), "/sim/lsodes1.c")
+      lsodes1.c <- readLines(file)
+      new.mxstp0 <- paste0("mxstp0 = ", mxstep)
+      mxstp0 <- gsub("mxstp0 = 500", new.mxstp0, lsodes1.c)
+      cat(mxstp0, file=file, sep="\n")
+    }
+
     system("./configure")
     system("make")
     system("make check")
@@ -64,7 +74,7 @@ install_mcsim = function(version = "6.0.1", directory = NULL) {
     }
 
     cat("\n")
-    message(paste0("The MCSim " , sprintf('%s', version), " is installed under ", mcsim.directory))
+    message(paste0("The MCSim " , sprintf('%s', version), " is installed. The sourced folder is under ", mcsim.directory))
     setwd(current.wd)
   }
 }

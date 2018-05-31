@@ -2,15 +2,18 @@
 % Please edit documentation in R/install.R
 \name{install_mcsim}
 \alias{install_mcsim}
-\title{Solved PK model with given parameters space}
+\title{Install MCSim}
 \usage{
-install_mcsim(version = "6.0.1", directory = NULL)
+install_mcsim(version = "6.0.1", directory = NULL, mxstep = 500)
 }
 \arguments{
 \item{version}{a character of MCSim version number.}
 
-\item{directory}{a character to assign the directory to install the MCSim.
+\item{directory}{a character to assign the directory to put the MCSim sourced folder.
 The default directory is under \code{/home/username} (Linux), \code{/Users/username} (MacOS), and C drive (Windows).}
+
+\item{mxstep}{a numeric value to assign the maximum number of (internally defined) steps
+allowed during one call to the solver (default is 500). The user may increase mxstep to avoid this error return.}
 }
 \description{
 Download the latest or specific version of MCSim from the official website

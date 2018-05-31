@@ -2,13 +2,16 @@
 % Please edit documentation in R/solve_MCSim.R
 \name{solve_MCSim}
 \alias{solve_MCSim}
-\alias{gen_infile}
+\alias{makemcsim}
+\alias{generate_infile}
 \title{Solved PK model through MCSim}
 \usage{
 solve_MCSim(x, mName, infile.name, outfile.name, parameters = NULL,
   output = NULL, time = NULL, condition = NULL)
 
-gen_infile(infile.name, outfile.name, parameters, output, time, condition,
+makemcsim(mName, standalone = F)
+
+generate_infile(infile.name, outfile.name, parameters, output, time, condition,
   rtol = 1e-06, atol = 1e-09)
 }
 \arguments{
@@ -20,19 +23,22 @@ gen_infile(infile.name, outfile.name, parameters, output, time, condition,
 
 \item{outfile.name}{a character to assign the name of out file.}
 
-\item{parameters}{a vector to assign the testing parameter.}
+\item{parameters}{a vector to assign the testing parameters.}
 
-\item{output}{a character or a vector to assign the selected output.}
+\item{output}{a character or a vector to assign the selected output(s).}
 
 \item{time}{a vector to define the given time sequence.}
 
 \item{condition}{a character to set the specific parameter value in the in file.}
+
+\item{standalone}{a logic value to create the standalone executable file (default FALSE).}
 
 \item{rtol}{argument passed to integrator (default 1e-6).}
 
 \item{atol}{argument passed to integrator (default 1e-9).}
 }
 \description{
-The \code{solve_MCSim} solves for the time-dependent quantity/concentration in different tissues
-through the imported deSolve function. It can also solve the function with analytical function.
+The \code{solve_MCSim} solves for the differential equations of time-dependent quantity/concentration in different tissues/compartments
+through MCSim (must be installed).
+The output result is the 4-dimension array with c(model evaluations, replications, time-points, output variables).
 }
