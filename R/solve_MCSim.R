@@ -35,8 +35,8 @@ solve_MCSim <- function(x, mName, infile.name, outfile.name,
                condition = condition)
   }
 
+  mcsim. <- paste0("mcsim.", mName)
   if(file.exists(mcsim.) == F){
-    mcsim. <- paste0("mcsim.", mName)
     system(paste0("makemcsim", " ", mName, ".model"))
   }
 
