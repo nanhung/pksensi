@@ -1,7 +1,7 @@
 #' Solve PK model through MCSim
 #'
 #' @description
-#' The \code{solve_MCSim} solves for the differential equations of time-dependent quantity/concentration in different tissues/compartments
+#' The \code{solve_mcsim} solves for the differential equations of time-dependent quantity/concentration in different tissues/compartments
 #' through MCSim (must be installed).
 #' The output result is the 4-dimension array with c(model evaluations, replications, time-points, output variables).
 #'
@@ -20,9 +20,9 @@
 #' @importFrom utils write.table
 #' @importFrom data.table fread
 #'
-#' @rdname solve_MCSim
+#' @rdname solve_mcsim
 #' @export
-solve_MCSim <- function(x, mName, infile.name, outfile.name,
+solve_mcsim <- function(x, mName, infile.name, outfile.name,
                         parameters = NULL,
                         output  = NULL,
                         time  = NULL,
@@ -69,7 +69,7 @@ solve_MCSim <- function(x, mName, infile.name, outfile.name,
   return(y)
 }
 
-#' @rdname solve_MCSim
+#' @rdname solve_mcsim
 #' @export
 makemcsim <- function(mName, standalone = F){
   if(standalone == F){
@@ -77,7 +77,7 @@ makemcsim <- function(mName, standalone = F){
   } else {system(paste0("makemcsims", " ", mName, ".model"))}
 }
 
-#' @rdname solve_MCSim
+#' @rdname solve_mcsim
 #' @export
 generate_infile <- function(infile.name, outfile.name, parameters, output, time,
                        condition, rtol = 1e-6, atol = 1e-9){
