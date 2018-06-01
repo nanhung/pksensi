@@ -4,7 +4,7 @@
 \alias{solve_MCSim}
 \alias{makemcsim}
 \alias{generate_infile}
-\title{Solved PK model through MCSim}
+\title{Solve PK model through MCSim}
 \usage{
 solve_MCSim(x, mName, infile.name, outfile.name, parameters = NULL,
   output = NULL, time = NULL, condition = NULL)

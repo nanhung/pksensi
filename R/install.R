@@ -3,6 +3,7 @@
 #' @description
 #' Download the latest or specific version of MCSim from the official website
 #' \url{https://www.gnu.org/software/mcsim/} and install it to the system directory.
+#' Currently, only support unix-based systems (MacOS and Linux).
 #'
 #' @param version a character of MCSim version number.
 #' @param directory a character to assign the directory to put the MCSim sourced folder.

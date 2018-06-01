@@ -1,4 +1,4 @@
-#' Solved PK model through MCSim
+#' Solve PK model through MCSim
 #'
 #' @description
 #' The \code{solve_MCSim} solves for the differential equations of time-dependent quantity/concentration in different tissues/compartments
