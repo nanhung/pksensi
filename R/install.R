@@ -3,7 +3,7 @@
 #' @description
 #' Download the latest or specific version of MCSim from the official website
 #' \url{https://www.gnu.org/software/mcsim/} and install it to the system directory.
-#' Currently, only support unix-based systems (MacOS and Linux).
+#' Currently, this function only support unix-based systems (MacOS and Linux).
 #'
 #' @param version a character of MCSim version number.
 #' @param directory a character to assign the directory to put the MCSim sourced folder.
@@ -18,7 +18,7 @@
 #' @export
 install_mcsim = function(version = "6.0.1", directory = NULL, mxstep = 500) {
   if (.Platform$OS.type == "windows") {
-    stop("The current function haven't supprot Windows system")
+    stop("The function haven't supprot Windows system")
   } else {
     message("Start install")
     version<-version
