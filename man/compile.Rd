@@ -4,13 +4,16 @@
 \alias{compile}
 \title{Model Compiler}
 \usage{
-compile(mName, model = F)
+compile(mName, model = F, application = "mcsim")
 }
 \arguments{
 \item{mName}{a string giving the name of the model or C file (without extension).}
 
 \item{model}{a logical value to operate the compiler to use model or C file,
 the default is set to FALSE to assign the C file in compiling.}
+
+\item{application}{a character to assign the specific methods (\code{mcsim} or \code{R})
+that will be applied to the numerical analysis (default is \code{mcsim}).}
 }
 \description{
 This function is used to compile the model file or C file to generate the executable file in numerical analysis
