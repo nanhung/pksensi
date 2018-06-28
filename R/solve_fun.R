@@ -80,7 +80,7 @@ solve_fun <- function(x, times = NULL, parameters, initParmsfun = NULL, initStat
         if (is.null(times)) tmp <- model(parameters) else tmp <- model(parameters, times)
 
         for (k in 1 : dim(y)[3]) { # Output time
-          y[j,i,k] <- tmp[k]
+          y[j,i,k,l] <- tmp[k]
         }
       }
     }
