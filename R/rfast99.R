@@ -149,7 +149,7 @@ check <- function(x, digits = 4, SI, CI) UseMethod("check")
 #' @export
 check.rfast99 <- function(x, digits = 4, SI = 0.01, CI = 0.1){
 
-  if (class(x$mSI)== "matrix"){
+  if (class(x$mSI)== "array"){
     mSI <- apply(x$mSI, 2, max)
     iSI <- apply(x$iSI, 2, max)
     tSI <- apply(x$tSI, 2, max)
