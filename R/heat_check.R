@@ -7,6 +7,8 @@
 #' @param fit a vector of interested output index included \code{first order}, \code{interaction}, and \code{total order}.
 #' @param vars a logical value or character to specific the display variable in simulation.
 #' @param times a logical value or character to specific the display time in simulation.
+#' @param SI.cutoff a vector with two numeric value to specific the cut-off points of sensitivity index in parameter ranking.
+#' @param CI.cutoff a vector with two numeric value to specific the cut-off points of convergence index in parameter ranking.
 #' @param index a character to choose sensitivity index \code{SI} (default) or convergence index \code{CI}.
 #' @param order a logical value indicating whether the parameter should reorder by the value.
 #' @param level a logical value to use continous or discrete (default) output.
@@ -23,20 +25,29 @@
 #' @export
 heat_check <- function(x, fit = c("first order", "interaction", "total order"),
                        vars = NULL, times = NULL,
+                       SI.cutoff = c(0.01, 0.05), CI.cutoff = c(0.05, 0.1),
                        index = "SI", order = F, level = T, text = F){
+
+  SI.labels <- c(paste0("0 - ", SI.cutoff[1]),
+                 paste0(SI.cutoff[1]," - ",SI.cutoff[2]),
+                 paste0(" > ", SI.cutoff[2]))
+  CI.labels <- c(paste0("0 - ", CI.cutoff[1]),
+                 paste0(CI.cutoff[1]," - ",CI.cutoff[2]),
+                 paste0(" > ", CI.cutoff[2]))
 
   if (index ==  "SI"){
     X <- tidy_index(x, index = index) %>%
-      mutate_(level = ~cut(value, breaks=c(-Inf, 0.01, 0.05, Inf),
-                           labels=c("0 - 0.01","0.01 - 0.05"," > 0.05")))
+      mutate_(level = ~cut(value, breaks=c(-Inf, SI.cutoff[1], CI.cutoff[2], Inf),
+                           labels=SI.labels))
 
-    cols <- c("0 - 0.01" = "grey90", "0.01 - 0.05" = "pink1", " > 0.05" = "red")
+    cols <- c("grey90", "pink1", "red")
+
   } else if ((index == "CI")) {
     X <- tidy_index(x, index = index) %>%
-      mutate_(level = ~cut(value, breaks=c(-Inf, 0.05, 0.1, Inf),
-                           labels=c("0 - 0.05","0.05 - 0.1"," > 0.1")))
+      mutate_(level = ~cut(value, breaks=c(-Inf, CI.cutoff[1], CI.cutoff[2], Inf),
+                           labels=CI.labels))
 
-    cols <- c("0 - 0.05" = "grey90", "0.05 - 0.1" = "pink1", " > 0.1" = "red")
+    cols <- c("grey90", "pink1", "red")
   }
 
   X$variable = factor(X$variable, levels=dimnames(x$y)[[4]])

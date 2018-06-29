@@ -5,7 +5,8 @@
 \title{Create Heatmap to Detect and Check Parameter Sensitivity}
 \usage{
 heat_check(x, fit = c("first order", "interaction", "total order"),
-  vars = NULL, times = NULL, index = "SI", order = F, level = T,
+  vars = NULL, times = NULL, SI.cutoff = c(0.01, 0.05),
+  CI.cutoff = c(0.05, 0.1), index = "SI", order = F, level = T,
   text = F)
 }
 \arguments{
@@ -16,6 +17,10 @@ heat_check(x, fit = c("first order", "interaction", "total order"),
 \item{vars}{a logical value or character to specific the display variable in simulation.}
 
 \item{times}{a logical value or character to specific the display time in simulation.}
+
+\item{SI.cutoff}{a vector with two numeric value to specific the cut-off points of sensitivity index in parameter ranking.}
+
+\item{CI.cutoff}{a vector with two numeric value to specific the cut-off points of convergence index in parameter ranking.}
 
 \item{index}{a character to choose sensitivity index \code{SI} (default) or convergence index \code{CI}.}
 
