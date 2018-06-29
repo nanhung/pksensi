@@ -6,6 +6,7 @@
 #' @param x a list of storing information in the defined sensitivity function.
 #' @param fit a vector of interested output index included \code{first order}, \code{interaction}, and \code{total order}.
 #' @param vars a logical value or character to specific the display variable in simulation.
+#' @param times a logical value or character to specific the display time in simulation.
 #' @param index a character to choose sensitivity index \code{SI} (default) or convergence index \code{CI}.
 #' @param order a logical value indicating whether the parameter should reorder by the value.
 #' @param level a logical value to use continous or discrete (default) output.
@@ -21,7 +22,7 @@
 #' @rdname heat_check
 #' @export
 heat_check <- function(x, fit = c("first order", "interaction", "total order"),
-                       vars = NULL,
+                       vars = NULL, times = NULL,
                        index = "SI", order = F, level = T, text = F){
 
   if (index ==  "SI"){
@@ -45,7 +46,11 @@ heat_check <- function(x, fit = c("first order", "interaction", "total order"),
     vars <- dimnames(x$y)[[4]]
   } else (vars <- vars)
 
-  X <- X %>% filter(order %in% fit) %>% filter_(~variable %in% vars)
+  if (is.null(times)){
+    times <- dimnames(x$y)[[3]]
+  } else (times <- times)
+
+  X <- X %>% filter(order %in% fit) %>% filter_(~variable %in% vars) %>% filter(time %in% times)
 
   if (order == F){
     p <- ggplot(X, aes_string("time", "parameter"))
