@@ -202,7 +202,7 @@ plot.rfast99 <- function(x, vars = 1, cut.off = F, ...){
     times <- row.names(tSI)
 
     old.par <- par(no.readonly = TRUE)
-    par(mfrow = c(nr, nc), mar = c(4,2,3,1))
+    par(mfrow = c(nr, nc), mar = c(4,2,3,1), oma = c(0,0,2,0))
 
     for(i in 1:ncol(tSI)){
       plot(times, tSI[,i], ylim = c(0, 1), bty = 'n',
@@ -223,6 +223,10 @@ plot.rfast99 <- function(x, vars = 1, cut.off = F, ...){
         abline( cut.off, 0, lty = 2)
       }
     }
+    
+    variable <- dimnames(x$y)[[4]][vars]
+    mtext(variable, NORTH<-3, line=0.4, adj=0, cex=1.5, outer=TRUE)
+    
     plot.new()
     legend('top', legend = c('total order', 'first order'), col = c('black','red'),
            lty = 1, lwd = 1, pch = NA, bty = 'n',
