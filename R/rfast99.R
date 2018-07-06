@@ -26,6 +26,7 @@
 #' @param CI a numeric vlaue to set the cut-off point for convergence index (default 0.01).
 #' @param ... additional arguments to customize the graphical parameters.
 #'
+#' @importFrom graphics mtext
 #' @rdname rfast99
 #' @export
 rfast99 <- function(factors, n, M = 4, omega = NULL,
@@ -223,10 +224,10 @@ plot.rfast99 <- function(x, vars = 1, cut.off = F, ...){
         abline( cut.off, 0, lty = 2)
       }
     }
-    
+
     variable <- dimnames(x$y)[[4]][vars]
     mtext(variable, NORTH<-3, line=0.4, adj=0, cex=1.5, outer=TRUE)
-    
+
     plot.new()
     legend('top', legend = c('total order', 'first order'), col = c('black','red'),
            lty = 1, lwd = 1, pch = NA, bty = 'n',
