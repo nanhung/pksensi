@@ -57,7 +57,7 @@ solve_mcsim <- function(x, mName, infile.name, outfile.name,
   system(paste0("./mcsim.", mName, " ", infile.name))
   str <- length(x$factors) + 2
 
-  df <- as.data.frame(data.table::fread("setpoint.csv", head = T))
+  df <- as.data.frame(data.table::fread(outfile.name, head = T))
 
   y <- df[,str:ncol(df)] %>% as.matrix() # output only
   dim(y)<- dim
