@@ -64,7 +64,7 @@ solve_mcsim <- function(x, mName, infile.name, outfile.name,
   dimnames(y)[[3]] <- time
   dimnames(y)[[4]] <- output
 
-  file.remove(setpoint.data)
+  #file.remove(setpoint.data)
 
   return(y)
 }
