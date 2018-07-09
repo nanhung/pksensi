@@ -23,7 +23,7 @@
 
 #' @rdname heat_check
 #' @export
-heat_check <- function(x, fit = c("first order", "interaction", "total order"),
+heat_check <- function(x, fit = c("first order", "total order"),
                        vars = NULL, times = NULL,
                        SI.cutoff = c(0.01, 0.05), CI.cutoff = c(0.05, 0.1),
                        index = "SI", order = F, level = T, text = F){
@@ -37,7 +37,7 @@ heat_check <- function(x, fit = c("first order", "interaction", "total order"),
 
   if (index ==  "SI"){
     X <- tidy_index(x, index = index) %>%
-      mutate_(level = ~cut(value, breaks=c(-Inf, SI.cutoff[1], CI.cutoff[2], Inf),
+      mutate_(level = ~cut(value, breaks=c(-Inf, SI.cutoff[1], SI.cutoff[2], Inf),
                            labels=SI.labels))
 
     cols <- c("grey90", "pink1", "red")
@@ -71,7 +71,7 @@ heat_check <- function(x, fit = c("first order", "interaction", "total order"),
 
   if (level == T) {
     p <- p + geom_tile(aes(fill = level), colour = "white") +
-      scale_fill_manual(values= cols)
+      scale_fill_manual(values = cols)
   } else if (level == F) {
     p <- p + geom_tile(aes_string(fill = "value")) +
       scale_fill_gradient(low = "white", high = "red", limits = c(-0.05,1.05))
