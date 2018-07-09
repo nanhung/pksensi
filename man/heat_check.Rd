@@ -4,10 +4,9 @@
 \alias{heat_check}
 \title{Create Heatmap to Detect and Check Parameter Sensitivity}
 \usage{
-heat_check(x, fit = c("first order", "interaction", "total order"),
-  vars = NULL, times = NULL, SI.cutoff = c(0.01, 0.05),
-  CI.cutoff = c(0.05, 0.1), index = "SI", order = F, level = T,
-  text = F)
+heat_check(x, fit = c("first order", "total order"), vars = NULL,
+  times = NULL, SI.cutoff = c(0.01, 0.05), CI.cutoff = c(0.05, 0.1),
+  index = "SI", order = F, level = T, text = F)
 }
 \arguments{
 \item{x}{a list of storing information in the defined sensitivity function.}

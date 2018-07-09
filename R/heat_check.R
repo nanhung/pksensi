@@ -63,6 +63,10 @@ heat_check <- function(x, fit = c("first order", "total order"),
 
   X <- X %>% filter(order %in% fit) %>% filter_(~variable %in% vars) %>% filter(time %in% times)
 
+  if(length(times) < 10){
+    X$time <- as.factor(X$time)
+  }
+
   if (order == F){
     p <- ggplot(X, aes_string("time", "parameter"))
   } else if (order == T) {
@@ -77,8 +81,11 @@ heat_check <- function(x, fit = c("first order", "total order"),
       scale_fill_gradient(low = "white", high = "red", limits = c(-0.05,1.05))
   }
 
-  p <- p +scale_x_continuous(expand=c(0,0)) +
-    scale_y_discrete(expand=c(0,0)) +
+  if(length(times) < 10){
+    p <- p + scale_x_discrete(expand=c(0,0))
+  } else p <- p + scale_x_continuous(expand=c(0,0))
+
+  p <- p + scale_y_discrete(expand=c(0,0)) +
     facet_grid(variable~order) +
     theme(axis.text.x = element_text(size=10, hjust = 1),
           axis.text.y = element_text(size=10), legend.title=element_blank(),
