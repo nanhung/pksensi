@@ -55,8 +55,10 @@ solve_mcsim <- function(x, mName, infile.name, outfile.name,
   X <- cbind(1, apply(x$a, 3L, c))
   write.table(X, file=setpoint.data, row.names=F, sep="\t")
   system(paste0("./mcsim.", mName, " ", infile.name))
-  str <- length(x$factors) + 2
 
+  rm(X); invisible(gc()); # clean memory
+
+  str <- length(x$factors) + 2
   df <- as.data.frame(data.table::fread(outfile.name, head = T))
 
   y <- df[,str:ncol(df)] %>% as.matrix() # output only
