@@ -82,7 +82,7 @@ makemcsim <- function(mName, standalone = F){
 #' @rdname solve_mcsim
 #' @export
 generate_infile <- function(infile.name, outfile.name, parameters, output, time,
-                       condition, rtol = 1e-6, atol = 1e-9){
+                            condition, rtol = 1e-6, atol = 1e-9){
 
   setpoint.data <- "setpoint.dat"
 
@@ -106,11 +106,18 @@ generate_infile <- function(infile.name, outfile.name, parameters, output, time,
 
   cat("Simulation {", "\n\n", file = infile.name, append=TRUE)
 
-  cat(condition, "\n\n", file = infile.name, append=TRUE, sep = "")
+  # cat(paste(conditions, collapse=";"), ";", "\n\n", file = infile.name, append=TRUE, sep = "")
 
-  cat("Print (", paste(output, collapse=", "), ", ", paste(time, collapse=", "), ");\n\n",
-      "}", "\n\n",
-      file = infile.name, append=TRUE, sep="")
+  for (i in 1 : length(condition)){
+    cat(paste(condition[i], collapse=";"), ";", "\n", file = infile.name, append=TRUE, sep = "")
+  }
 
-  cat("END.", file = infile.name, append=TRUE)
+  cat("\n", file = infile.name, append=TRUE)
+
+  for (i in 1 : length(output)) {
+    cat("Print (", paste(output[i], collapse=", "), ", ", paste(time, collapse=", "), ");\n",
+        file = infile.name, append=TRUE, sep="")
+  }
+
+  cat("}", "END.", file = infile.name, append=TRUE)
 }
