@@ -126,21 +126,23 @@ print.rfast99 <- function(x, digits = 4, ...) {
     print(round(x$iSI, digits = digits))
     cat("\ntotal order:", "\n")
     print(round(x$tSI, digits = digits))
-    cat("\n")
-    cat("\n=================================")
-    cat("\nConvergence Indices", "\n")
-    cat("\nfirst order:", "\n")
-    print(round(x$mCI, digits = digits))
-    cat("\ninteraction:", "\n")
-    print(round(x$iCI, digits = digits))
-    cat("\ntotal order:", "\n")
-    print(round(x$tCI, digits = digits))
+
+    if (x$rep > 1){ # without replication
+      cat("\n")
+      cat("\n=================================")
+      cat("\nConvergence Indices", "\n")
+      cat("\nfirst order:", "\n")
+      print(round(x$mCI, digits = digits))
+      cat("\ninteraction:", "\n")
+      print(round(x$iCI, digits = digits))
+      cat("\ntotal order:", "\n")
+      print(round(x$tCI, digits = digits))
+    }
   }
   else {
     cat("(empty)\n")
   }
 }
-
 
 #' @rdname rfast99
 #' @export
