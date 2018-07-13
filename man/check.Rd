@@ -10,7 +10,7 @@ heat_check(x, fit = c("first order", "total order"), vars = NULL,
   times = NULL, SI.cutoff = c(0.01, 0.05), CI.cutoff = c(0.05, 0.1),
   index = "SI", order = F, level = T, text = F)
 
-check(x, times, vars, digits, SI, CI)
+check(x, times, vars, SI, CI)
 
 print(x, digits)
 }
@@ -35,12 +35,12 @@ print(x, digits)
 
 \item{text}{a logical value to display the calculated indices in the plot.}
 
-\item{digits}{a integer to rounds the values in its first argument.
-to the specified number of decimal places (default 4).}
-
 \item{SI}{a numeric value to set the cut-off point for sensitivity index (default 0.1).}
 
 \item{CI}{a numeric vlaue to set the cut-off point for convergence index (default 0.01).}
+
+\item{digits}{a integer to rounds the values in its first argument.
+to the specified number of decimal places (default 4).}
 
 \item{...}{additional arguments to customize the graphical parameters.}
 }

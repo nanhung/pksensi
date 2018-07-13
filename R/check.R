@@ -114,11 +114,11 @@ heat_check <- function(x, fit = c("first order", "total order"),
 
 #' @rdname check
 #' @export
-check <- function(x, times, vars, digits, SI, CI) UseMethod("check")
+check <- function(x, times, vars, SI, CI) UseMethod("check")
 
 #' @method check rfast99
 #' @export
-check.rfast99 <- function(x, times = NULL, vars = NULL, digits = 4, SI = 0.01, CI = 0.1){
+check.rfast99 <- function(x, times = NULL, vars = NULL, SI = 0.01, CI = 0.1){
 
   if (length(times) == 1 && length(vars) == 1) {
 
@@ -172,16 +172,18 @@ check.rfast99 <- function(x, times = NULL, vars = NULL, digits = 4, SI = 0.01, C
 
   cat("\nSensitivity check ( Index >", SI, ")\n")
   cat("----------------------------------")
-  cat("\nfirst order:", names(which(mSI > SI)))
-  cat("\ninteraction:", names(which(iSI > SI)))
-  cat("\ntotal order:", names(which(tSI > SI)), "\n")
+  cat("\nFirst order:\n", names(which(mSI > SI)), "\n")
+  cat("\nInteraction:\n", names(which(iSI > SI)), "\n")
+  cat("\nTotal order:\n", names(which(tSI > SI)), "\n")
+  cat("\nUnselected factors in total order:\n", names(which(tSI <= SI)), "\n")
   cat("\n")
 
   cat("\nConvergence check ( Index >", CI, ")\n")
   cat("----------------------------------")
-  cat("\nfirst order:", names(which(mCI > CI)))
-  cat("\ninteraction:", names(which(iCI > CI)))
-  cat("\ntotal order:", names(which(tCI > CI)))
+  cat("\nFirst order:\n", names(which(mCI > CI)), "\n")
+  cat("\nInteraction:\n", names(which(iCI > CI)), "\n")
+  cat("\nTotal order:\n", names(which(tCI > CI)), "\n")
+  cat("\n")
 
 }
 
