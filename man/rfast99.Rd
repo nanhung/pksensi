@@ -2,13 +2,10 @@
 % Please edit documentation in R/rfast99.R
 \name{rfast99}
 \alias{rfast99}
-\alias{check}
 \title{Extended Fourier Amplitude Sensitivity Test with Random Phase Shift}
 \usage{
 rfast99(factors, n, M = 4, omega = NULL, q = NULL, q.arg = NULL,
-  replicate = 1, conf = 0.95, ...)
-
-check(x, digits = 4, SI, CI)
+  replicate = 1, conf = 0.95)
 }
 \arguments{
 \item{factors}{an integer for the giving number of factors, or a vector of character strings giving their names.}
@@ -26,24 +23,7 @@ check(x, digits = 4, SI, CI)
 \item{replicate}{an integer to define the number of replication, the default is 1.}
 
 \item{conf}{the confidence level for replication confidence intervals.}
-
-\item{...}{additional arguments to customize the graphical parameters.}
-
-\item{x}{a list of class "rfast99"}
-
-\item{digits}{a integer to rounds the values in its first argument.
-to the specified number of decimal places (default 4).}
-
-\item{SI}{a numeric value to set the cut-off point for sensitivity index (default 0.1).}
-
-\item{CI}{a numeric vlaue to set the cut-off point for convergence index (default 0.01).}
 }
 \description{
 \code{rfast99} is based on the fast99 function in \pkg{sensitivity} package.
-}
-\details{
-The \code{print} method can used to print sensitivity and convergence indices
-with given time-step. The \code{check} method provide the summary of
-parameter sensitivity and convergence. The \code{plot} function provide the
-time-course functional output of both indices for each parameter.
 }
