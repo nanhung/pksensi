@@ -121,26 +121,44 @@ check <- function(x, times, vars, digits, SI, CI) UseMethod("check")
 check.rfast99 <- function(x, times = NULL, vars = NULL, digits = 4, SI = 0.01, CI = 0.1){
 
   if (length(times) == 1 && length(vars) == 1) {
+
     mSI <- x$mSI[times,,vars]
     iSI <- x$iSI[times,,vars]
     tSI <- x$tSI[times,,vars]
     mCI <- x$mCI[times,,vars]
     iCI <- x$iCI[times,,vars]
     tCI <- x$tCI[times,,vars]
-  } else if  (length(t) == 1 && length(vars) > 1) {
+
+  } else if (length(times) == 1 && length(vars) > 1) {
+
     mSI <- apply(x$mSI[times,,vars], 1, max)
     iSI <- apply(x$iSI[times,,vars], 1, max)
     tSI <- apply(x$tSI[times,,vars], 1, max)
     mCI <- apply(x$mCI[times,,vars], 1, max)
     iCI <- apply(x$iCI[times,,vars], 1, max)
     tCI <- apply(x$tCI[times,,vars], 1, max)
-  } else {
+
+  } else if (length(times) > 1 | length(vars) > 1) {
+
+    if (is.null(times)) times <- dimnames(x$mSI)[[1]]
+    if (is.null(vars)) vars <- dimnames(x$mSI)[[3]]
+
     mSI <- apply(x$mSI[times,,vars], 2, max)
     iSI <- apply(x$iSI[times,,vars], 2, max)
     tSI <- apply(x$tSI[times,,vars], 2, max)
     mCI <- apply(x$mCI[times,,vars], 2, max)
     iCI <- apply(x$iCI[times,,vars], 2, max)
     tCI <- apply(x$tCI[times,,vars], 2, max)
+
+  } else {
+
+    mSI <- apply(x$mSI, 2, max)
+    iSI <- apply(x$iSI, 2, max)
+    tSI <- apply(x$tSI, 2, max)
+    mCI <- apply(x$mCI, 2, max)
+    iCI <- apply(x$iCI, 2, max)
+    tCI <- apply(x$tCI, 2, max)
+
   }
 
   # else{
