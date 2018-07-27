@@ -80,6 +80,7 @@ install_mcsim = function(version = "6.0.1", directory = NULL, mxstep = 500) {
     }
   } else if (.Platform$OS.type == "windows") {
     Sys.setenv(PATH = paste("c:\\Rtools\\mingw_64\\bin", Sys.getenv("PATH"), sep=";"))
+    generate_config.h()
     system("cp config.h ./mod/")
     system("cp config.h ./sim/")
     system(paste0("gcc -o ./mod/mod.exe ./mod/*.c"))
@@ -89,4 +90,36 @@ install_mcsim = function(version = "6.0.1", directory = NULL, mxstep = 500) {
   message(paste0("The MCSim " , sprintf('%s', version), " is installed. The sourced folder is under ", mcsim.directory))
   setwd(current.wd)
 
+}
+
+generate_config.h <- function(){
+  cat("#define HAVE_DLFCN_H 1 \n",
+      "#define HAVE_ERFC 1 \n",
+      "#define HAVE_FLOAT_H 1 \n",
+      "#define HAVE_FLOOR 1 \n",
+      "#define HAVE_INTTYPES_H 1 \n",
+      #"#define HAVE_LIBGSL 1 \n",
+      "#define HAVE_LIBGSLCBLAS 1 \n",
+      "#define HAVE_LIBLAPACK 1 \n",
+      "#define HAVE_LIBM 1 \n",
+      #"#define HAVE_LIBSBML 1 \n",
+      #"#define HAVE_LIBSUNDIALS_CVODES 1 \n",
+      #"#define HAVE_LIBSUNDIALS_NVECSERIAL 1 \n",
+      "#define HAVE_LIMITS_H 1 \n",
+      "#define HAVE_MALLOC 1 \n",
+      "#define HAVE_MEMORY_H 1 \n",
+      "#define HAVE_MODF 1 \n",
+      "#define HAVE_POW 1 \n",
+      "#define HAVE_REALLOC 1 \n",
+      "#define HAVE_SQRT 1 \n",
+      "#define HAVE_STDINT_H 1 \n",
+      "#define HAVE_STDLIB_H 1 \n",
+      "#define HAVE_STRCHR 1 \n",
+      "#define HAVE_STRINGS_H 1 \n",
+      "#define HAVE_STRING_H 1 \n",
+      "#define HAVE_SYS_STAT_H 1 \n",
+      "#define HAVE_SYS_TYPES_H 1 \n",
+      "#define HAVE_UNISTD_H 1 \n",
+      file = "config.h",
+      sep = "")
 }

@@ -53,7 +53,9 @@ compile <- function (mName, model = F, application = 'mcsim', version = NULL) {
     } else if ((.Platform$OS.type == "windows")) {
       system(paste0(mod, " ", mName, " ", mName, ".c"))
       system(paste0("gcc -O3 -I.. -I", sim, " -o mcsim_", mName, ".exe ", mName, ".c ", sim, "/*.c", " -lm "))
-      cat(paste0("* Created executable file 'mcsim.", mName, ".exe'."))
+      if (file.exists(paste0("mcsim.", mName, ".model"))){
+        cat(paste0("* Created executable file 'mcsim.", mName, ".exe'."))
+      }
     }
 
 
