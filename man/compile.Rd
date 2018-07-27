@@ -4,7 +4,7 @@
 \alias{compile}
 \title{Model Compiler}
 \usage{
-compile(mName, model = F, application = "mcsim")
+compile(mName, model = F, application = "mcsim", version = NULL)
 }
 \arguments{
 \item{mName}{a string giving the name of the model or C file (without extension).}
@@ -14,6 +14,8 @@ the default is set to FALSE to assign the C file in compiling.}
 
 \item{application}{a character to assign the specific methods (\code{mcsim} or \code{R})
 that will be applied to the numerical analysis (default is \code{mcsim}).}
+
+\item{version}{a character to assign the version of MCSim that had been installed}
 }
 \description{
 This function is used to compile the model file or C file to generate the executable file in numerical analysis

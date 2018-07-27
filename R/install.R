@@ -17,51 +17,56 @@
 #' @rdname install_mcsim
 #' @export
 install_mcsim = function(version = "6.0.1", directory = NULL, mxstep = 500) {
+  #  if (.Platform$OS.type == "windows") {
+  #    stop("The function haven't supprot Windows system")
   if (.Platform$OS.type == "windows") {
-    stop("The function haven't supprot Windows system")
-  } else {
-    message("Start install")
-    version<-version
-    URL <- sprintf('http://ftp.gnu.org/gnu/mcsim/mcsim-%s.tar.gz', version)
-    tf <- tempfile()
-    download.file(URL, tf, mode = "wb")
+    if (!(devtools::find_rtools() == T)) {
+      warning("The Rtools should be installed first")
+    }}
 
-    name <- Sys.info()[['user']]
+  message("Start install")
+  version<-version
+  URL <- sprintf('http://ftp.gnu.org/gnu/mcsim/mcsim-%s.tar.gz', version)
+  tf <- tempfile()
+  download.file(URL, tf, mode = "wb")
 
-    if (is.null(directory)){
-      if (Sys.info()[['sysname']] == "Darwin"){
-        exdir <- paste0("/Users/", name)
-      } else if (Sys.info()[['sysname']] == "Linux") {
-        exdir <- paste0("/home/", name)
-      } else if (Sys.info()[['sysname']] == "Windows") {
-        exdir <- paste0("C:")
-      }
-    } else {exdir <- directory}
+  name <- Sys.info()[['user']]
 
-    utils::untar(tf, exdir = exdir)
-
-    current.wd <- getwd()
-
-    if (is.null(directory)){
-      if (Sys.info()[['sysname']] == "Darwin"){
-        setwd(paste0("/Users/", name, sprintf('/mcsim-%s', version)))
-      } else if (Sys.info()[['sysname']] == "Linux") {
-        setwd(paste0("/home/", name, sprintf('/mcsim-%s', version)))
-      } else if (Sys.info()[['sysname']] == "Windows") {
-        setwd(paste0("C:/", name, sprintf('/mcsim-%s', version)))
-      }
-    } else {setwd(paste0(directory, sprintf('/mcsim-%s', version)))}
-
-    mcsim.directory <-getwd()
-
-    if (mxstep != 500){
-      file <- paste0(getwd(), "/sim/lsodes1.c")
-      lsodes1.c <- readLines(file)
-      new.mxstp0 <- paste0("mxstp0 = ", mxstep)
-      mxstp0 <- gsub("mxstp0 = 500", new.mxstp0, lsodes1.c)
-      cat(mxstp0, file=file, sep="\n")
+  if (is.null(directory)){
+    if (Sys.info()[['sysname']] == "Darwin"){
+      exdir <- paste0("/Users/", name)
+    } else if (Sys.info()[['sysname']] == "Linux") {
+      exdir <- paste0("/home/", name)
+    } else if (Sys.info()[['sysname']] == "Windows") {
+      exdir <- paste0("c:\\Users\\", name)
     }
+  } else {exdir <- directory}
 
+  utils::untar(tf, exdir = exdir)
+
+  current.wd <- getwd()
+
+  if (is.null(directory)){
+    if (Sys.info()[['sysname']] == "Darwin"){
+      setwd(paste0("/Users/", name, sprintf('/mcsim-%s', version)))
+    } else if (Sys.info()[['sysname']] == "Linux") {
+      setwd(paste0("/home/", name, sprintf('/mcsim-%s', version)))
+    } else if (Sys.info()[['sysname']] == "Windows") {
+      setwd(paste0("c:\\Users\\", name, sprintf('/mcsim-%s', version)))
+    }
+  } else {setwd(paste0(directory, sprintf('/mcsim-%s', version)))}
+
+  mcsim.directory <-getwd()
+
+  if (mxstep != 500){
+    file <- paste0(getwd(), "/sim/lsodes1.c")
+    lsodes1.c <- readLines(file)
+    new.mxstp0 <- paste0("mxstp0 = ", mxstep)
+    mxstp0 <- gsub("mxstp0 = 500", new.mxstp0, lsodes1.c)
+    cat(mxstp0, file=file, sep="\n")
+  }
+
+  if (.Platform$OS.type == "unix"){
     system("./configure")
     system("make")
     system("make check")
@@ -73,9 +78,15 @@ install_mcsim = function(version = "6.0.1", directory = NULL, mxstep = 500) {
     } else if (Sys.info()[['sysname']] == "Linux"){
       system("sudo -kS sh -c 'make install; ldconfig'", input=input)
     }
-
-    cat("\n")
-    message(paste0("The MCSim " , sprintf('%s', version), " is installed. The sourced folder is under ", mcsim.directory))
-    setwd(current.wd)
+  } else if (.Platform$OS.type == "windows") {
+    Sys.setenv(PATH = paste("c:\\Rtools\\mingw_64\\bin", Sys.getenv("PATH"), sep=";"))
+    system("cp config.h ./mod/")
+    system("cp config.h ./sim/")
+    system(paste0("gcc -o ./mod/mod.exe ./mod/*.c"))
   }
+
+  cat("\n")
+  message(paste0("The MCSim " , sprintf('%s', version), " is installed. The sourced folder is under ", mcsim.directory))
+  setwd(current.wd)
+
 }
