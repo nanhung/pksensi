@@ -4,16 +4,16 @@
 \alias{compile}
 \title{Model Compiler}
 \usage{
-compile(mName, model = F, application = "mcsim", version = NULL)
+compile(mName, application = "mcsim", use_model_file = T, version = NULL)
 }
 \arguments{
 \item{mName}{a string giving the name of the model or C file (without extension).}
 
-\item{model}{a logical value to operate the compiler to use model or C file,
-the default is set to FALSE to assign the C file in compiling.}
-
 \item{application}{a character to assign the specific methods (\code{mcsim} or \code{R})
 that will be applied to the numerical analysis (default is \code{mcsim}).}
+
+\item{use_model_file}{a logical value to operate the compiler to use model or C file,
+the default is set to FALSE to assign the C file in compiling.}
 
 \item{version}{a character to assign the version of MCSim that had been installed}
 }
