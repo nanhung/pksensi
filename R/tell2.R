@@ -76,12 +76,6 @@ tell2 <- function(x, y){
   assign(id, x, parent.frame())
 }
 
-#' @rdname tell2
-#' @export
-tell <- function(x, y = NULL) UseMethod("tell")
-
-#' @method tell rfast99
-#' @export
 tell.rfast99 <- function(x, y = NULL) {
 
 

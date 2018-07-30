@@ -3,7 +3,7 @@
 \name{heat_check}
 \alias{heat_check}
 \alias{check}
-\alias{print}
+\alias{print.rfast99}
 \title{Create Heatmap to Detect and Check Parameter Sensitivity}
 \usage{
 heat_check(x, fit = c("first order", "total order"), vars = NULL,
@@ -12,7 +12,7 @@ heat_check(x, fit = c("first order", "total order"), vars = NULL,
 
 check(x, times, vars, SI, CI)
 
-print(x, digits)
+\method{print}{rfast99}(x, digits = 4, ...)
 }
 \arguments{
 \item{x}{a list of storing information in the defined sensitivity function.}

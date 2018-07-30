@@ -2,12 +2,9 @@
 % Please edit documentation in R/tell2.R
 \name{tell2}
 \alias{tell2}
-\alias{tell}
 \title{The Decoupling Simulations}
 \usage{
 tell2(x, y)
-
-tell(x, y = NULL)
 }
 \arguments{
 \item{x}{a list of storing information in the defined sensitivity function.}

@@ -253,12 +253,9 @@ plot.rfast99 <- function(x, vars = 1, cut.off = F, ...){
 }
 
 #' @rdname check
-#' @export
-print <- function(x, digits) UseMethod("print")
-
 #' @method print rfast99
 #' @export
-print.rfast99 <- function(x, digits = 4) {
+print.rfast99 <- function(x, digits = 4, ...) {
   cat("\nCall:\n", deparse(x$call), "\n", sep = "")
   if (! is.null(x$y) && ! is.null(x$S)) {
     cat("\nModel runs:", dim(x$y)[1], "\n")
