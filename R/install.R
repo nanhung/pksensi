@@ -80,10 +80,14 @@ install_mcsim = function(version = "6.0.1", directory = NULL, mxstep = 500) {
     }
   } else if (.Platform$OS.type == "windows") {
     Sys.setenv(PATH = paste("c:\\Rtools\\mingw_64\\bin", Sys.getenv("PATH"), sep=";"))
+    Sys.setenv(PATH = paste("c:\\MinGW\\bin", Sys.getenv("PATH"), sep=";"))
     generate_config.h()
     system("cp config.h ./mod/")
     system("cp config.h ./sim/")
     system(paste0("gcc -o ./mod/mod.exe ./mod/*.c"))
+    if(file.exists("./mod/mod.exe")){
+      cat(paste0("Created 'mod.exe'"))
+    }
   }
 
   cat("\n")
