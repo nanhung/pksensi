@@ -28,7 +28,7 @@ solve_mcsim <- function(x, mName, infile.name, outfile.name,
                         time  = NULL,
                         condition  = NULL){
 
-  if(file.exists(infile.name) == F){
+  if(!is.null(condition)){
     generate_infile(infile.name = infile.name,
                     outfile.name = outfile.name,
                     parameters = parameters,
