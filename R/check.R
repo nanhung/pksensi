@@ -118,7 +118,7 @@ check <- function(x, times, vars, SI, CI) UseMethod("check")
 
 #' @method check rfast99
 #' @export
-check.rfast99 <- function(x, times = NULL, vars = NULL, SI = 0.01, CI = 0.1){
+check.rfast99 <- function(x, times = NULL, vars = NULL, SI = 0.05, CI = 0.05){
 
   if (length(times) == 1 && length(vars) == 1) {
 
