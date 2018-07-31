@@ -51,6 +51,8 @@ compile <- function (mName, application = 'mcsim', use_model_file = T, version =
       system(paste0("gcc -O3 -I/usr/local/include -L/usr/local/lib -g -O2 ", mName, ".c", " -lmcsim -o", " mcsim.", mName, " -lm -llapack -Wall"))
       cat(paste0("* Created executable file 'mcsim.", mName, "'."))
     } else if ((.Platform$OS.type == "windows")) {
+      Sys.setenv(PATH = paste("c:\\Rtools\\mingw_64\\bin", Sys.getenv("PATH"), sep=";"))
+      Sys.setenv(PATH = paste("c:\\MinGW\\bin", Sys.getenv("PATH"), sep=";"))
       system(paste0(mod, " ", mName, " ", mName, ".c"))
       system(paste0("gcc -O3 -I.. -I", sim, " -o mcsim.", mName, ".exe ", mName, ".c ", sim, "/*.c", " -lm "))
       if (file.exists(paste0("mcsim.", mName, ".exe"))){

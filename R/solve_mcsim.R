@@ -39,7 +39,7 @@ solve_mcsim <- function(x, mName, infile.name, outfile.name,
 
   mcsim. <- paste0("mcsim.", mName)
   if(file.exists(mcsim.) == F){
-    makemcsim(mName)
+    makemcsim(paste0(mName, ".model"))
   }
 
   #
@@ -54,14 +54,20 @@ solve_mcsim <- function(x, mName, infile.name, outfile.name,
   setpoint.data <- "setpoint.dat"
   X <- cbind(1, apply(x$a, 3L, c))
   write.table(X, file=setpoint.data, row.names=F, sep="\t")
-  system(paste0("./mcsim.", mName, " ", infile.name))
+
+
+  if(file.exists(mcsim.) == T){
+    system(paste0("./mcsim.", mName, " ", infile.name))
+  } else if (file.exists(paste0(mcsim., ".model.exe")) == T) {
+    system(paste0("./mcsim.", mName, ".model.exe ", infile.name))
+  }
 
   rm(X); invisible(gc()); # clean memory
 
   str <- length(x$factors) + 2
   df <- as.data.frame(data.table::fread(outfile.name, head = T))
 
-  y <- df[,str:ncol(df)] %>% as.matrix() # output only
+  y <- as.matrix(df[,str:ncol(df)]) # output only
   dim(y)<- dim
   dimnames(y)[[3]] <- time
   dimnames(y)[[4]] <- output
