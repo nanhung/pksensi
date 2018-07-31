@@ -16,7 +16,7 @@
 #' @export
 compile <- function (mName, application = 'mcsim', use_model_file = T, version = NULL) {
 
-  if (.Platform$OS.type == "windows"){
+  if (application == 'mcsim' && .Platform$OS.type == "windows"){
     mName <- paste0(mName,".model")
   }
 
@@ -58,12 +58,19 @@ compile <- function (mName, application = 'mcsim', use_model_file = T, version =
       }
     }
 
-
   } else if (application == "R"){
-    system (paste0("R CMD SHLIB ", mName, ".c")) # create .o and .so (or .dll) files
-    cat(paste0("\n* Created executable file '", mName, ".so' or '", mName, ".dll'."))
-  }
+    if (.Platform$OS.type == "windows" && use_model_file == T){
+      system(paste0(mod, " -R ", mName, ".model ", mName, ".c"))
+    }
 
+    system (paste0("R CMD SHLIB ", mName, ".c")) # create .o and .so (or .dll) files
+    if (file.exists(paste0(mName, ".so"))){
+      cat(paste0("* Created file '", mName, ".so'."), "\n")
+    }
+    if (file.exists(paste0(mName, ".dll"))){
+      cat(paste0("* Created file '", mName, ".dll'."), "\n")
+    }
+  }
 
   if (application == "R"){
     dyn.load(paste0(mName, .Platform$dynlib.ext))
