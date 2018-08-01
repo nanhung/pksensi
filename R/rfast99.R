@@ -33,12 +33,12 @@ rfast99 <- function(factors, n, M = 4, omega = NULL,
   # quantiles
 
   if (is.null(q)) {
-    q <- rep("qunif", p)
+    stop("Please assign the distribution(s) of quantile function")
   } else if (length(q) == 1) {
     q <- rep(q, p)
   }
   if (is.null(q.arg)) {
-    q.arg <- rep(list(), p)
+    stop("Please assign the arguments for defined distribution")
   } else if (FALSE %in% sapply(q.arg, is.list)) { # q.arg isn't a list of lists
     q.arg <- rep(list(q.arg), p)
   }

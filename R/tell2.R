@@ -83,8 +83,6 @@ tell.rfast99 <- function(x, y = NULL) {
 
   if (! is.null(y)) {
     x$y <- y
-  } else if (is.null(x$y)) {
-    stop("y not found")
   }
 
   p <- dim(x$a)[3]
