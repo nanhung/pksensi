@@ -65,7 +65,7 @@ solve_fun <- function(x, times = NULL, parameters, initParmsfun = NULL, initStat
                             rtol=rtol, atol=atol, ...)
 
         for (l in 1:n.vars){
-          for (k in 1 : dim(y)[3]) { #output time
+          for (k in 1 : dim(y)[3]) { # output time
             y[j,i,k,l] <- tmp[k+1, output[l]] # skip zero
           }
         }
@@ -85,7 +85,14 @@ solve_fun <- function(x, times = NULL, parameters, initParmsfun = NULL, initStat
       }
     }
   }
-  dimnames(y)[[3]]<-times
-  dimnames(y)[[4]]<-output
+
+  if(dim(y)[3] > 1){
+    dimnames(y)[[3]] <- times
+    dimnames(y)[[4]] <- output
+  } else { # single time point
+    dimnames(y)[[3]] <- list(times)
+    dimnames(y)[[4]] <- list(output)
+  }
+
   return(y)
 }
