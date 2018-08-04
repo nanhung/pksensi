@@ -1,11 +1,9 @@
 context("test-rfast99.R")
 
 test_that("rfast99 single_time", {
-  FFPK <- function(parameters, times, dose = 320){
-    A <- (dose * parameters[1])/( parameters[3]*( parameters[1]- parameters[2]))
-    CONC <- A*exp(- parameters[2] * times) - A*exp(- parameters[1] * times)
-    return(CONC)
-  }
+
+  FFPK <- pksensi:::FFPK
+
   q = "qunif"
   q.arg = list(list(min = 0.5, max = 1.5),
                list(min = 0.02, max = 0.3),
@@ -16,6 +14,8 @@ test_that("rfast99 single_time", {
   times <- 0.5
   y<-solve_fun(x, model = FFPK, times = times, output = "output")
   tell2(x,y)
+  check(x)
+  print(x)
 
   expect_equal(dimnames(y)[[3]], "0.5")
   expect_equal(dim(y)[3], 1)
@@ -37,7 +37,14 @@ test_that("rfast99 class", {
   times <- seq(from = 0.25, to = 12.25, by = 0.5)
   y<-solve_fun(x, model = FFPK, times = times, output = "output")
   tell2(x,y)
+  check(x)
+  print(x)
 
+  heat_check(x, text = T)
+  heat_check(x, level = F)
+  heat_check(x, index = "CI")
+
+  expect_silent(pksim(y, log = T))
   expect_silent(plot(x))
   expect_that(x, is_a("rfast99"))
   expect_equal(x$M, 4)
@@ -81,6 +88,8 @@ test_that("rfast99 rep1", {
   times <- 0.5
   y<-solve_fun(x, model = FFPK, times = times, output = "output")
   tell2(x,y)
+  check(x)
+  print(x)
 
   expect_equal(x$replicate, 1)
 })
@@ -101,6 +110,8 @@ test_that("rfast99 rep2", {
   times <- c(0.5, 1)
   y<-solve_fun(x, model = FFPK, times = times, output = "output", lnparam = T)
   tell2(x,y)
+  check(x, times = 1)
+  print(x)
 
   expect_equal(x$replicate, 1)
 })

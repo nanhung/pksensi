@@ -15,14 +15,11 @@ tell2 <- function(x, y){
   x$mSI <- x$iSI <- x$tSI <- x$mCI <- x$iCI <- x$tCI <- array(dim = c(dim(y)[3], length(x$factors), dim(y)[4]), NA) #c(tim-points, factors, variables)
   vars <- dimnames(y)[[4]]
 
-  if (dim(y)[3] == 1){
-    names(x$mSI) <- names(x$iSI) <- names(x$tSI) <- names(x$mCI) <- names(x$iCI) <- names(x$tCI) <- dimnames(x$a)[[3]]
-  } else {
+  if (dim(y)[3] > 1){
     dimnames(x$mSI)[[1]] <- dimnames(x$iSI)[[1]] <- dimnames(x$tSI)[[1]] <- dimnames(x$mCI)[[1]] <- dimnames(x$iCI)[[1]] <- dimnames(x$tCI)[[1]] <- dimnames(y)[[3]] # time-points
     dimnames(x$mSI)[[2]] <- dimnames(x$iSI)[[2]] <- dimnames(x$tSI)[[2]] <- dimnames(x$mCI)[[2]] <- dimnames(x$iCI)[[2]] <- dimnames(x$tCI)[[2]] <- x$factors
     dimnames(x$mSI)[[3]] <- dimnames(x$iSI)[[3]] <- dimnames(x$tSI)[[3]] <- dimnames(x$mCI)[[3]] <- dimnames(x$iCI)[[3]] <- dimnames(x$tCI)[[3]] <- vars
   }
-
 
   if (x$rep == 1) {
     if (dim(y)[3] == 1){ # one time point
@@ -66,6 +63,10 @@ tell2 <- function(x, y){
         }
       }
     }
+  }
+
+  if (dim(y)[3] == 1){
+    names(x$mSI) <- names(x$iSI) <- names(x$tSI) <- names(x$mCI) <- names(x$iCI) <- names(x$tCI) <- dimnames(x$a)[[3]]
   }
 
   x$y<-y

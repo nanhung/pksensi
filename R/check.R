@@ -120,14 +120,25 @@ check <- function(x, times, vars, SI, CI) UseMethod("check")
 #' @export
 check.rfast99 <- function(x, times = NULL, vars = NULL, SI = 0.05, CI = 0.05){
 
-  if (length(times) == 1 && length(vars) == 1) {
+  if (is.null(times)) times <- dimnames(x$y)[[3]]
+  if (is.null(vars)) vars <- dimnames(x$y)[[4]]
 
-    mSI <- x$mSI[times,,vars]
-    iSI <- x$iSI[times,,vars]
-    tSI <- x$tSI[times,,vars]
-    mCI <- x$mCI[times,,vars]
-    iCI <- x$iCI[times,,vars]
-    tCI <- x$tCI[times,,vars]
+  if (length(times) == 1 && length(vars) == 1) {
+    if(dim(x$y)[3] == 1 && dim(x$y)[4] == 1){
+      mSI <- x$mSI
+      iSI <- x$iSI
+      tSI <- x$tSI
+      mCI <- x$mCI
+      iCI <- x$iCI
+      tCI <- x$tCI
+    } else {
+      mSI <- x$mSI[times,,vars]
+      iSI <- x$iSI[times,,vars]
+      tSI <- x$tSI[times,,vars]
+      mCI <- x$mCI[times,,vars]
+      iCI <- x$iCI[times,,vars]
+      tCI <- x$tCI[times,,vars]
+    }
 
   } else if (length(times) == 1 && length(vars) > 1) {
 
@@ -139,9 +150,6 @@ check.rfast99 <- function(x, times = NULL, vars = NULL, SI = 0.05, CI = 0.05){
     tCI <- apply(x$tCI[times,,vars], 1, max)
 
   } else if (length(times) > 1 | length(vars) > 1) {
-
-    if (is.null(times)) times <- dimnames(x$mSI)[[1]]
-    if (is.null(vars)) vars <- dimnames(x$mSI)[[3]]
 
     mSI <- apply(x$mSI[times,,vars], 2, max)
     iSI <- apply(x$iSI[times,,vars], 2, max)
@@ -239,16 +247,6 @@ plot.rfast99 <- function(x, vars = 1, cut.off = F, ...){
            lty = 1, lwd = 1, pch = NA, bty = 'n',
            text.col = 'black')
     par(old.par)
-  } else {
-    D1 <- apply(x$D1, 1, mean)
-    V <- apply(x$V, 1, mean)
-    Dt <- apply(x$Dt, 1, mean)
-
-    S <- rbind(D1 / V, 1 - Dt / V - D1 / V)
-    colnames(S) <- names(x$mSI)
-    bar.col <- c("white","grey")
-    barplot(S, ylim = c(0,1), col = bar.col)
-    legend("topright", c("main effect", "interactions"), fill = bar.col)
   }
 }
 
@@ -257,15 +255,7 @@ plot.rfast99 <- function(x, vars = 1, cut.off = F, ...){
 #' @export
 print.rfast99 <- function(x, digits = 4, ...) {
   cat("\nCall:\n", deparse(x$call), "\n", sep = "")
-  if (! is.null(x$y) && ! is.null(x$S)) {
-    cat("\nModel runs:", dim(x$y)[1], "\n")
-    cat("\nFirst order indices:\n")
-    print(x$S)
-    cat("\nInteraction indices:\n")
-    print(x$I)
-    cat("\nTotal order indices:\n")
-    print(x$T)
-  } else if (! is.null(x$y) && ! is.null(x$mSI)) {
+  if (! is.null(x$y) && ! is.null(x$mSI)) {
     cat("\nModel runs:", dim(x$y)[1], "\n")
     cat("\n")
     cat("\n==================================")
