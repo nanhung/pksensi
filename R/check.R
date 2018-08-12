@@ -124,21 +124,13 @@ check.rfast99 <- function(x, times = NULL, vars = NULL, SI = 0.05, CI = 0.05){
   if (is.null(vars)) vars <- dimnames(x$y)[[4]]
 
   if (length(times) == 1 && length(vars) == 1) {
-    if(dim(x$y)[3] == 1 && dim(x$y)[4] == 1){
-      mSI <- x$mSI
-      iSI <- x$iSI
-      tSI <- x$tSI
-      mCI <- x$mCI
-      iCI <- x$iCI
-      tCI <- x$tCI
-    } else {
-      mSI <- x$mSI[times,,vars]
-      iSI <- x$iSI[times,,vars]
-      tSI <- x$tSI[times,,vars]
-      mCI <- x$mCI[times,,vars]
-      iCI <- x$iCI[times,,vars]
-      tCI <- x$tCI[times,,vars]
-    }
+
+    mSI <- x$mSI[times,,vars]
+    iSI <- x$iSI[times,,vars]
+    tSI <- x$tSI[times,,vars]
+    mCI <- x$mCI[times,,vars]
+    iCI <- x$iCI[times,,vars]
+    tCI <- x$tCI[times,,vars]
 
   } else if (length(times) == 1 && length(vars) > 1) {
 
@@ -194,6 +186,7 @@ check.rfast99 <- function(x, times = NULL, vars = NULL, SI = 0.05, CI = 0.05){
   cat("\n")
 
 }
+
 
 #' @method plot rfast99
 #' @importFrom graphics barplot legend lines par abline plot.new
