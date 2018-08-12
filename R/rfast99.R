@@ -1,18 +1,18 @@
 #' Extended Fourier Amplitude Sensitivity Test with Random Phase Shift
 #'
 #' @description
-#'   \code{rfast99} is based on the fast99 function in \pkg{sensitivity} package.
+#'   \code{rfast99} is used to create the sequances for each parameter. It is based on the \code{fast99} function in \pkg{sensitivity} package.
 #'
 #' @importFrom stats runif fft var
 #'
 #' @param factors an integer for the giving number of factors, or a vector of character strings giving their names.
 #' @param n an integer for the sampling number.
-#' @param M an integer specifying the interference parameter.
+#' @param M an integer specifying the interference parameter. The default is 4.
 #' @param omega a vector giving the set of frequencies.
 #' @param q a vector of quantile functions names corresponding to wanted factors distributions.
 #' @param q.arg a list of quantile functions parameters.
-#' @param replicate an integer to define the number of replication, the default is 1.
-#' @param conf the confidence level for replication confidence intervals.
+#' @param replicate an integer to define the number of replication. The default is 1.
+#' @param conf the confidence level for replication confidence intervals. The default is 0.95 (95% confidence interval).
 #'
 #' @importFrom graphics mtext
 #' @rdname rfast99

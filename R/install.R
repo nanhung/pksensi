@@ -3,13 +3,12 @@
 #' @description
 #' Download the latest or specific version of MCSim from the official website
 #' \url{https://www.gnu.org/software/mcsim/} and install it to the system directory.
-#' Currently, this function only support Unix-based systems (MacOS and Linux).
 #'
 #' @param version a character of MCSim version number.
 #' @param directory a character to assign the directory to put the MCSim sourced folder.
-#' The default directory is under \code{/home/username} (Linux), \code{/Users/username} (MacOS), and C drive (Windows).
+#' The default directory is under \code{/home/username} (Linux), \code{/Users/username} (MacOS), and C drive.
 #' @param mxstep a numeric value to assign the maximum number of (internally defined) steps
-#' allowed during one call to the solver (default is 500). The user may increase mxstep to avoid this error return.
+#' allowed during one call to the solver (default is 500). The user can increase mxstep to avoid possible error return.
 #'
 #' @import getPass
 #' @importFrom utils download.file

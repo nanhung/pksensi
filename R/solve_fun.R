@@ -1,4 +1,4 @@
-#' Solve PK model through DeSolve package
+#' Solve PK Model Through deSolve Package or Analytical Function
 #'
 #' @description
 #' The \code{solve_fun} solves for the time-dependent quantity/concentration in different tissues

@@ -1,18 +1,18 @@
-#' Solve PK model through MCSim
+#' Solve PK Model Through MCSim
 #'
 #' @description
 #' The \code{solve_mcsim} solves for the differential equations of time-dependent quantity/concentration in different tissues/compartments
-#' through MCSim (must be installed).
+#' through MCSim.
 #' The output result is the 4-dimension array with c(model evaluations, replications, time-points, output variables).
 #'
 #' @param x a list of storing information in the defined sensitivity function.
 #' @param mName a string giving the name of the model or C file (without extension).
-#' @param infile.name a character to assign the name of in file.
-#' @param outfile.name a character to assign the name of out file.
-#' @param parameters a vector to assign the testing parameters.
+#' @param infile.name a character to assign the name of input file.
+#' @param outfile.name a character to assign the name of output file.
+#' @param parameters a character to assign the testing parameters.
 #' @param output a character or a vector to assign the selected output(s).
-#' @param time a vector to define the given time sequence.
-#' @param condition a character to set the specific parameter value in the in file.
+#' @param time a numeric to define the given time point(s).
+#' @param condition a character to set the specific parameter value in the input file.
 #' @param rtol argument passed to integrator (default 1e-6).
 #' @param atol argument passed to integrator (default 1e-9).
 #' @param standalone a logic value to create the standalone executable file (default FALSE).

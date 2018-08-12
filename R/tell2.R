@@ -1,11 +1,12 @@
 #' The Decoupling Simulations
 #'
 #' @description
-#' Integrate the decoupling simulations and estimation results
+#' Integrate the decoupling simulations (parameter sequences) and estimation results
 #' to compute the sensitivity measures.
 #'
 #' @param x a list of storing information in the defined sensitivity function.
-#' @param y a numeric array created from \code{solve_fun} function.
+#' @param y a numeric array generated from the solutions of \code{solve_fun}
+#' or \code{solve_mcsim} function.
 #'
 #' @rdname tell2
 #' @export
