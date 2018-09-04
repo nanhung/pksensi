@@ -12,7 +12,7 @@
 #' @param q a vector of quantile functions names corresponding to wanted factors distributions.
 #' @param q.arg a list of quantile functions parameters.
 #' @param replicate an integer to define the number of replication. The default is 1.
-#' @param conf the confidence level for replication confidence intervals. The default is 0.95 (95% confidence interval).
+#' @param conf the confidence level for replication confidence intervals. The default is 0.95.
 #'
 #' @importFrom graphics mtext
 #' @rdname rfast99

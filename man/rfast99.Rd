@@ -12,7 +12,7 @@ rfast99(factors, n, M = 4, omega = NULL, q = NULL, q.arg = NULL,
 
 \item{n}{an integer for the sampling number.}
 
-\item{M}{an integer specifying the interference parameter.}
+\item{M}{an integer specifying the interference parameter. The default is 4.}
 
 \item{omega}{a vector giving the set of frequencies.}
 
@@ -20,10 +20,10 @@ rfast99(factors, n, M = 4, omega = NULL, q = NULL, q.arg = NULL,
 
 \item{q.arg}{a list of quantile functions parameters.}
 
-\item{replicate}{an integer to define the number of replication, the default is 1.}
+\item{replicate}{an integer to define the number of replication. The default is 1.}
 
-\item{conf}{the confidence level for replication confidence intervals.}
+\item{conf}{the confidence level for replication confidence intervals. The default is 0.95.}
 }
 \description{
-\code{rfast99} is based on the fast99 function in \pkg{sensitivity} package.
+\code{rfast99} is used to create the sequances for each parameter. It is based on the \code{fast99} function in \pkg{sensitivity} package.
 }

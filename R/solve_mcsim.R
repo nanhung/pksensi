@@ -8,6 +8,7 @@
 #' @param x a list of storing information in the defined sensitivity function.
 #' @param mName a string giving the name of the model or C file (without extension).
 #' @param infile.name a character to assign the name of input file.
+#' @param setpoint.name a character to assign the name of file for parameter matrix.
 #' @param outfile.name a character to assign the name of output file.
 #' @param parameters a character to assign the testing parameters.
 #' @param output a character or a vector to assign the selected output(s).
@@ -22,7 +23,9 @@
 #'
 #' @rdname solve_mcsim
 #' @export
-solve_mcsim <- function(x, mName, infile.name, outfile.name,
+solve_mcsim <- function(x, mName, infile.name,
+                        outfile.name,
+                        setpoint.name = NULL,
                         parameters = NULL,
                         output  = NULL,
                         time  = NULL,
@@ -36,6 +39,14 @@ solve_mcsim <- function(x, mName, infile.name, outfile.name,
                     time = time,
                     condition = condition)
   }
+
+  if(is.null(condition) && is.null(setpoint.name)){
+    stop("Please assign the setpoint.name (parameter matrix defined in input file)")
+  }
+
+  if(!is.null(condition)){
+    setpoint.data <- "setpoint.dat"
+  } else setpoint.data <- setpoint.name
 
   mcsim. <- paste0("mcsim.", mName)
   if(file.exists(mcsim.) == F){
@@ -51,7 +62,6 @@ solve_mcsim <- function(x, mName, infile.name, outfile.name,
   dim <- c(n.sample * n.factors, n.rep, n.time, n.vars)
 
   #
-  setpoint.data <- "setpoint.dat"
   X <- cbind(1, apply(x$a, 3L, c))
   write.table(X, file=setpoint.data, row.names=F, sep="\t")
 

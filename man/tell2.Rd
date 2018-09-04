@@ -9,9 +9,10 @@ tell2(x, y)
 \arguments{
 \item{x}{a list of storing information in the defined sensitivity function.}
 
-\item{y}{a numeric array created from \code{solve_fun} function.}
+\item{y}{a numeric array generated from the solutions of \code{solve_fun}
+or \code{solve_mcsim} function.}
 }
 \description{
-Integrate the decoupling simulations and estimation results
+Integrate the decoupling simulations (parameter sequences) and estimation results
 to compute the sensitivity measures.
 }

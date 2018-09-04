@@ -4,10 +4,10 @@
 \alias{solve_mcsim}
 \alias{makemcsim}
 \alias{generate_infile}
-\title{Solve PK model through MCSim}
+\title{Solve PK Model Through MCSim}
 \usage{
-solve_mcsim(x, mName, infile.name, outfile.name, parameters = NULL,
-  output = NULL, time = NULL, condition = NULL)
+solve_mcsim(x, mName, infile.name, outfile.name, setpoint.name,
+  parameters = NULL, output = NULL, time = NULL, condition = NULL)
 
 makemcsim(mName, standalone = F)
 
@@ -19,17 +19,19 @@ generate_infile(infile.name, outfile.name, parameters, output, time, condition,
 
 \item{mName}{a string giving the name of the model or C file (without extension).}
 
-\item{infile.name}{a character to assign the name of in file.}
+\item{infile.name}{a character to assign the name of input file.}
 
-\item{outfile.name}{a character to assign the name of out file.}
+\item{outfile.name}{a character to assign the name of output file.}
 
-\item{parameters}{a vector to assign the testing parameters.}
+\item{setpoint.name}{a character to assign the name of file for parameter matrix.}
+
+\item{parameters}{a character to assign the testing parameters.}
 
 \item{output}{a character or a vector to assign the selected output(s).}
 
-\item{time}{a vector to define the given time sequence.}
+\item{time}{a numeric to define the given time point(s).}
 
-\item{condition}{a character to set the specific parameter value in the in file.}
+\item{condition}{a character to set the specific parameter value in the input file.}
 
 \item{standalone}{a logic value to create the standalone executable file (default FALSE).}
 
@@ -39,6 +41,6 @@ generate_infile(infile.name, outfile.name, parameters, output, time, condition,
 }
 \description{
 The \code{solve_mcsim} solves for the differential equations of time-dependent quantity/concentration in different tissues/compartments
-through MCSim (must be installed).
+through MCSim.
 The output result is the 4-dimension array with c(model evaluations, replications, time-points, output variables).
 }
