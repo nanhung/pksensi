@@ -95,11 +95,20 @@ heat_check <- function(x, fit = c("first order", "total order"),
     p <- p + scale_x_discrete(expand=c(0,0))
   } else p <- p + scale_x_continuous(expand=c(0,0))
 
-  p <- p + scale_y_discrete(expand=c(0,0)) +
-    facet_grid(variable~order) +
-    theme(axis.text.x = element_text(size=10, hjust = 1),
-          axis.text.y = element_text(size=10), legend.title=element_blank(),
-          legend.position="top")
+  if (length(fit) == 1){
+    p <- p + scale_y_discrete(expand=c(0,0)) +
+      facet_grid(~variable) +
+      theme(axis.text.x = element_text(size=10, hjust = 1),
+            axis.text.y = element_text(size=10), legend.title=element_blank(),
+            legend.position="top")
+  } else {
+    p <- p + scale_y_discrete(expand=c(0,0)) +
+      facet_grid(variable~order) +
+      theme(axis.text.x = element_text(size=10, hjust = 1),
+            axis.text.y = element_text(size=10), legend.title=element_blank(),
+            legend.position="top")
+  }
+
 
   if (index ==  "SI"){
     p <- p + labs(title="Sensitivity index", x="time", y="parameters")
