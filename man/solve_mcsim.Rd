@@ -6,7 +6,7 @@
 \alias{generate_infile}
 \title{Solve PK Model Through MCSim}
 \usage{
-solve_mcsim(x, mName, infile.name, outfile.name, setpoint.name,
+solve_mcsim(x, mName, infile.name, outfile.name, setpoint.name = NULL,
   parameters = NULL, output = NULL, time = NULL, condition = NULL)
 
 makemcsim(mName, standalone = F)

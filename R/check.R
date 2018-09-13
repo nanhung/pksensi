@@ -21,6 +21,7 @@
 #' @importFrom reshape melt
 #' @importFrom magrittr %>%
 #' @importFrom stats reorder time
+#' @importFrom grDevices colorRampPalette
 #' @import dplyr
 #' @import ggplot2
 #' @export
@@ -35,30 +36,39 @@
 #' @export
 heat_check <- function(x, fit = c("first order", "total order"),
                        vars = NULL, times = NULL,
-                       SI.cutoff = c(0.01, 0.05), CI.cutoff = c(0.05, 0.1),
+                       SI.cutoff = c(0.05, 0.1), CI.cutoff = c(0.05, 0.1),
                        index = "SI", order = F, level = T, text = F){
 
-  SI.labels <- c(paste0("0 - ", SI.cutoff[1]),
-                 paste0(SI.cutoff[1]," - ",SI.cutoff[2]),
-                 paste0(" > ", SI.cutoff[2]))
-  CI.labels <- c(paste0("0 - ", CI.cutoff[1]),
-                 paste0(CI.cutoff[1]," - ",CI.cutoff[2]),
-                 paste0(" > ", CI.cutoff[2]))
+  nSI <- length(SI.cutoff)
+  SI.labels<-rep(NA, nSI+1)
+
+  for(i in 1:nSI){
+    SI.labels[i+1] <- paste0(SI.cutoff[i]," - ",SI.cutoff[i+1])
+  }
+  SI.labels[1] <- paste0("0 - ", SI.cutoff[1])
+  SI.labels[nSI+1] <- paste0(" > ", SI.cutoff[nSI])
+
+
+  nCI <- length(CI.cutoff)
+  CI.labels<-rep(NA, nCI+1)
+
+  for(i in 1:nCI){
+    CI.labels[i+1] <- paste0(CI.cutoff[i]," - ",CI.cutoff[i+1])
+  }
+  CI.labels[1] <- paste0("0 - ", CI.cutoff[1])
+  CI.labels[nCI+1] <- paste0(" > ", CI.cutoff[nCI+1])
 
   if (index ==  "SI"){
     X <- tidy_index(x, index = index) %>%
-      mutate_(level = ~cut(value, breaks=c(-Inf, SI.cutoff[1], SI.cutoff[2], Inf),
-                           labels=SI.labels))
-
-    cols <- c("grey90", "pink1", "red")
+      mutate_(level = ~cut(value, breaks=c(-Inf, paste(SI.cutoff), Inf), labels=SI.labels))
 
   } else if ((index == "CI")) {
     X <- tidy_index(x, index = index) %>%
-      mutate_(level = ~cut(value, breaks=c(-Inf, CI.cutoff[1], CI.cutoff[2], Inf),
-                           labels=CI.labels))
-
-    cols <- c("grey90", "pink1", "red")
+      mutate_(level = ~cut(value, breaks=c(-Inf, paste(SI.cutoff), Inf), labels=CI.labels))
   }
+
+  colfunc <- colorRampPalette(c("red", "grey90"))
+  cols <- rev(colfunc(nSI+1))
 
   X$variable = factor(X$variable, levels=dimnames(x$y)[[4]])
   X$parameter = factor(X$parameter, levels=rev(x$factors))
@@ -109,7 +119,6 @@ heat_check <- function(x, fit = c("first order", "total order"),
             legend.position="top")
   }
 
-
   if (index ==  "SI"){
     p <- p + labs(title="Sensitivity index", x="time", y="parameters")
   } else if ((index == "CI")) {
@@ -119,6 +128,23 @@ heat_check <- function(x, fit = c("first order", "total order"),
   if (text == T){
     p + geom_text(aes_string(label = "ifelse(value < 0.01, '', round(value, 2))"), size = 2.5)
   } else p
+}
+
+tidy_index <- function (x, index = "SI") {
+
+  if(index == "CI") {
+    m <- reshape::melt(x$mCI) %>% cbind(order = "first order")
+    i <- reshape::melt(x$iCI) %>% cbind(order = "interaction")
+    t <- reshape::melt(x$tCI) %>% cbind(order = "total order")
+    X <- do.call(rbind, list(m, i, t))
+  } else if (index == "SI") {
+    m <- reshape::melt(x$mSI) %>% cbind(order = "first order")
+    i <- reshape::melt(x$iSI) %>% cbind(order = "interaction")
+    t <- reshape::melt(x$tSI) %>% cbind(order = "total order")
+    X <- do.call(rbind, list(m, i, t))
+  }
+  names(X) <- c("time", "parameter", "variable", "value", "order")
+  return(X)
 }
 
 #' @rdname check
@@ -284,21 +310,4 @@ print.rfast99 <- function(x, digits = 4, ...) {
   else {
     cat("(empty)\n")
   }
-}
-
-tidy_index <- function (x, index = "SI") {
-
-  if(index == "CI") {
-    m <- reshape::melt(x$mCI) %>% cbind(order = "first order")
-    i <- reshape::melt(x$iCI) %>% cbind(order = "interaction")
-    t <- reshape::melt(x$tCI) %>% cbind(order = "total order")
-    X <- do.call(rbind, list(m, i, t))
-  } else if (index == "SI") {
-    m <- reshape::melt(x$mSI) %>% cbind(order = "first order")
-    i <- reshape::melt(x$iSI) %>% cbind(order = "interaction")
-    t <- reshape::melt(x$tSI) %>% cbind(order = "total order")
-    X <- do.call(rbind, list(m, i, t))
-  }
-  names(X) <- c("time", "parameter", "variable", "value", "order")
-  return(X)
 }
