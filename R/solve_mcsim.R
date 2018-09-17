@@ -7,6 +7,8 @@
 #'
 #' @param x a list of storing information in the defined sensitivity function.
 #' @param n a numeric to define the sample number.
+#' @param dist a vector of distribution names corresponding to \code{<distribution-name>} in MCSim.
+#' @param q.arg a list of shape parameters in the sampling distribution (\code{dist}).
 #' @param mName a string giving the name of the model or C file (without extension).
 #' @param infile.name a character to assign the name of input file.
 #' @param setpoint.name a character to assign the name of file for parameter matrix.
@@ -118,7 +120,8 @@ makemcsim <- function(mName, standalone = F){
 #' @rdname solve_mcsim
 #' @export
 generate_infile <- function(infile.name, outfile.name, parameters, output, time,
-                            condition, rtol = 1e-6, atol = 1e-9){
+                            condition, rtol = 1e-6, atol = 1e-9,
+                            n = NULL, dist = NULL, q.arg = NULL){ # Monte Carlo
 
   setpoint.data <- "setpoint.dat"
 
@@ -129,13 +132,24 @@ generate_infile <- function(infile.name, outfile.name, parameters, output, time,
       file = infile.name, sep = "")
 
   cat("Integrate (Lsodes, ", rtol, ", ", atol, " , 1);", "\n\n", file=infile.name,append=TRUE,sep="")
-  cat("SetPoints (", "\n",
-      "\"", outfile.name, "\", \n\"",setpoint.data,"\",\n",
-      "0, ", "\n",
-      paste(parameters, collapse=", "),");\n\n",
-      file = infile.name, append=TRUE, sep="")
 
-  cat("#---------------------------------------- \n#",
+  if(is.null(n)){
+    cat("SetPoints (", "\n",
+        "\"", outfile.name, "\", \n\"",setpoint.data,"\",\n",
+        "0, ", "\n",
+        paste(parameters, collapse=", "),");\n\n",
+        file = infile.name, append=TRUE, sep="")
+  } else {
+    cat("MonteCarlo (", outfile.name, ",", n , ",", sample(1:99999, 1), ");\n\n",
+        file = infile.name, append=TRUE, sep="")
+    for (i in 1 : length(parameters)){
+      cat("Distrib ( ", parameters[i], ",", dist[i], ",", paste(unlist(q.arg[i]), collapse = ","), ");", "\n",
+          file = infile.name, append=TRUE, sep = "")
+    }
+
+  }
+
+  cat("\n#---------------------------------------- \n#",
       " Simulation scenario\n#",
       "----------------------------------------", "\n\n",
       file = infile.name, append=TRUE, sep = "")

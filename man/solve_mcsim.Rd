@@ -13,7 +13,7 @@ solve_mcsim(x, n = NULL, mName, infile.name, outfile.name,
 makemcsim(mName, standalone = F)
 
 generate_infile(infile.name, outfile.name, parameters, output, time, condition,
-  rtol = 1e-06, atol = 1e-09)
+  rtol = 1e-06, atol = 1e-09, n = NULL, dist = NULL, q.arg = NULL)
 }
 \arguments{
 \item{x}{a list of storing information in the defined sensitivity function.}
@@ -41,6 +41,10 @@ generate_infile(infile.name, outfile.name, parameters, output, time, condition,
 \item{rtol}{argument passed to integrator (default 1e-6).}
 
 \item{atol}{argument passed to integrator (default 1e-9).}
+
+\item{dist}{a vector of distribution names corresponding to \code{<distribution-name>} in MCSim.}
+
+\item{q.arg}{a list of shape parameters in the sampling distribution (\code{dist}).}
 }
 \description{
 The \code{solve_mcsim} solves for the differential equations of time-dependent quantity/concentration in different tissues/compartments
