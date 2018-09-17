@@ -26,15 +26,16 @@
 #'
 #' @rdname solve_mcsim
 #' @export
-solve_mcsim <- function(x, n = NULL, mName, infile.name,
+solve_mcsim <- function(x, mName, infile.name,
                         outfile.name,
+                        n = NULL,
                         setpoint.name = NULL,
                         parameters = NULL,
                         output  = NULL,
                         time  = NULL,
                         condition  = NULL){
 
-  if(!is.null(condition)){
+  if(!is.null(condition)){ # Generate input file if not define condition
     generate_infile(infile.name = infile.name,
                     outfile.name = outfile.name,
                     parameters = parameters,
@@ -43,7 +44,7 @@ solve_mcsim <- function(x, n = NULL, mName, infile.name,
                     condition = condition)
   }
 
-  if(is.null(condition) && is.null(setpoint.name)){
+  if(is.null(condition) && is.null(setpoint.name) && is.null(n)){
     stop("Please assign the setpoint.name (parameter matrix defined in input file)")
   }
 
@@ -62,6 +63,7 @@ solve_mcsim <- function(x, n = NULL, mName, infile.name,
   } else if (!is.null(x$s)){
     n.sample <- length(x$s)
   }
+
   if (!is.null(parameters)){
     n.factors <- length(parameters)
   } else if (!is.null(x$factors)){
@@ -72,7 +74,7 @@ solve_mcsim <- function(x, n = NULL, mName, infile.name,
   n.vars <- length(output)
 
   #
-  if (is.null(n)){
+  if (is.null(n)){ # Remember to define n if used external parameter matrix
     X <- cbind(1, apply(x$a, 3L, c))
     write.table(X, file=setpoint.data, row.names=F, sep="\t")
   }
@@ -98,9 +100,12 @@ solve_mcsim <- function(x, n = NULL, mName, infile.name,
   n.rep <- nrow(y) / (n.sample * n.factors)
   #  }
 
-  dim <- c(n.sample * n.factors, n.rep, n.time, n.vars)
+  if (nrow(df)==n){ # For Monte Carlo
+    dim <- c(n.sample, 1, n.time, n.vars)
+  } else  dim <- c(n.sample * n.factors, n.rep, n.time, n.vars)
 
   dim(y)<- dim
+
   dimnames(y)[[3]] <- time
   dimnames(y)[[4]] <- output
 
@@ -140,7 +145,7 @@ generate_infile <- function(infile.name, outfile.name, parameters, output, time,
         paste(parameters, collapse=", "),");\n\n",
         file = infile.name, append=TRUE, sep="")
   } else {
-    cat("MonteCarlo (", outfile.name, ",", n , ",", sample(1:99999, 1), ");\n\n",
+    cat("MonteCarlo (", "\"", outfile.name, "\"", ",", n , ",", sample(1:99999, 1), ");\n\n",
         file = infile.name, append=TRUE, sep="")
     for (i in 1 : length(parameters)){
       cat("Distrib ( ", parameters[i], ",", dist[i], ",", paste(unlist(q.arg[i]), collapse = ","), ");", "\n",

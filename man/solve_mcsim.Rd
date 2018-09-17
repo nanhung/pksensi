@@ -6,7 +6,7 @@
 \alias{generate_infile}
 \title{Solve PK Model Through MCSim}
 \usage{
-solve_mcsim(x, n = NULL, mName, infile.name, outfile.name,
+solve_mcsim(x, mName, infile.name, outfile.name, n = NULL,
   setpoint.name = NULL, parameters = NULL, output = NULL, time = NULL,
   condition = NULL)
 
@@ -18,13 +18,13 @@ generate_infile(infile.name, outfile.name, parameters, output, time, condition,
 \arguments{
 \item{x}{a list of storing information in the defined sensitivity function.}
 
-\item{n}{a numeric to define the sample number.}
-
 \item{mName}{a string giving the name of the model or C file (without extension).}
 
 \item{infile.name}{a character to assign the name of input file.}
 
 \item{outfile.name}{a character to assign the name of output file.}
+
+\item{n}{a numeric to define the sample number.}
 
 \item{setpoint.name}{a character to assign the name of file for parameter matrix.}
 
