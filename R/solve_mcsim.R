@@ -6,6 +6,7 @@
 #' The output result is the 4-dimension array with c(model evaluations, replications, time-points, output variables).
 #'
 #' @param x a list of storing information in the defined sensitivity function.
+#' @param n a numeric to define the sample number.
 #' @param mName a string giving the name of the model or C file (without extension).
 #' @param infile.name a character to assign the name of input file.
 #' @param setpoint.name a character to assign the name of file for parameter matrix.
@@ -23,7 +24,7 @@
 #'
 #' @rdname solve_mcsim
 #' @export
-solve_mcsim <- function(x, mName, infile.name,
+solve_mcsim <- function(x, n = NULL, mName, infile.name,
                         outfile.name,
                         setpoint.name = NULL,
                         parameters = NULL,
@@ -54,17 +55,25 @@ solve_mcsim <- function(x, mName, infile.name,
   }
 
   #
-  n.sample <- length(x$s)
-  n.factors <- ifelse(class(x$factors) == "character", length(x$factors), x$factors)
-  n.rep <- x$rep
+  if (is.numeric(n)){
+    n.sample <- n
+  } else if (!is.null(x$s)){
+    n.sample <- length(x$s)
+  }
+  if (!is.null(parameters)){
+    n.factors <- length(parameters)
+  } else if (!is.null(x$factors)){
+    n.factors <- ifelse(class(x$factors) == "character", length(x$factors), x$factors)
+  }
+
   n.time <- ifelse(is.null(time), 1, length(time))
   n.vars <- length(output)
-  dim <- c(n.sample * n.factors, n.rep, n.time, n.vars)
 
   #
-  X <- cbind(1, apply(x$a, 3L, c))
-  write.table(X, file=setpoint.data, row.names=F, sep="\t")
-
+  if (is.null(n)){
+    X <- cbind(1, apply(x$a, 3L, c))
+    write.table(X, file=setpoint.data, row.names=F, sep="\t")
+  }
 
   if(file.exists(mcsim.) == T){
     system(paste0("./mcsim.", mName, " ", infile.name))
@@ -72,12 +81,23 @@ solve_mcsim <- function(x, mName, infile.name,
     system(paste0("./mcsim.", mName, ".model.exe ", infile.name))
   }
 
-  rm(X); invisible(gc()); # clean memory
+  if (is.null(n)){rm(X)}
 
-  str <- length(x$factors) + 2
+  invisible(gc()); # clean memory
+
+  str <- n.factors + 2
   df <- as.data.frame(data.table::fread(outfile.name, head = T))
 
   y <- as.matrix(df[,str:ncol(df)]) # output only
+
+  #  if (!is.null(x)){
+  #    n.rep <- x$rep
+  #  } else {
+  n.rep <- nrow(y) / (n.sample * n.factors)
+  #  }
+
+  dim <- c(n.sample * n.factors, n.rep, n.time, n.vars)
+
   dim(y)<- dim
   dimnames(y)[[3]] <- time
   dimnames(y)[[4]] <- output
