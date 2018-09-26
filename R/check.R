@@ -56,7 +56,7 @@ heat_check <- function(x, fit = c("first order", "total order"),
     CI.labels[i+1] <- paste0(CI.cutoff[i]," - ",CI.cutoff[i+1])
   }
   CI.labels[1] <- paste0("0 - ", CI.cutoff[1])
-  CI.labels[nCI+1] <- paste0(" > ", CI.cutoff[nCI+1])
+  CI.labels[nCI+1] <- paste0(" > ", CI.cutoff[nCI])
 
   if (index ==  "SI"){
     X <- tidy_index(x, index = index) %>%
@@ -64,11 +64,14 @@ heat_check <- function(x, fit = c("first order", "total order"),
 
   } else if ((index == "CI")) {
     X <- tidy_index(x, index = index) %>%
-      mutate_(level = ~cut(value, breaks=c(-Inf, paste(SI.cutoff), Inf), labels=CI.labels))
+      mutate_(level = ~cut(value, breaks=c(-Inf, paste(CI.cutoff), Inf), labels=CI.labels))
   }
 
   colfunc <- colorRampPalette(c("red", "grey90"))
-  cols <- rev(colfunc(nSI+1))
+
+  if (index == "SI"){
+    cols <- rev(colfunc(nSI+1))
+  } else if (index == "CI") cols <- rev(colfunc(nCI+1))
 
   X$variable = factor(X$variable, levels=dimnames(x$y)[[4]])
   X$parameter = factor(X$parameter, levels=rev(x$factors))
