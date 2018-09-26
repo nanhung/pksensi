@@ -7,13 +7,14 @@
 \title{Solve PK Model Through MCSim}
 \usage{
 solve_mcsim(x, mName, infile.name, outfile.name, n = NULL,
-  setpoint.name = NULL, parameters = NULL, output = NULL, time = NULL,
-  condition = NULL)
+  setpoint.name = NULL, parameters = NULL, output = NULL,
+  time = NULL, condition = NULL)
 
 makemcsim(mName, standalone = F)
 
-generate_infile(infile.name, outfile.name, parameters, output, time, condition,
-  rtol = 1e-06, atol = 1e-09, n = NULL, dist = NULL, q.arg = NULL)
+generate_infile(infile.name, outfile.name, parameters, output, time,
+  condition, rtol = 1e-06, atol = 1e-09, n = NULL, dist = NULL,
+  q.arg = NULL)
 }
 \arguments{
 \item{x}{a list of storing information in the defined sensitivity function.}

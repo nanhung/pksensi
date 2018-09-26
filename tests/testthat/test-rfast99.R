@@ -11,8 +11,8 @@ test_that("rfast99 single_time", {
   set.seed(1234)
   x<-rfast99(factors=c("KA","KE","V"), n = 100, q = q, q.arg = q.arg,
              rep = 20, conf = 0.95)
-  times <- 0.5
-  y<-solve_fun(x, model = FFPK, times = times, output = "output")
+  time <- 0.5
+  y<-solve_fun(x, model = FFPK, time = time, output = "output")
   tell2(x,y)
   check(x)
   print(x)
@@ -22,9 +22,9 @@ test_that("rfast99 single_time", {
 })
 
 test_that("rfast99 class", {
-  FFPK <- function(parameters, times, dose = 320){
+  FFPK <- function(parameters, time, dose = 320){
     A <- (dose * parameters[1])/( parameters[3]*( parameters[1]- parameters[2]))
-    CONC <- A*exp(- parameters[2] * times) - A*exp(- parameters[1] * times)
+    CONC <- A*exp(- parameters[2] * time) - A*exp(- parameters[1] * time)
     return(CONC)
   }
   q = "qunif"
@@ -34,8 +34,8 @@ test_that("rfast99 class", {
   set.seed(1234)
   x<-rfast99(factors=c("KA","KE","V"), n = 100, q = q, q.arg = q.arg,
              rep = 10, conf = 0.95)
-  times <- seq(from = 0.25, to = 12.25, by = 0.5)
-  y<-solve_fun(x, model = FFPK, times = times, output = "output")
+  time <- seq(from = 0.25, to = 12.25, by = 0.5)
+  y<-solve_fun(x, model = FFPK, time = time, output = "output")
   tell2(x,y)
   check(x)
   print(x)
@@ -73,9 +73,9 @@ test_that("rfast99 M", {
 })
 
 test_that("rfast99 rep1", {
-  FFPK <- function(parameters, times, dose = 320){
+  FFPK <- function(parameters, time, dose = 320){
     A <- (dose * parameters[1])/( parameters[3]*( parameters[1]- parameters[2]))
-    CONC <- A*exp(- parameters[2] * times) - A*exp(- parameters[1] * times)
+    CONC <- A*exp(- parameters[2] * time) - A*exp(- parameters[1] * time)
     return(CONC)
   }
   q = "qunif"
@@ -85,8 +85,8 @@ test_that("rfast99 rep1", {
   set.seed(1234)
   x<-rfast99(factors=c("KA","KE","V"), n = 100, q = q, q.arg = q.arg,
              rep = 1, conf = 0.95)
-  times <- 0.5
-  y<-solve_fun(x, model = FFPK, times = times, output = "output")
+  time <- 0.5
+  y<-solve_fun(x, model = FFPK, time = time, output = "output")
   tell2(x,y)
   check(x)
   print(x)
@@ -95,9 +95,9 @@ test_that("rfast99 rep1", {
 })
 
 test_that("rfast99 rep2", {
-  FFPK <- function(parameters, times, dose = 320){
+  FFPK <- function(parameters, time, dose = 320){
     A <- (dose * parameters[1])/( parameters[3]*( parameters[1]- parameters[2]))
-    CONC <- A*exp(- parameters[2] * times) - A*exp(- parameters[1] * times)
+    CONC <- A*exp(- parameters[2] * time) - A*exp(- parameters[1] * time)
     return(CONC)
   }
   q = "qunif"
@@ -107,10 +107,10 @@ test_that("rfast99 rep2", {
   set.seed(1234)
   x<-rfast99(factors=c("KA","KE","V"), n = 100, q = q, q.arg = q.arg,
              rep = 1, conf = 0.95)
-  times <- c(0.5, 1)
-  y<-solve_fun(x, model = FFPK, times = times, output = "output", lnparam = T)
+  time <- c(0.5, 1)
+  y<-solve_fun(x, model = FFPK, time = time, output = "output", lnparam = T)
   tell2(x,y)
-  check(x, times = 1)
+  check(x, time = 1)
   print(x)
 
   expect_equal(x$replicate, 1)

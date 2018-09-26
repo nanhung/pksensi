@@ -5,7 +5,7 @@
 #' through the imported deSolve function. It can also solve the function with analytical function.
 #'
 #' @param x a list of storing information in the defined sensitivity function.
-#' @param times a vector to define the given time sequence.
+#' @param time a vector to define the given time sequence.
 #' @param parameters parameters passed to \code{func}.
 #' @param initParmsfun a character for the given specific initial parameter function.
 #' @param initState a vector that define the initial values of state variables for the ODE system.
@@ -24,14 +24,14 @@
 #'
 #' @rdname solve_fun
 #' @export
-solve_fun <- function(x, times = NULL, parameters, initParmsfun = NULL, initState, dllname,
+solve_fun <- function(x, time = NULL, parameters, initParmsfun = NULL, initState, dllname,
                       func, initfunc, outnames,
                       method ="lsode", rtol=1e-8, atol=1e-12,
                       model = NULL, lnparam = F, output, ...){
   n <- length(x$s)
   no.factors <- ifelse (class(x$factors) == "character", length(x$factors), x$factors)
   replicate <- x$rep
-  out <- ifelse (is.null(times), 1, length(times))
+  out <- ifelse (is.null(time), 1, length(time))
   n.vars <- length(output)
   y <- array(dim = c(n * no.factors, replicate, out, n.vars), NA)
   # c(Model Evaluations, replicates, time points, n.vars)
@@ -39,7 +39,7 @@ solve_fun <- function(x, times = NULL, parameters, initParmsfun = NULL, initStat
   if (is.null(model) == TRUE){
 
     # Specific time or variable
-    inputs = c(0, times) # NEED TIME AT ZERO
+    inputs = c(0, time) # NEED TIME AT ZERO
 
     for (i in 1 : dim(y)[2]) { # replicate
       for (j in 1 : dim(y)[1]) { # Model evaluation
@@ -77,7 +77,7 @@ solve_fun <- function(x, times = NULL, parameters, initParmsfun = NULL, initStat
         if (lnparam == T) { parameters <- exp(x$a[j,i,])}
         else if (lnparam == F) { parameters <- x$a[j,i,]}
 
-        if (is.null(times)) tmp <- model(parameters) else tmp <- model(parameters, times)
+        if (is.null(time)) tmp <- model(parameters) else tmp <- model(parameters, time)
 
         for (k in 1 : dim(y)[3]) { # Output time
           y[j,i,k,1] <- tmp[k]
@@ -87,10 +87,10 @@ solve_fun <- function(x, times = NULL, parameters, initParmsfun = NULL, initStat
   }
 
   if(dim(y)[3] > 1){
-    dimnames(y)[[3]] <- times
+    dimnames(y)[[3]] <- time
     dimnames(y)[[4]] <- output
   } else { # single time point
-    dimnames(y)[[3]] <- list(times)
+    dimnames(y)[[3]] <- list(time)
     dimnames(y)[[4]] <- list(output)
   }
 

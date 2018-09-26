@@ -4,7 +4,8 @@
 \alias{compile}
 \title{Model Compiler}
 \usage{
-compile(mName, application = "mcsim", use_model_file = T, version = NULL)
+compile(mName, application = "mcsim", use_model_file = T,
+  version = NULL)
 }
 \arguments{
 \item{mName}{a string giving the name of the model or C file (without extension).}
