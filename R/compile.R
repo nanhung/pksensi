@@ -1,20 +1,29 @@
 #' Model Compiler
 #'
-#' @description
-#' This function is used to compile the model file or C file to generate the executable file in numerical analysis
+#' This function is used to compile the C file or MCSim's model file to generate the executable file in numerical analysis.
+#'
+#' Generally, the solving function through MCSim can provide faster speed than exporting C in R.
+#' Therefore, we set \code{use_model_file = TRUE} and \code{application = 'mcsim'} as a default setting
+#' and suggest to use MCSim to solve the differential equation.
+#'
+#' To compile MCSim in Windows, be sure to install Rtools or MinGW first.
+#' For Windows user, to compile MCSim's model file,
+#' the \code{version} of MCSim should provide to conduct model compiling.
+#' If \code{application = 'R'},
+#' the function will compile and create dynamic-link libraries (.dll) on Windows and
+#' shared objects (.so) on Unix-liked systems (e.g., Linux and MacOS).
 #'
 #' @param mName a string giving the name of the model or C file (without extension).
 #' @param use_model_file a logical value to operate the compiler to use model or C file,
-#' the default is set to FALSE to assign the C file in compiling.
+#' the default is set to \code{TRUE} to assign the MCSim's model file in compiling.
 #' @param application a character to assign the specific methods (\code{mcsim} or \code{R})
 #' that will be applied to the numerical analysis (default is \code{mcsim}).
 #' @param version a character to assign the version of MCSim that had been installed
 #'
 #' @importFrom devtools find_rtools
 #'
-#' @rdname compile
 #' @export
-compile <- function (mName, application = 'mcsim', use_model_file = T, version = NULL) {
+compile_model <- function (mName, application = 'mcsim', use_model_file = TRUE, version = NULL) {
 
   if (application == 'mcsim' && .Platform$OS.type == "windows"){
     mName <- paste0(mName,".model")

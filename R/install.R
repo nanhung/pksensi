@@ -1,19 +1,25 @@
 #' Install MCSim
 #'
-#' @description
 #' Download the latest or specific version of MCSim from the official website
 #' \url{https://www.gnu.org/software/mcsim/} and install it to the system directory.
 #'
+#' This function aims to help you install MCSim more easily.
+#' However, if you can not install it through this function.
+#' You might need to follow the instruction of MCSim and install it,
+#' manually: \url{https://www.gnu.org/software/mcsim/mcsim.html#Installation}
+#'
+#' To install MCSim in Windows, be sure to install Rtools or MinGW first.
+#'
 #' @param version a character of MCSim version number.
 #' @param directory a character to assign the directory to put the MCSim sourced folder.
-#' The default directory is under \code{/home/username} (Linux), \code{/Users/username} (MacOS), and C drive.
+#' The default directory is under \code{/home/username} (Linux), \code{/Users/username} (MacOS),
+#' and \code{C:/Users/} (windows).
 #' @param mxstep a numeric value to assign the maximum number of (internally defined) steps
 #' allowed during one call to the solver (default is 500). The user can increase mxstep to avoid possible error return.
 #'
 #' @import getPass
 #' @importFrom utils download.file
 #'
-#' @rdname install_mcsim
 #' @export
 install_mcsim = function(version = "6.0.1", directory = NULL, mxstep = 500) {
   #  if (.Platform$OS.type == "windows") {
