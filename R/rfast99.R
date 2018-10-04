@@ -78,7 +78,8 @@ rfast99 <- function(factors, n, M = 4, omega = NULL,
         X[l, j] <- do.call(q[j], c(list(p = g), q.arg[[j]]))
       }
     }
-    a[,k,] <- X
+    # a[,k,] <- X
+    a[,k,] <- round(X, digits = 4)
   }
   dimnames(a)[[3]] <- X.labels
 
