@@ -7,13 +7,13 @@
 \title{Solve PK Model Through MCSim}
 \usage{
 solve_mcsim(x, mName, infile.name, outfile.name, n = NULL,
-  setpoint.name = NULL, parameters = NULL, output = NULL,
-  time = NULL, condition = NULL)
+  setpoint.name = NULL, params = NULL, vars = NULL, time = NULL,
+  condition = NULL)
 
 makemcsim(mName, standalone = F)
 
-generate_infile(infile.name, outfile.name, parameters, output, time,
-  condition, rtol = 1e-06, atol = 1e-09, n = NULL, dist = NULL,
+generate_infile(infile.name, outfile.name, params, vars, time, condition,
+  rtol = 1e-06, atol = 1e-09, n = NULL, dist = NULL,
   q.arg = NULL)
 }
 \arguments{
@@ -29,9 +29,9 @@ generate_infile(infile.name, outfile.name, parameters, output, time,
 
 \item{setpoint.name}{a character to assign the name of file for parameter matrix.}
 
-\item{parameters}{a character to assign the testing parameters.}
+\item{params}{a character to assign the testing parameters.}
 
-\item{output}{a character or a vector to assign the selected output(s).}
+\item{vars}{a character or a vector to assign the selected output(s).}
 
 \item{time}{a numeric to define the given time point(s).}
 
@@ -51,4 +51,8 @@ generate_infile(infile.name, outfile.name, parameters, output, time,
 The \code{solve_mcsim} solves for the differential equations of time-dependent quantity/concentration in different tissues/compartments
 through MCSim.
 The output result is the 4-dimension array with c(model evaluations, replications, time-points, output variables).
+}
+\details{
+This function allow user to use external data file that assigned in \code{setpoint.name} as parameter matrix.
+If you want to use it, be sure to define \code{n} and \code{setpoint.name}.
 }

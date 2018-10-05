@@ -1,7 +1,11 @@
-#' Create Heatmap to Detect and Check Parameter Sensitivity
+#' Create Heatmap to Visualize Parameter Sensitivity
 #'
-#' @description
-#' plot the sensitivity (or convergence) index by heatmap with a given result.
+#' Plot the sensitivity (or convergence) index by heatmap with a given result.
+#'
+#' The \code{print} method can used to print sensitivity and convergence indices
+#' with given time-step. The \code{check} method provide the summary of
+#' parameter sensitivity and convergence. The \code{plot} function provide the
+#' time-course functional output of both indices for each parameter.
 #'
 #' @param x a list of storing information in the defined sensitivity function.
 #' @param fit a vector of interested output index included \code{first order}, \code{interaction}, and \code{total order}.
@@ -17,21 +21,15 @@
 #' to the specified number of decimal places (default 4).
 #' @param SI a numeric value to set the cut-off point for sensitivity index (default 0.1).
 #' @param CI a numeric vlaue to set the cut-off point for convergence index (default 0.01).
+#' @param ... additional arguments to customize the graphical parameters.
 #'
 #' @importFrom reshape melt
 #' @importFrom magrittr %>%
 #' @importFrom stats reorder time
 #' @importFrom grDevices colorRampPalette
-#' @import dplyr
 #' @import ggplot2
-#' @export
-#' @details
-#' The \code{print} method can used to print sensitivity and convergence indices
-#' with given time-step. The \code{check} method provide the summary of
-#' parameter sensitivity and convergence. The \code{plot} function provide the
-#' time-course functional output of both indices for each parameter.
-#' @param ... additional arguments to customize the graphical parameters.
-
+#' @import dplyr
+#'
 #' @rdname check
 #' @export
 heat_check <- function(x, fit = c("first order", "total order"),

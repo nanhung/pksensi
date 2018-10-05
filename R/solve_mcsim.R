@@ -1,9 +1,11 @@
 #' Solve PK Model Through MCSim
 #'
-#' @description
 #' The \code{solve_mcsim} solves for the differential equations of time-dependent quantity/concentration in different tissues/compartments
 #' through MCSim.
 #' The output result is the 4-dimension array with c(model evaluations, replications, time-points, output variables).
+#'
+#' This function allow user to use external data file that assigned in \code{setpoint.name} as parameter matrix.
+#' If you want to use it, be sure to define \code{n} and \code{setpoint.name}.
 #'
 #' @param x a list of storing information in the defined sensitivity function.
 #' @param n a numeric to define the sample number.
@@ -13,8 +15,8 @@
 #' @param infile.name a character to assign the name of input file.
 #' @param setpoint.name a character to assign the name of file for parameter matrix.
 #' @param outfile.name a character to assign the name of output file.
-#' @param parameters a character to assign the testing parameters.
-#' @param output a character or a vector to assign the selected output(s).
+#' @param params a character to assign the testing parameters.
+#' @param vars a character or a vector to assign the selected output(s).
 #' @param time a numeric to define the given time point(s).
 #' @param condition a character to set the specific parameter value in the input file.
 #' @param rtol argument passed to integrator (default 1e-6).
@@ -30,16 +32,16 @@ solve_mcsim <- function(x, mName, infile.name,
                         outfile.name,
                         n = NULL,
                         setpoint.name = NULL,
-                        parameters = NULL,
-                        output  = NULL,
+                        params = NULL,
+                        vars  = NULL,
                         time  = NULL,
                         condition  = NULL){
 
   if(!is.null(condition)){ # Generate input file if not define condition
     generate_infile(infile.name = infile.name,
                     outfile.name = outfile.name,
-                    parameters = parameters,
-                    output = output,
+                    params = params,
+                    vars = vars,
                     time = time,
                     condition = condition)
   }
@@ -64,14 +66,14 @@ solve_mcsim <- function(x, mName, infile.name,
     n.sample <- length(x$s)
   }
 
-  if (!is.null(parameters)){
-    n.factors <- length(parameters)
+  if (!is.null(params)){
+    n.factors <- length(params)
   } else if (!is.null(x$factors)){
     n.factors <- ifelse(class(x$factors) == "character", length(x$factors), x$factors)
   }
 
   n.time <- ifelse(is.null(time), 1, length(time))
-  n.vars <- length(output)
+  n.vars <- length(vars)
 
   #
   if (is.null(n)){ # Remember to define n if used external parameter matrix
@@ -107,7 +109,7 @@ solve_mcsim <- function(x, mName, infile.name,
   dim(y)<- dim
 
   dimnames(y)[[3]] <- time
-  dimnames(y)[[4]] <- output
+  dimnames(y)[[4]] <- vars
 
   #file.remove(setpoint.data)
 
@@ -124,7 +126,7 @@ makemcsim <- function(mName, standalone = F){
 
 #' @rdname solve_mcsim
 #' @export
-generate_infile <- function(infile.name, outfile.name, parameters, output, time,
+generate_infile <- function(infile.name, outfile.name, params, vars, time,
                             condition, rtol = 1e-6, atol = 1e-9,
                             n = NULL, dist = NULL, q.arg = NULL){ # Monte Carlo
 
@@ -136,19 +138,19 @@ generate_infile <- function(infile.name, outfile.name, parameters, output, time,
       "----------------------------------------", "\n\n",
       file = infile.name, sep = "")
 
-  cat("Integrate (Lsodes, ", rtol, ", ", atol, " , 1);", "\n\n", file=infile.name,append=TRUE,sep="")
+  cat("Integrate (Lsodes, ", rtol, ", ", atol, " , 1);", "\n\n", file=infile.name, append=TRUE, sep="")
 
   if(is.null(n)){
     cat("SetPoints (", "\n",
-        "\"", outfile.name, "\", \n\"",setpoint.data,"\",\n",
+        "\"", outfile.name, "\", \n\"", setpoint.data, "\",\n",
         "0, ", "\n",
-        paste(parameters, collapse=", "),");\n\n",
-        file = infile.name, append=TRUE, sep="")
+        paste(params, collapse = ", "),");\n\n",
+        file = infile.name, append = TRUE, sep = "")
   } else {
     cat("MonteCarlo (", "\"", outfile.name, "\"", ",", n , ",", sample(1:99999, 1), ");\n\n",
-        file = infile.name, append=TRUE, sep="")
-    for (i in 1 : length(parameters)){
-      cat("Distrib ( ", parameters[i], ",", dist[i], ",", paste(unlist(q.arg[i]), collapse = ","), ");", "\n",
+        file = infile.name, append = TRUE, sep = "")
+    for (i in 1 : length(params)){
+      cat("Distrib ( ", params[i], ",", dist[i], ",", paste(unlist(q.arg[i]), collapse = ","), ");", "\n",
           file = infile.name, append=TRUE, sep = "")
     }
 
@@ -157,22 +159,22 @@ generate_infile <- function(infile.name, outfile.name, parameters, output, time,
   cat("\n#---------------------------------------- \n#",
       " Simulation scenario\n#",
       "----------------------------------------", "\n\n",
-      file = infile.name, append=TRUE, sep = "")
+      file = infile.name, append = TRUE, sep = "")
 
-  cat("Simulation {", "\n\n", file = infile.name, append=TRUE)
+  cat("Simulation {", "\n\n", file = infile.name, append = TRUE)
 
   # cat(paste(conditions, collapse=";"), ";", "\n\n", file = infile.name, append=TRUE, sep = "")
 
   for (i in 1 : length(condition)){
-    cat(paste(condition[i], collapse=";"), ";", "\n", file = infile.name, append=TRUE, sep = "")
+    cat(paste(condition[i], collapse = ";"), ";", "\n", file = infile.name, append = TRUE, sep = "")
   }
 
-  cat("\n", file = infile.name, append=TRUE)
+  cat("\n", file = infile.name, append = TRUE)
 
-  for (i in 1 : length(output)) {
-    cat("Print (", paste(output[i], collapse=", "), ", ", paste(time, collapse=", "), ");\n",
-        file = infile.name, append=TRUE, sep="")
+  for (i in 1 : length(vars)) {
+    cat("Print (", paste(vars[i], collapse = ", "), ", ", paste(time, collapse=", "), ");\n",
+        file = infile.name, append=TRUE, sep = "")
   }
 
-  cat("}", "END.", file = infile.name, append=TRUE)
+  cat("}", "END.", file = infile.name, append = TRUE)
 }

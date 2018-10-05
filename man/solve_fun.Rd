@@ -4,16 +4,16 @@
 \alias{solve_fun}
 \title{Solve PK Model Through deSolve Package or Analytical Function}
 \usage{
-solve_fun(x, time = NULL, parameters, initParmsfun = NULL, initState,
+solve_fun(x, time = NULL, params, initParmsfun = NULL, initState,
   dllname, func, initfunc, outnames, method = "lsode", rtol = 1e-08,
-  atol = 1e-12, model = NULL, lnparam = F, output, ...)
+  atol = 1e-12, model = NULL, lnparam = F, vars, ...)
 }
 \arguments{
 \item{x}{a list of storing information in the defined sensitivity function.}
 
 \item{time}{a vector to define the given time sequence.}
 
-\item{parameters}{parameters passed to \code{func}.}
+\item{params}{parameters passed to \code{func}.}
 
 \item{initParmsfun}{a character for the given specific initial parameter function.}
 
@@ -38,7 +38,7 @@ that contains the compiled function.}
 
 \item{lnparam}{a logical value that make the statement of the log-transformed parameter (default FALSE).}
 
-\item{output}{a character for the selected output.}
+\item{vars}{a character for the selected output.}
 
 \item{...}{additional arguments for deSolve::ode method.}
 }

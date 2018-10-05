@@ -6,7 +6,7 @@
 #'
 #' @param x a list of storing information in the defined sensitivity function.
 #' @param time a vector to define the given time sequence.
-#' @param parameters parameters passed to \code{func}.
+#' @param params parameters passed to \code{func}.
 #' @param initParmsfun a character for the given specific initial parameter function.
 #' @param initState a vector that define the initial values of state variables for the ODE system.
 #' @param dllname a string giving the name of the shared library (without extension)
@@ -19,21 +19,21 @@
 #' @param atol argument passed to integrator (default 1e-12).
 #' @param model the defined analytical equation with functional output.
 #' @param lnparam a logical value that make the statement of the log-transformed parameter (default FALSE).
-#' @param output a character for the selected output.
+#' @param vars a character for the selected output.
 #' @param ... additional arguments for deSolve::ode method.
 #'
 #' @rdname solve_fun
 #' @export
-solve_fun <- function(x, time = NULL, parameters, initParmsfun = NULL, initState, dllname,
+solve_fun <- function(x, time = NULL, params, initParmsfun = NULL, initState, dllname,
                       func, initfunc, outnames,
                       method ="lsode", rtol=1e-8, atol=1e-12,
-                      model = NULL, lnparam = F, output, ...){
+                      model = NULL, lnparam = F, vars, ...){
   n <- length(x$s)
-  no.factors <- ifelse (class(x$factors) == "character", length(x$factors), x$factors)
+  no.params <- ifelse (class(x$params) == "character", length(x$params), x$params)
   replicate <- x$rep
   out <- ifelse (is.null(time), 1, length(time))
-  n.vars <- length(output)
-  y <- array(dim = c(n * no.factors, replicate, out, n.vars), NA)
+  n.vars <- length(vars)
+  y <- array(dim = c(n * no.params, replicate, out, n.vars), NA)
   # c(Model Evaluations, replicates, time points, n.vars)
 
   if (is.null(model) == TRUE){
@@ -43,12 +43,12 @@ solve_fun <- function(x, time = NULL, parameters, initParmsfun = NULL, initState
 
     for (i in 1 : dim(y)[2]) { # replicate
       for (j in 1 : dim(y)[1]) { # Model evaluation
-        for (p in x$factors) {
-          parameters[p] <- ifelse (lnparam == T,  exp(x$a[j,i,p]), x$a[j,i,p])
+        for (p in x$params) {
+          params[p] <- ifelse (lnparam == T,  exp(x$a[j,i,p]), x$a[j,i,p])
         }
 
         if (!is.null(initParmsfun) == TRUE){
-          parms <- do.call(initParmsfun, list(parameters))
+          parms <- do.call(initParmsfun, list(params))
           # Use the initParms function from _inits.R file, if the file had defined
         } else {
           stop("The 'initParmsfun' must be defined")
@@ -66,7 +66,7 @@ solve_fun <- function(x, time = NULL, parameters, initParmsfun = NULL, initState
 
         for (l in 1:n.vars){
           for (k in 1 : dim(y)[3]) { # output time
-            y[j,i,k,l] <- tmp[k+1, output[l]] # skip zero
+            y[j,i,k,l] <- tmp[k+1, vars[l]] # skip zero
           }
         }
       }
@@ -74,10 +74,10 @@ solve_fun <- function(x, time = NULL, parameters, initParmsfun = NULL, initState
   } else {
     for (i in 1 : dim(y)[2]) { # Replicate
       for (j in 1 : dim(y)[1]) { # Model evaluation
-        if (lnparam == T) { parameters <- exp(x$a[j,i,])}
-        else if (lnparam == F) { parameters <- x$a[j,i,]}
+        if (lnparam == T) { params <- exp(x$a[j,i,])}
+        else if (lnparam == F) { params <- x$a[j,i,]}
 
-        if (is.null(time)) tmp <- model(parameters) else tmp <- model(parameters, time)
+        if (is.null(time)) tmp <- model(params) else tmp <- model(params, time)
 
         for (k in 1 : dim(y)[3]) { # Output time
           y[j,i,k,1] <- tmp[k]
@@ -88,10 +88,10 @@ solve_fun <- function(x, time = NULL, parameters, initParmsfun = NULL, initState
 
   if(dim(y)[3] > 1){
     dimnames(y)[[3]] <- time
-    dimnames(y)[[4]] <- output
+    dimnames(y)[[4]] <- vars
   } else { # single time point
     dimnames(y)[[3]] <- list(time)
-    dimnames(y)[[4]] <- list(output)
+    dimnames(y)[[4]] <- list(vars)
   }
 
   return(y)

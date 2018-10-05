@@ -1,6 +1,5 @@
 #' The Decoupling Simulations
 #'
-#' @description
 #' Integrate the decoupling simulations (parameter sequences) and estimation results
 #' to compute the sensitivity measures.
 #'
@@ -8,19 +7,18 @@
 #' @param y a numeric array generated from the solutions of \code{solve_fun}
 #' or \code{solve_mcsim} function.
 #'
-#' @rdname tell2
 #' @export
 tell2 <- function(x, y){
 
   id <- deparse(substitute(x))
-  x$mSI <- x$iSI <- x$tSI <- x$mCI <- x$iCI <- x$tCI <- array(dim = c(dim(y)[3], length(x$factors), dim(y)[4]), NA) #c(tim-points, factors, variables)
+  x$mSI <- x$iSI <- x$tSI <- x$mCI <- x$iCI <- x$tCI <- array(dim = c(dim(y)[3], length(x$params), dim(y)[4]), NA) #c(tim-points, params, variables)
   vars <- dimnames(y)[[4]]
 
-  dimnames(x$mSI)[[2]] <- dimnames(x$iSI)[[2]] <- dimnames(x$tSI)[[2]] <- dimnames(x$mCI)[[2]] <- dimnames(x$iCI)[[2]] <- dimnames(x$tCI)[[2]] <- x$factors
+  dimnames(x$mSI)[[2]] <- dimnames(x$iSI)[[2]] <- dimnames(x$tSI)[[2]] <- dimnames(x$mCI)[[2]] <- dimnames(x$iCI)[[2]] <- dimnames(x$tCI)[[2]] <- x$params
   dimnames(x$mSI)[[3]] <- dimnames(x$iSI)[[3]] <- dimnames(x$tSI)[[3]] <- dimnames(x$mCI)[[3]] <- dimnames(x$iCI)[[3]] <- dimnames(x$tCI)[[3]] <- vars
   dimnames(x$mSI)[[1]] <- dimnames(x$iSI)[[1]] <- dimnames(x$tSI)[[1]] <- dimnames(x$mCI)[[1]] <- dimnames(x$iCI)[[1]] <- dimnames(x$tCI)[[1]] <- dimnames(y)[[3]] # time-points
 
-  if (x$rep == 1) {
+  if (x$replicate == 1) {
     for (k in vars){ # variables
       for ( i in 1:length(dimnames(y)[[3]])){  # time-points
         X <- tell.rfast99(x, y[,,i,k])
@@ -63,11 +61,11 @@ tell.rfast99 <- function(x, y = NULL) {
   p <- dim(x$a)[3]
   n <- length(x$s)
 
-  V <- array(numeric(p), dim = c(p, x$rep))
-  D1 <- array(numeric(p), dim = c(p, x$rep))
-  Dt <- array(numeric(p), dim = c(p, x$rep))
+  V <- array(numeric(p), dim = c(p, x$replicate))
+  D1 <- array(numeric(p), dim = c(p, x$replicate))
+  Dt <- array(numeric(p), dim = c(p, x$replicate))
 
-  if (x$rep == 1){
+  if (x$replicate == 1){
     for (i in 1 : p) {
       l <- seq((i - 1) * n + 1, i * n)
       f <- fft(x$y[l], inverse = FALSE)
@@ -81,7 +79,7 @@ tell.rfast99 <- function(x, y = NULL) {
       names(S) <- names(T) <- names(I) <- dimnames(x$a)[[3]]
     }
   } else {
-    for (j in 1 : x$rep){
+    for (j in 1 : x$replicate){
       for (i in 1 : p) {
         l <- seq((i - 1) * n + 1, i * n)
         f <- fft(x$y[l, j], inverse = FALSE)

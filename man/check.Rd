@@ -4,7 +4,7 @@
 \alias{heat_check}
 \alias{check}
 \alias{print.rfast99}
-\title{Create Heatmap to Detect and Check Parameter Sensitivity}
+\title{Create Heatmap to Visualize Parameter Sensitivity}
 \usage{
 heat_check(x, fit = c("first order", "total order"), vars = NULL,
   times = NULL, SI.cutoff = c(0.05, 0.1), CI.cutoff = c(0.05, 0.1),
@@ -45,7 +45,7 @@ to the specified number of decimal places (default 4).}
 \item{...}{additional arguments to customize the graphical parameters.}
 }
 \description{
-plot the sensitivity (or convergence) index by heatmap with a given result.
+Plot the sensitivity (or convergence) index by heatmap with a given result.
 }
 \details{
 The \code{print} method can used to print sensitivity and convergence indices

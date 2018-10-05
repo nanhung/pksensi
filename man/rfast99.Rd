@@ -4,11 +4,11 @@
 \alias{rfast99}
 \title{Extended Fourier Amplitude Sensitivity Test with Random Phase Shift}
 \usage{
-rfast99(factors, n, M = 4, omega = NULL, q = NULL, q.arg = NULL,
+rfast99(params, n, M = 4, omega = NULL, q = NULL, q.arg = NULL,
   replicate = 1, conf = 0.95)
 }
 \arguments{
-\item{factors}{an integer for the giving number of factors, or a vector of character strings giving their names.}
+\item{params}{an integer for the giving number of parameters, or a vector of character strings giving their names.}
 
 \item{n}{an integer for the sampling number.}
 
@@ -16,7 +16,7 @@ rfast99(factors, n, M = 4, omega = NULL, q = NULL, q.arg = NULL,
 
 \item{omega}{a vector giving the set of frequencies.}
 
-\item{q}{a vector of quantile functions names corresponding to wanted factors distributions.}
+\item{q}{a vector of quantile functions names corresponding to wanted parameters distributions.}
 
 \item{q.arg}{a list of quantile functions parameters.}
 
@@ -25,5 +25,6 @@ rfast99(factors, n, M = 4, omega = NULL, q = NULL, q.arg = NULL,
 \item{conf}{the confidence level for replication confidence intervals. The default is 0.95.}
 }
 \description{
-\code{rfast99} is used to create the sequances for each parameter. It is based on the \code{fast99} function in \pkg{sensitivity} package.
+\code{rfast99} is used to create the sequances for each parameter.
+It is based on the \code{fast99} function in \pkg{sensitivity} package.
 }

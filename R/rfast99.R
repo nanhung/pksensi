@@ -1,15 +1,15 @@
 #' Extended Fourier Amplitude Sensitivity Test with Random Phase Shift
 #'
-#' @description
-#'   \code{rfast99} is used to create the sequances for each parameter. It is based on the \code{fast99} function in \pkg{sensitivity} package.
+#' \code{rfast99} is used to create the sequances for each parameter.
+#' It is based on the \code{fast99} function in \pkg{sensitivity} package.
 #'
 #' @importFrom stats runif fft var
 #'
-#' @param factors an integer for the giving number of factors, or a vector of character strings giving their names.
+#' @param params an integer for the giving number of parameters, or a vector of character strings giving their names.
 #' @param n an integer for the sampling number.
 #' @param M an integer specifying the interference parameter. The default is 4.
 #' @param omega a vector giving the set of frequencies.
-#' @param q a vector of quantile functions names corresponding to wanted factors distributions.
+#' @param q a vector of quantile functions names corresponding to wanted parameters distributions.
 #' @param q.arg a list of quantile functions parameters.
 #' @param replicate an integer to define the number of replication. The default is 1.
 #' @param conf the confidence level for replication confidence intervals. The default is 0.95.
@@ -17,16 +17,16 @@
 #' @importFrom graphics mtext
 #' @rdname rfast99
 #' @export
-rfast99 <- function(factors, n, M = 4, omega = NULL,
+rfast99 <- function(params, n, M = 4, omega = NULL,
                     q = NULL, q.arg = NULL, replicate = 1, conf = 0.95) {
 
-  # factors numbers and names
+  # params numbers and names
 
-  if (is.character(factors)) {
-    X.labels <- factors
+  if (is.character(params)) {
+    X.labels <- params
     p <- length(X.labels)
   } else {
-    p <- factors
+    p <- params
     X.labels <- paste("X", 1 : p, sep = "")
   }
 
@@ -39,7 +39,7 @@ rfast99 <- function(factors, n, M = 4, omega = NULL,
   }
   if (is.null(q.arg)) {
     stop("Please assign the arguments for defined distribution")
-  } else if (FALSE %in% sapply(q.arg, is.list)) { # q.arg isn't a list of lists
+  } else if (FALSE %in% sapply(q.arg, is.list)) {
     q.arg <- rep(list(q.arg), p)
   }
 
@@ -83,9 +83,9 @@ rfast99 <- function(factors, n, M = 4, omega = NULL,
   }
   dimnames(a)[[3]] <- X.labels
 
-  # object of class "fast18"
+  # object of class "rfast99"
 
-  x <- list(M = M, s = s, omega = omega, a = a, factors = factors,
+  x <- list(M = M, s = s, omega = omega, a = a, params = params,
             replicate = replicate, conf = conf, call = match.call())
   class(x) <- "rfast99"
 
