@@ -93,7 +93,12 @@ solve_mcsim <- function(x, mName, infile.name,
   str <- n.factors + 2
   df <- as.data.frame(data.table::fread(outfile.name, head = T))
 
+  invisible(gc()); # clean memory
+
   y <- as.matrix(df[,str:ncol(df)]) # output only
+
+  rm(df)
+  invisible(gc()); # clean memory
 
   #  if (!is.null(x)){
   #    n.rep <- x$rep
@@ -106,6 +111,8 @@ solve_mcsim <- function(x, mName, infile.name,
   } else  dim <- c(n.sample * n.factors, n.rep, n.time, n.vars)
 
   dim(y)<- dim
+
+  invisible(gc()); # clean memory
 
   dimnames(y)[[3]] <- time
   dimnames(y)[[4]] <- vars
