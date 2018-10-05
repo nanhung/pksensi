@@ -106,7 +106,7 @@ solve_mcsim <- function(x, mName, infile.name,
   n.rep <- nrow(y) / (n.sample * n.factors)
   #  }
 
-  if (nrow(df) == n.sample){ # For Monte Carlo
+  if (nrow(y) == n.sample){ # For Monte Carlo
     dim <- c(n.sample, 1, n.time, n.vars)
   } else  dim <- c(n.sample * n.factors, n.rep, n.time, n.vars)
 
