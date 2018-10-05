@@ -54,7 +54,6 @@ compile_model <- function (mName, application = 'mcsim', use_model_file = TRUE, 
 
   if (is.loaded("derivs", PACKAGE=mName)) dyn.unload(paste0(mName,.Platform$dynlib.ext))
 
-
   if (application == "mcsim"){
     if (.Platform$OS.type == "unix"){
       system(paste0("gcc -O3 -I/usr/local/include -L/usr/local/lib -g -O2 ", mName, ".c", " -lmcsim -o", " mcsim.", mName, " -lm -llapack -Wall"))

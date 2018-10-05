@@ -2,15 +2,12 @@
 % Please edit documentation in R/solve_mcsim.R
 \name{solve_mcsim}
 \alias{solve_mcsim}
-\alias{makemcsim}
 \alias{generate_infile}
 \title{Solve PK Model Through MCSim}
 \usage{
 solve_mcsim(x, mName, infile.name, outfile.name, n = NULL,
   setpoint.name = NULL, params = NULL, vars = NULL, time = NULL,
   condition = NULL)
-
-makemcsim(mName, standalone = F)
 
 generate_infile(infile.name, outfile.name, params, vars, time, condition,
   rtol = 1e-06, atol = 1e-09, n = NULL, dist = NULL,
@@ -37,11 +34,9 @@ generate_infile(infile.name, outfile.name, params, vars, time, condition,
 
 \item{condition}{a character to set the specific parameter value in the input file.}
 
-\item{standalone}{a logic value to create the standalone executable file (default FALSE).}
+\item{rtol}{an argument passed to the integrator (default 1e-6).}
 
-\item{rtol}{argument passed to integrator (default 1e-6).}
-
-\item{atol}{argument passed to integrator (default 1e-9).}
+\item{atol}{an argument passed to the integrator (default 1e-9).}
 
 \item{dist}{a vector of distribution names corresponding to \code{<distribution-name>} in MCSim.}
 
@@ -53,6 +48,13 @@ through MCSim.
 The output result is the 4-dimension array with c(model evaluations, replications, time-points, output variables).
 }
 \details{
-This function allow user to use external data file that assigned in \code{setpoint.name} as parameter matrix.
+This function allows users to use external data file that assigned in \code{setpoint.name} as parameter matrix.
 If you want to use it, be sure to define \code{n} and \code{setpoint.name}.
 }
+\section{Functions}{
+\itemize{
+\item \code{solve_mcsim}: Numerical analysis for the PK model by MCSim.
+
+\item \code{generate_infile}: Generate the MCSim input file.
+}}
+

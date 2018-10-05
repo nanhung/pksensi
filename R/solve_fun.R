@@ -1,6 +1,5 @@
 #' Solve PK Model Through deSolve Package or Analytical Function
 #'
-#' @description
 #' The \code{solve_fun} solves for the time-dependent quantity/concentration in different tissues
 #' through the imported deSolve function. It can also solve the function with analytical function.
 #'
@@ -22,7 +21,6 @@
 #' @param vars a character for the selected output.
 #' @param ... additional arguments for deSolve::ode method.
 #'
-#' @rdname solve_fun
 #' @export
 solve_fun <- function(x, time = NULL, params, initParmsfun = NULL, initState, dllname,
                       func, initfunc, outnames,

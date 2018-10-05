@@ -3,6 +3,8 @@
 #' \code{rfast99} is used to create the sequances for each parameter.
 #' It is based on the \code{fast99} function in \pkg{sensitivity} package.
 #'
+#' Parameter values will be stored in an array (x$a) with c(model evaluation, replication, parameters).
+#'
 #' @importFrom stats runif fft var
 #'
 #' @param params an integer for the giving number of parameters, or a vector of character strings giving their names.
@@ -14,8 +16,24 @@
 #' @param replicate an integer to define the number of replication. The default is 1.
 #' @param conf the confidence level for replication confidence intervals. The default is 0.95.
 #'
+#' @references
+#' A. Saltelli, S. Tarantola and K. Chan, 1999, A quantitative, model independent method for
+#' global sensitivity analysis of model output,
+#' \emph{Technometrics}, 41, 39-56
+#'
+#' R. I. Cukier, H. B. Levine and K. E. Schuler, 1978,
+#' Nonlinear sensitivity analysis of multiparameter model systems.
+#' \emph{J. Comput. Phys.}, 26, 1–42.
+#'
 #' @importFrom graphics mtext
-#' @rdname rfast99
+#'
+#' @examples
+#' # Generate the parameter matrix with 20 replications
+#' q <- "qunif"
+#' q.arg <- list(min = 0, max = 1)
+#' x <- rfast99(params = 3, n = 100, replicate = 20, q = q, q.arg = q.arg)
+#' dim(x$a) # the array of c(model evaluation, replication, parameters).
+#'
 #' @export
 rfast99 <- function(params, n, M = 4, omega = NULL,
                     q = NULL, q.arg = NULL, replicate = 1, conf = 0.95) {

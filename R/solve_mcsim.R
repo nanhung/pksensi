@@ -4,14 +4,14 @@
 #' through MCSim.
 #' The output result is the 4-dimension array with c(model evaluations, replications, time-points, output variables).
 #'
-#' This function allow user to use external data file that assigned in \code{setpoint.name} as parameter matrix.
+#' This function allows users to use external data file that assigned in \code{setpoint.name} as parameter matrix.
 #' If you want to use it, be sure to define \code{n} and \code{setpoint.name}.
 #'
+#' @param mName a string giving the name of the model or C file (without extension).
 #' @param x a list of storing information in the defined sensitivity function.
 #' @param n a numeric to define the sample number.
 #' @param dist a vector of distribution names corresponding to \code{<distribution-name>} in MCSim.
 #' @param q.arg a list of shape parameters in the sampling distribution (\code{dist}).
-#' @param mName a string giving the name of the model or C file (without extension).
 #' @param infile.name a character to assign the name of input file.
 #' @param setpoint.name a character to assign the name of file for parameter matrix.
 #' @param outfile.name a character to assign the name of output file.
@@ -19,15 +19,14 @@
 #' @param vars a character or a vector to assign the selected output(s).
 #' @param time a numeric to define the given time point(s).
 #' @param condition a character to set the specific parameter value in the input file.
-#' @param rtol argument passed to integrator (default 1e-6).
-#' @param atol argument passed to integrator (default 1e-9).
-#' @param standalone a logic value to create the standalone executable file (default FALSE).
+#' @param rtol an argument passed to the integrator (default 1e-6).
+#' @param atol an argument passed to the integrator (default 1e-9).
 #'
 #' @importFrom utils write.table
 #' @importFrom data.table fread
 #'
-#' @rdname solve_mcsim
 #' @export
+#' @describeIn solve_mcsim Numerical analysis for the PK model by MCSim.
 solve_mcsim <- function(x, mName, infile.name,
                         outfile.name,
                         n = NULL,
@@ -56,7 +55,7 @@ solve_mcsim <- function(x, mName, infile.name,
 
   mcsim. <- paste0("mcsim.", mName)
   if(file.exists(mcsim.) == F){
-    makemcsim(paste0(mName, ".model"))
+    stop(paste0("The ", "mcsim.", mName, " doesn't exist."))
   }
 
   #
@@ -116,16 +115,8 @@ solve_mcsim <- function(x, mName, infile.name,
   return(y)
 }
 
-#' @rdname solve_mcsim
 #' @export
-makemcsim <- function(mName, standalone = F){
-  if(standalone == F){
-    system(paste0("makemcsim", " ", mName, ".model"))
-  } else {system(paste0("makemcsims", " ", mName, ".model"))}
-}
-
-#' @rdname solve_mcsim
-#' @export
+#' @describeIn solve_mcsim Generate the MCSim input file.
 generate_infile <- function(infile.name, outfile.name, params, vars, time,
                             condition, rtol = 1e-6, atol = 1e-9,
                             n = NULL, dist = NULL, q.arg = NULL){ # Monte Carlo
