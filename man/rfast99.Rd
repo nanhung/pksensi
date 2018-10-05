@@ -3,6 +3,9 @@
 \name{rfast99}
 \alias{rfast99}
 \title{Extended Fourier Amplitude Sensitivity Test with Random Phase Shift}
+\source{
+This function is based on \code{fast99} function in \pkg{sensitivity} package.
+}
 \usage{
 rfast99(params, n, M = 4, omega = NULL, q = NULL, q.arg = NULL,
   replicate = 1, conf = 0.95)
@@ -24,17 +27,19 @@ rfast99(params, n, M = 4, omega = NULL, q = NULL, q.arg = NULL,
 
 \item{conf}{the confidence level for replication confidence intervals. The default is 0.95.}
 }
+\value{
+The generate parameter values will be stored in an array with c(model evaluation, replication, parameters).
+}
 \description{
 \code{rfast99} is used to create the sequances for each parameter.
 It is based on the \code{fast99} function in \pkg{sensitivity} package.
-}
-\details{
-Parameter values will be stored in an array (x$a) with c(model evaluation, replication, parameters).
 }
 \examples{
 # Generate the parameter matrix with 20 replications
 q <- "qunif"
 q.arg <- list(min = 0, max = 1)
+
+set.seed(1234)
 x <- rfast99(params = 3, n = 100, replicate = 20, q = q, q.arg = q.arg)
 dim(x$a) # the array of c(model evaluation, replication, parameters).
 

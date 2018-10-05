@@ -7,6 +7,10 @@
 #' @param y a numeric array generated from the solutions of \code{solve_fun}
 #' or \code{solve_mcsim} function.
 #'
+#' @source
+#' This function is based on \code{tell} function in \pkg{sensitivity} package,
+#' which is an S3 generic method to estimate sensitivity measures by combining sensitivity object (rfast99) and external simulation results.
+#'
 #' @export
 tell2 <- function(x, y){
 

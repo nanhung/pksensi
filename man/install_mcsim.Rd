@@ -9,12 +9,16 @@ install_mcsim(version = "6.0.1", directory = NULL, mxstep = 500)
 \arguments{
 \item{version}{a character of MCSim version number.}
 
-\item{directory}{a character to assign the directory to put the MCSim sourced folder.
-The default directory is under \code{/home/username} (Linux), \code{/Users/username} (MacOS),
-and \code{C:/Users/} (windows).}
+\item{directory}{a character to assign the directory to put the MCSim sourced folder.}
 
 \item{mxstep}{a numeric value to assign the maximum number of (internally defined) steps
-allowed during one call to the solver (default is 500). The user can increase mxstep to avoid possible error return.}
+allowed during one call to the solver.}
+}
+\value{
+The default \code{mxstp} is setting to 500.
+The user can increase mxstep to avoid possible error return.
+The default \code{directory} to install MCSim is under \code{/home/username} (Linux), \code{/Users/username} (MacOS),
+and \code{C:/Users/} (windows).
 }
 \description{
 Download the latest or specific version of MCSim from the official website
@@ -27,4 +31,8 @@ You might need to follow the instruction of MCSim and install it,
 manually: \url{https://www.gnu.org/software/mcsim/mcsim.html#Installation}
 
 To install MCSim in Windows, be sure to install Rtools or MinGW first.
+}
+\examples{
+\dontrun{install_mcsim(version = 6.0.1, mxstep = 10000)}
+
 }

@@ -12,13 +12,18 @@
 #'
 #' @param version a character of MCSim version number.
 #' @param directory a character to assign the directory to put the MCSim sourced folder.
-#' The default directory is under \code{/home/username} (Linux), \code{/Users/username} (MacOS),
-#' and \code{C:/Users/} (windows).
 #' @param mxstep a numeric value to assign the maximum number of (internally defined) steps
-#' allowed during one call to the solver (default is 500). The user can increase mxstep to avoid possible error return.
+#' allowed during one call to the solver.
 #'
 #' @import getPass
 #' @importFrom utils download.file
+#'
+#' @return The default \code{mxstp} is setting to 500.
+#' The user can increase mxstep to avoid possible error return.
+#' The default \code{directory} to install MCSim is under \code{/home/username} (Linux), \code{/Users/username} (MacOS),
+#' and \code{C:/Users/} (windows).
+#' @examples
+#' \dontrun{install_mcsim(version = 6.0.1, mxstep = 10000)}
 #'
 #' @export
 install_mcsim = function(version = "6.0.1", directory = NULL, mxstep = 500) {
