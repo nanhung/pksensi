@@ -1,4 +1,4 @@
-#' Create Heatmap to Visualize Parameter Sensitivity
+#' Check Parameter Sensitivity
 #'
 #' Plot the sensitivity (or convergence) index by heatmap with a given result.
 #'
@@ -17,16 +17,17 @@
 #' @param order a logical value indicating whether the parameter should reorder by the value.
 #' @param level a logical value to use continous or discrete (default) output.
 #' @param text a logical value to display the calculated indices in the plot.
-#' @param digits a integer to rounds the values in its first argument.
 #' to the specified number of decimal places (default 4).
-#' @param SI a numeric value to set the cut-off point for sensitivity index (default 0.1).
-#' @param CI a numeric vlaue to set the cut-off point for convergence index (default 0.01).
+#' @param SI a numeric value to set the cut-off point for sensitivity index (default 0.05).
+#' @param CI a numeric vlaue to set the cut-off point for convergence index (default 0.05).
 #' @param ... additional arguments to customize the graphical parameters.
 #'
 #' @importFrom reshape melt
 #' @importFrom magrittr %>%
 #' @importFrom stats reorder time
 #' @importFrom grDevices colorRampPalette
+#' @importFrom graphics barplot legend lines par abline plot.new
+#' @importFrom stats runif fft
 #' @import ggplot2
 #' @import dplyr
 #'
@@ -223,10 +224,7 @@ check.rfast99 <- function(x, times = NULL, vars = NULL, SI = 0.05, CI = 0.05){
 
 }
 
-
 #' @method plot rfast99
-#' @importFrom graphics barplot legend lines par abline plot.new
-#' @importFrom stats runif fft
 #' @export
 plot.rfast99 <- function(x, vars = 1, cut.off = F, ...){
 
@@ -279,12 +277,13 @@ plot.rfast99 <- function(x, vars = 1, cut.off = F, ...){
   }
 }
 
-#' @rdname check
 #' @method print rfast99
 #' @export
-print.rfast99 <- function(x, digits = 4, ...) {
+print.rfast99 <- function(x, ...) {
   cat("\nCall:\n", deparse(x$call), "\n", sep = "")
   if (! is.null(x$y) && ! is.null(x$mSI)) {
+    digits <- 4
+
     cat("\nModel runs:", dim(x$y)[1], "\n")
     cat("\n")
     cat("\n==================================")

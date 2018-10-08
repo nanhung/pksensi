@@ -3,16 +3,13 @@
 \name{heat_check}
 \alias{heat_check}
 \alias{check}
-\alias{print.rfast99}
-\title{Create Heatmap to Visualize Parameter Sensitivity}
+\title{Check Parameter Sensitivity}
 \usage{
 heat_check(x, fit = c("first order", "total order"), vars = NULL,
   times = NULL, SI.cutoff = c(0.05, 0.1), CI.cutoff = c(0.05, 0.1),
   index = "SI", order = F, level = T, text = F)
 
 check(x, times, vars, SI, CI)
-
-\method{print}{rfast99}(x, digits = 4, ...)
 }
 \arguments{
 \item{x}{a list of storing information in the defined sensitivity function.}
@@ -33,14 +30,12 @@ check(x, times, vars, SI, CI)
 
 \item{level}{a logical value to use continous or discrete (default) output.}
 
-\item{text}{a logical value to display the calculated indices in the plot.}
-
-\item{SI}{a numeric value to set the cut-off point for sensitivity index (default 0.1).}
-
-\item{CI}{a numeric vlaue to set the cut-off point for convergence index (default 0.01).}
-
-\item{digits}{a integer to rounds the values in its first argument.
+\item{text}{a logical value to display the calculated indices in the plot.
 to the specified number of decimal places (default 4).}
+
+\item{SI}{a numeric value to set the cut-off point for sensitivity index (default 0.05).}
+
+\item{CI}{a numeric vlaue to set the cut-off point for convergence index (default 0.05).}
 
 \item{...}{additional arguments to customize the graphical parameters.}
 }
