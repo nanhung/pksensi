@@ -1,11 +1,12 @@
-#' Check Parameter Sensitivity
+#' Check the Parameter Sensitivity
 #'
-#' Plot the sensitivity (or convergence) index by heatmap with a given result.
+#' Visualize and check the sensitivity (or convergence) measurment with a given result.
 #'
-#' The \code{print} method can used to print sensitivity and convergence indices
+#' The \code{print} function can used to print sensitivity and convergence indices
 #' with given time-step. The \code{check} method provide the summary of
 #' parameter sensitivity and convergence. The \code{plot} function provide the
-#' time-course functional output of both indices for each parameter.
+#' time-course functional output of both indices (first order and interaction) for each parameter.
+#' The first model variable is the default output.
 #'
 #' @param x a list of storing information in the defined sensitivity function.
 #' @param fit a vector of interested output index included \code{first order}, \code{interaction}, and \code{total order}.
@@ -30,6 +31,15 @@
 #' @importFrom stats runif fft
 #' @import ggplot2
 #' @import dplyr
+#'
+#' @references
+#' F Sarrazin, F Pianosi, T Wagener, 2016,
+#' Global sensitivity analysis of environmental models: convergence and validation,
+#' \emph{Environ. Model. Softw}, 79, 135–152.
+#'
+#' N-H Hsieh, B Reisfeld, FY Bois, WA, Chiu, 2018, Applying a global sensitivity analysis workflow
+#' to improve the computational efficiencies in physiologically-based pharmacokinetic modeling,
+#' \emph{Front. Pharmacol}, 9, 588.
 #'
 #' @rdname check
 #' @export
