@@ -28,7 +28,8 @@ rfast99(params, n, M = 4, omega = NULL, q = NULL, q.arg = NULL,
 \item{conf}{the confidence level for replication confidence intervals. The default is 0.95.}
 }
 \value{
-The generate parameter values will be stored in an array with c(model evaluation, replication, parameters).
+Return the parameter value that will be stored in an array with
+c(model evaluation, replication, parameters).
 }
 \description{
 \code{rfast99} is used to create the sequances for each parameter.
@@ -42,6 +43,10 @@ q.arg <- list(min = 0, max = 1)
 set.seed(1234)
 x <- rfast99(params = 3, n = 100, replicate = 20, q = q, q.arg = q.arg)
 dim(x$a) # the array of c(model evaluation, replication, parameters).
+
+\dontrun{
+save(x, file = "input_parameters.rda")
+}
 
 }
 \references{

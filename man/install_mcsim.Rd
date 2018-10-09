@@ -36,3 +36,6 @@ To install MCSim in Windows, be sure to install Rtools or MinGW first.
 \dontrun{install_mcsim(version = 6.0.1, mxstep = 10000)}
 
 }
+\references{
+\url{https://www.gnu.org/software/mcsim/}
+}

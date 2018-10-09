@@ -26,7 +26,9 @@
 #' Nonlinear sensitivity analysis of multiparameter model systems.
 #' \emph{J. Comput. Phys.}, 26, 1–42.
 #'
-#' @return The generate parameter values will be stored in an array with c(model evaluation, replication, parameters).
+#' @return
+#' Return the parameter value that will be stored in an array with
+#' c(model evaluation, replication, parameters).
 #'
 #' @importFrom graphics mtext
 #'
@@ -38,6 +40,10 @@
 #' set.seed(1234)
 #' x <- rfast99(params = 3, n = 100, replicate = 20, q = q, q.arg = q.arg)
 #' dim(x$a) # the array of c(model evaluation, replication, parameters).
+#'
+#' \dontrun{
+#' save(x, file = "input_parameters.rda")
+#' }
 #'
 #' @export
 rfast99 <- function(params, n, M = 4, omega = NULL,

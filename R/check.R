@@ -41,6 +41,100 @@
 #' to improve the computational efficiencies in physiologically-based pharmacokinetic modeling,
 #' \emph{Front. Pharmacol}, 9, 588.
 #'
+#' @examples
+#' q <- "qunif"
+#' q.arg <- list(list(min = 0.5, max = 1.5), list(min = 0.02, max = 0.3), list(min = 20, max = 60))
+#' params <- c("KA","KE","V")
+#'
+#' set.seed(1234)
+#' x <- rfast99(params = params, n = 200, q = q, q.arg = q.arg, rep = 20)
+#'
+#' time <- seq(from = 0.25, to = 12.25, by = 0.5)
+#' y <- solve_fun(x, model = FFPK, time = time, vars = "output")
+#'
+#'
+#' tell2(x,y) # Link decoupling simulation result
+#'
+#' check(x) # Check results of sensitivity measures
+#' print(x)
+#'
+#' @seealso \code{\link{tell2}}
+#'
+#' @rdname check
+#' @export
+check <- function(x, times, vars, SI, CI) UseMethod("check")
+
+#' @method check rfast99
+#' @export
+check.rfast99 <- function(x, times = NULL, vars = NULL, SI = 0.05, CI = 0.05){
+
+  if (is.null(times)) times <- dimnames(x$y)[[3]]
+  if (is.null(vars)) vars <- dimnames(x$y)[[4]]
+
+  if (length(times) == 1 && length(vars) == 1) {
+
+    mSI <- x$mSI[times,,vars]
+    iSI <- x$iSI[times,,vars]
+    tSI <- x$tSI[times,,vars]
+    mCI <- x$mCI[times,,vars]
+    iCI <- x$iCI[times,,vars]
+    tCI <- x$tCI[times,,vars]
+
+  } else if (length(times) == 1 && length(vars) > 1) {
+
+    mSI <- apply(x$mSI[times,,vars], 1, max)
+    iSI <- apply(x$iSI[times,,vars], 1, max)
+    tSI <- apply(x$tSI[times,,vars], 1, max)
+    mCI <- apply(x$mCI[times,,vars], 1, max)
+    iCI <- apply(x$iCI[times,,vars], 1, max)
+    tCI <- apply(x$tCI[times,,vars], 1, max)
+
+  } else if (length(times) > 1 | length(vars) > 1) {
+
+    mSI <- apply(x$mSI[times,,vars], 2, max)
+    iSI <- apply(x$iSI[times,,vars], 2, max)
+    tSI <- apply(x$tSI[times,,vars], 2, max)
+    mCI <- apply(x$mCI[times,,vars], 2, max)
+    iCI <- apply(x$iCI[times,,vars], 2, max)
+    tCI <- apply(x$tCI[times,,vars], 2, max)
+
+  } else {
+
+    mSI <- apply(x$mSI, 2, max)
+    iSI <- apply(x$iSI, 2, max)
+    tSI <- apply(x$tSI, 2, max)
+    mCI <- apply(x$mCI, 2, max)
+    iCI <- apply(x$iCI, 2, max)
+    tCI <- apply(x$tCI, 2, max)
+
+  }
+
+  # else{
+  #    mSI <- x$mSI
+  #    iSI <- x$iSI
+  #    tSI <- x$tSI
+  #    mCI <- x$mCI
+  #    iCI <- x$iCI
+  #    tCI <- x$tCI
+  #  }
+
+  cat("\nSensitivity check ( Index >", SI, ")\n")
+  cat("----------------------------------")
+  cat("\nFirst order:\n", names(which(mSI > SI)), "\n")
+  cat("\nInteraction:\n", names(which(iSI > SI)), "\n")
+  cat("\nTotal order:\n", names(which(tSI > SI)), "\n")
+  cat("\nUnselected factors in total order:\n", names(which(tSI <= SI)), "\n")
+  cat("\n")
+
+  cat("\nConvergence check ( Index >", CI, ")\n")
+  cat("----------------------------------")
+  cat("\nFirst order:\n", names(which(mCI > CI)), "\n")
+  cat("\nInteraction:\n", names(which(iCI > CI)), "\n")
+  cat("\nTotal order:\n", names(which(tCI > CI)), "\n")
+  cat("\n")
+
+}
+
 #' @rdname check
 #' @export
 heat_check <- function(x, fit = c("first order", "total order"),
@@ -160,83 +254,9 @@ tidy_index <- function (x, index = "SI") {
 }
 
 #' @rdname check
-#' @export
-check <- function(x, times, vars, SI, CI) UseMethod("check")
-
-#' @method check rfast99
-#' @export
-check.rfast99 <- function(x, times = NULL, vars = NULL, SI = 0.05, CI = 0.05){
-
-  if (is.null(times)) times <- dimnames(x$y)[[3]]
-  if (is.null(vars)) vars <- dimnames(x$y)[[4]]
-
-  if (length(times) == 1 && length(vars) == 1) {
-
-    mSI <- x$mSI[times,,vars]
-    iSI <- x$iSI[times,,vars]
-    tSI <- x$tSI[times,,vars]
-    mCI <- x$mCI[times,,vars]
-    iCI <- x$iCI[times,,vars]
-    tCI <- x$tCI[times,,vars]
-
-  } else if (length(times) == 1 && length(vars) > 1) {
-
-    mSI <- apply(x$mSI[times,,vars], 1, max)
-    iSI <- apply(x$iSI[times,,vars], 1, max)
-    tSI <- apply(x$tSI[times,,vars], 1, max)
-    mCI <- apply(x$mCI[times,,vars], 1, max)
-    iCI <- apply(x$iCI[times,,vars], 1, max)
-    tCI <- apply(x$tCI[times,,vars], 1, max)
-
-  } else if (length(times) > 1 | length(vars) > 1) {
-
-    mSI <- apply(x$mSI[times,,vars], 2, max)
-    iSI <- apply(x$iSI[times,,vars], 2, max)
-    tSI <- apply(x$tSI[times,,vars], 2, max)
-    mCI <- apply(x$mCI[times,,vars], 2, max)
-    iCI <- apply(x$iCI[times,,vars], 2, max)
-    tCI <- apply(x$tCI[times,,vars], 2, max)
-
-  } else {
-
-    mSI <- apply(x$mSI, 2, max)
-    iSI <- apply(x$iSI, 2, max)
-    tSI <- apply(x$tSI, 2, max)
-    mCI <- apply(x$mCI, 2, max)
-    iCI <- apply(x$iCI, 2, max)
-    tCI <- apply(x$tCI, 2, max)
-
-  }
-
-  # else{
-  #    mSI <- x$mSI
-  #    iSI <- x$iSI
-  #    tSI <- x$tSI
-  #    mCI <- x$mCI
-  #    iCI <- x$iCI
-  #    tCI <- x$tCI
-  #  }
-
-  cat("\nSensitivity check ( Index >", SI, ")\n")
-  cat("----------------------------------")
-  cat("\nFirst order:\n", names(which(mSI > SI)), "\n")
-  cat("\nInteraction:\n", names(which(iSI > SI)), "\n")
-  cat("\nTotal order:\n", names(which(tSI > SI)), "\n")
-  cat("\nUnselected factors in total order:\n", names(which(tSI <= SI)), "\n")
-  cat("\n")
-
-  cat("\nConvergence check ( Index >", CI, ")\n")
-  cat("----------------------------------")
-  cat("\nFirst order:\n", names(which(mCI > CI)), "\n")
-  cat("\nInteraction:\n", names(which(iCI > CI)), "\n")
-  cat("\nTotal order:\n", names(which(tCI > CI)), "\n")
-  cat("\n")
-
-}
-
 #' @method plot rfast99
 #' @export
-plot.rfast99 <- function(x, vars = 1, cut.off = F, ...){
+plot.rfast99 <- function(x, vars = 1, SI.cutoff = 0.1, ...){
 
   mSI <- x$mSI[,,vars]
   iSI <- x$tSI[,,vars]
@@ -271,8 +291,8 @@ plot.rfast99 <- function(x, vars = 1, cut.off = F, ...){
       polygon(x = c(times, rev(times)),
               y =c(mSI[,i]-mCI[,i], rev(mSI[,i]+mCI[,i])),
               col = col.transp, border = col.transp)
-      if (is.numeric(cut.off)){
-        abline( cut.off, 0, lty = 2)
+      if (is.numeric(SI.cutoff)){
+        abline(SI.cutoff, 0, lty = 2)
       }
     }
 
@@ -287,6 +307,7 @@ plot.rfast99 <- function(x, vars = 1, cut.off = F, ...){
   }
 }
 
+#' @rdname check
 #' @method print rfast99
 #' @export
 print.rfast99 <- function(x, ...) {

@@ -18,5 +18,6 @@ pksim(y, vars = 1, log = F, legend = T, ...)
 \item{...}{additional arguments to customize the graphical parameters.}
 }
 \description{
-pharmacokinetic plot of the output result based on the given parameter
+Pharmacokinetic plot of the output result based on the given parameter (Uncertainty analysis).
+The first model variable is the default output.
 }

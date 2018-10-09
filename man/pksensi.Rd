@@ -6,7 +6,7 @@
 \title{The \pkg{pksensi} package}
 \description{
 Reduce parameter dimensionality in pharmacokinetic modeling
-and evaluate the robustness of global sensitivity analysis algorithm
+and evaluate the robustness of global sensitivity analysis algorithm.
 }
 \details{
 The "extended Fourier amplitude sensitivity testing (eFAST)" method,

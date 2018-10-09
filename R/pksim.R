@@ -1,7 +1,7 @@
 #' Pharmacokinetic Simulation from Sampling Parameter
 #'
-#' @description
-#' pharmacokinetic plot of the output result based on the given parameter
+#' Pharmacokinetic plot of the output result based on the given parameter (Uncertainty analysis).
+#' The first model variable is the default output.
 #'
 #' @param y a numeric array created from \code{solve_fun} function.
 #' @param vars a logical value or character to specific the display variable in simulation.
@@ -13,7 +13,6 @@
 #' @importFrom graphics plot polygon
 #' @importFrom stats quantile
 #'
-#' @rdname pksim
 #' @export
 pksim <- function(y, vars = 1, log = F, legend = T, ...){
   times <- as.numeric(colnames(y[,1,,vars]))

@@ -31,10 +31,10 @@
 #'
 #'   time <- seq(from = 0.25, to = 12.25, by = 0.5)
 #'   y <- solve_fun(x, model = FFPK, time = time, vars = "output")
-#'   tell2(x,y)
 #'
-#'   check(x)
-#'   print(x)
+#'   pksim(y) # Visualize uncertainty of model output
+#'
+#' @seealso \code{\link{pksim}}
 #'
 #' @export
 solve_fun <- function(x, time = NULL, params, initParmsfun = NULL, initState, dllname,
