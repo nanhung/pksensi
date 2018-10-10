@@ -2,8 +2,10 @@ Package: pksensi
 Type: Package
 Title: Sensitivity analysis for pharmacokinetic model
 Version: 0.1.0
-Author: Nan-Hung Hsieh, Brad Reisfeld, Weihsueh A. Chiu
-Maintainer: Nan-Hung Hsieh <nhsieh@cvm.tamu.edu>
+Authors@R: c(
+    person("Nan-Hung", "Hsieh", role = c("aut", "cre"), email = "nhsieh@cvm.tamu.edu", comment = c(ORCID = "0000-0003-0163-2766")),
+    person("Brad", "Reisfeld", role = "aut"),
+    person("Weihsueh A.", "Chiu", role = "aut"))
 Depends: R (>= 3.3.0)
 Imports:
     deSolve,
@@ -14,7 +16,7 @@ Imports:
     data.table,
     getPass,
     magrittr
-Description: pksensi implements the global sensitivity analysis workflow to investigate the parameter uncertainty and sensitivity in pharmacokinetic (PK) models, especially the physiologically-based pharmacokinetic (PBPK) model and advanced compartment absorption and transit (ACAT) model with multivariate outputs. The package also provide some functions to check the convergence and sensitivity of model parameters.   
+Description: pksensi implements the global sensitivity analysis workflow to investigate the parameter uncertainty and sensitivity in pharmacokinetic (PK) models, especially the physiologically-based pharmacokinetic (PBPK) model with multivariate outputs. The package also provide some functions to check the convergence and sensitivity of model parameters.   
 License: GPL (>= 3)
 RoxygenNote: 6.1.0
 Suggests:
@@ -23,6 +25,8 @@ Suggests:
     rmarkdown,
     covr,
     knitr
-VignetteBuilder: knitr
+LazyData: true    
+URL: https://github.com/nanhung/pksensi
+BugReports: https://github.com/nanhung/pksensi/issues
 Encoding: UTF-8
 

@@ -1,4 +1,4 @@
-#' The \pkg{pksensi} package
+#' About \pkg{pksensi} package
 #'
 #' Reduce parameter dimensionality in pharmacokinetic modeling
 #' and evaluate the robustness of global sensitivity analysis algorithm.
@@ -18,6 +18,6 @@
 #' to improve the computational efficiencies in physiologically-based pharmacokinetic modeling,
 #' \emph{Front. Pharmacol}, 9, 588.
 #'
-#' @name pksensi
+#' @name about-pksensi
 #' @aliases pksensi-package
 NULL
