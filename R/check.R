@@ -2,35 +2,34 @@
 #'
 #' Visualize and check the sensitivity (or convergence) measurment with a given result.
 #'
-#' The \code{print} function can used to print sensitivity and convergence indices
-#' with given time-step. The \code{check} method provide the summary of
-#' parameter sensitivity and convergence. The \code{plot} function provide the
+#' The \code{plot} function provide the
 #' time-course functional output of both indices (first order and interaction) for each parameter.
-#' The first model variable is the default output.
+#' The first model variable is the default output. \code{heat_check}
 #'
 #' @param x a list of storing information in the defined sensitivity function.
-#' @param fit a vector of interested output index included \code{first order}, \code{interaction}, and \code{total order}.
+#' @param order a vector of interested output index included \code{first order}, \code{interaction}, and \code{total order}.
 #' @param vars a logical value or character to specific the display variable in simulation.
 #' @param times a logical value or character to specific the display time in simulation.
-#' @param SI.cutoff a vector with two numeric value to specific the cut-off points of sensitivity index in parameter ranking.
-#' @param CI.cutoff a vector with two numeric value to specific the cut-off points of convergence index in parameter ranking.
+#' @param SI.cutoff a value or vector to set the cut-off for sensitivity index. The default is 0.05.
+#' @param CI.cutoff a value or vector to set the cut-off for convergence index. The default is 0.05.
 #' @param index a character to choose sensitivity index \code{SI} (default) or convergence index \code{CI}.
-#' @param order a logical value indicating whether the parameter should reorder by the value.
 #' @param level a logical value to use continous or discrete (default) output.
 #' @param text a logical value to display the calculated indices in the plot.
-#' to the specified number of decimal places (default 4).
-#' @param SI a numeric value to set the cut-off point for sensitivity index (default 0.05).
-#' @param CI a numeric vlaue to set the cut-off point for convergence index (default 0.05).
 #' @param ... additional arguments to customize the graphical parameters.
 #'
 #' @importFrom reshape melt
 #' @importFrom magrittr %>%
-#' @importFrom stats reorder time
+#' @importFrom stats time
 #' @importFrom grDevices colorRampPalette
 #' @importFrom graphics barplot legend lines par abline plot.new
 #' @importFrom stats runif fft
 #' @import ggplot2
 #' @import dplyr
+#'
+#' @return The \code{print} function can return sensitivity and convergence indices
+#' with given time-step. in console The \code{check} method provide the summary of
+#' parameter sensitivity and convergence according to the given \code{SI.cutoff} and \code{CI.cutoff}.
+#' This function can distinguish the influential and non-influential parameter by the providing value of \code{SI.cutoff}.
 #'
 #' @references
 #' F Sarrazin, F Pianosi, T Wagener, 2016,
@@ -54,19 +53,21 @@
 #'
 #'
 #' tell2(x,y) # Link decoupling simulation result
+#' x
 #'
-#' check(x) # Check results of sensitivity measures
-#' print(x)
+#' # Check results of sensitivity measures
+#' check(x)
+#' heat_check(x)
 #'
 #' @seealso \code{\link{tell2}}
 #'
 #' @rdname check
 #' @export
-check <- function(x, times, vars, SI, CI) UseMethod("check")
+check <- function(x, times, vars, SI.cutoff, CI.cutoff) UseMethod("check")
 
 #' @method check rfast99
 #' @export
-check.rfast99 <- function(x, times = NULL, vars = NULL, SI = 0.05, CI = 0.05){
+check.rfast99 <- function(x, times = NULL, vars = NULL, SI.cutoff = 0.05, CI.cutoff = 0.05){
 
   if (is.null(times)) times <- dimnames(x$y)[[3]]
   if (is.null(vars)) vars <- dimnames(x$y)[[4]]
@@ -118,29 +119,29 @@ check.rfast99 <- function(x, times = NULL, vars = NULL, SI = 0.05, CI = 0.05){
   #    tCI <- x$tCI
   #  }
 
-  cat("\nSensitivity check ( Index >", SI, ")\n")
+  cat("\nSensitivity check ( Index >", SI.cutoff, ")\n")
   cat("----------------------------------")
-  cat("\nFirst order:\n", names(which(mSI > SI)), "\n")
-  cat("\nInteraction:\n", names(which(iSI > SI)), "\n")
-  cat("\nTotal order:\n", names(which(tSI > SI)), "\n")
-  cat("\nUnselected factors in total order:\n", names(which(tSI <= SI)), "\n")
+  cat("\nFirst order:\n", names(which(mSI > SI.cutoff)), "\n")
+  cat("\nInteraction:\n", names(which(iSI > SI.cutoff)), "\n")
+  cat("\nTotal order:\n", names(which(tSI > SI.cutoff)), "\n")
+  cat("\nUnselected factors in total order:\n", names(which(tSI <= SI.cutoff)), "\n")
   cat("\n")
 
-  cat("\nConvergence check ( Index >", CI, ")\n")
+  cat("\nConvergence check ( Index >", CI.cutoff, ")\n")
   cat("----------------------------------")
-  cat("\nFirst order:\n", names(which(mCI > CI)), "\n")
-  cat("\nInteraction:\n", names(which(iCI > CI)), "\n")
-  cat("\nTotal order:\n", names(which(tCI > CI)), "\n")
+  cat("\nFirst order:\n", names(which(mCI > CI.cutoff)), "\n")
+  cat("\nInteraction:\n", names(which(iCI > CI.cutoff)), "\n")
+  cat("\nTotal order:\n", names(which(tCI > CI.cutoff)), "\n")
   cat("\n")
 
 }
 
 #' @rdname check
 #' @export
-heat_check <- function(x, fit = c("first order", "total order"),
+heat_check <- function(x, order = c("first order", "total order"),
                        vars = NULL, times = NULL,
                        SI.cutoff = c(0.05, 0.1), CI.cutoff = c(0.05, 0.1),
-                       index = "SI", order = F, level = T, text = F){
+                       index = "SI", level = T, text = F){
 
   nSI <- length(SI.cutoff)
   SI.labels<-rep(NA, nSI+1)
@@ -187,17 +188,17 @@ heat_check <- function(x, fit = c("first order", "total order"),
     times <- dimnames(x$y)[[3]]
   } else (times <- times)
 
-  X <- X %>% filter(order %in% fit) %>% filter_(~variable %in% vars) %>% filter(time %in% times)
+  X <- X %>% filter(order %in% order) %>% filter_(~variable %in% vars) %>% filter(time %in% times)
 
   if(length(times) < 10){
     X$time <- as.factor(X$time)
   }
 
-  if (order == F){
+  #if (order == F){
     p <- ggplot(X, aes_string("time", "parameter"))
-  } else if (order == T) {
-    p <- ggplot(X, aes_string("time", "reorder(parameter, value)"))
-  }
+  #} else if (order == T) {
+  #  p <- ggplot(X, aes_string("time", "reorder(parameter, value)"))
+  #}
 
   if (level == T) {
     p <- p + geom_tile(aes(fill = level), colour = "white") +
@@ -211,7 +212,7 @@ heat_check <- function(x, fit = c("first order", "total order"),
     p <- p + scale_x_discrete(expand=c(0,0))
   } else p <- p + scale_x_continuous(expand=c(0,0))
 
-  if (length(fit) == 1){
+  if (length(order) == 1){
     p <- p + scale_y_discrete(expand=c(0,0)) +
       facet_grid(~variable) +
       theme(axis.text.x = element_text(size=10, hjust = 1),

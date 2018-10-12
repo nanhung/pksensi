@@ -7,11 +7,11 @@
 \alias{print.rfast99}
 \title{Check the Parameter Sensitivity}
 \usage{
-check(x, times, vars, SI, CI)
+check(x, times, vars, SI.cutoff, CI.cutoff)
 
-heat_check(x, fit = c("first order", "total order"), vars = NULL,
+heat_check(x, order = c("first order", "total order"), vars = NULL,
   times = NULL, SI.cutoff = c(0.05, 0.1), CI.cutoff = c(0.05, 0.1),
-  index = "SI", order = F, level = T, text = F)
+  index = "SI", level = T, text = F)
 
 \method{plot}{rfast99}(x, vars = 1, SI.cutoff = 0.1, ...)
 
@@ -24,36 +24,33 @@ heat_check(x, fit = c("first order", "total order"), vars = NULL,
 
 \item{vars}{a logical value or character to specific the display variable in simulation.}
 
-\item{SI}{a numeric value to set the cut-off point for sensitivity index (default 0.05).}
+\item{SI.cutoff}{a value or vector to set the cut-off for sensitivity index. The default is 0.05.}
 
-\item{CI}{a numeric vlaue to set the cut-off point for convergence index (default 0.05).}
+\item{CI.cutoff}{a value or vector to set the cut-off for convergence index. The default is 0.05.}
 
-\item{fit}{a vector of interested output index included \code{first order}, \code{interaction}, and \code{total order}.}
-
-\item{SI.cutoff}{a vector with two numeric value to specific the cut-off points of sensitivity index in parameter ranking.}
-
-\item{CI.cutoff}{a vector with two numeric value to specific the cut-off points of convergence index in parameter ranking.}
+\item{order}{a vector of interested output index included \code{first order}, \code{interaction}, and \code{total order}.}
 
 \item{index}{a character to choose sensitivity index \code{SI} (default) or convergence index \code{CI}.}
 
-\item{order}{a logical value indicating whether the parameter should reorder by the value.}
-
 \item{level}{a logical value to use continous or discrete (default) output.}
 
-\item{text}{a logical value to display the calculated indices in the plot.
-to the specified number of decimal places (default 4).}
+\item{text}{a logical value to display the calculated indices in the plot.}
 
 \item{...}{additional arguments to customize the graphical parameters.}
+}
+\value{
+The \code{print} function can return sensitivity and convergence indices
+with given time-step. in console The \code{check} method provide the summary of
+parameter sensitivity and convergence according to the given \code{SI.cutoff} and \code{CI.cutoff}.
+This function can distinguish the influential and non-influential parameter by the providing value of \code{SI.cutoff}.
 }
 \description{
 Visualize and check the sensitivity (or convergence) measurment with a given result.
 }
 \details{
-The \code{print} function can used to print sensitivity and convergence indices
-with given time-step. The \code{check} method provide the summary of
-parameter sensitivity and convergence. The \code{plot} function provide the
+The \code{plot} function provide the
 time-course functional output of both indices (first order and interaction) for each parameter.
-The first model variable is the default output.
+The first model variable is the default output. \code{heat_check}
 }
 \examples{
 q <- "qunif"
