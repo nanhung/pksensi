@@ -57,7 +57,9 @@
 #'
 #' # Check results of sensitivity measures
 #' check(x)
+#' plot(x)
 #' heat_check(x)
+#' heat_check(x, index = "CI")
 #'
 #' @seealso \code{\link{tell2}}
 #'
@@ -152,7 +154,6 @@ heat_check <- function(x, order = c("first order", "total order"),
   SI.labels[1] <- paste0("0 - ", SI.cutoff[1])
   SI.labels[nSI+1] <- paste0(" > ", SI.cutoff[nSI])
 
-
   nCI <- length(CI.cutoff)
   CI.labels<-rep(NA, nCI+1)
 
@@ -165,7 +166,6 @@ heat_check <- function(x, order = c("first order", "total order"),
   if (index ==  "SI"){
     X <- tidy_index(x, index = index) %>%
       mutate_(level = ~cut(value, breaks=c(-Inf, paste(SI.cutoff), Inf), labels=SI.labels))
-
   } else if ((index == "CI")) {
     X <- tidy_index(x, index = index) %>%
       mutate_(level = ~cut(value, breaks=c(-Inf, paste(CI.cutoff), Inf), labels=CI.labels))
@@ -178,7 +178,7 @@ heat_check <- function(x, order = c("first order", "total order"),
   } else if (index == "CI") cols <- rev(colfunc(nCI+1))
 
   X$variable = factor(X$variable, levels=dimnames(x$y)[[4]])
-  X$parameter = factor(X$parameter, levels=rev(x$factors))
+  X$parameter = factor(X$parameter, levels=rev(x$params))
 
   if (is.null(vars)){
     vars <- dimnames(x$y)[[4]]

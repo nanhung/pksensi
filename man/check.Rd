@@ -69,7 +69,9 @@ x
 
 # Check results of sensitivity measures
 check(x)
+plot(x)
 heat_check(x)
+heat_check(x, index = "CI")
 
 }
 \references{
