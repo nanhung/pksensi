@@ -5,7 +5,7 @@ Version: 0.1.0
 Authors@R: c(
     person("Nan-Hung", "Hsieh", role = c("aut", "cre"), email = "nhsieh@cvm.tamu.edu", comment = c(ORCID = "0000-0003-0163-2766")),
     person("Brad", "Reisfeld", role = "aut"),
-    person("Weihsueh A.", "Chiu", role = "aut"))
+    person("Weihsueh A.", "Chiu", role = "aut", comment = c(ORCID = "0000-0002-7575-2368")))
 Depends: R (>= 3.3.0)
 Imports:
     data.table,

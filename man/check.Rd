@@ -65,9 +65,11 @@ y <- solve_fun(x, model = FFPK, time = time, vars = "output")
 
 
 tell2(x,y) # Link decoupling simulation result
+x
 
-check(x) # Check results of sensitivity measures
-print(x)
+# Check results of sensitivity measures
+check(x)
+heat_check(x)
 
 }
 \references{
