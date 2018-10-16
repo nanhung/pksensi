@@ -2,9 +2,12 @@
 #'
 #' Visualize and check the sensitivity (or convergence) measurment with a given result.
 #'
-#' The \code{plot} function provide the
-#' time-course functional output of both indices (first order and interaction) for each parameter.
-#' The first model variable is the default output. \code{heat_check}
+#' The convergence of sensitivity indices for each parameter is using the approach proposed
+#' by Sarrazin et al. (2016).
+#' This method quantitatively assesses the convergence by computing the range of
+#' 95% confidence intervals of the sensitivity indices for each parameter across all data points (time and outputs).
+#' Using a global approach based on a heatmap visualization combined with an index "cut-off,"
+#' can systematically distinguish between "influential" and "non-influential" parameters (Hsieh et al., 2018).
 #'
 #' @param x a list of storing information in the defined sensitivity function.
 #' @param order a vector of interested output index included \code{first order}, \code{interaction}, and \code{total order}.
@@ -26,10 +29,16 @@
 #' @import ggplot2
 #' @import dplyr
 #'
-#' @return The \code{print} function can return sensitivity and convergence indices
-#' with given time-step. in console The \code{check} method provide the summary of
+#' @return The \code{print} function returns sensitivity and convergence indices
+#' with given time-step in console. The \code{check} method provides the summary of
 #' parameter sensitivity and convergence according to the given \code{SI.cutoff} and \code{CI.cutoff}.
-#' This function can distinguish the influential and non-influential parameter by the providing value of \code{SI.cutoff}.
+#' It can distinguish the influential and non-influential parameter by the providing value
+#' of \code{SI.cutoff}. The \code{plot} function can generate the
+#' time-course functional outputs of first order and interaction indices for each parameter.
+#' The default output is the first model variable. The \code{heat_check} provides a convenient way
+#' to visualize and distinguish the influential and non-influential parameter by the setting cut-off.
+#' The convergence index can examine the stability of sensitivity index.
+#' To check convergence, be sure to conduct the replication in \code{rfast99}.
 #'
 #' @references
 #' F Sarrazin, F Pianosi, T Wagener, 2016,
