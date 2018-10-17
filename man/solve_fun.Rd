@@ -24,15 +24,15 @@ that contains the compiled function.}
 
 \item{func}{the name of the function in the dynamically loaded shared library.}
 
-\item{initfunc}{the name of the initialisation function (which initialises values of parameters), as provided in dllname.}
+\item{initfunc}{the name of the initialization function (which initialises values of parameters), as provided in dllname.}
 
 \item{outnames}{the names of output variables calculated in the compiled function \code{func}.}
 
-\item{method}{method used by integrator (default "lsode").}
+\item{method}{method used by integrator (\pkg{desolve}).}
 
-\item{rtol}{argument passed to integrator (default 1e-8).}
+\item{rtol}{argument passed to integrator (\pkg{desolve}).}
 
-\item{atol}{argument passed to integrator (default 1e-12).}
+\item{atol}{argument passed to integrator (\pkg{desolve}).}
 
 \item{model}{the defined analytical equation with functional output.}
 
@@ -43,8 +43,8 @@ that contains the compiled function.}
 \item{...}{additional arguments for deSolve::ode method.}
 }
 \description{
-The \code{solve_fun} solves for the time-dependent quantity/concentration in different tissues
-through the imported deSolve function. It can also solve the function with analytical function.
+The \code{solve_fun} can solve time-dependent quantities/concentrations of different variables in PK model
+through the imported deSolve function. It can be used to solve the function with analytical solution.
 }
 \examples{
   q <- "qunif"
@@ -63,6 +63,10 @@ through the imported deSolve function. It can also solve the function with analy
 
   pksim(y) # Visualize uncertainty of model output
 
+}
+\references{
+K. Soetaert, T. Petzoldt, R.W. Setzer, 2010, Solving differential equations in R: package deSolve,
+\emph{J. Stat. Soft.}, 33:9
 }
 \seealso{
 \code{\link{pksim}}

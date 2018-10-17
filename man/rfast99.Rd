@@ -23,12 +23,12 @@ rfast99(params, n, M = 4, omega = NULL, q = NULL, q.arg = NULL,
 
 \item{q.arg}{a list of quantile functions parameters.}
 
-\item{replicate}{an integer to define the number of replication. The default is 1.}
+\item{replicate}{an integer to define the number of replication. The default is set to 1 turn off the replication.}
 
 \item{conf}{the confidence level for replication confidence intervals. The default is 0.95.}
 }
 \value{
-Return the parameter value that will be stored in an array with
+The returned parameter value will be stored in an array with
 c(model evaluation, replication, parameters).
 }
 \description{
@@ -52,7 +52,7 @@ save(x, file = "input_parameters.rda")
 \references{
 A. Saltelli, S. Tarantola and K. Chan, 1999, A quantitative, model independent method for
 global sensitivity analysis of model output,
-\emph{Technometrics}, 41, 39-56
+\emph{Technometrics}, 41, 39-56.
 
 R. I. Cukier, H. B. Levine and K. E. Schuler, 1978,
 Nonlinear sensitivity analysis of multiparameter model systems.

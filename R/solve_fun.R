@@ -1,7 +1,7 @@
 #' Solve PK Model Through deSolve Package or Analytical Function
 #'
-#' The \code{solve_fun} solves for the time-dependent quantity/concentration in different tissues
-#' through the imported deSolve function. It can also solve the function with analytical function.
+#' The \code{solve_fun} can solve time-dependent quantities/concentrations of different variables in PK model
+#' through the imported deSolve function. It can be used to solve the function with analytical solution.
 #'
 #' @param x a list of storing information in the defined sensitivity function.
 #' @param time a vector to define the given time sequence.
@@ -11,11 +11,11 @@
 #' @param dllname a string giving the name of the shared library (without extension)
 #' that contains the compiled function.
 #' @param func the name of the function in the dynamically loaded shared library.
-#' @param initfunc the name of the initialisation function (which initialises values of parameters), as provided in dllname.
+#' @param initfunc the name of the initialization function (which initialises values of parameters), as provided in dllname.
 #' @param outnames the names of output variables calculated in the compiled function \code{func}.
-#' @param method method used by integrator (default "lsode").
-#' @param rtol argument passed to integrator (default 1e-8).
-#' @param atol argument passed to integrator (default 1e-12).
+#' @param method method used by integrator (\pkg{desolve}).
+#' @param rtol argument passed to integrator (\pkg{desolve}).
+#' @param atol argument passed to integrator (\pkg{desolve}).
 #' @param model the defined analytical equation with functional output.
 #' @param lnparam a logical value that make the statement of the log-transformed parameter (default FALSE).
 #' @param vars a character for the selected output.
@@ -39,6 +39,10 @@
 #'   pksim(y) # Visualize uncertainty of model output
 #'
 #' @seealso \code{\link{pksim}}
+#'
+#' @references
+#' K. Soetaert, T. Petzoldt, R.W. Setzer, 2010, Solving differential equations in R: package deSolve,
+#' \emph{J. Stat. Soft.}, 33:9
 #'
 #' @export
 solve_fun <- function(x, time = NULL, params, initParmsfun = NULL, initState, dllname,

@@ -1,8 +1,7 @@
 #' Solve PK Model Through MCSim
 #'
-#' The \code{solve_mcsim} solves for the differential equations of time-dependent quantity/concentration in different tissues/compartments
+#' The \code{solve_mcsim} can solve the differential equations of time-dependent quantity/concentration in different tissues/compartments
 #' through MCSim.
-#' The output result is the 4-dimension array with c(model evaluations, replications, time-points, output variables).
 #'
 #' This function allows users to use external data file that assigned in \code{setpoint.name} as parameter matrix.
 #' If you want to use it, be sure to define \code{n} and \code{setpoint.name}.
@@ -24,6 +23,15 @@
 #'
 #' @importFrom utils write.table
 #' @importFrom data.table fread
+#'
+#' @return The output result is the 4-dimension array with
+#' c(model evaluations, replications, time-points, output variables).
+#'
+#' @examples
+#' url <- "https://raw.githubusercontent.com/rbind/nanhung/master/index.Rmd"
+#' destfile <- paste0(getwd(),"/index.Rmd")
+#' download.file(url, destfile)
+#'
 #'
 #' @export
 #' @describeIn solve_mcsim Numerical analysis for the PK model by MCSim.

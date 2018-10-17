@@ -11,7 +11,7 @@
 #' @param omega a vector giving the set of frequencies.
 #' @param q a vector of quantile functions names corresponding to wanted parameters distributions.
 #' @param q.arg a list of quantile functions parameters.
-#' @param replicate an integer to define the number of replication. The default is 1.
+#' @param replicate an integer to define the number of replication. The default is set to 1 turn off the replication.
 #' @param conf the confidence level for replication confidence intervals. The default is 0.95.
 #'
 #' @source
@@ -20,14 +20,14 @@
 #' @references
 #' A. Saltelli, S. Tarantola and K. Chan, 1999, A quantitative, model independent method for
 #' global sensitivity analysis of model output,
-#' \emph{Technometrics}, 41, 39-56
+#' \emph{Technometrics}, 41, 39-56.
 #'
 #' R. I. Cukier, H. B. Levine and K. E. Schuler, 1978,
 #' Nonlinear sensitivity analysis of multiparameter model systems.
 #' \emph{J. Comput. Phys.}, 26, 1–42.
 #'
 #' @return
-#' Return the parameter value that will be stored in an array with
+#' The returned parameter value will be stored in an array with
 #' c(model evaluation, replication, parameters).
 #'
 #' @importFrom graphics mtext

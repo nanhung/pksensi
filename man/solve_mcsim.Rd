@@ -42,10 +42,13 @@ generate_infile(infile.name, outfile.name, params, vars, time, condition,
 
 \item{q.arg}{a list of shape parameters in the sampling distribution (\code{dist}).}
 }
+\value{
+The output result is the 4-dimension array with
+c(model evaluations, replications, time-points, output variables).
+}
 \description{
-The \code{solve_mcsim} solves for the differential equations of time-dependent quantity/concentration in different tissues/compartments
+The \code{solve_mcsim} can solve the differential equations of time-dependent quantity/concentration in different tissues/compartments
 through MCSim.
-The output result is the 4-dimension array with c(model evaluations, replications, time-points, output variables).
 }
 \details{
 This function allows users to use external data file that assigned in \code{setpoint.name} as parameter matrix.
@@ -58,3 +61,9 @@ If you want to use it, be sure to define \code{n} and \code{setpoint.name}.
 \item \code{generate_infile}: Generate the MCSim input file.
 }}
 
+\examples{
+url <- "https://raw.githubusercontent.com/rbind/nanhung/master/index.Rmd"
+destfile <- paste0(getwd(),"/index.Rmd")
+download.file(url, destfile)
+
+}

@@ -5,16 +5,26 @@
 \alias{FFPK}
 \title{Example PK Model for Sensitivity Analysis}
 \usage{
-FFPK(parameters, time, dose = 1)
+FFPK(params, time, dose = 1)
 }
 \arguments{
-\item{parameters}{a parameter matrix containing the input sample.}
+\item{params}{a parameter matrix containing the input sample.}
 
 \item{time}{the given time-points.}
 
 \item{dose}{a given dose.}
 }
 \description{
-The example test model is Flip-flop kinetics (FFPK).
-\deqn{$C(t) = \frac{F \cdot D \cdot k_a}{(k_a-k_e)V} (e^{-k_et}-e^{-k_at})$/}
+The example test model is Flip-flop kinetics (FFPK). The time-dependent concentration can be written as:
+\deqn{C(t) = \frac{F \cdot D \cdot k_a}{(k_a-k_e)V} (e^{-k_et}-e^{-k_at})}
+where \eqn{F} is the fraction or percentage of the administrated dose that can reach the general circulation,
+\eqn{k_a} is the first-order absorption rate constant (/time),
+\eqn{k_e} is the first-order elimination rate constant (/time), and \eqn{V} is the distribution volume.
+}
+\examples{
+params <- c(F = 0.9, KA = 1.2, KE = 0.2, V = 1.5)
+t <- seq(0, 12, 0.1)
+C <-FFPK(params = params, time = t)
+plot(t, C, type = "l", xlab = "time", ylab = "concentration")
+
 }

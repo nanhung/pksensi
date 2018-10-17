@@ -1,18 +1,30 @@
 #' Example PK Model for Sensitivity Analysis
 #'
-#' The example test model is Flip-flop kinetics (FFPK).
-#' \deqn{$C(t) = \frac{F \cdot D \cdot k_a}{(k_a-k_e)V} (e^{-k_et}-e^{-k_at})$/}
+#' The example test model is Flip-flop kinetics (FFPK). The time-dependent concentration can be written as:
+#' \deqn{C(t) = \frac{F \cdot D \cdot k_a}{(k_a-k_e)V} (e^{-k_et}-e^{-k_at})}
+#' where \eqn{F} is the fraction or percentage of the administrated dose that can reach the general circulation,
+#' \eqn{k_a} is the first-order absorption rate constant (/time),
+#' \eqn{k_e} is the first-order elimination rate constant (/time), and \eqn{V} is the distribution volume.
 #'
 #' @param time the given time-points.
-#' @param parameters a parameter matrix containing the input sample.
+#' @param params a parameter matrix containing the input sample.
 #' @param dose a given dose.
 #'
 #' @name pk_model
 #' @aliases pk_model
 #' @rdname models
+#'
+#' @examples
+#' params <- c(F = 0.9, KA = 1.2, KE = 0.2, V = 1.5)
+#' t <- seq(0, 12, 0.1)
+#' C <-FFPK(params = params, time = t)
+#' plot(t, C, type = "l", xlab = "time", ylab = "concentration")
+#'
 #' @export
-FFPK <- function(parameters, time, dose = 1){
-  A <- (dose * parameters[1] * parameters[2])/( parameters[4] * ( parameters[2] - parameters[3]))
-  C <- A * exp(- parameters[3] * time) - A * exp(- parameters[2] * time)
+FFPK <- function(params, time, dose = 1){
+  A <- (dose * params[1] * params[2])/( params[4] * ( params[2] - params[3]))
+  C <- A * exp(- params[3] * time) - A * exp(- params[2] * time)
   return(C)
 }
+
+

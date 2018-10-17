@@ -1,0 +1,83 @@
+# ------------------------------------------------------------
+# One-compartment model with first-order absorption rate and
+# linear elimination (metabolism or other route of elimination)
+#
+# Units:
+# - time in hours
+# - volumes in liters
+#
+# Nan-Hung Hsieh - Oct 2018
+# ------------------------------------------------------------
+
+States  = {Q_rest,          # ~           rest compartment
+           Q_elim};         # ~           eliminated
+
+Outputs = {C_rest,         # Quantity in rest compartment (uM)
+           C_elim,
+           Q_total,        # Total quantity for mass balance
+           lnC_rest};
+
+Inputs  = {Oral_input};     # Drug input in micromoles
+
+# ------------------------
+# Parameters
+# ------------------------
+
+BW = 70; # Body weight
+
+# Chemical Parameters
+MW = 100;   # Molecualar Weight
+
+# Volumes (L)
+V_dist = 1; lnV_dist = log(1.);
+
+# Rate constant (/h)
+k_a = 1.0; lnk_a = log(1.0); # Intestinal absortion rate (/h)
+k_e = 0.1; lnk_e = log(.1);
+
+# Oral input modeling
+
+Absdose;
+IngDose    = 1.0; # ingested input (mg/kg)
+Fgutabs    = 1.0; #
+Period     = 24.0; # period of the exposure/no exposure cycle (h)
+Tlag       = 0.0; # Absorption lagtime (h)
+
+Oral_input = PerExp (Absdose, Period, Tlag, k_a);
+
+# Population Mean Parameters (M_...)
+M_V_dist; M_lnV_dist;
+M_k_e; M_lnk_e;
+M_k_a; M_lnk_a;
+M_Fgutabs; M_lnFgutabs;
+
+
+#Population Variance Parameters (V_...)
+V_V_dist; V_lnV_dist;
+V_k_e; V_lnk_e;
+V_k_a; V_lnk_a;
+V_Fgutabs; V_lnFgutabs;
+
+#  Data Error (Ve_...)
+# Needed if you are using an error distribution, rather than error at specific time points.
+Ve_C_rest; Ve_lnC_rest;
+
+Initialize{
+    Absdose = IngDose * Fgutabs * BW;
+}
+
+
+Dynamics {
+  dt (Q_rest)  = k_a * Oral_input - k_e * Q_rest;
+  dt (Q_elim)  = k_e * Q_rest;
+}
+
+CalcOutputs {
+  C_rest  = Q_rest / V_dist / MW * 1000; # uM
+  C_elim  = Q_elim / MW * 1000;
+  Q_total = Q_rest + Q_elim;
+
+  lnC_rest  = (C_rest > 0 ? log(C_rest):-20.);
+}
+
+End.
