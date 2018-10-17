@@ -24,7 +24,7 @@ The default \code{application} is set to \code{'mcsim'}
 to generate the executable file to solve differential equations by MCSim.
 If \code{application = 'R'},
 the function will compile and create dynamic-link libraries (.dll) on Windows and
-shared objects (.so) on Unix-liked systems (e.g., Linux and MacOS).
+shared objects (.so) on Unix-likes systems (e.g., Linux and MacOS).
 }
 \description{
 The \code{compile_model} is used to compile the C file or MCSim's model file
