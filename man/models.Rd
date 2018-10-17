@@ -3,7 +3,7 @@
 \name{pk_model}
 \alias{pk_model}
 \alias{FFPK}
-\title{Test PK Model for Sensitivity Analysis}
+\title{Example PK Model for Sensitivity Analysis}
 \usage{
 FFPK(parameters, time, dose = 1)
 }
@@ -16,4 +16,5 @@ FFPK(parameters, time, dose = 1)
 }
 \description{
 The example test model is Flip-flop kinetics (FFPK).
+\deqn{$C(t) = \frac{F \cdot D \cdot k_a}{(k_a-k_e)V} (e^{-k_et}-e^{-k_at})$/}
 }
