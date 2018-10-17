@@ -62,6 +62,7 @@ If you want to use it, be sure to define \code{n} and \code{setpoint.name}.
 }}
 
 \examples{
+\dontrun{
 url <- "https://raw.githubusercontent.com/nanhung/pksensi/master/tests/1cpt.model"
 destfile <- paste0(getwd(),"/1cpt.model")
 download.file(url, destfile)
@@ -91,6 +92,6 @@ outfile.name = outfile.name, params = params, vars = vars, time = t,
 condition = "IngDose = 1")
 
 pksim(y)
-
+}
 
 }

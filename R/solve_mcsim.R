@@ -28,6 +28,7 @@
 #' c(model evaluations, replications, time-points, output variables).
 #'
 #' @examples
+#' \dontrun{
 #' url <- "https://raw.githubusercontent.com/nanhung/pksensi/master/tests/1cpt.model"
 #' destfile <- paste0(getwd(),"/1cpt.model")
 #' download.file(url, destfile)
@@ -57,7 +58,7 @@
 #' condition = "IngDose = 1")
 #'
 #' pksim(y)
-#'
+#' }
 #'
 #' @export
 #' @describeIn solve_mcsim Numerical analysis for the PK model by MCSim.
