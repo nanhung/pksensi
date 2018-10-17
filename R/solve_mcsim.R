@@ -28,9 +28,35 @@
 #' c(model evaluations, replications, time-points, output variables).
 #'
 #' @examples
-#' url <- "https://raw.githubusercontent.com/rbind/nanhung/master/index.Rmd"
-#' destfile <- paste0(getwd(),"/index.Rmd")
+#' url <- "https://raw.githubusercontent.com/nanhung/pksensi/master/tests/1cpt.model"
+#' destfile <- paste0(getwd(),"/1cpt.model")
 #' download.file(url, destfile)
+#' mName <- "1cpt"
+#' compile_model(mName)
+#'
+#' q <- "qunif"
+#' q.arg <- list(list(min = 0.6, max = 1.0),
+#'    list(min = 0.5, max = 1.5),
+#'    list(min = 0.02, max = 0.3),
+#'    list(min = 20, max = 60))
+#'
+#' params <- c("Fgutabs","k_a","k_e","V_dist")
+#'
+#' set.seed(1234)
+#' x <- rfast99(params = params, n = 200, q = q, q.arg = q.arg, rep = 20)
+#'
+#' infile.name <- "example.in"
+#' outfile.name <- "example.csv"
+#' vars <- "C_rest"
+#'
+#' t <- seq(from = 0.25, to = 12.25, by = 0.5)
+#'
+#' y <- solve_mcsim(x, mName = mName, infile.name = infile.name,
+#' setpoint.name = "setpoint.dat",
+#' outfile.name = outfile.name, params = params, vars = vars, time = t,
+#' condition = "IngDose = 1")
+#'
+#' pksim(y)
 #'
 #'
 #' @export
