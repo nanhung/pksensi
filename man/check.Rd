@@ -32,7 +32,7 @@ heat_check(x, order = c("first order", "total order"), vars = NULL,
 
 \item{index}{a character to choose sensitivity index \code{SI} (default) or convergence index \code{CI}.}
 
-\item{level}{a logical value to use continous or discrete (default) output.}
+\item{level}{a logical value to use continuous or discrete (default) output.}
 
 \item{text}{a logical value to display the calculated indices in the plot.}
 
@@ -51,7 +51,7 @@ The convergence index can examine the stability of sensitivity index.
 To check convergence, be sure to conduct the replication in \code{rfast99}.
 }
 \description{
-Visualize and check the sensitivity (or convergence) measurment with a given result.
+Visualize and check the sensitivity (or convergence) measurement with a given result.
 }
 \details{
 The convergence of sensitivity indices for each parameter is using the approach proposed

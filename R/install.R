@@ -31,12 +31,13 @@
 #'
 #' @export
 install_mcsim = function(version = "6.0.1", directory = NULL, mxstep = 500) {
-  #  if (.Platform$OS.type == "windows") {
-  #    stop("The function haven't supprot Windows system")
-  if (.Platform$OS.type == "windows") {
-    if (!(devtools::find_rtools() == T)) {
-      warning("The Rtools should be installed first")
-    }}
+
+#  if (.Platform$OS.type == "windows") {
+#    stop("The function haven't supprot Windows system")
+#  if (.Platform$OS.type == "windows") {
+#    if (!(devtools::find_rtools() == T)) {
+#      warning("The Rtools should be installed first")
+#    }}
 
   message("Start install")
   version<-version

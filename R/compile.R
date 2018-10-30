@@ -25,7 +25,6 @@
 #' the function will compile and create dynamic-link libraries (.dll) on Windows and
 #' shared objects (.so) on Unix-likes systems (e.g., Linux and MacOS).
 #'
-#' @importFrom devtools find_rtools
 #'
 #' @export
 compile_model <- function (mName, application = 'mcsim', use_model_file = TRUE, version = NULL) {
@@ -34,11 +33,11 @@ compile_model <- function (mName, application = 'mcsim', use_model_file = TRUE, 
     mName <- paste0(mName,".model")
   }
 
-  if (.Platform$OS.type == "windows") {
-    if (!(devtools::find_rtools() == T)) {
-      warning("The Rtools should be installed first")
-    }
-  }
+#  if (.Platform$OS.type == "windows") {
+#    if (!(devtools::find_rtools() == T)) {
+#      warning("The Rtools should be installed first")
+#    }
+#  }
 
   if (use_model_file == T){ # Generate the ".c" file and "_inits.R" from model file
     if(file.exists(paste0(mName, ".model")) && .Platform$OS.type == "unix"){

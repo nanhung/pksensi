@@ -1,6 +1,6 @@
 #' Check the Parameter Sensitivity
 #'
-#' Visualize and check the sensitivity (or convergence) measurment with a given result.
+#' Visualize and check the sensitivity (or convergence) measurement with a given result.
 #'
 #' The convergence of sensitivity indices for each parameter is using the approach proposed
 #' by Sarrazin et al. (2016).
@@ -16,7 +16,7 @@
 #' @param SI.cutoff a value or vector to set the cut-off for sensitivity index. The default is 0.05.
 #' @param CI.cutoff a value or vector to set the cut-off for convergence index. The default is 0.05.
 #' @param index a character to choose sensitivity index \code{SI} (default) or convergence index \code{CI}.
-#' @param level a logical value to use continous or discrete (default) output.
+#' @param level a logical value to use continuous or discrete (default) output.
 #' @param text a logical value to display the calculated indices in the plot.
 #' @param ... additional arguments to customize the graphical parameters.
 #'

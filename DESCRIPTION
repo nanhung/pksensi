@@ -1,7 +1,7 @@
 Package: pksensi
 Type: Package
 Title: Global Sensitivity Analysis in Pharmacokinetic Modeling
-Version: 0.0.0.9000
+Version: 1.0.0
 Authors@R: c(
     person("Nan-Hung", "Hsieh", role = c("aut", "cre"), email = "nhsieh@cvm.tamu.edu", comment = c(ORCID = "0000-0003-0163-2766")),
     person("Brad", "Reisfeld", role = "aut"),
@@ -16,7 +16,7 @@ Imports:
     ggplot2,
     magrittr,
     reshape
-Description: pksensi implements the global sensitivity analysis workflow to investigate the parameter uncertainty and sensitivity in pharmacokinetic (PK) models, especially the physiologically-based pharmacokinetic (PBPK) model with multivariate outputs. The package also provide some functions to check the sensitivity measures and its convergence of model parameters.   
+Description: Applying the global sensitivity analysis workflow to investigate the parameter uncertainty and sensitivity in pharmacokinetic (PK) models, especially the physiologically-based pharmacokinetic (PBPK) model with multivariate outputs. The package also provide some functions to check the sensitivity measures and its convergence of model parameters.   
 License: GPL (>= 3)
 RoxygenNote: 6.1.0
 Suggests:
