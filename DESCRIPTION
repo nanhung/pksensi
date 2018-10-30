@@ -10,7 +10,6 @@ Depends: R (>= 3.3.0)
 Imports:
     data.table,
     deSolve,
-    devtools,
     dplyr,
     getPass,
     ggplot2,
