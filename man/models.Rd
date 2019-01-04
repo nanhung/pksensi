@@ -3,9 +3,12 @@
 \name{pk_model}
 \alias{pk_model}
 \alias{FFPK}
+\alias{pbtk1comp.c}
 \title{Example PK Model for Sensitivity Analysis}
 \usage{
 FFPK(params, time, dose = 1)
+
+pbtk1comp.c()
 }
 \arguments{
 \item{params}{a parameter matrix containing the input sample.}
@@ -15,12 +18,17 @@ FFPK(params, time, dose = 1)
 \item{dose}{a given dose.}
 }
 \description{
-The example test model is Flip-flop kinetics (FFPK). The time-dependent concentration can be written as:
+One of the example test model is flip-flop pharmacokinetic (FFPK) model. The time-dependent concentration can be written as:
 \deqn{C(t) = \frac{F \cdot D \cdot k_a}{(k_a-k_e)V} (e^{-k_et}-e^{-k_at})}
 where \eqn{F} is the fraction or percentage of the administrated dose that can reach the general circulation,
 \eqn{k_a} is the first-order absorption rate constant (/time),
 \eqn{k_e} is the first-order elimination rate constant (/time), and \eqn{V} is the distribution volume.
 }
+\section{Functions}{
+\itemize{
+\item \code{pbtk1comp.c}: Generate pbtk1comp.c file.
+}}
+
 \examples{
 params <- c(F = 0.9, KA = 1.2, KE = 0.2, V = 1.5)
 t <- seq(0, 12, 0.1)

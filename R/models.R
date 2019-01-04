@@ -1,6 +1,6 @@
 #' Example PK Model for Sensitivity Analysis
 #'
-#' The example test model is Flip-flop kinetics (FFPK). The time-dependent concentration can be written as:
+#' One of the example test model is flip-flop pharmacokinetic (FFPK) model. The time-dependent concentration can be written as:
 #' \deqn{C(t) = \frac{F \cdot D \cdot k_a}{(k_a-k_e)V} (e^{-k_et}-e^{-k_at})}
 #' where \eqn{F} is the fraction or percentage of the administrated dose that can reach the general circulation,
 #' \eqn{k_a} is the first-order absorption rate constant (/time),
@@ -27,4 +27,11 @@ FFPK <- function(params, time, dose = 1){
   return(C)
 }
 
+#' @export
+#' @describeIn models Generate pbtk1comp.c file.
+pbtk1comp.c = function(){
+  url = "https://raw.githubusercontent.com/cran/httk/master/src/pbtk1comp.c"
+  destfile = paste0(getwd(),"/pbtk1comp.c")
+  download.file(url, destfile)
+}
 
