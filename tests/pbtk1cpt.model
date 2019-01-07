@@ -1,0 +1,25 @@
+# ------------------------------------------
+# pbtk1cpt.model (Based on R httk package)
+# ------------------------------------------
+
+#
+States  = { Agutlument, Acompartment, Ametabolized, AUC};
+
+#
+Outputs = {Ccompartment};
+
+# Parameters
+vdist = 0;
+ke = 0;
+kgutabs = 1;
+
+#
+Dynamics {
+  Ccompartment = Acompartment / vdist;
+  dt (Agutlument)  = - kgutabs * Agutlument;
+  dt (Acompartment)  = kgutabs * Agutlument - ke * Acompartment;
+  dt (Ametabolized) = ke * Acompartment;
+  dt (AUC) = Ccompartment;
+}
+
+End.
