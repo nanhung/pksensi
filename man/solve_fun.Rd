@@ -4,9 +4,10 @@
 \alias{solve_fun}
 \title{Solve PK Model Through deSolve Package or Analytical Function}
 \usage{
-solve_fun(x, time = NULL, params, initParmsfun = NULL, initState,
-  dllname, func, initfunc, outnames, method = "lsode", rtol = 1e-08,
-  atol = 1e-12, model = NULL, lnparam = F, vars, ...)
+solve_fun(x, time = NULL, params, initParmsfun = "initParms",
+  initState, dllname, func = "derivs", initfunc = "initmod", outnames,
+  method = "lsode", rtol = 1e-08, atol = 1e-12, model = NULL,
+  lnparam = F, vars = NULL, ...)
 }
 \arguments{
 \item{x}{a list of storing information in the defined sensitivity function.}

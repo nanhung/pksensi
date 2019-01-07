@@ -45,14 +45,17 @@
 #' \emph{J. Stat. Soft.}, 33:9
 #'
 #' @export
-solve_fun <- function(x, time = NULL, params, initParmsfun = NULL, initState, dllname,
-                      func, initfunc, outnames,
+solve_fun <- function(x, time = NULL, params, initParmsfun = "initParms", initState, dllname,
+                      func = "derivs", initfunc = "initmod", outnames,
                       method ="lsode", rtol=1e-8, atol=1e-12,
-                      model = NULL, lnparam = F, vars, ...){
+                      model = NULL, lnparam = F, vars = NULL, ...){
   n <- length(x$s)
   no.params <- ifelse (class(x$params) == "character", length(x$params), x$params)
   replicate <- x$rep
   out <- ifelse (is.null(time), 1, length(time))
+
+  if (is.null(vars)) vars <- outnames
+
   n.vars <- length(vars)
   y <- array(dim = c(n * no.params, replicate, out, n.vars), NA)
   # c(Model Evaluations, replicates, time points, n.vars)
