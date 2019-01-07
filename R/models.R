@@ -28,10 +28,11 @@ FFPK <- function(params, time, dose = 1){
 }
 
 #' @export
-#' @describeIn models Generate pbtk1comp.c file.
-pbtk1comp.c = function(){
-  url = "https://raw.githubusercontent.com/cran/httk/master/src/pbtk1comp.c"
-  destfile = paste0(getwd(),"/pbtk1comp.c")
+#' @describeIn models Generate pbtk1cpt.model file.
+pbtk1cpt.model = function(){
+  url = "https://raw.githubusercontent.com/nanhung/pksensi/master/tests/pbtk1cpt.model"
+  destfile = paste0(getwd(),"/pbtk1cpt.model")
   download.file(url, destfile)
 }
+
 
