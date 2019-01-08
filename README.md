@@ -10,7 +10,7 @@
 
 ```
 # To get pksensi from CRAN (current version 1.0.0):
-install.packages("tidyverse")
+install.packages("pksensi")
 
 # Or get the the development version from GitHub:
 if (!require("devtools")) {
