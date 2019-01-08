@@ -2,36 +2,44 @@
 % Please edit documentation in R/install.R
 \name{install_mcsim}
 \alias{install_mcsim}
+\alias{mcsim_version}
 \title{Install MCSim}
 \usage{
 install_mcsim(version = "6.0.1", directory = NULL, mxstep = 500)
+
+mcsim_version()
 }
 \arguments{
 \item{version}{a character of MCSim version number.}
 
-\item{directory}{a character to assign the directory to put the MCSim files.}
+\item{directory}{a character to assign the directory to put the GNU MCSim files.}
 
 \item{mxstep}{a numeric value to assign the maximum number of (internally defined) steps
 allowed during one call to the solver.}
 }
 \description{
-Download the latest or specific version of MCSim from the official website
+Download the latest or specific version of GNU MCSim from the official website
 (\url{https://www.gnu.org/software/mcsim/}) and install it to the system directory.
 }
 \details{
-This function aims to help users install MCSim more easily.
+This function aims to help users install GNU MCSim more easily.
 However, if you can not install it through this function.
-You might need to follow the instruction of MCSim and install it,
+You might need to follow the instruction of GNU MCSim and install it,
 manually: \url{https://www.gnu.org/software/mcsim/mcsim.html#Installation}
 
 The default \code{mxstp} is setting to 500.
 The user can increase \code{mxstp} to avoid possible error return.
-If you meet any error when conduct sensitivity analysis, you can this function to reinstall MCSim and set the higher \code{mxstp}.
+If you meet any error when conduct sensitivity analysis, you can this function to reinstall GNU MCSim and set the higher \code{mxstp}.
 The default \code{directory} to install MCSim is under \code{/home/username} (Linux), \code{/Users/username} (MacOS),
 and \code{C:/Users/} (windows).
 
 To install MCSim in Windows, be sure to install Rtools or MinGW first.
 }
+\section{Functions}{
+\itemize{
+\item \code{mcsim_version}: Return the version number of GNU MCSim.
+}}
+
 \examples{
 \dontrun{install_mcsim(version = 6.0.1, mxstep = 10000)}
 
