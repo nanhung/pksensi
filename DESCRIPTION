@@ -6,13 +6,14 @@ Authors@R: c(
     person("Nan-Hung", "Hsieh", role = c("aut", "cre"), email = "nhsieh@cvm.tamu.edu", comment = c(ORCID = "0000-0003-0163-2766")),
     person("Brad", "Reisfeld", role = "aut"),
     person("Weihsueh A.", "Chiu", role = "aut", comment = c(ORCID = "0000-0002-7575-2368")))
-Depends: R (>= 3.3.0)
+Depends: 
+    ggplot2 (>= 3.0.0)
 Imports:
     data.table,
+    rlang,
     deSolve,
     dplyr,
     getPass,
-    ggplot2,
     magrittr,
     reshape
 Description: Applying the global sensitivity analysis workflow to investigate the parameter uncertainty and sensitivity in pharmacokinetic (PK) models, especially the physiologically-based pharmacokinetic (PBPK) model with multivariate outputs. The package also provide some functions to check the sensitivity measures and its convergence of model parameters.   
