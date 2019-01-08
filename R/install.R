@@ -116,10 +116,10 @@ mcsim_install <- function(version = "6.0.1", directory = NULL, mxstep = 500) {
 #' @export
 #' @describeIn mcsim Return the version number of GNU MCSim.
 mcsim_version <- function(){
-  system("mod -h | tee mod.mcsim.txt")
+  invisible(system("mod -h | tee mod.mcsim.txt", intern = TRUE))
   l <- readLines("mod.mcsim.txt")
-  substr(l[4], 5, 10)
   invisible(file.remove("mod.mcsim.txt"))
+  cat(substr(l[4], 5, 10))
 }
 
 generate_config.h <- function(){
