@@ -29,6 +29,7 @@
 #'
 #' @examples
 #'
+#' \dontrun{
 #' pbtk1cpt.model()
 #' mName <- "pbtk1cpt"
 #' compile_model(mName)
@@ -54,6 +55,7 @@
 #'                  outfile.name = outfile.name, params = params, vars = vars, time = t,
 #'                  condition = "Agutlument = 10")
 #' pksim(y)
+#' }
 #'
 #' @export
 #' @describeIn solve_mcsim Numerical analysis for the PK model by MCSim.

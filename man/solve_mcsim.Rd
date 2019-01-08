@@ -63,6 +63,7 @@ If you want to use it, be sure to define \code{n} and \code{setpoint.name}.
 
 \examples{
 
+\dontrun{
 pbtk1cpt.model()
 mName <- "pbtk1cpt"
 compile_model(mName)
@@ -88,5 +89,6 @@ y <- solve_mcsim(x, mName = mName, infile.name = infile.name,
                  outfile.name = outfile.name, params = params, vars = vars, time = t,
                  condition = "Agutlument = 10")
 pksim(y)
+}
 
 }
