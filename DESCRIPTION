@@ -1,7 +1,7 @@
 Package: pksensi
 Type: Package
 Title: Global Sensitivity Analysis in Pharmacokinetic Modeling
-Version: 1.0.1
+Version: 1.0.0.9000
 Authors@R: c(
     person("Nan-Hung", "Hsieh", role = c("aut", "cre"), email = "nhsieh@cvm.tamu.edu", comment = c(ORCID = "0000-0003-0163-2766")),
     person("Brad", "Reisfeld", role = "aut"),

@@ -10,6 +10,7 @@ init:
 environment:
   global:
     WARNINGS_ARE_ERORRS: 1
+  USE_RTOOLS: true
 
 install:
   ps: Bootstrap
