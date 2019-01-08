@@ -340,7 +340,7 @@ print.rfast99 <- function(x, ...) {
     cat("\ntotal order:", "\n")
     print(round(x$tSI, digits = digits))
 
-    if (x$rep > 1){ # without replication
+    if (x$rep > 1){ # w/ replication
       cat("\n")
       cat("\n=================================")
       cat("\nConvergence Indices", "\n")

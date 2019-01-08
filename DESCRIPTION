@@ -7,10 +7,10 @@ Authors@R: c(
     person("Brad", "Reisfeld", role = "aut"),
     person("Weihsueh A.", "Chiu", role = "aut", comment = c(ORCID = "0000-0002-7575-2368")))
 Depends: 
-    ggplot2 (>= 3.0.0)
+    R (>= 3.1)
 Imports:
+    ggplot2,
     data.table,
-    rlang,
     deSolve,
     dplyr,
     getPass,
