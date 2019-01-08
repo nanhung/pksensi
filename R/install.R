@@ -25,14 +25,14 @@
 #' @importFrom utils download.file
 #'
 #' @examples
-#' \dontrun{install_mcsim(version = 6.0.1, mxstep = 10000)}
+#' \dontrun{mcsim_install(version = 6.0.1, mxstep = 10000)}
 #'
 #' @references \url{https://www.gnu.org/software/mcsim/}
 #'
 #' @rdname mcsim
 #'
 #' @export
-install_mcsim <- function(version = "6.0.1", directory = NULL, mxstep = 500) {
+mcsim_install <- function(version = "6.0.1", directory = NULL, mxstep = 500) {
 
 #  if (.Platform$OS.type == "windows") {
 #    stop("The function haven't supprot Windows system")
