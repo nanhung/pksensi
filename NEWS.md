@@ -6,7 +6,8 @@ New examples:
 
 New function:
 
-* Add pbtk1cpt.model()
+* Add pbtk1cpt_model()
+* Add pbtk_apap_model()
 * Add function mcsim_version()
 
 Change:
