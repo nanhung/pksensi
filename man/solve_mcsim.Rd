@@ -64,7 +64,7 @@ If you want to use it, be sure to define \code{n} and \code{setpoint.name}.
 \examples{
 
 \dontrun{
-pbtk1cpt.model()
+pbtk1cpt_model()
 mName <- "pbtk1cpt"
 compile_model(mName)
 

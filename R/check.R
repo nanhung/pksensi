@@ -153,7 +153,7 @@ check.rfast99 <- function(x, times = NULL, vars = NULL, SI.cutoff = 0.05, CI.cut
 
 #' @rdname check
 #' @export
-heat_check <- function(x, order = c("first order", "total order"),
+heat_check <- function(x, order = NULL,
                        vars = NULL, times = NULL,
                        SI.cutoff = c(0.05, 0.1), CI.cutoff = c(0.05, 0.1),
                        index = "SI", level = T, text = F){

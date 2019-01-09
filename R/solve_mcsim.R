@@ -30,7 +30,7 @@
 #' @examples
 #'
 #' \dontrun{
-#' pbtk1cpt.model()
+#' pbtk1cpt_model()
 #' mName <- "pbtk1cpt"
 #' compile_model(mName)
 #'

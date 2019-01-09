@@ -28,11 +28,18 @@ FFPK <- function(params, time, dose = 1){
 }
 
 #' @export
-#' @describeIn models Generate pbtk1cpt.model file.
-pbtk1cpt.model = function(){
+#' @describeIn models Download pbtk1cpt.model file.
+pbtk1cpt_model = function(){
   url = "https://raw.githubusercontent.com/nanhung/pksensi/master/tests/pbtk1cpt.model"
   destfile = paste0(getwd(),"/pbtk1cpt.model")
   download.file(url, destfile)
 }
 
+#' @export
+#' @describeIn models Download pbpk_apap.model file.
+pbpk_apap_model = function(){
+  url = "https://raw.githubusercontent.com/nanhung/pksensi/master/tests/pbpk_apap.model"
+  destfile = paste0(getwd(),"/pbpk_apap.model")
+  download.file(url, destfile)
+}
 

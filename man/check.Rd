@@ -9,9 +9,9 @@
 \usage{
 check(x, times, vars, SI.cutoff, CI.cutoff)
 
-heat_check(x, order = c("first order", "total order"), vars = NULL,
-  times = NULL, SI.cutoff = c(0.05, 0.1), CI.cutoff = c(0.05, 0.1),
-  index = "SI", level = T, text = F)
+heat_check(x, order = NULL, vars = NULL, times = NULL,
+  SI.cutoff = c(0.05, 0.1), CI.cutoff = c(0.05, 0.1), index = "SI",
+  level = T, text = F)
 
 \method{plot}{rfast99}(x, vars = 1, SI.cutoff = 0.1, ...)
 

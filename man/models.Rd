@@ -3,12 +3,15 @@
 \name{pk_model}
 \alias{pk_model}
 \alias{FFPK}
-\alias{pbtk1cpt.model}
+\alias{pbtk1cpt_model}
+\alias{pbpk_apap_model}
 \title{Example PK Model for Sensitivity Analysis}
 \usage{
 FFPK(params, time, dose = 1)
 
-pbtk1cpt.model()
+pbtk1cpt_model()
+
+pbpk_apap_model()
 }
 \arguments{
 \item{params}{a parameter matrix containing the input sample.}
@@ -26,7 +29,9 @@ where \eqn{F} is the fraction or percentage of the administrated dose that can r
 }
 \section{Functions}{
 \itemize{
-\item \code{pbtk1cpt.model}: Generate pbtk1cpt.model file.
+\item \code{pbtk1cpt_model}: Download pbtk1cpt.model file.
+
+\item \code{pbpk_apap_model}: Download pbpk_apap.model file.
 }}
 
 \examples{
