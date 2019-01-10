@@ -86,9 +86,9 @@ solve_mcsim <- function(x, mName, infile.name,
   } else setpoint.data <- setpoint.name
 
   mcsim. <- paste0("mcsim.", mName)
-  if(file.exists(mcsim.) == F){
-    stop(paste0("The ", "mcsim.", mName, " doesn't exist."))
-  }
+  #if(file.exists(mcsim.) == F){
+  #  stop(paste0("The ", "mcsim.", mName, " doesn't exist."))
+  #}
 
   #
   if (is.numeric(n)){
