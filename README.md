@@ -1,4 +1,4 @@
-# pksensi: Sensitivity analysis for pharmacokinetic model
+# pksensi: Sensitivity analysis for pharmacokinetic model <img src="man/figures/logo.png" align="right" />
 
 [![Travis-CI Build Status](https://travis-ci.org/nanhung/pksensi.svg?branch=master)](https://travis-ci.org/nanhung/pksensi)
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/nanhung/pksensi?branch=master&svg=true)](https://ci.appveyor.com/project/nanhung/pksensi)
