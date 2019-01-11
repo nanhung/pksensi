@@ -13,9 +13,7 @@
 install.packages("pksensi")
 
 # Or get the the development version from GitHub:
-if (!require("devtools")) {
-  install.packages("devtools")
-}
+if (!require("devtools")) install.packages("devtools")
 devtools::install_github("nanhung/pksensi")
 ```
 
