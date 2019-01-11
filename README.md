@@ -1,4 +1,4 @@
-# pksensi: Sensitivity analysis for pharmacokinetic model <img src="man/figures/logo.png" align="right" />
+# pksensi <img src="man/figures/logo.png" height="150px" align="right" />
 
 [![Travis-CI Build Status](https://travis-ci.org/nanhung/pksensi.svg?branch=master)](https://travis-ci.org/nanhung/pksensi)
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/nanhung/pksensi?branch=master&svg=true)](https://ci.appveyor.com/project/nanhung/pksensi)
@@ -22,4 +22,3 @@ devtools::install_github("nanhung/pksensi")
 ## Reference
 
 Hsieh NH, Reisfeld B, Bois FY, Chiu WA. [Applying a global sensitivity analysis workflow to improve the computational efficiencies in physiologically-based pharmacokinetic modeling](https://www.frontiersin.org/articles/10.3389/fphar.2018.00588/full). Frontiers in Pharmacology 2018 Jun; 9:588.
-
