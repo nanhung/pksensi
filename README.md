@@ -1,4 +1,4 @@
-# pksensi <img src="man/figures/logo.png" height="150px" align="right" />
+# pksensi <img src="man/figures/logo.png" height="200px" align="right" />
 
 [![Travis-CI Build Status](https://travis-ci.org/nanhung/pksensi.svg?branch=master)](https://travis-ci.org/nanhung/pksensi)
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/nanhung/pksensi?branch=master&svg=true)](https://ci.appveyor.com/project/nanhung/pksensi)
