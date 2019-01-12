@@ -1,5 +1,9 @@
 # pksensi 1.0.1
 
+New vignette:
+
+* Add "PBTK 1-compartment model"
+
 New examples:
 
 * Update example in solve_mcsim

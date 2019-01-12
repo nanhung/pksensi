@@ -1,0 +1,70 @@
+---
+title: "PBTK 1-compartment model"
+author: "Nan-Hung Hsieh"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{PBTK 1-compartment model}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r}
+library(pksensi)
+pbtk1cpt_model()
+mName <- "pbtk1cpt"
+compile_model(mName, application = "R")
+source(paste0(mName, "_inits.R"))
+```
+
+```{r}
+parms <- initParms()
+parms["vdist"] <- 0.74
+parms["ke"] <- 0.28
+parms["kgutabs"] <- 2.18
+initState <- initStates(parms=parms)
+initState["Agutlument"] <- 10
+```
+
+
+```{r fig.height=4, fig.width=6,}
+times <- seq(from = 0.01, to = 24.01, by = 1)
+y <- deSolve::ode(initState, times, func = "derivs", parms = parms, 
+         dllname = mName, initfunc = "initmod", nout = 1, outnames = Outputs)
+plot(y)
+```
+
+```{r}
+LL <- 0.5 
+UL <- 1.5
+q <- "qunif"
+q.arg <- list(list(min = parms["vdist"] * LL, max = parms["vdist"] * UL),
+             list(min = parms["ke"] * LL, max = parms["ke"] * UL), 
+             list(min = parms["kgutabs"] * LL, max = parms["kgutabs"] * UL)) 
+set.seed(1234)
+x <- rfast99(params = c("vdist", "ke", "kgutabs"), n = 200, q = q, q.arg = q.arg, replicate = 20)
+```
+
+```{r}
+t <- seq(from = 0.01, to = 24.01, by = 1)
+y <- solve_fun(x, times, params = parms, initState = initState, outnames = Outputs, dllname = mName)
+tell2(x,y)
+```
+
+
+
+```{r fig.height=4, fig.width=6,}
+pksim(y)
+```
+
+
+```{r fig.height=4, fig.width=6,}
+plot(x)
+```

@@ -1,0 +1,6 @@
+*.html
+*.R
+*.model
+*.o
+*.so
+*.dll
