@@ -7,7 +7,7 @@
 [![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/pksensi)](https://cran.r-project.org/package=pksensi)
 [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/pksensi?color=orange)](https://CRAN.R-project.org/package=pksensi)
 
-**pksensi** implements the global sensitivity analysis workflow to investigate the parameter uncertainty and sensitivity in pharmacokinetic (PK) models, especially the physiologically based pharmacokinetic (PBPK) model with multivariate outputs. The package also provide some functions to check the convergence and sensitivity of model parameters.
+**pksensi** implements the global sensitivity analysis workflow to investigate the parameter uncertainty and sensitivity in pharmacokinetic (PK) models, especially the physiologically based pharmacokinetic (PBPK) model with multivariate outputs. The package also provides some functions to check the convergence and sensitivity of model parameters.
 
 ```
 # To get pksensi from CRAN (current version 1.0.0):
