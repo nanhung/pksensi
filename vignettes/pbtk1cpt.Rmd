@@ -75,3 +75,28 @@ To create the time-dependent sensitivity measurement, we set the time duration f
 ```{r fig.height=4, fig.width=6,}
 plot(x)
 ```
+
+
+```{r}
+system.time(y<-solve_fun(x, times, params = parms, initState = initState, 
+                         outnames = Outputs, dllname = mName))
+```
+
+```{r}
+compile_model(mName, app = "mcsim")
+```
+
+
+```{r}
+infile.name <- "setpoint.in"
+outfile.name <- "setpoint.csv"
+params <- c("vdist", "ke", "kgutabs")
+conditions <- c("Agutlument = 10")
+system.time(y<-solve_mcsim(x, mName = mName, 
+                           infile.name = infile.name, 
+                           params = params,
+                           vars = Outputs,
+                           time = times,
+                           outfile.name = outfile.name,
+                           condition = conditions))
+```
