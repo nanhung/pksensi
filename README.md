@@ -26,7 +26,7 @@ if (!require("devtools")) install.packages("devtools")
 devtools::install_github("nanhung/pksensi")
 ```
 
-This package includes a function that can help you install GNU MCsim more easily through the function `mcsim_install`.
+This package includes a function that can help you install GNU MCsim more easily through the function `mcsim_install()`.
 
 ## Reference
 
