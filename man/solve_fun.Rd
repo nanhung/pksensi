@@ -4,8 +4,8 @@
 \alias{solve_fun}
 \title{Solve PK Model Through deSolve Package or Analytical Function}
 \usage{
-solve_fun(x, time = NULL, params, initParmsfun = "initParms",
-  initState, dllname, func = "derivs", initfunc = "initmod", outnames,
+solve_fun(x, time = NULL, initParmsfun = "initParms", initState,
+  dllname, func = "derivs", initfunc = "initmod", outnames,
   method = "lsode", rtol = 1e-08, atol = 1e-12, model = NULL,
   lnparam = F, vars = NULL, ...)
 }
@@ -13,8 +13,6 @@ solve_fun(x, time = NULL, params, initParmsfun = "initParms",
 \item{x}{a list of storing information in the defined sensitivity function.}
 
 \item{time}{a vector to define the given time sequence.}
-
-\item{params}{parameters passed to \code{func}.}
 
 \item{initParmsfun}{a character for the given specific initial parameter function.}
 

@@ -14,6 +14,10 @@ New function:
 * Add pbtk_apap_model()
 * Add function mcsim_version()
 
+Update function
+
+* No need to define params in solve_fun()
+
 Change:
 
 change function's name install_mcsim() to mcsim_install()
