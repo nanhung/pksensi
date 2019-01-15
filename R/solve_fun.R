@@ -5,7 +5,6 @@
 #'
 #' @param x a list of storing information in the defined sensitivity function.
 #' @param time a vector to define the given time sequence.
-#' @param params parameters passed to \code{func}.
 #' @param initParmsfun a character for the given specific initial parameter function.
 #' @param initState a vector that define the initial values of state variables for the ODE system.
 #' @param dllname a string giving the name of the shared library (without extension)
@@ -45,7 +44,7 @@
 #' \emph{J. Stat. Soft.}, 33:9
 #'
 #' @export
-solve_fun <- function(x, time = NULL, params, initParmsfun = "initParms", initState, dllname,
+solve_fun <- function(x, time = NULL, initParmsfun = "initParms", initState, dllname,
                       func = "derivs", initfunc = "initmod", outnames,
                       method ="lsode", rtol=1e-8, atol=1e-12,
                       model = NULL, lnparam = F, vars = NULL, ...){
@@ -64,6 +63,9 @@ solve_fun <- function(x, time = NULL, params, initParmsfun = "initParms", initSt
 
     # Specific time or variable
     inputs = c(0, time) # NEED TIME AT ZERO
+
+    params <- rep(0, length(x$params))
+    names(params) <- x$params
 
     for (i in 1 : dim(y)[2]) { # replicate
       for (j in 1 : dim(y)[1]) { # Model evaluation
