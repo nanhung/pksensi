@@ -1,29 +1,33 @@
 ---
-title: "PBTK 1-compartment model"
+title: "1-compartment PBTK model"
 author: "Nan-Hung Hsieh"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{PBTK 1-compartment model}
+  %\VignetteIndexEntry{1-compartment PBTK model}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include = FALSE}
+library(pksensi)
+mcsim_install()
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 ```
 
+In this example, We use a simple, one-compartment model to demonstrate how `pksensi` can be applied to pharmacokinetic studies. The following command can download and compile the model file and use deSolve to solve equation.
+
 ```{r}
-library(pksensi)
-mcsim_install()
 pbtk1cpt_model()
 mName <- "pbtk1cpt"
 compile_model(mName, application = "R")
 source(paste0(mName, "_inits.R"))
 ```
+
+Through the definition of `application = "R"`, the compile function in the above setting will generate the executable files (`pbtk1cpt.so` or `pbtk1cpt.dll`) and R file (`pbtk1cpt_inits.R`) with default input parameter and initial state settings. We can customize the parameter values and initial states to specify the properties and schedule for the given dosing scenario:
 
 ```{r}
 parms <- initParms()
@@ -34,6 +38,9 @@ initState <- initStates(parms=parms)
 initState["Agutlument"] <- 10
 ```
 
+In the current setting, we assumed the initial condition of the intake chemical to be 10 mol. The `initParms` and `initStates` functions were used to customize the parameter values and the initial state that will be used in the `solve_fun` function. In this case, the given vdist, ke, and kgutabs are 0.74, 0.28, and 2.18, respectively.
+
+Through ode function in deSolve package, we can visualize the pharmacokinetic according to the given parameter conditions:
 
 ```{r fig.height=4, fig.width=6,}
 times <- seq(from = 0.01, to = 24.01, by = 1)
@@ -41,6 +48,8 @@ y <- deSolve::ode(initState, times, func = "derivs", parms = parms,
          dllname = mName, initfunc = "initmod", nout = 1, outnames = Outputs)
 plot(y)
 ```
+
+To conduct sensitivity analysis for the parameters in one-compartment pharmacokinetic model in this case, we want to quantify the impact of these three parameters on the chemical concentration in plasma during 24 hour time period post intake. We assume a uniform distribution for the estimate for each parameter with the coefficient of uncertainty within 50%. The parameter ranges are assumed to be (0.37, 1.12) for `vdist`, (0.0058, 0.0174) for `ke`, and (0.045, 0.136) for `kgutabs`. The sample number determines the robustness of the result of sensitivity analysis. Higher sample numbers can generate narrow confidence intervals for sensitivity measurements across different replications. However, they might cause heavy computational burden for complex models. Here we use a sample number of 400 with 20 replications:
 
 ```{r}
 LL <- 0.5 
@@ -53,18 +62,15 @@ set.seed(1234)
 x <- rfast99(params = c("vdist", "ke", "kgutabs"), n = 200, q = q, q.arg = q.arg, replicate = 20)
 ```
 
+Because the pharmacokinetic model is being used to describe a continuous process for the chemical concentration over time, the sensitivity measurements can also show the time-dependent relationships for each model parameter. Here we define the output time points to examine the change of the parameter sensitivity over time. To solve the pharmacokinetic model through deSolve, we needs to provide the details of the argument: 
+
 ```{r}
 t <- seq(from = 0.01, to = 24.01, by = 1)
 y <- solve_fun(x, times, params = parms, initState = initState, outnames = Outputs, dllname = mName)
 tell2(x,y)
 ```
 
-
-
-```{r fig.height=4, fig.width=6,}
-pksim(y)
-```
-
+To create the time-dependent sensitivity measurement, we set the time duration from 0.01 to 24.01 hours in the example. The `initParmsfun` is used to generate the sampling value for each parameter. The `outnames`, `dllname`, `func`, `initfunc` are based on the arguments from the ode function in `deSolve` package. The details of model structure and these arguments are defined in `pbtk1comp.c`. and `pbtk1comp_inits.R`. Finally, the `tell2` function is used to integrate the parameter values and the output results of numerical analysis that were generated and stored in variables x and y. The result of object x is an object of rfast99, which has specific `print`, `plot`, and `check` method. The print function gives the sensitivity and convergence indices for main, interaction, and total order in each time point. In addition to print out the result of sensitivity analysis, the more efficient way to distinguish the influence of model parameter is to visualize them.
 
 ```{r fig.height=4, fig.width=6,}
 plot(x)
