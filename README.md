@@ -28,8 +28,6 @@ devtools::install_github("nanhung/pksensi")
 
 This package includes a function that can help you install GNU MCsim more easily through the function `mcsim_install`.
 
-## 
-
 ## Reference
 
 Hsieh NH, Reisfeld B, Bois FY, Chiu WA. [Applying a global sensitivity analysis workflow to improve the computational efficiencies in physiologically-based pharmacokinetic modeling](https://www.frontiersin.org/articles/10.3389/fphar.2018.00588/full). Frontiers in Pharmacology 2018 Jun; 9:588.
