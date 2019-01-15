@@ -1,10 +1,11 @@
 ---
-title: "1-compartment PBTK model"
+title: "One-compartment PBTK model"
 author: "Nan-Hung Hsieh"
 date: "`r Sys.Date()`"
+bibliography: references.bib
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{1-compartment PBTK model}
+  %\VignetteIndexEntry{One-compartment PBTK model}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,20 +15,42 @@ library(pksensi)
 mcsim_install()
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.height=4, 
+  fig.width=6
 )
 ```
 
-In this example, We use a simple, one-compartment model to demonstrate how `pksensi` can be applied to pharmacokinetic studies. The following command can download and compile the model file and use deSolve to solve equation.
+## Equations
 
-```{r}
+In this example, We use a simple, one-compartment PK model from `httk` package [@JSSv079i04] to demonstrate how `pksensi` can be applied to pharmacokinetic studies. The differential equations for the one-compartment pharmacokinetic model can be written as:
+
+$$\frac{dA_{gutlumen}}{dt} = -k_{gutabs} \cdot A_{gutlumen} + g(t)$$
+$$\frac{dC_{rest}}{dt} = \frac{k_{gutabs}}{V_{dist}}-k_{elim} \cdot C_{rest}$$
+
+where $A_{gutlumen}$ is the state variable that describes the quantity of compound in gut lumen (mol), $k_{gutabs}$ is the absorption rate constant that describes the chemical absorption from the gut lumen into gut tissue through first-order processes (/h), $V_{dist}$ is the volume of distribution (L), and $k_{elim}$ is the elimination rate constant (/h), which is equal to the total clearance divided by the volume of distribution. The time-dependent function $g(t)$ is used to describe the oral dosing schedule. $C_{rest}$ is the chemical concentration in plasma that can be used to compare with observed results in a pharmacokinetic experiment (mol/L). 
+
+## Model implementations with R deSolve package
+
+In the beginning, we need to pre-install GNU MCSim and related compiler to let us generate .c file and exexutble file. The GNU MCSim can be installed by following the instruction in GNU MCSim’s manual on https://www.gnu.org/software/mcsim/mcsim.html or using the build-in function `mcsim_install()` in pkseni. The GNU compiler is necessary for users that use Linux or MacOS. For Windows users, you should install Rtools on https://cran.r-project.org/bin/windows/Rtools/ and use `Sys.setenv()` to set the working path of compiler. The  `Sys.which("gcc")` and `system('g++ -v')` can check whether we can run compiler correctly. 
+
+We first implemented this model in R by compiling the file written in C. pksensi allows users to select the preferred method to solve the pharmacokinetic model, either with the `deSolve` package or with GNU MCSim through the compile function. However, running model under GNU MCsim native code can have faster speed to obtain the model outputs.
+
+The following R script can download and compile the model file (`pbtk1cpt.model`) and use `deSolve` package [@JSSv033i09] to solve ordinary differential equations in our model. The example model code of one-compartment PBTK model is available with pksensi package:
+
+```{r comment=''}
 pbtk1cpt_model()
+cat(readLines("pbtk1cpt.model"), sep = "\n")
+```
+
+Then, use `compile_model()` to generate the executable files (`pbtk1cpt.dll` on Windows or `pbtk1cpt.so` on other systmes) and R file (`pbtk1cpt_inits.R`) with default input parameter and initial state settings with the definition of `application = "R"`. 
+```{r}
 mName <- "pbtk1cpt"
 compile_model(mName, application = "R")
 source(paste0(mName, "_inits.R"))
 ```
 
-Through the definition of `application = "R"`, the compile function in the above setting will generate the executable files (`pbtk1cpt.so` or `pbtk1cpt.dll`) and R file (`pbtk1cpt_inits.R`) with default input parameter and initial state settings. We can customize the parameter values and initial states to specify the properties and schedule for the given dosing scenario:
+We can customize the parameter values and initial states to specify the properties and schedule for the given dosing scenario.
 
 ```{r}
 parms <- initParms()
@@ -38,14 +61,26 @@ initState <- initStates(parms=parms)
 initState["Agutlument"] <- 10
 ```
 
-In the current setting, we assumed the initial condition of the intake chemical to be 10 mol. The `initParms` and `initStates` functions were used to customize the parameter values and the initial state that will be used in the `solve_fun` function. In this case, the given vdist, ke, and kgutabs are 0.74, 0.28, and 2.18, respectively.
+```{r}
+parms
+```
 
-Through ode function in deSolve package, we can visualize the pharmacokinetic according to the given parameter conditions:
+```{r}
+initState
+```
 
-```{r fig.height=4, fig.width=6,}
+```{r}
+Outputs
+```
+
+In the current setting, we assumed the initial condition of the intake chemical to be 10 mol. The `initParms` and `initStates` functions were used to customize the parameter values and the initial state that will be used in the `solve_fun` function. These parameter value can be adopted from the `httk` package, which includes physico-chemical and drug biological properties for 553 chemicals. In this case, we used the parameter value of theophylline in this example. The given `vdist`, `ke`, and `kgutabs` are 0.74, 0.28, and 2.18, respectively.
+
+Through `ode` function in `deSolve` package, we can visualize the pharmacokinetic according to the given parameter conditions such as time points (`times`):
+
+```{r}
 times <- seq(from = 0.01, to = 24.01, by = 1)
 y <- deSolve::ode(initState, times, func = "derivs", parms = parms, 
-         dllname = mName, initfunc = "initmod", nout = 1, outnames = Outputs)
+                  dllname = mName, initfunc = "initmod", nout = 1, outnames = Outputs)
 plot(y)
 ```
 
@@ -59,28 +94,29 @@ q.arg <- list(list(min = parms["vdist"] * LL, max = parms["vdist"] * UL),
              list(min = parms["ke"] * LL, max = parms["ke"] * UL), 
              list(min = parms["kgutabs"] * LL, max = parms["kgutabs"] * UL)) 
 set.seed(1234)
-x <- rfast99(params = c("vdist", "ke", "kgutabs"), n = 200, q = q, q.arg = q.arg, replicate = 20)
+params <- c("vdist", "ke", "kgutabs")
+x <- rfast99(params, n = 200, q = q, q.arg = q.arg, replicate = 20)
 ```
 
 Because the pharmacokinetic model is being used to describe a continuous process for the chemical concentration over time, the sensitivity measurements can also show the time-dependent relationships for each model parameter. Here we define the output time points to examine the change of the parameter sensitivity over time. To solve the pharmacokinetic model through deSolve, we needs to provide the details of the argument: 
 
 ```{r}
-t <- seq(from = 0.01, to = 24.01, by = 1)
-y <- solve_fun(x, times, params = parms, initState = initState, outnames = Outputs, dllname = mName)
+y <- solve_fun(x, times, initState = initState, outnames = Outputs, dllname = mName)
 tell2(x,y)
 ```
 
 To create the time-dependent sensitivity measurement, we set the time duration from 0.01 to 24.01 hours in the example. The `initParmsfun` is used to generate the sampling value for each parameter. The `outnames`, `dllname`, `func`, `initfunc` are based on the arguments from the ode function in `deSolve` package. The details of model structure and these arguments are defined in `pbtk1comp.c`. and `pbtk1comp_inits.R`. Finally, the `tell2` function is used to integrate the parameter values and the output results of numerical analysis that were generated and stored in variables x and y. The result of object x is an object of rfast99, which has specific `print`, `plot`, and `check` method. The print function gives the sensitivity and convergence indices for main, interaction, and total order in each time point. In addition to print out the result of sensitivity analysis, the more efficient way to distinguish the influence of model parameter is to visualize them.
 
-```{r fig.height=4, fig.width=6,}
+```{r}
 plot(x)
 ```
 
 
 ```{r}
-system.time(y<-solve_fun(x, times, params = parms, initState = initState, 
-                         outnames = Outputs, dllname = mName))
+system.time(y<-solve_fun(x, times, initState = initState, outnames = Outputs, dllname = mName))
 ```
+
+## Model implementations with GNU MCSim
 
 ```{r}
 compile_model(mName, app = "mcsim")
@@ -90,7 +126,6 @@ compile_model(mName, app = "mcsim")
 ```{r}
 infile.name <- "setpoint.in"
 outfile.name <- "setpoint.csv"
-params <- c("vdist", "ke", "kgutabs")
 conditions <- c("Agutlument = 10")
 system.time(y<-solve_mcsim(x, mName = mName, 
                            infile.name = infile.name, 
@@ -100,3 +135,7 @@ system.time(y<-solve_mcsim(x, mName = mName,
                            outfile.name = outfile.name,
                            condition = conditions))
 ```
+
+Under the same given conditon, it takes 5.6 (`deSolve`) and 1.5 (GNU MCSim) seconds to solve model. The `solve_mcsim()` shows the better computational performance than `solve_fun()` in pksesni. 
+
+## References
