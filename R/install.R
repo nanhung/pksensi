@@ -119,7 +119,8 @@ mcsim_version <- function(){
   invisible(system("mod -h | tee mod.mcsim.txt", intern = TRUE))
   l <- readLines("mod.mcsim.txt")
   invisible(file.remove("mod.mcsim.txt"))
-  cat(substr(l[4], 5, 10), "\n")
+  version <- substr(l[4], 6, 10)
+  message("The current GNU MCSim version is ", version)
 }
 
 generate_config.h <- function(){
