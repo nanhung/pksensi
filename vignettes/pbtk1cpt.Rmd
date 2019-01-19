@@ -3,7 +3,9 @@ title: "One-compartment PBTK model"
 author: "Nan-Hung Hsieh"
 date: "`r Sys.Date()`"
 bibliography: references.bib
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+  fig_caption: yes
 vignette: >
   %\VignetteIndexEntry{One-compartment PBTK model}
   %\VignetteEngine{knitr::rmarkdown}
@@ -12,7 +14,7 @@ vignette: >
 
 ```{r setup, include = FALSE}
 library(pksensi)
-mcsim_install()
+#mcsim_install()
 
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -21,7 +23,7 @@ knitr::opts_chunk$set(
   fig.width=6
 )
 
-fn = local({
+fn = local({ # not used function for fig caption
   i = 0
   function(x) {
     i <<- i + 1
@@ -94,7 +96,7 @@ y <- deSolve::ode(initState, times, func = "derivs", parms = parms,
                   dllname = mName, initfunc = "initmod", nout = 1, outnames = Outputs)
 ```
 
-```{r, fig.cap=fn('Simulation results of one-compartment PBTK model.')}
+```{r, fig.cap = 'Figure 1. Simulation results of one-compartment PBTK model.'}
 plot(y)
 ```
 
@@ -121,7 +123,7 @@ tell2(x,y)
 
 To create the time-dependent sensitivity measurement, we set the time duration from 0.01 to 24.01 hours in the example. The `initParmsfun` is used to generate the sampling value for each parameter. The `outnames`, `dllname`, `func`, `initfunc` are based on the arguments from the ode function in `deSolve` package. The details of model structure and these arguments are defined in `pbtk1comp.c`. and `pbtk1comp_inits.R`. Finally, the `tell2` function is used to integrate the parameter values and the output results of numerical analysis that were generated and stored in variables x and y. The result of object x is an object of rfast99, which has specific `print`, `plot`, and `check` method. The print function gives the sensitivity and convergence indices for main, interaction, and total order in each time point. In addition to print out the result of sensitivity analysis, the more efficient way to distinguish the influence of model parameter is to visualize them. The time-dependent sensitivity indices are show in Figure 2. 
 
-```{r, fig.cap=fn('Time-dependent sensitivity indices of the plasma concentration estimated from one-compartment PBTK model during 24 hour time period intake.')}
+```{r, fig.cap = 'Figure 2. Time-dependent sensitivity indices of the plasma concentration estimated from one-compartment PBTK model during 24 hour time period intake.'}
 plot(x)
 ```
 
@@ -129,7 +131,7 @@ We can find that `vdist` and `ke` are dominate the plasma concentration in the b
 
 The x is a list of class "rfast99", containing all the input arguments detailed before and the calculated sensitivity indices of first order (`mSI`), interaction (`iSI`), and total order (`tSI`). The convergence indices are also stored in the list named `mCI`, `iCI`, and `tCI`.
 
-The `check()` is a useful function to determine which parameters have relative lower sensitivity measurment across the given time interval, and therefore can be applied parameter fixing in model calibration. The argument of `SI.cutoff` is setting at 0.5 to detect the relative non-influential parameters in this case. 
+The `check()` is a useful function to determine which parameters have relative lower sensitivity measurement across the given time interval, and therefore can be applied parameter fixing in model calibration. The argument of `SI.cutoff` is setting at 0.5 to detect the relative non-influential parameters in this case. 
 
 ```{r}
 check(x, SI.cutoff = 0.5)
