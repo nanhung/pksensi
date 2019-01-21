@@ -93,7 +93,7 @@ names(df) <- c("Parameter","Description", "Unit", "Min", "Max")
 
 ```
 
-Same as the example of one-compartment PBTK model. The model parameters and the corresponding sampling range should be defined to create the parameter matrix. Previously, the probability distribution of model parameter were set to truncated normal and uniform distribution when the parameter have or not have prior informative information, respectively. To rapidly reach the acceptance convergence, we apply uniform distribution for all testing parameters and increase the sampling range to 4-times log-scaled (approximate 54.6 times difference between minimum and maximum).
+Same as the example of one-compartment PBTK model. The model parameters and the corresponding sampling range should be defined to create the parameter matrix. Previously, the probability distribution of model parameter were set to either truncated normal or uniform distribution when the parameter have or not have prior informative information, respectively. To rapidly reach the acceptance convergence, we apply uniform distribution for all testing parameters and increase the sampling range to 4-times log-scaled (approximate 54.6 times difference between minimum and maximum).
 
 
 ```{r}
@@ -150,6 +150,6 @@ set.seed(1234)
 x <- rfast99(params = params, n = 1024, q = q, q.arg = q.arg) 
 ```
 
-To improve the computational speed, we only used MCSim to solve
+To improve the computational speed, this case only use MCSim to solve
 
 ## References
