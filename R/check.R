@@ -153,7 +153,8 @@ check.rfast99 <- function(x, times = NULL, vars = NULL, SI.cutoff = 0.05, CI.cut
 
 #' @rdname check
 #' @export
-heat_check <- function(x, order = NULL,
+heat_check <- function(x,
+                       order = c("first order", "interaction", "total order"),
                        vars = NULL, times = NULL,
                        SI.cutoff = c(0.05, 0.1), CI.cutoff = c(0.05, 0.1),
                        index = "SI", level = T, text = F){
@@ -201,7 +202,8 @@ heat_check <- function(x, order = NULL,
     times <- dimnames(x$y)[[3]]
   } else (times <- times)
 
-  X <- X %>% filter(order %in% order) %>% filter_(~variable %in% vars) %>% filter(time %in% times)
+
+  X <- X %>% filter(order %in% !!(order)) %>% filter_(~variable %in% vars) %>% filter(time %in% times)
 
   if(length(times) < 10){
     X$time <- as.factor(X$time)
