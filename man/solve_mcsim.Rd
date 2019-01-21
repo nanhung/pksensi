@@ -5,13 +5,13 @@
 \alias{generate_infile}
 \title{Solve PK Model Through MCSim}
 \usage{
-solve_mcsim(x, mName, infile.name, outfile.name, n = NULL,
-  setpoint.name = NULL, params = NULL, vars = NULL, time = NULL,
-  condition = NULL)
+solve_mcsim(x, mName, infile.name = NULL, outfile.name = NULL,
+  n = NULL, setpoint.name = NULL, params = NULL, vars = NULL,
+  time = NULL, condition = NULL, generate.infile = T)
 
-generate_infile(infile.name, outfile.name, params, vars, time, condition,
-  rtol = 1e-06, atol = 1e-09, n = NULL, dist = NULL,
-  q.arg = NULL)
+generate_infile(infile.name = NULL, outfile.name = NULL, params, vars,
+  time, condition, rtol = 1e-06, atol = 1e-09, n = NULL,
+  dist = NULL, q.arg = NULL)
 }
 \arguments{
 \item{x}{a list of storing information in the defined sensitivity function.}
@@ -33,6 +33,8 @@ generate_infile(infile.name, outfile.name, params, vars, time, condition,
 \item{time}{a numeric to define the given time point(s).}
 
 \item{condition}{a character to set the specific parameter value in the input file.}
+
+\item{generate.infile}{a logical value to automatically generate the input file, .}
 
 \item{rtol}{an argument passed to the integrator (default 1e-6).}
 

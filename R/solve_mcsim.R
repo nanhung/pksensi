@@ -20,6 +20,7 @@
 #' @param condition a character to set the specific parameter value in the input file.
 #' @param rtol an argument passed to the integrator (default 1e-6).
 #' @param atol an argument passed to the integrator (default 1e-9).
+#' @param generate.infile a logical value to automatically generate the input file, .
 #'
 #' @importFrom utils write.table
 #' @importFrom data.table fread
@@ -59,16 +60,21 @@
 #'
 #' @export
 #' @describeIn solve_mcsim Numerical analysis for the PK model by MCSim.
-solve_mcsim <- function(x, mName, infile.name,
-                        outfile.name,
+solve_mcsim <- function(x, mName,
+                        infile.name = NULL,
+                        outfile.name = NULL,
                         n = NULL,
                         setpoint.name = NULL,
                         params = NULL,
                         vars  = NULL,
                         time  = NULL,
-                        condition  = NULL){
+                        condition  = NULL,
+                        generate.infile = T){
 
-  if(!is.null(condition)){ # Generate input file if not define condition
+  if(is.null(infile.name)) infile.name <- "input.in"
+  if(is.null(outfile.name)) outfile.name <- "output.csv"
+
+  if(generate.infile == T){
     generate_infile(infile.name = infile.name,
                     outfile.name = outfile.name,
                     params = params,
@@ -156,9 +162,14 @@ solve_mcsim <- function(x, mName, infile.name,
 
 #' @export
 #' @describeIn solve_mcsim Generate the MCSim input file.
-generate_infile <- function(infile.name, outfile.name, params, vars, time,
+generate_infile <- function(infile.name = NULL,
+                            outfile.name = NULL,
+                            params, vars, time,
                             condition, rtol = 1e-6, atol = 1e-9,
                             n = NULL, dist = NULL, q.arg = NULL){ # Monte Carlo
+
+  if(is.null(infile.name)) infile.name <- "input.in"
+  if(is.null(outfile.name)) outfile.name <- "output.csv"
 
   setpoint.data <- "setpoint.dat"
 

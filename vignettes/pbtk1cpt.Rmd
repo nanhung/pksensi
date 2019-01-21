@@ -157,15 +157,11 @@ Since the
 specify the input filename.
 
 ```{r}
-infile.name <- "setpoint.in"
-outfile.name <- "setpoint.csv"
 conditions <- c("Agutlument = 10")
 system.time(y<-solve_mcsim(x, mName = mName, 
-                           infile.name = infile.name, 
                            params = params,
                            vars = Outputs,
                            time = times,
-                           outfile.name = outfile.name,
                            condition = conditions))
 ```
 
