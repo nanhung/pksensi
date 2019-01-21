@@ -1,5 +1,9 @@
 # pksensi 1.0.1
 
+Fix Bug:
+
+Fix the `order` argument in heat_check
+
 New vignette:
 
 * Add "PBTK 1-compartment model"
@@ -17,6 +21,7 @@ New function:
 Update function
 
 * No need to define params in solve_fun()
+* No need to define `infile.name` and `outfile.name` in solve_mcsim()
 
 Change:
 
