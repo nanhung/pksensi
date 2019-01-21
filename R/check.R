@@ -201,8 +201,7 @@ heat_check <- function(x, order = NULL,
     times <- dimnames(x$y)[[3]]
   } else (times <- times)
 
-  ORD <- order
-  X <- X %>% filter(order %in% ORD) %>% filter_(~variable %in% vars) %>% filter(time %in% times)
+  X <- X %>% filter(order %in% (!!order)) %>% filter_(~variable %in% vars) %>% filter(time %in% times)
 
   if(length(times) < 10){
     X$time <- as.factor(X$time)
