@@ -170,17 +170,21 @@ generate_infile <- function(infile.name = NULL,
 
   if(is.null(infile.name)) infile.name <- "input.in"
   if(is.null(outfile.name)) outfile.name <- "output.csv"
-
   setpoint.data <- "setpoint.dat"
+
+  #if(file.exists(paste0(infile.name)) == T){
+  #  if(menu(c("Yes", "No"),
+  #          title=paste('The "', infile.name, '" is exist. Do you want to replace it?', sep ="")) == 2){
+  #    stop()
+  #  }
+  #}
 
   cat("#---------------------------------------- \n#",
       " ", infile.name , "\n#",
       " (Created by generate_infile)\n#",
       "----------------------------------------", "\n\n",
       file = infile.name, sep = "")
-
   cat("Integrate (Lsodes, ", rtol, ", ", atol, " , 1);", "\n\n", file=infile.name, append=TRUE, sep="")
-
   if(is.null(n)){
     cat("SetPoints (", "\n",
         "\"", outfile.name, "\", \n\"", setpoint.data, "\",\n",
@@ -194,28 +198,21 @@ generate_infile <- function(infile.name = NULL,
       cat("Distrib ( ", params[i], ",", dist[i], ",", paste(unlist(q.arg[i]), collapse = ","), ");", "\n",
           file = infile.name, append=TRUE, sep = "")
     }
-
   }
-
   cat("\n#---------------------------------------- \n#",
       " Simulation scenario\n#",
       "----------------------------------------", "\n\n",
       file = infile.name, append = TRUE, sep = "")
-
   cat("Simulation {", "\n\n", file = infile.name, append = TRUE)
-
   # cat(paste(conditions, collapse=";"), ";", "\n\n", file = infile.name, append=TRUE, sep = "")
-
   for (i in 1 : length(condition)){
     cat(paste(condition[i], collapse = ";"), ";", "\n", file = infile.name, append = TRUE, sep = "")
   }
-
   cat("\n", file = infile.name, append = TRUE)
-
   for (i in 1 : length(vars)) {
     cat("Print (", paste(vars[i], collapse = ", "), ", ", paste(time, collapse=", "), ");\n",
         file = infile.name, append=TRUE, sep = "")
   }
-
   cat("}", "END.", file = infile.name, append = TRUE)
+  message(paste('* Created input file "', infile.name, '".', sep =""))
 }
