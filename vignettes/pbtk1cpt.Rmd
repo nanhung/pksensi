@@ -14,7 +14,7 @@ vignette: >
 
 ```{r setup, include = FALSE}
 library(pksensi)
-#mcsim_install()
+mcsim_install()
 
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -127,9 +127,37 @@ To create the time-dependent sensitivity measurement, we set the time duration f
 plot(x)
 ```
 
-We can find that `vdist` and `ke` are dominate the plasma concentration in the before and after 5 hour post chemical intake, respectively, representing that the elimination is a key parameter to dominate the plasma concentration. Besides, the `kgutabs` only plays an crucial role to determine the plasma concentration in the first hour. 
+We can find that `vdist` and `ke` are dominate the plasma concentration in the before and after 5 hour post chemical intake, respectively, representing that the elimination is a key parameter to dominate the plasma concentration. Besides, the `kgutabs` only plays an crucial role to determine the plasma concentration in the first hour. The relationship between concentration and the parameters can be plotted as follow (Figure 3): 
 
-The x is a list of class "rfast99", containing all the input arguments detailed before and the calculated sensitivity indices of first order (`mSI`), interaction (`iSI`), and total order (`tSI`). The convergence indices are also stored in the list named `mCI`, `iCI`, and `tCI`.
+```{r, fig.cap = 'Figure 3. The relationship between model parameter and estimated concentration under the time-point of 0.01, 2.01, and 24.01 hr'}
+par(mfrow = c(3,3), mar = c(2,2,2,2), oma = c(2,2,1,1))
+plot(x$a[,1,"vdist"], y[,1,"0.01",], main = "vdist")
+text(1, .7, "t=0.01",cex = 1.2)
+plot(x$a[,1,"ke"], y[,1,"0.01",], main = "ke")
+plot(x$a[,1,"kgutabs"], y[,1,"0.01",], main = "kgutabs")
+plot(x$a[,1,"vdist"], y[,1,"2.01",])
+text(1, 18, "t=2.01",cex = 1.2)
+plot(x$a[,1,"ke"], y[,1,"2.01",])
+plot(x$a[,1,"kgutabs"], y[,1,"2.01",])
+plot(x$a[,1,"vdist"], y[,1,"24.01",])
+text(1, .7, "t=24.01",cex = 1.2)
+plot(x$a[,1,"ke"], y[,1,"24.01",])
+plot(x$a[,1,"kgutabs"], y[,1,"24.01",])
+mtext("parameter", SOUTH<-1, line=0.4, outer=TRUE)
+mtext("Ccompartment", WEST<-2, line=0.4, outer=TRUE)
+```
+
+The x is a list of class "rfast99", containing all the input arguments detailed before and the calculated sensitivity indices of first order (`mSI`), interaction (`iSI`), and total order (`tSI`). The convergence indices are also stored in the list named `mCI`, `iCI`, and `tCI`. The parameter values are stored in an array `x$a` with c(model evaluation, replication, parameters).
+
+```{r}
+dim(x$a)
+```
+
+In addition, the output are also formated with c(model evaluation, replication, time, variable).
+
+```{r}
+dim(y)
+```
 
 The `check()` is a useful function to determine which parameters have relative lower sensitivity measurement across the given time interval, and therefore can be applied parameter fixing in model calibration. The argument of `SI.cutoff` is setting at 0.5 to detect the relative non-influential parameters in this case. 
 
