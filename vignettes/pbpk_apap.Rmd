@@ -22,6 +22,8 @@ knitr::opts_chunk$set(
 )
 ```
 
+## Uncertainty and sensitivity analysis
+
 The aim of this section is to reproduce our previous published [@fphar201800588] result of global sensitivity analysis for acetaminophen PBPK model through `pksensi`. The model code are included in this package and can be generated through `pbpk_apap_model()`. We applied global sensitivity analysis to the original published model with 21 model parameters [@s13318-015-0253-x]. The descriptions of each parameter and the sampling ranges are list in Table 1.
 
 ```{r, echo=F, eval=T}
@@ -114,7 +116,7 @@ Km_AS <- log(2.29e4)
 rng <- 2 
 ```
 
-The wide range of parameter value might cause the computational error in solver. One of effective solution is to adjust the value of relative and absoulte error tolerance to control the error appearance by resetting these parameter in lower value. The `generate_infile()` provide the arguments of `rtol` and `atol` that can be adjusted to  . However, the modification will slow down the computational speed. Therefore, the alternative method to prevent the computational error is to detect the crucial parameter range that cause the problem.  
+The wide range of parameter value might cause the computational error in solver. One of effective solution is to adjust the value of relative and absoulte error tolerance to control the error appearance by resetting these parameter in lower value. The `generate_infile()` provide the arguments of `rtol` and `atol` that can be adjusted to prevent the unwanted error. However, the modification will slow down the computational speed. Therefore, the alternative method to prevent the computational error is to detect the crucial parameter range that cause the problem.  
 
 We adjust the range of `SULT_VmaxC` and `UGT_VmaxC` from U(0, 15) to U(0, 10). The relative and absoulte error tolerance are set to 1e-7 and 1e-9, respectively, to prevent the computational error in MCSim in this example,
 
@@ -161,7 +163,7 @@ pbpk_apap_model()
 compile_model(mName, application = "mcsim")
 ```
 
-To improve the computational speed, this case only use MCSim to solve
+To improve the computational speed, this case only use MCSim as solver to estimate the concentration of acetaminophen (APAP) and its metabolites glucuronide (AG) and sulfate (AS) in plasma.
 
 ```{r}
 vars <- c("lnCPL_APAP_mcgL", "lnCPL_AG_mcgL", "lnCPL_AS_mcgL")
@@ -185,17 +187,41 @@ y <- solve_mcsim(x, mName = mName,
 tell2(x,y)
 ```
 
-The plotting function can output the result of time-dependent sensitivity measurement. In this case, the target variable are the concentration of APAP, AG and AS in plasma.  
+The plotting function can output the result of time-dependent sensitivity measurement. 
 
-```{r, fig.height=8, fig.width=8, fig.cap = 'Figure 2. '}
+```{r, fig.height=8, fig.width=8, fig.cap = 'Figure 1. '}
 plot(x, vars = "lnCPL_AG_mcgL")
 ```
 
+Also, we can apply uncertainty analysis through the `pksim()` by the given name of output variables as,
 
-```{r}
-check(x, SI.cutoff = 0.05)
+```{r, fig.cap = 'Figure 2. Model simulation range based on parameter distribution'}
+par(mfrow = c(2,2), mar = c(2,2,1,1), oma = c(2,2,1,1))
+pksim(y, vars = "lnCPL_APAP_mcgL")
+text(1, 15, "APAP",cex = 1.2)
+pksim(y, vars = "lnCPL_AG_mcgL", legend = F)
+text(1, 15, "AG",cex = 1.2)
+pksim(y, vars = "lnCPL_AS_mcgL", legend = F)
+text(1, 15, "AS",cex = 1.2)
+mtext("Time", SOUTH<-1, line=0.4, cex=1.2, outer=TRUE)
+mtext("Conc.", WEST<-2, line=0.4, cex=1.2, outer=TRUE)
 ```
 
+Through using the `check()`, the parameter with sensitivity and convegence indice over the given condition can be easily dected for all output variables.
+
+```{r}
+check(x)
+```
+
+The `check()` also provides some feasible argument to specify the target output or change the cut-off value.
+
+```{r}
+check(x, vars = "lnCPL_APAP_mcgL", SI.cutoff = 0.1, CI.cutoff = 0.1)
+```
+
+## Heatmap visualization combined with an index “cut-off”
+
+We propsed the heatmap
 
 ```{r}
 heat_check(x, order = "interaction")
