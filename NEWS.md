@@ -3,6 +3,7 @@
 Fix Bug:
 
 Fix the `order` argument in heat_check
+Add message in `generate_infile`
 
 New vignette:
 
