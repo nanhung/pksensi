@@ -1,31 +1,34 @@
 # pksensi 1.0.1
 
-Fix Bug:
-
-Fix the `order` argument in heat_check
-Add message in `generate_infile`
-
-New vignette:
+## New vignette:
 
 * Add "PBTK 1-compartment model"
+* Add "Acetaminophen-PBPK model"
 
-New examples:
+## New example:
 
-* Update example in solve_mcsim
+* Update example in `solve_mcsim()`
 
-New function:
+## New function:
 
-* Add pbtk1cpt_model()
-* Add pbtk_apap_model()
-* Add function mcsim_version()
+* Add `pbtk1cpt_model()`
+* Add `pbtk_apap_model()`
+* Add function `mcsim_version()`
 
-Update function
+## Fix Bug:
 
-* No need to define params in solve_fun()
-* No need to define `infile.name` and `outfile.name` in solve_mcsim()
+- Fix the `order` argument in `heat_check()`
+- Add message in `generate_infile`
 
-Change:
+## Update function
 
-change function's name install_mcsim() to mcsim_install()
+* Remove argument `params` in `solve_fun()`
+* No need to define `infile.name` and `outfile.name` in `solve_mcsim()`
+
+## Change:
+
+* Change function's name `install_mcsim()` to `mcsim_install()`
 
 # pksensi 1.0.0
+
+* Initial release in CRAN
