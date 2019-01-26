@@ -38,13 +38,14 @@ Hsieh NH, Reisfeld B, Bois FY, Chiu WA. [Applying a global sensitivity analysis 
 The package is organized as follow
 
 ```
- .
+.
 ├── appveyor.yml
 ├── codecov.yml
 ├── cran-comments.md
 ├── data
 │   └── APAP.rda
 ├── DESCRIPTION
+├── LICENSE
 ├── man
 │   ├── about-pksensi.Rd
 │   ├── APAP.Rd
@@ -87,6 +88,5 @@ The package is organized as follow
     ├── pbtk1cpt.Rmd
     └── references.bib
 
-7 directories, 40 files
-
+7 directories, 41 files
 ```
