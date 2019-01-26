@@ -15,6 +15,10 @@
 * Add `pbpk_apap_model()`
 * Add function `mcsim_version()`
 
+### NEW dataset
+
+* Add `APAP` dataset
+
 ### Fix Bug:
 
 - Fix the `order` argument in `heat_check()`

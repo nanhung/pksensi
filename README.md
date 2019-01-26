@@ -10,7 +10,7 @@
 
 **pksensi** implements the global sensitivity analysis workflow to investigate the parameter uncertainty and sensitivity in pharmacokinetic (PK) models, especially the physiologically based pharmacokinetic (PBPK) model with multivariate outputs. The package also provides some functions to check the convergence and sensitivity of model parameters.
 
-Through **pksensi**, we can:
+Through **pksensi**, you can:
 -	Run sensitivity analysis for pharmacokinetic models in R with script that were written in C or GNU MCSim.
 -	Decision making. The output results and visualization tools can be used to easily determine which parameters have “non-influential” effects on the model output and can be fixed in model calibration.
 
