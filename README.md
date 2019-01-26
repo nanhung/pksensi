@@ -32,3 +32,61 @@ This package includes a function that can help you install GNU MCsim more easily
 ## Reference
 
 Hsieh NH, Reisfeld B, Bois FY, Chiu WA. [Applying a global sensitivity analysis workflow to improve the computational efficiencies in physiologically-based pharmacokinetic modeling](https://www.frontiersin.org/articles/10.3389/fphar.2018.00588/full). Frontiers in Pharmacology 2018 Jun; 9:588.
+
+## Directory structure
+
+The package is organized as follow
+
+```
+ .
+├── appveyor.yml
+├── codecov.yml
+├── cran-comments.md
+├── data
+│   └── APAP.rda
+├── DESCRIPTION
+├── man
+│   ├── about-pksensi.Rd
+│   ├── APAP.Rd
+│   ├── check.Rd
+│   ├── compile_model.Rd
+│   ├── figures
+│   │   └── logo.png
+│   ├── mcsim.Rd
+│   ├── models.Rd
+│   ├── pksim.Rd
+│   ├── rfast99.Rd
+│   ├── solve_fun.Rd
+│   ├── solve_mcsim.Rd
+│   └── tell2.Rd
+├── NAMESPACE
+├── NEWS.md
+├── pksensi.Rproj
+├── R
+│   ├── check.R
+│   ├── compile.R
+│   ├── data.R
+│   ├── install.R
+│   ├── models.R
+│   ├── package.R
+│   ├── pksim.R
+│   ├── rfast99.R
+│   ├── solve_fun.R
+│   ├── solve_mcsim.R
+│   └── tell2.R
+├── README.md
+├── tests
+│   ├── 1cpt.model
+│   ├── pbpk_apap.model
+│   ├── pbtk1cpt.model
+│   ├── testthat
+│   │   └── test-rfast99.R
+│   └── testthat.R
+└── vignettes
+    ├── pbpk_apap.Rmd
+    ├── pbtk1cpt.Rmd
+    └── references.bib
+
+7 directories, 40 files
+
+```
