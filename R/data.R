@@ -1,7 +1,7 @@
 #' Pharmacokinetics of Acetaminophen
 #'
-#' The APAP dataset contains an human experiment of pharmacokinetic data
-#' for acetaminophen and it's major metabolites.
+#' The APAP dataset contains a human experiment of pharmacokinetic data
+#' for acetaminophen, and it's major metabolites.
 #'
 #' @format A data frame containing the following columns:
 #' \itemize{

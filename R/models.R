@@ -1,18 +1,26 @@
 #' Example PK Model for Sensitivity Analysis
 #'
-#' One of the example test model is flip-flop pharmacokinetic (FFPK) model. The time-dependent concentration can be written as:
-#' \deqn{C(t) = \frac{F \cdot D \cdot k_a}{(k_a-k_e)V} (e^{-k_et}-e^{-k_at})}
-#' where \eqn{F} is the fraction or percentage of the administrated dose that can reach the general circulation,
-#' \eqn{k_a} is the first-order absorption rate constant (/time),
-#' \eqn{k_e} is the first-order elimination rate constant (/time), and \eqn{V} is the distribution volume.
+#' Three examples are included: Flip-flop pharmacokinetic model,
+#' one-compartment toxicokinetic model from \pkg{httk} (Pearce et al., 2017),
+#' and acetaminophen pharmacokinetic model (Zurlinden et al., 2016).
 #'
 #' @param time the given time-points.
 #' @param params a parameter matrix containing the input sample.
 #' @param dose a given dose.
 #'
-#' @name pk_model
-#' @aliases pk_model
+#' @name models
+#' @aliases models
 #' @rdname models
+#'
+#' @references
+#' R. Pearce, R. Setzer, C. Strope, N. Sipes and J. Wambaugh, 2017,
+#' httk: R Package for High-Throughput Toxicokinetics,
+#' \emph{J. Stat. Soft.}, 79(4), 1-26.
+#'
+#' T. J. Zurlinden and B. Reisfeld, 2016,
+#' Physiologically based modeling of the pharmacokinetics of acetaminophen
+#' and its major metabolites in humans using a Bayesian population approach,
+#' \emph{Eur. J. Drug Metab. Pharmacokinet.}, 79(4), 1-26.
 #'
 #' @examples
 #' params <- c(F = 0.9, KA = 1.2, KE = 0.2, V = 1.5)
@@ -42,4 +50,3 @@ pbpk_apap_model = function(){
   destfile = paste0(getwd(),"/pbpk_apap.model")
   download.file(url, destfile)
 }
-

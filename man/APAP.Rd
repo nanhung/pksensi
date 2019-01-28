@@ -18,7 +18,7 @@
 APAP
 }
 \description{
-The APAP dataset contains an human experiment of pharmacokinetic data
-for acetaminophen and it's major metabolites.
+The APAP dataset contains a human experiment of pharmacokinetic data
+for acetaminophen, and it's major metabolites.
 }
 \keyword{datasets}
