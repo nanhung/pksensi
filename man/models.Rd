@@ -22,8 +22,8 @@ pbpk_apap_model()
 }
 \description{
 Three examples are included: Flip-flop pharmacokinetic model,
-one-compartment toxicokinetic model from \pkg{httk} (Pearce et al., 2017),
-and acetaminophen pharmacokinetic model (Zurlinden et al., 2016).
+one-compartment toxicokinetic model from \pkg{httk} (Pearce et al. 2017),
+and acetaminophen pharmacokinetic model (Zurlinden et al. 2016).
 }
 \section{Functions}{
 \itemize{

@@ -1,8 +1,8 @@
 #' Example PK Model for Sensitivity Analysis
 #'
 #' Three examples are included: Flip-flop pharmacokinetic model,
-#' one-compartment toxicokinetic model from \pkg{httk} (Pearce et al., 2017),
-#' and acetaminophen pharmacokinetic model (Zurlinden et al., 2016).
+#' one-compartment toxicokinetic model from \pkg{httk} (Pearce et al. 2017),
+#' and acetaminophen pharmacokinetic model (Zurlinden et al. 2016).
 #'
 #' @param time the given time-points.
 #' @param params a parameter matrix containing the input sample.

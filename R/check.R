@@ -7,7 +7,7 @@
 #' This method quantitatively assesses the convergence by computing the range of
 #' 95% confidence intervals of the sensitivity indices for each parameter across all data points (time and outputs).
 #' Using a global approach based on a heatmap visualization combined with an index "cut-off,"
-#' can systematically distinguish between "influential" and "non-influential" parameters (Hsieh et al., 2018).
+#' can systematically distinguish between "influential" and "non-influential" parameters (Hsieh et al. 2018).
 #'
 #' @param x a list of storing information in the defined sensitivity function.
 #' @param order a vector of interested output index included \code{first order}, \code{interaction}, and \code{total order}.
