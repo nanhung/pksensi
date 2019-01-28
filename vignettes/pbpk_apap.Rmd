@@ -12,7 +12,7 @@ vignette: >
 
 ```{r setup, include = FALSE}
 library(pksensi)
-mcsim_install()
+mcsim_install(mxstep = 5000)
 #library(kableExtra)
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -116,7 +116,7 @@ Km_AS <- log(2.29e4)
 rng <- 1.96 
 ```
 
-Generally, The wide range of parameter value might cause the computational error in the solver. One of the effective ways to prevent this problem is to adjust the value of relative and absolute error tolerance to control the error appearance by resetting these parameters in a lower value. The `generate_infile()` provide the arguments of `rtol` and `atol` that can be adjusted to prevent the unwanted error. However, the modification will slow down the computational speed. Therefore, the alternative method to prevent the computational error is to detect the crucial parameter range that causes the problem.  
+Generally, The wide range of parameter value might cause the computational error in the solver. One of the effective ways to prevent this problem is to adjust the value of relative and absolute error tolerance to control the error appearance by resetting these parameters in a lower value. The `generate_infile()` provide the arguments of `rtol` and `atol` that can be adjusted to prevent the unwanted error. However, the modification will slow down the computational speed. Therefore, the alternative method to prevent the computational error is to detect the crucial parameter range that causes the problem. Also, setting the maximum number of (internally defined) steps to higher value instead of using the default value (500) can prevent this problem. The maximum number of step is set to 5000 in this case.
 
 In this test case, we adjusted the range of `SULT_VmaxC` and `UGT_VmaxC` from U(0, 15) to U(0, 10). The relative and absolute error tolerance were set to 1e-7 and 1e-9, respectively, to prevent the computational error in MCSim,
 
