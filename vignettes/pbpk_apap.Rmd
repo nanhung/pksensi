@@ -234,7 +234,7 @@ heat_check(x, order = "total order")
 
 Also, adding the `index = "CI"` in the function can further investigate the convergence of the sensitivity index. Based on the current setting of sampling number, most parameters cannot reach the acceptable criteria of convergence. Therefore, the higher number of sampling is necessary.
 
-```{r, 'Figure 5: Heatmap of convergence index'}
+```{r, fig.height=9, 'Figure 5: Heatmap of convergence index'}
 heat_check(x, index = "CI", CI.cutoff = 0.05)
 ```
 
