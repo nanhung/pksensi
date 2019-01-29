@@ -3,9 +3,6 @@
 \name{rfast99}
 \alias{rfast99}
 \title{Extended Fourier Amplitude Sensitivity Test with Random Phase Shift}
-\source{
-This function is based on \code{fast99} function in \pkg{sensitivity} package.
-}
 \usage{
 rfast99(params, n, M = 4, omega = NULL, q = NULL, q.arg = NULL,
   replicate = 1, conf = 0.95)
@@ -56,5 +53,5 @@ global sensitivity analysis of model output,
 
 R. I. Cukier, H. B. Levine and K. E. Schuler, 1978,
 Nonlinear sensitivity analysis of multiparameter model systems.
-\emph{J. Comput. Phys.}, 26, 1–42.
+\emph{Journal of Computational Physics}, 26, 1–42.
 }

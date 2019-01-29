@@ -14,9 +14,6 @@
 #' @param replicate an integer to define the number of replication. The default is set to 1 turn off the replication.
 #' @param conf the confidence level for replication confidence intervals. The default is 0.95.
 #'
-#' @source
-#'  This function is based on \code{fast99} function in \pkg{sensitivity} package.
-#'
 #' @references
 #' A. Saltelli, S. Tarantola and K. Chan, 1999, A quantitative, model independent method for
 #' global sensitivity analysis of model output,
@@ -24,7 +21,7 @@
 #'
 #' R. I. Cukier, H. B. Levine and K. E. Schuler, 1978,
 #' Nonlinear sensitivity analysis of multiparameter model systems.
-#' \emph{J. Comput. Phys.}, 26, 1–42.
+#' \emph{Journal of Computational Physics}, 26, 1–42.
 #'
 #' @return
 #' The returned parameter value will be stored in an array with

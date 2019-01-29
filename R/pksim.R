@@ -2,7 +2,8 @@
 #'
 #' Pharmacokinetic plot of the output results based on the given parameter (Uncertainty analysis).
 #' If the user define the multiple output in model, the generated result will based on
-#' first model variable (default).
+#' first model variable (default). A pharmacokinetic plot with median and the range
+#' of min-max, 10%-90%, and 25%-75%.
 #'
 #' @param y a numeric array created from \code{solve_fun} or \code{solve_mcsim} function.
 #' @param vars a logical value or character to specific the display variable in simulation (default 1).
@@ -13,8 +14,6 @@
 #' @importFrom grDevices adjustcolor
 #' @importFrom graphics plot polygon
 #' @importFrom stats quantile
-#'
-#' @return A pharmacokinetic plot with median and the range of min-max, 10%-90%, and 25%-75%.
 #'
 #' @export
 pksim <- function(y, vars = 1, log = F, legend = T, ...){

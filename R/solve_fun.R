@@ -20,6 +20,11 @@
 #' @param vars a character for the selected output.
 #' @param ... additional arguments for deSolve::ode method.
 #'
+#' @references
+#' S. Karline, T. Petzoldt and R. Setzer. 2010.
+#' Solving Differential Equations in R: Package deSolve.
+#' \emph{Journal of Statistical Software}, 33(9), 1–25.
+#'
 #' @examples
 #'   q <- "qunif"
 #'   q.arg <- list(list(min = 0.6, max = 1.0),

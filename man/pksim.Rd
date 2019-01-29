@@ -17,11 +17,9 @@ pksim(y, vars = 1, log = F, legend = T, ...)
 
 \item{...}{additional arguments to customize the graphical parameters.}
 }
-\value{
-A pharmacokinetic plot with median and the range of min-max, 10%-90%, and 25%-75%.
-}
 \description{
 Pharmacokinetic plot of the output results based on the given parameter (Uncertainty analysis).
 If the user define the multiple output in model, the generated result will based on
-first model variable (default).
+first model variable (default). A pharmacokinetic plot with median and the range
+of min-max, 10%-90%, and 25%-75%.
 }

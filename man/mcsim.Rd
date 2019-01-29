@@ -31,9 +31,7 @@ The default \code{mxstp} is setting to 500.
 The user can increase \code{mxstp} to avoid possible error return.
 If you meet any error when conduct sensitivity analysis, you can this function to reinstall GNU MCSim and set the higher \code{mxstp}.
 The default \code{directory} to install MCSim is under \code{/home/username} (Linux), \code{/Users/username} (MacOS),
-and \code{C:/Users/} (windows).
-
-To install MCSim in Windows, be sure to install Rtools or MinGW first.
+and \code{C:/Users/} (windows). To install MCSim in Windows, be sure to install Rtools or MinGW first.
 }
 \section{Functions}{
 \itemize{
@@ -45,5 +43,9 @@ To install MCSim in Windows, be sure to install Rtools or MinGW first.
 
 }
 \references{
+F.Y. Bois, and D. Maszle, 1997,
+MCSim: A Monte Carlo Simulation Program,
+\emph{Journal of Statistical Software}, 2(9): 1–60.
+
 \url{https://www.gnu.org/software/mcsim/}
 }
