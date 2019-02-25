@@ -152,8 +152,13 @@ solve_mcsim <- function(x, mName,
 
   invisible(gc()); # clean memory
 
-  dimnames(y)[[3]] <- time
-  dimnames(y)[[4]] <- vars
+  if (length(time) > 1) {
+    dimnames(y)[[3]] <- time
+    dimnames(y)[[4]] <- vars
+  } else {
+    dimnames(y)[[3]] <- list(time)
+    dimnames(y)[[4]] <- list(vars)
+  }
 
   #file.remove(setpoint.data)
 
