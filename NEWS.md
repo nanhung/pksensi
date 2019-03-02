@@ -1,3 +1,13 @@
+# pksensi 1.1.0
+
+### Fix Bug:
+
+* Use single time point in `solve_mcsim()`
+
+### Update function:
+
+* Update `version = 6.1.0` in `install_mcsim()`
+
 # pksensi 1.0.1
 
 ### New vignette:
@@ -15,7 +25,7 @@
 * Add `pbpk_apap_model()`
 * Add function `mcsim_version()`
 
-### NEW dataset
+### NEW dataset:
 
 * Add `APAP` dataset
 
@@ -24,7 +34,7 @@
 - Fix the `order` argument in `heat_check()`
 - Add message in `generate_infile()`
 
-### Update function
+### Update function:
 
 * Remove argument `params` in `solve_fun()`
 * No need to define `infile.name` and `outfile.name` in `solve_mcsim()`

@@ -9,3 +9,4 @@ mcsim.*
 *.csv
 *.dat
 *.in
+.Rapp.history
