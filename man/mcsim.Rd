@@ -5,7 +5,7 @@
 \alias{mcsim_version}
 \title{Install MCSim}
 \usage{
-mcsim_install(version = "6.0.1", directory = NULL, mxstep = 500)
+mcsim_install(version = "6.1.0", directory = NULL, mxstep = 500)
 
 mcsim_version()
 }
@@ -39,7 +39,7 @@ and \code{C:/Users/} (windows). To install MCSim in Windows, be sure to install 
 }}
 
 \examples{
-\dontrun{mcsim_install(version = 6.0.1, mxstep = 10000)}
+\dontrun{mcsim_install(version = 6.1.0, mxstep = 10000)}
 
 }
 \references{
