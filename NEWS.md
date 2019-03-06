@@ -2,11 +2,12 @@
 
 ### Fix Bug:
 
-* Use single time point in `solve_mcsim()`
+* Used single time point in `solve_mcsim()`
 
 ### Update function:
 
-* Update `version = 6.1.0` in `install_mcsim()`
+* Added solving message in `solve_mcsim()`
+* Updated `version = 6.1.0` in `install_mcsim()`
 
 # pksensi 1.0.1
 

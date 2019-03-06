@@ -71,6 +71,7 @@ solve_mcsim <- function(x, mName,
                         condition  = NULL,
                         generate.infile = T){
 
+  message(paste0("Starting time: ", Sys.time()))
   if(is.null(infile.name)) infile.name <- "input.in"
   if(is.null(outfile.name)) outfile.name <- "output.csv"
 
@@ -119,8 +120,11 @@ solve_mcsim <- function(x, mName,
   }
 
   if(file.exists(mcsim.) == T){
+    message(paste0("Execute: ", "./mcsim.", mName, " ", infile.name))
     system(paste0("./mcsim.", mName, " ", infile.name))
+
   } else if (file.exists(paste0(mcsim., ".model.exe")) == T) {
+    message(paste0("Solving: ", "./mcsim.", mName, ".model.exe ", infile.name))
     system(paste0("./mcsim.", mName, ".model.exe ", infile.name))
   }
 
@@ -161,7 +165,7 @@ solve_mcsim <- function(x, mName,
   }
 
   #file.remove(setpoint.data)
-
+  message(paste0("Ending time: ", Sys.time()))
   return(y)
 }
 
