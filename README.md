@@ -1,6 +1,7 @@
 # pksensi <img src="man/figures/logo.png" height="200px" align="right" />
 
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Dependencies](https://tinyverse.netlify.com/badge/pksensi)](https://cran.r-project.org/package=pksensi)
 [![Travis-CI Build Status](https://travis-ci.org/nanhung/pksensi.svg?branch=master)](https://travis-ci.org/nanhung/pksensi)
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/nanhung/pksensi?branch=master&svg=true)](https://ci.appveyor.com/project/nanhung/pksensi)
 [![Coverage Status](https://codecov.io/gh/nanhung/pksensi/branch/master/graph/badge.svg)](https://codecov.io/gh/nanhung/pksensi?branch=master)  
