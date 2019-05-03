@@ -73,7 +73,7 @@ solve_mcsim <- function(x, mName,
 
   message(paste0("Starting time: ", Sys.time()))
   if(is.null(infile.name)) infile.name <- "input.in"
-  if(is.null(outfile.name)) outfile.name <- "output.csv"
+  if(is.null(outfile.name)) outfile.name <- "sim.out"
 
   if(generate.infile == T){
     generate_infile(infile.name = infile.name,
@@ -89,7 +89,7 @@ solve_mcsim <- function(x, mName,
   }
 
   if(!is.null(condition)){
-    setpoint.data <- "setpoint.dat"
+    setpoint.data <- "setpoint.out"
   } else setpoint.data <- setpoint.name
 
   mcsim. <- paste0("mcsim.", mName)
