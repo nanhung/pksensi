@@ -93,6 +93,7 @@ solve_mcsim <- function(x, mName,
   } else setpoint.data <- setpoint.name
 
   mcsim. <- paste0("mcsim.", mName)
+  mcsim. <- ifelse(file.exists(mcsim.) ,mcsim., paste0(mcsim., ".exe"))
   #if(file.exists(mcsim.) == F){
   #  stop(paste0("The ", "mcsim.", mName, " doesn't exist."))
   #}
@@ -120,12 +121,8 @@ solve_mcsim <- function(x, mName,
   }
 
   if(file.exists(mcsim.) == T){
-    message(paste0("Execute: ", "./mcsim.", mName, " ", infile.name))
-    system(paste0("./mcsim.", mName, " ", infile.name))
-
-  } else if (file.exists(paste0(mcsim., ".model.exe")) == T) {
-    message(paste0("Solving: ", "./mcsim.", mName, ".model.exe ", infile.name))
-    system(paste0("./mcsim.", mName, ".model.exe ", infile.name))
+    message(paste0("Execute: ", "./", mcsim., " ", infile.name))
+    system(paste0("./", mcsim., " ", infile.name))
   }
 
   if (is.null(n)){rm(X)}
