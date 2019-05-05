@@ -8,7 +8,7 @@
 #'
 #' @param mName a string giving the name of the model or C file (without extension).
 #' @param x a list of storing information in the defined sensitivity function.
-#' @param n a numeric to define the sample number.
+#' @param monte_carlo a numeric to define the sample number in Monte Carlo simulaton.
 #' @param dist a vector of distribution names corresponding to \code{<distribution-name>} in MCSim.
 #' @param q.arg a list of shape parameters in the sampling distribution (\code{dist}).
 #' @param infile.name a character to assign the name of input file.
@@ -70,14 +70,14 @@ solve_mcsim <- function(x, mName,
                         condition  = NULL,
                         generate.infile = T,
                         rtol = 1e-6, atol = 1e-6,
-                        n = NULL, dist = NULL, q.arg = NULL){
+                        monte_carlo = NULL, dist = NULL, q.arg = NULL){
 
   message(paste0("Starting time: ", Sys.time()))
   if(is.null(infile.name)) infile.name <- "input.in"
   if(is.null(outfile.name)) outfile.name <- "sim.out"
 
   if(generate.infile == T){
-    if (is.null(n)){
+    if (is.null(monte_carlo)){
       generate_infile(infile.name = infile.name,
                       outfile.name = outfile.name,
                       params = params,
@@ -92,11 +92,11 @@ solve_mcsim <- function(x, mName,
                       time = time,
                       condition = condition,
                       rtol = rtol, atol = atol,
-                      n = n, dist = dist, q.arg = q.arg)
+                      monte_carlo = monte_carlo, dist = dist, q.arg = q.arg)
     }
   }
 
-  if(is.null(condition) && is.null(setpoint.name) && is.null(n)){
+  if(is.null(condition) && is.null(setpoint.name) && is.null(monte_carlo)){
     stop("Please assign the setpoint.name (parameter matrix defined in input file)")
   }
 
@@ -111,8 +111,8 @@ solve_mcsim <- function(x, mName,
   #}
 
   #
-  if (is.numeric(n)){
-    n.sample <- n
+  if (is.numeric(monte_carlo)){
+    n.sample <- monte_carlo
   } else if (!is.null(x$s)){
     n.sample <- length(x$s)
   }
@@ -127,7 +127,7 @@ solve_mcsim <- function(x, mName,
   n.vars <- length(vars)
 
   #
-  if (is.null(n)){ # Remember to define n if used external parameter matrix
+  if (is.null(monte_carlo)){ # Remember to define n if used external parameter matrix
     X <- cbind(1, apply(x$a, 3L, c))
     write.table(X, file=setpoint.data, row.names=F, sep="\t")
   }
@@ -137,7 +137,7 @@ solve_mcsim <- function(x, mName,
     system(paste0("./", mcsim., " ", infile.name))
   }
 
-  if (is.null(n)){rm(X)}
+  if (is.null(monte_carlo)){rm(X)}
 
   invisible(gc()); # clean memory
 
@@ -184,7 +184,7 @@ generate_infile <- function(infile.name = NULL,
                             outfile.name = NULL,
                             params, vars, time,
                             condition, rtol = 1e-6, atol = 1e-6,
-                            n = NULL, dist = NULL, q.arg = NULL){ # Monte Carlo
+                            monte_carlo = NULL, dist = NULL, q.arg = NULL){ # Monte Carlo
 
   if(is.null(infile.name)) infile.name <- "input.in"
   if(is.null(outfile.name)) outfile.name <- "sim.out"
@@ -203,14 +203,14 @@ generate_infile <- function(infile.name = NULL,
       "----------------------------------------", "\n\n",
       file = infile.name, sep = "")
   cat("Integrate (Lsodes, ", rtol, ", ", atol, " , 1);", "\n\n", file=infile.name, append=TRUE, sep="")
-  if(is.null(n)){
+  if(is.null(monte_carlo)){
     cat("SetPoints (", "\n",
         "\"", outfile.name, "\", \n\"", setpoint.data, "\",\n",
         "0, ", "\n",
         paste(params, collapse = ", "),");\n\n",
         file = infile.name, append = TRUE, sep = "")
   } else {
-    cat("MonteCarlo (", "\"", outfile.name, "\"", ",", n , ",", sample(1:99999, 1), ");\n\n",
+    cat("MonteCarlo (", "\"", outfile.name, "\"", ",", monte_carlo , ",", sample(1:99999, 1), ");\n\n",
         file = infile.name, append = TRUE, sep = "")
     for (i in 1 : length(params)){
       cat("Distrib ( ", params[i], ",", dist[i], ",", paste(unlist(q.arg[i]), collapse = ","), ");", "\n",
