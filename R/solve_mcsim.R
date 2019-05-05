@@ -69,6 +69,7 @@ solve_mcsim <- function(x, mName,
                         time  = NULL,
                         condition  = NULL,
                         generate.infile = T,
+                        rtol = 1e-6, atol = 1e-6,
                         n = NULL, dist = NULL, q.arg = NULL){
 
   message(paste0("Starting time: ", Sys.time()))
@@ -90,7 +91,8 @@ solve_mcsim <- function(x, mName,
                       vars = vars,
                       time = time,
                       condition = condition,
-                      n, dist = NULL, q.arg = NULL)
+                      rtol = rtol, atol = atol,
+                      n = n, dist = dist, q.arg = q.arg)
     }
   }
 
@@ -181,7 +183,7 @@ solve_mcsim <- function(x, mName,
 generate_infile <- function(infile.name = NULL,
                             outfile.name = NULL,
                             params, vars, time,
-                            condition, rtol = 1e-6, atol = 1e-9,
+                            condition, rtol = 1e-6, atol = 1e-6,
                             n = NULL, dist = NULL, q.arg = NULL){ # Monte Carlo
 
   if(is.null(infile.name)) infile.name <- "input.in"

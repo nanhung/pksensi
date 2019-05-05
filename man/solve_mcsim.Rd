@@ -7,11 +7,11 @@
 \usage{
 solve_mcsim(x, mName, infile.name = NULL, outfile.name = NULL,
   setpoint.name = NULL, params = NULL, vars = NULL, time = NULL,
-  condition = NULL, generate.infile = T, n = NULL, dist = NULL,
-  q.arg = NULL)
+  condition = NULL, generate.infile = T, rtol = 1e-06,
+  atol = 1e-06, n = NULL, dist = NULL, q.arg = NULL)
 
 generate_infile(infile.name = NULL, outfile.name = NULL, params, vars,
-  time, condition, rtol = 1e-06, atol = 1e-09, n = NULL,
+  time, condition, rtol = 1e-06, atol = 1e-06, n = NULL,
   dist = NULL, q.arg = NULL)
 }
 \arguments{
@@ -35,15 +35,15 @@ generate_infile(infile.name = NULL, outfile.name = NULL, params, vars,
 
 \item{generate.infile}{a logical value to automatically generate the input file, .}
 
+\item{rtol}{an argument passed to the integrator (default 1e-6).}
+
+\item{atol}{an argument passed to the integrator (default 1e-9).}
+
 \item{n}{a numeric to define the sample number.}
 
 \item{dist}{a vector of distribution names corresponding to \code{<distribution-name>} in MCSim.}
 
 \item{q.arg}{a list of shape parameters in the sampling distribution (\code{dist}).}
-
-\item{rtol}{an argument passed to the integrator (default 1e-6).}
-
-\item{atol}{an argument passed to the integrator (default 1e-9).}
 }
 \value{
 The output result is the 4-dimension array with
