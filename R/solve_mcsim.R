@@ -175,7 +175,7 @@ generate_infile <- function(infile.name = NULL,
                             n = NULL, dist = NULL, q.arg = NULL){ # Monte Carlo
 
   if(is.null(infile.name)) infile.name <- "input.in"
-  if(is.null(outfile.name)) outfile.name <- "output.out"
+  if(is.null(outfile.name)) outfile.name <- "sim.out"
   setpoint.data <- "setpoint.out"
 
   #if(file.exists(paste0(infile.name)) == T){
