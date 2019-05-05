@@ -105,10 +105,10 @@ solve_mcsim <- function(x, mName,
   } else setpoint.data <- setpoint.name
 
   mcsim. <- paste0("mcsim.", mName)
-  mcsim. <- ifelse(file.exists(mcsim.) ,mcsim., paste0(mcsim., ".exe"))
-  #if(file.exists(mcsim.) == F){
-  #  stop(paste0("The ", "mcsim.", mName, " doesn't exist."))
-  #}
+  mcsim. <- ifelse(file.exists(mcsim.) ,mcsim., paste0(mcsim., ".exe")) # Design for MCSim under R
+  if(file.exists(mcsim.) == F){
+    stop(paste0("The ", mcsim., " doesn't exist."))
+  }
 
   #
   if (is.numeric(monte_carlo)){
