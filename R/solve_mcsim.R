@@ -63,25 +63,35 @@
 solve_mcsim <- function(x, mName,
                         infile.name = NULL,
                         outfile.name = NULL,
-                        n = NULL,
                         setpoint.name = NULL,
                         params = NULL,
                         vars  = NULL,
                         time  = NULL,
                         condition  = NULL,
-                        generate.infile = T){
+                        generate.infile = T,
+                        n = NULL, dist = NULL, q.arg = NULL){
 
   message(paste0("Starting time: ", Sys.time()))
   if(is.null(infile.name)) infile.name <- "input.in"
   if(is.null(outfile.name)) outfile.name <- "sim.out"
 
   if(generate.infile == T){
-    generate_infile(infile.name = infile.name,
-                    outfile.name = outfile.name,
-                    params = params,
-                    vars = vars,
-                    time = time,
-                    condition = condition)
+    if (is.null(n)){
+      generate_infile(infile.name = infile.name,
+                      outfile.name = outfile.name,
+                      params = params,
+                      vars = vars,
+                      time = time,
+                      condition = condition)
+    } else { # must be Monte Carlo
+      generate_infile(infile.name = infile.name,
+                      outfile.name = outfile.name,
+                      params = params,
+                      vars = vars,
+                      time = time,
+                      condition = condition,
+                      n, dist = NULL, q.arg = NULL)
+    }
   }
 
   if(is.null(condition) && is.null(setpoint.name) && is.null(n)){

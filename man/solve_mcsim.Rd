@@ -6,8 +6,9 @@
 \title{Solve PK Model Through MCSim}
 \usage{
 solve_mcsim(x, mName, infile.name = NULL, outfile.name = NULL,
-  n = NULL, setpoint.name = NULL, params = NULL, vars = NULL,
-  time = NULL, condition = NULL, generate.infile = T)
+  setpoint.name = NULL, params = NULL, vars = NULL, time = NULL,
+  condition = NULL, generate.infile = T, n = NULL, dist = NULL,
+  q.arg = NULL)
 
 generate_infile(infile.name = NULL, outfile.name = NULL, params, vars,
   time, condition, rtol = 1e-06, atol = 1e-09, n = NULL,
@@ -22,8 +23,6 @@ generate_infile(infile.name = NULL, outfile.name = NULL, params, vars,
 
 \item{outfile.name}{a character to assign the name of output file.}
 
-\item{n}{a numeric to define the sample number.}
-
 \item{setpoint.name}{a character to assign the name of file for parameter matrix.}
 
 \item{params}{a character to assign the testing parameters.}
@@ -36,13 +35,15 @@ generate_infile(infile.name = NULL, outfile.name = NULL, params, vars,
 
 \item{generate.infile}{a logical value to automatically generate the input file, .}
 
-\item{rtol}{an argument passed to the integrator (default 1e-6).}
-
-\item{atol}{an argument passed to the integrator (default 1e-9).}
+\item{n}{a numeric to define the sample number.}
 
 \item{dist}{a vector of distribution names corresponding to \code{<distribution-name>} in MCSim.}
 
 \item{q.arg}{a list of shape parameters in the sampling distribution (\code{dist}).}
+
+\item{rtol}{an argument passed to the integrator (default 1e-6).}
+
+\item{atol}{an argument passed to the integrator (default 1e-9).}
 }
 \value{
 The output result is the 4-dimension array with
