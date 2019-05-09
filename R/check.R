@@ -205,7 +205,7 @@ heat_check <- function(x,
 
   X <- X %>% filter(order %in% !!(order)) %>% filter_(~variable %in% vars) %>% filter(time %in% times)
 
-  if(length(times) < 10){
+  if(length(times) < 16){
     X$time <- as.factor(X$time)
   }
 
@@ -223,7 +223,7 @@ heat_check <- function(x,
       scale_fill_gradient(low = "white", high = "red", limits = c(-0.05,1.05))
   }
 
-  if(length(times) < 10){
+  if(length(times) < 16){
     p <- p + scale_x_discrete(expand=c(0,0))
   } else p <- p + scale_x_continuous(expand=c(0,0))
 
