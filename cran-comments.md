@@ -1,10 +1,8 @@
 ## Test environments
 * local OS X install, R 3.6.0
 * local Ubuntu 18.04, R 3.6.0
-* local win 7, R 3.5.1
 * Ubuntu 14.04.5 LTS(on travis-ci), R 3.6.0
 * Windows Server 2012 R2 x64 (appveyor), R 3.6.0
-
 
 ## R CMD check results
 There were no ERRORs, WARNINGs and NOTE.
