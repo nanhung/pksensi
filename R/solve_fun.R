@@ -18,6 +18,7 @@
 #' @param model the defined analytical equation with functional output.
 #' @param lnparam a logical value that make the statement of the log-transformed parameter (default FALSE).
 #' @param vars a character for the selected output.
+#' @param tell a logical value to automatically combine the result y to decoupling simulation x.
 #' @param ... additional arguments for deSolve::ode method.
 #'
 #' @references
@@ -52,7 +53,7 @@
 solve_fun <- function(x, time = NULL, initParmsfun = "initParms", initState, dllname,
                       func = "derivs", initfunc = "initmod", outnames,
                       method ="lsode", rtol=1e-8, atol=1e-12,
-                      model = NULL, lnparam = F, vars = NULL, ...){
+                      model = NULL, lnparam = F, vars = NULL, tell = T, ...){
   n <- length(x$s)
   no.params <- ifelse (class(x$params) == "character", length(x$params), x$params)
   replicate <- x$rep
@@ -125,5 +126,11 @@ solve_fun <- function(x, time = NULL, initParmsfun = "initParms", initState, dll
     dimnames(y)[[4]] <- list(vars)
   }
 
-  return(y)
+  if (tell == T){
+    tell2(x, y)
+  }
+
+  if (tell == T){
+    return(x)
+  } else return(y)
 }

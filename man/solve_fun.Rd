@@ -7,7 +7,7 @@
 solve_fun(x, time = NULL, initParmsfun = "initParms", initState,
   dllname, func = "derivs", initfunc = "initmod", outnames,
   method = "lsode", rtol = 1e-08, atol = 1e-12, model = NULL,
-  lnparam = F, vars = NULL, ...)
+  lnparam = F, vars = NULL, tell = T, ...)
 }
 \arguments{
 \item{x}{a list of storing information in the defined sensitivity function.}
@@ -38,6 +38,8 @@ that contains the compiled function.}
 \item{lnparam}{a logical value that make the statement of the log-transformed parameter (default FALSE).}
 
 \item{vars}{a character for the selected output.}
+
+\item{tell}{a logical value to automatically combine the result y to decoupling simulation x.}
 
 \item{...}{additional arguments for deSolve::ode method.}
 }

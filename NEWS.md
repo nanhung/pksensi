@@ -6,8 +6,22 @@
 
 ### Update function:
 
-* Added solving message in `solve_mcsim()`
+**Installation**
+
 * Updated `version = 6.1.0` in `install_mcsim()`
+* Adopt to file name in MCSim_under_R - "model.R.exe"
+
+**Modeling**
+
+* Change assignment `n` to `monte_carlo` in `solve_mcsim()`
+* Revise the default name of output to "sim.out" and "setpoint.out" in `solve_mcsim()`
+* Added solving message to track time spend in `solve_mcsim()` 
+* Add assignment `tell = T` to automatically combine the output y in decoupling simulation x in `solve_fun()` and `solve_mcsim()`
+
+**Plot**
+
+* Transfer the log-transformed value to natural scale in `pksim()`
+* Revise the discrete time condition to `length(times) < 16` in `heat_check()`
 
 # pksensi 1.0.1
 
