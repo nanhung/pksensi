@@ -33,7 +33,7 @@ remotes::install_github('nanhung/pksensi', upgrade = TRUE)
 
 ## Workflow
 
-![](https://i.ibb.co/sVR44Hb/sensitivity-workflow.png)
+![](https://i.ibb.co/tqpDLrk/sensitivity-workflow.png)
 
 ## Reference
 
