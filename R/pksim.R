@@ -12,11 +12,16 @@
 #' @param ... additional arguments to customize the graphical parameters.
 #'
 #' @importFrom grDevices adjustcolor
-#' @importFrom graphics plot polygon
+#' @importFrom graphics plot polygon axis
 #' @importFrom stats quantile
 #'
 #' @export
 pksim <- function(y, vars = 1, log = F, legend = T, ...){
+
+  if(is.null(dim(y))){
+    y <- y$y
+  }
+
   times <- as.numeric(colnames(y[,1,,vars]))
 
   if(dim(y)[3] == 1) stop("The time point must greater than 1")
@@ -41,8 +46,8 @@ pksim <- function(y, vars = 1, log = F, legend = T, ...){
        ylim=c(min(ytck),max(ytck)), lty=1, las=1, lwd=2, col = 1, yaxt = "n", ...)
 
   if (log == T){
-    axis(2, at = ytck, label = natural_ytck, las=2)
-  } else axis(2, at = ytck, label = ytck, las=2)
+    axis(2, at = ytck, labels = natural_ytck, las=2)
+  } else axis(2, at = ytck, labels = ytck, las=2)
 
   if (any(is.na(quantY[2:3,])) == FALSE)
   {

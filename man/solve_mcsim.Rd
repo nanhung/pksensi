@@ -7,7 +7,7 @@
 \usage{
 solve_mcsim(x, mName, infile.name = NULL, outfile.name = NULL,
   setpoint.name = NULL, params = NULL, vars = NULL, time = NULL,
-  condition = NULL, generate.infile = T, rtol = 1e-06,
+  condition = NULL, generate.infile = T, tell = T, rtol = 1e-06,
   atol = 1e-06, monte_carlo = NULL, dist = NULL, q.arg = NULL)
 
 generate_infile(infile.name = NULL, outfile.name = NULL, params, vars,
@@ -33,7 +33,9 @@ generate_infile(infile.name = NULL, outfile.name = NULL, params, vars,
 
 \item{condition}{a character to set the specific parameter value in the input file.}
 
-\item{generate.infile}{a logical value to automatically generate the input file, .}
+\item{generate.infile}{a logical value to automatically generate the input file.}
+
+\item{tell}{a logical value to automatically combine the result y to decoupling simulation x.}
 
 \item{rtol}{an argument passed to the integrator (default 1e-6).}
 

@@ -20,7 +20,8 @@
 #' @param condition a character to set the specific parameter value in the input file.
 #' @param rtol an argument passed to the integrator (default 1e-6).
 #' @param atol an argument passed to the integrator (default 1e-9).
-#' @param generate.infile a logical value to automatically generate the input file, .
+#' @param generate.infile a logical value to automatically generate the input file.
+#' @param tell a logical value to automatically combine the result y to decoupling simulation x.
 #'
 #' @importFrom utils write.table
 #' @importFrom data.table fread
@@ -69,6 +70,7 @@ solve_mcsim <- function(x, mName,
                         time  = NULL,
                         condition  = NULL,
                         generate.infile = T,
+                        tell = T,
                         rtol = 1e-6, atol = 1e-6,
                         monte_carlo = NULL, dist = NULL, q.arg = NULL){
 
@@ -173,9 +175,16 @@ solve_mcsim <- function(x, mName,
     dimnames(y)[[4]] <- list(vars)
   }
 
+  if (is.null(monte_carlo) && tell == T){
+    tell2(x, y)
+  }
+
   #file.remove(setpoint.data)
   message(paste0("Ending time: ", Sys.time()))
-  return(y)
+
+  if (is.null(monte_carlo) && tell == T){
+    return(x)
+  } else return(y)
 }
 
 #' @export
