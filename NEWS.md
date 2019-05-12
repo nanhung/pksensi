@@ -8,14 +8,14 @@
 
 **Installation**
 
-* Updated `version = 6.1.0` in `install_mcsim()`
-* Adopt to file name in MCSim_under_R - "model.R.exe"
+* Update the default MCSim version to `version = 6.1.0` in `install_mcsim()`
+* Adopt the name of model file ("model.R.exe") to MCSim_under_R project
 
 **Modeling**
 
 * Change assignment `n` to `monte_carlo` in `solve_mcsim()`
 * Revise the default name of output to "sim.out" and "setpoint.out" in `solve_mcsim()`
-* Added solving message to track time spend in `solve_mcsim()` 
+* Add solving message to track time spend in `solve_mcsim()` 
 * Add assignment `tell = T` to automatically combine the output y in decoupling simulation x in `solve_fun()` and `solve_mcsim()`
 
 **Plot**
