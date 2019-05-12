@@ -31,6 +31,10 @@ remotes::install_github('nanhung/pksensi', upgrade = TRUE)
 
 - All updated details can be found in [NEWS.md](https://github.com/nanhung/pksensi/blob/master/NEWS.md)
 
+## Workflow
+
+![](https://i.ibb.co/sVR44Hb/sensitivity-workflow.png)
+
 ## Reference
 
 Hsieh NH, Reisfeld B, Bois FY, Chiu WA. [Applying a global sensitivity analysis workflow to improve the computational efficiencies in physiologically-based pharmacokinetic modeling](https://www.frontiersin.org/articles/10.3389/fphar.2018.00588/full). Frontiers in Pharmacology 2018 Jun; 9:588.
