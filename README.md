@@ -34,3 +34,5 @@ remotes::install_github('nanhung/pksensi', upgrade = TRUE)
 ## Reference
 
 Hsieh NH, Reisfeld B, Bois FY, Chiu WA. [Applying a global sensitivity analysis workflow to improve the computational efficiencies in physiologically-based pharmacokinetic modeling](https://www.frontiersin.org/articles/10.3389/fphar.2018.00588/full). Frontiers in Pharmacology 2018 Jun; 9:588.
+
+Hsieh NH, Reisfeld B, Chiu WA. [pksensi: an R package to apply sensitivity analysis in pharmacokinetic modeling](https://nanhung.rbind.io/poster/2019-SOT.pdf). 58th SOT Annual Meeting, Baltimore, USA, March 10–14, 2019.
