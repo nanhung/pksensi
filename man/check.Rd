@@ -74,17 +74,14 @@ set.seed(1234)
 x <- rfast99(params = params, n = 200, q = q, q.arg = q.arg, rep = 20)
 
 time <- seq(from = 0.25, to = 12.25, by = 0.5)
-y <- solve_fun(x, model = FFPK, time = time, vars = "output")
+out <- solve_fun(x, model = FFPK, time = time, vars = "output")
 
-
-tell2(x,y) # Link decoupling simulation result
-x
 
 # Check results of sensitivity measures
-check(x)
-plot(x)
-heat_check(x)
-heat_check(x, index = "CI")
+check(out)
+plot(out)
+heat_check(out)
+heat_check(out, index = "CI")
 
 }
 \references{

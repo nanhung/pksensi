@@ -1,12 +1,2 @@
-*.html
-*.R
 *.model
-*.o
-*.so
-*.dll
-*.c
-mcsim.*
-*.csv
-*.dat
-*.in
 .Rapp.history

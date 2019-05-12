@@ -174,13 +174,12 @@ generate_infile(params = params,
                 time = times, 
                 condition = conditions,
                 rtol = 1e-7, atol = 1e-9)
-system.time(y <- solve_mcsim(x, mName = mName, 
+system.time(out <- solve_mcsim(x, mName = mName, 
                              params = params,
                              vars = vars,
                              time = times,
                              condition = conditions,
                              generate.infile = F))
-tell2(x,y)
 ```
 
 
@@ -188,20 +187,21 @@ tell2(x,y)
 The plotting function can output the result of time-dependent sensitivity measurement to determine the parameter impact on model output over time (Figure 1). 
 
 ```{r, eval=F, fig.height=8, fig.width=8, fig.cap = 'Figure 1. '}
-plot(x, vars = "lnCPL_AG_mcgL")
+plot(out, vars = "lnCPL_AG_mcgL")
 ```
 
 The uncertainty analysis is a crucial step before model calibration. We can apply uncertainty analysis through the `pksim()` by the given name of output variables (Figure 2). Through this visualization approach, we can recognize whether the simulated outputs can accurately simulate the same concentration profile as the in-vivo experiment under the setting of parameter ranges. In Figure 2, all experiment points are included in the intervals, representing the acceptable set of the parameter range. 
 
 ```{r, eval=F, fig.cap = 'Figure 2. The range of model simulation based on parameter distribution'}
+data(APAP)
 par(mfrow = c(2,2), mar = c(2,2,1,1), oma = c(2,2,1,1))
-pksim(y, vars = "lnCPL_APAP_mcgL")
+pksim(out, vars = "lnCPL_APAP_mcgL")
 text(1, 15, "APAP",cex = 1.2)
 points(APAP$Time, log(APAP$APAP * 1000))
-pksim(y, vars = "lnCPL_AG_mcgL", legend = F)
+pksim(out, vars = "lnCPL_AG_mcgL", legend = F)
 text(1, 15, "AG",cex = 1.2)
 points(APAP$Time, log(APAP$AG * 1000))
-pksim(y, vars = "lnCPL_AS_mcgL", legend = F)
+pksim(out, vars = "lnCPL_AS_mcgL", legend = F)
 text(1, 15, "AS",cex = 1.2)
 points(APAP$Time, log(APAP$AS * 1000))
 mtext("Time", SOUTH<-1, line=0.4, cex=1.2, outer=TRUE)
@@ -211,13 +211,13 @@ mtext("Conc.", WEST<-2, line=0.4, cex=1.2, outer=TRUE)
 In addition, through using the `check()`, the parameter with sensitivity and convergence indices over the given condition can be easily detected for all output variables.
 
 ```{r, eval=F}
-check(x)
+check(out)
 ```
 
 The `check()` also provides some feasible argument to specify the target output or change the cut-off value.
 
 ```{r, eval=F}
-check(x, vars = "lnCPL_APAP_mcgL", SI.cutoff = 0.1, CI.cutoff = 0.1)
+check(out, vars = "lnCPL_APAP_mcgL", SI.cutoff = 0.1, CI.cutoff = 0.1)
 ```
 
 ## Heatmap visualization combined with an index “cut-off”
@@ -225,17 +225,17 @@ check(x, vars = "lnCPL_APAP_mcgL", SI.cutoff = 0.1, CI.cutoff = 0.1)
 Based on our previous study, we proposed the heatmap visualization approach to distinguish "influential" and "non-influential" parameters with a cut-off. Through the given argument `order`, we can select the specific order of sensitivity measurement that we're interested in (Figure 3 & 4). 
 
 ```{r, eval=F, 'Figure 3: Heatmap of sensitivity index for interaction'}
-heat_check(x, order = "interaction")
+heat_check(out, order = "interaction")
 ```
 
 ```{r, eval=F, 'Figure 4: Heatmap of convergence index for total order'}
-heat_check(x, order = "total order")
+heat_check(out, order = "total order")
 ```
 
 Also, adding the `index = "CI"` in the function can further investigate the convergence of the sensitivity index. Based on the current setting of sampling number, most parameters cannot reach the acceptable criteria of convergence. Therefore, the higher number of sampling is necessary.
 
 ```{r, eval=F, fig.height=9, 'Figure 5: Heatmap of convergence index'}
-heat_check(x, index = "CI", CI.cutoff = 0.05)
+heat_check(out, index = "CI", CI.cutoff = 0.05)
 ```
 
 ## References

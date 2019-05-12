@@ -117,32 +117,31 @@ x <- rfast99(params, n = 200, q = q, q.arg = q.arg, replicate = 20)
 Because the pharmacokinetic model is being used to describe a continuous process for the chemical concentration over time, the sensitivity measurements can also show the time-dependent relationships for each model parameter. Here we define the output time points to examine the change of the parameter sensitivity over time. To solve the pharmacokinetic model through deSolve, we need to provide the details of the argument: 
 
 ```{r, eval=F}
-y <- solve_fun(x, times, initState = initState, outnames = Outputs, dllname = mName)
-tell2(x,y)
+out <- solve_fun(x, times, initState = initState, outnames = Outputs, dllname = mName)
 ```
 
 To create the time-dependent sensitivity measurement, we set the time duration from 0.01 to 24.01 hours in the example. The `initParmsfun` is used to generate the sampling value for each parameter. The `outnames`, `dllname`, `func`, `initfunc` are based on the arguments from the ode function in `deSolve` package. The details of the model structure and these arguments are defined in `pbtk1comp.c`. and `pbtk1comp_inits.R`. Finally, the `tell2` function is used to integrate the parameter values and the output results of numerical analysis that were generated and stored in variables x and y. The result of object x is an object of rfast99, which has specific `print`, `plot`, and `check` method. The print function gives the sensitivity and convergence indices for main, interaction, and total order at each time point. In addition to print out the result of sensitivity analysis, the more efficient way to distinguish the influence of model parameter is to visualize them. The time-dependent sensitivity indices are shown in Figure 2. 
 
 ```{r, eval=F, fig.cap = 'Figure 2. Time-dependent sensitivity indices of the plasma concentration estimated from one-compartment PBTK model during 24 hour time period intake.'}
-plot(x)
+plot(out)
 ```
 
 Here, we can find that `vdist` and `ke` are dominating the plasma concentration in the before and after 5-hour post chemical intake, respectively, representing that the elimination is a key parameter to dominate the plasma concentration. Besides, the `kgutabs` only plays a crucial role to determine the plasma concentration in the first hour. The relationship between concentration and the parameters can be plotted as follow (Figure 3): 
 
 ```{r, eval=F, fig.cap = 'Figure 3. The relationship between model parameter and estimated concentration under the time-point of 0.01, 2.01, and 24.01 hr'}
 par(mfrow = c(3,3), mar = c(2,2,2,2), oma = c(2,2,1,1))
-plot(x$a[,1,"vdist"], y[,1,"0.01",], main = "vdist")
+plot(x$a[,1,"vdist"], out$y[,1,"0.01",], main = "vdist")
 text(1, .7, "t=0.01",cex = 1.2)
-plot(x$a[,1,"ke"], y[,1,"0.01",], main = "ke")
-plot(x$a[,1,"kgutabs"], y[,1,"0.01",], main = "kgutabs")
-plot(x$a[,1,"vdist"], y[,1,"2.01",])
+plot(x$a[,1,"ke"], out$y[,1,"0.01",], main = "ke")
+plot(x$a[,1,"kgutabs"], out$y[,1,"0.01",], main = "kgutabs")
+plot(x$a[,1,"vdist"], out$y[,1,"2.01",])
 text(1, 18, "t=2.01",cex = 1.2)
-plot(x$a[,1,"ke"], y[,1,"2.01",])
-plot(x$a[,1,"kgutabs"], y[,1,"2.01",])
-plot(x$a[,1,"vdist"], y[,1,"24.01",])
+plot(x$a[,1,"ke"], out$y[,1,"2.01",])
+plot(x$a[,1,"kgutabs"], out$y[,1,"2.01",])
+plot(x$a[,1,"vdist"], out$y[,1,"24.01",])
 text(1, .7, "t=24.01",cex = 1.2)
-plot(x$a[,1,"ke"], y[,1,"24.01",])
-plot(x$a[,1,"kgutabs"], y[,1,"24.01",])
+plot(x$a[,1,"ke"], out$y[,1,"24.01",])
+plot(x$a[,1,"kgutabs"], out$y[,1,"24.01",])
 mtext("parameter", SOUTH<-1, line=0.4, outer=TRUE)
 mtext("Ccompartment", WEST<-2, line=0.4, outer=TRUE)
 ```
@@ -156,13 +155,13 @@ dim(x$a)
 In addition, the output are also formated with c(model evaluation, replication, time, variable).
 
 ```{r, eval=F}
-dim(y)
+dim(out$y)
 ```
 
 The `check()` is a useful function to determine which parameters have relative lower sensitivity measurement across the given time interval, and therefore can be applied parameter fixing in model calibration. The argument of `SI.cutoff` is setting at 0.5 to detect the relative non-influential parameters in this case. 
 
 ```{r, eval=F}
-check(x, SI.cutoff = 0.5)
+check(out, SI.cutoff = 0.5)
 ```
 
 Based on the sensitivity measurement of the total order, the result shows that `kgutabs` has relative lower measurement of sensitivity index.

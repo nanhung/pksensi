@@ -14,13 +14,12 @@ test_that("rfast99 single_time", {
   x<-rfast99(params=c("F","KA","KE","V"), n = 100, q = q, q.arg = q.arg,
              rep = 20, conf = 0.95)
   time <- 0.5
-  y<-solve_fun(x, model = FFPK, time = time, vars = "output")
-  tell2(x,y)
-  check(x)
-  print(x)
+  out<-solve_fun(x, model = FFPK, time = time, vars = "output")
+  check(out)
+  print(out)
 
-  expect_equal(dimnames(y)[[3]], "0.5")
-  expect_equal(dim(y)[3], 1)
+  expect_equal(dimnames(out$y)[[3]], "0.5")
+  expect_equal(dim(out$y)[3], 1)
 })
 
 test_that("rfast99 class", {
@@ -38,17 +37,16 @@ test_that("rfast99 class", {
              rep = 20, conf = 0.95)
 
   time <- seq(from = 0.25, to = 12.25, by = 0.5)
-  y<-solve_fun(x, model = FFPK, time = time, vars = "output")
-  tell2(x,y)
-  check(x)
-  print(x)
+  out<-solve_fun(x, model = FFPK, time = time, vars = "output")
+  check(out)
+  print(out)
 
-  heat_check(x, text = T)
-  heat_check(x, level = F)
-  heat_check(x, index = "CI")
+  heat_check(out, text = T)
+  heat_check(out, level = F)
+  heat_check(out, index = "CI")
 
-  expect_silent(pksim(y, log = T))
-  expect_silent(plot(x))
+  expect_silent(pksim(out, log = T))
+  expect_silent(plot(out))
   expect_that(x, is_a("rfast99"))
   expect_equal(x$M, 4)
   expect_equal(x$replicate, 20)
@@ -90,10 +88,9 @@ test_that("rfast99 rep1", {
              rep = 20, conf = 0.95)
 
   time <- 0.5
-  y<-solve_fun(x, model = FFPK, time = time, vars = "output")
-  tell2(x,y)
-  check(x)
-  print(x)
+  out<-solve_fun(x, model = FFPK, time = time, vars = "output")
+  check(out)
+  print(out)
 
   expect_equal(x$replicate, 20)
 })
@@ -113,10 +110,9 @@ test_that("rfast99 rep2", {
              rep = 20, conf = 0.95)
 
   time <- c(0.5, 1)
-  y<-solve_fun(x, model = FFPK, time = time, vars = "output", lnparam = T)
-  tell2(x,y)
-  check(x, time = 1)
-  print(x)
+  out<-solve_fun(x, model = FFPK, time = time, vars = "output", lnparam = T)
+  check(out, time = 1)
+  print(out)
 
   expect_equal(x$replicate, 20)
 })

@@ -20,11 +20,11 @@ Through **pksensi**, you can:
 You can install the package via CRAN or GitHub:
 
 ```
-# To get pksensi from CRAN (current version 1.0.1):
+# To get pksensi from CRAN (current version 1.1.0):
 install.packages('pksensi')
 
 # Or get the the development version from GitHub:
-remotes::install_github('nanhung/pksensi', upgrade = TRUE)
+remotes::install_github('nanhung/pksensi')
 ```
 
 - This package includes a function that can help you install GNU MCsim more easily through the function `mcsim_install()`.
