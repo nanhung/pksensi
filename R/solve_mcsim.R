@@ -75,8 +75,8 @@ solve_mcsim <- function(x, mName,
                         monte_carlo = NULL, dist = NULL, q.arg = NULL){
 
   message(paste0("Starting time: ", Sys.time()))
-  if(is.null(infile.name)) infile.name <- "input.in"
-  if(is.null(outfile.name)) outfile.name <- "sim.out"
+  if(is.null(infile.name)) infile.name <- "sim.in"
+  if(is.null(outfile.name)) outfile.name <- "simmc.out"
 
   if(generate.infile == T){
     if (is.null(monte_carlo)){
@@ -103,7 +103,7 @@ solve_mcsim <- function(x, mName,
   }
 
   if(!is.null(condition)){
-    setpoint.data <- "setpoint.out"
+    setpoint.data <- "setpoints.out"
   } else setpoint.data <- setpoint.name
 
   mcsim. <- paste0("mcsim.", mName)
@@ -195,9 +195,9 @@ generate_infile <- function(infile.name = NULL,
                             condition, rtol = 1e-6, atol = 1e-6,
                             monte_carlo = NULL, dist = NULL, q.arg = NULL){ # Monte Carlo
 
-  if(is.null(infile.name)) infile.name <- "input.in"
-  if(is.null(outfile.name)) outfile.name <- "sim.out"
-  setpoint.data <- "setpoint.out"
+  if(is.null(infile.name)) infile.name <- "sim.in"
+  if(is.null(outfile.name)) outfile.name <- "simmc.out"
+  setpoint.data <- "setpoints.out"
 
   #if(file.exists(paste0(infile.name)) == T){
   #  if(menu(c("Yes", "No"),
