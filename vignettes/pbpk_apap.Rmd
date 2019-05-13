@@ -164,6 +164,8 @@ compile_model(mName, application = "mcsim")
 
 To improve the computational speed, this case only uses MCSim to estimate the concentration of acetaminophen (APAP) and its metabolites glucuronide (AG) and sulfate (AS) in plasma. The setting oral dose of APAP is 20 mg/kg in this example. Generally, the input dosing method can be defined through the `condition` argument. Since the unit of the given dose is mg/kg, the `mgkg_flag` is set to 1 to declare the statement. More definition of input can be found in the section of input functions in GNU MCSim User’s Manual (https://www.gnu.org/software/mcsim/mcsim.html#Input-functions).
 
+**NOTE:** The `mxstep` was set at `5000` to prevent the computational error.
+
 ```{r, eval=F}
 vars <- c("lnCPL_APAP_mcgL", "lnCPL_AG_mcgL", "lnCPL_AS_mcgL")
 conditions <- c("mgkg_flag = 1",
