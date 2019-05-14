@@ -61,7 +61,12 @@ compile_model <- function (mName, application = 'mcsim', use_model_file = TRUE, 
   if (application == "mcsim"){
     if (.Platform$OS.type == "unix"){
       system(paste0("gcc -O3 -I/usr/local/include -L/usr/local/lib -g -O2 ", mName, ".c", " -lmcsim -o", " mcsim.", mName, " -lm -llapack -Wall"))
-      cat(paste0("* Created executable file 'mcsim.", mName, "'."))
+
+      exec <- paste0("mcsim.", mName)
+      if (file.exists(exec)){
+        cat(paste0("* Created executable file 'mcsim.", mName, "'."))
+      } else stop("* Error in model compilation.")
+
     } else if ((.Platform$OS.type == "windows")) {
       Sys.setenv(PATH = paste("c:\\Rtools\\mingw_64\\bin", Sys.getenv("PATH"), sep=";"))
       Sys.setenv(PATH = paste("c:\\MinGW\\bin", Sys.getenv("PATH"), sep=";"))

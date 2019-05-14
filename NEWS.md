@@ -3,11 +3,15 @@
 ### Fix Bug:
 
 * Add rtol and atol in solve_mcsim()
+* Switch default compiler from Clang to GCC in MacOS
 
 ### Update vignette
 
 * Add note to APAP vignette
 
+### Update function
+
+* Stop the function in compile error in compile_model()
 
 
 # pksensi 1.1.0

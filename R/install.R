@@ -70,7 +70,7 @@ mcsim_install <- function(version = "6.1.0", directory = NULL, mxstep = 500) {
     if (Sys.info()[['sysname']] == "Darwin"){
       setwd(paste0("/Users/", name, sprintf('/mcsim-%s', version)))
 
-      # The macos used clang as default, the following command is used to switch to GCC
+      # The MacOS used clang as default compiler, the following command is used to switch to GCC
       Sys.setenv(PATH = paste("/usr/local/bin", Sys.getenv("PATH"), sep=";"))
 
     } else if (Sys.info()[['sysname']] == "Linux") {
