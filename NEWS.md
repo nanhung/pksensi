@@ -2,6 +2,18 @@
 
 ### Fix Bug:
 
+* Add rtol and atol in solve_mcsim()
+
+### Update vignette
+
+* Add note to APAP vignette
+
+
+
+# pksensi 1.1.0
+
+### Fix Bug:
+
 * Used single time point in `solve_mcsim()`
 
 ### Update function:

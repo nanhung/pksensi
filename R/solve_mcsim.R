@@ -85,6 +85,7 @@ solve_mcsim <- function(x, mName,
                       params = params,
                       vars = vars,
                       time = time,
+                      rtol = rtol, atol = atol,
                       condition = condition)
     } else { # must be Monte Carlo
       generate_infile(infile.name = infile.name,
@@ -92,8 +93,8 @@ solve_mcsim <- function(x, mName,
                       params = params,
                       vars = vars,
                       time = time,
-                      condition = condition,
                       rtol = rtol, atol = atol,
+                      condition = condition,
                       monte_carlo = monte_carlo, dist = dist, q.arg = q.arg)
     }
   }
