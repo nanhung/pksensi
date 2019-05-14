@@ -1,17 +1,20 @@
-# pksensi 1.1.0
+# pksensi 1.1.1
 
 ### Fix Bug:
 
-* Add rtol and atol in solve_mcsim()
+* Add `rtol` and `atol` in `solve_mcsim()`
 * Switch default compiler from Clang to GCC in MacOS
+* Fix the mName problem under Windows environment in `solve_mcsim()`
 
 ### Update vignette
 
-* Add note to APAP vignette
+* Remind to set the `mxstep` to 5000 in APAP-PBPK example
+* Add note to APAP vignette (Set `atol` and `rtol`)
 
 ### Update function
 
-* Stop the function when compile error in compile_model()
+* Stop the function when compile error in `compile_model()`
+* Revise the default name of output to "simmc.out" and "setpts.out" in `solve_mcsim()`
 
 
 # pksensi 1.1.0
@@ -38,6 +41,7 @@
 
 * Transfer the log-transformed value to natural scale in `pksim()`
 * Revise the discrete time condition to `length(times) < 16` in `heat_check()`
+
 
 # pksensi 1.0.1
 
@@ -73,6 +77,7 @@
 ### Change:
 
 * Change function's name `install_mcsim()` to `mcsim_install()`
+
 
 # pksensi 1.0.0
 
