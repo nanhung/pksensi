@@ -18,7 +18,7 @@
 #'
 #' N-H Hsieh, B Reisfeld, FY Bois, WA, Chiu, 2018, Applying a global sensitivity analysis workflow
 #' to improve the computational efficiencies in physiologically-based pharmacokinetic modeling,
-#' \emph{Froniers in Pharmacology}, 9, 588.
+#' \emph{Frontiers in Pharmacology}, 9, 588.
 #'
 #' @name about-pksensi
 #' @aliases pksensi-package
