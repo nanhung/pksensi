@@ -11,7 +11,7 @@
 
 ### Update function
 
-* Stop the function in compile error in compile_model()
+* Stop the function when compile error in compile_model()
 
 
 # pksensi 1.1.0
