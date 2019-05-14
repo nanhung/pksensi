@@ -107,7 +107,12 @@ solve_mcsim <- function(x, mName,
     setpoint.data <- "setpts.out"
   } else setpoint.data <- setpoint.name
 
-  mcsim. <- paste0("mcsim.", mName)
+  if (.Platform$OS.type == "unix"){
+    mcsim. <- paste0("mcsim.", mName)
+  } else if (.Platform$OS.type == "windows"){ # Windows user but not MCSim under R
+    mcsim. <- paste0("mcsim.", mName, ".exe")
+  }
+
   mcsim. <- ifelse(file.exists(mcsim.) ,mcsim., paste0(mcsim., ".exe")) # Design for MCSim under R
 
   if(file.exists(mcsim.) == F){
