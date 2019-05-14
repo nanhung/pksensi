@@ -110,13 +110,15 @@ solve_mcsim <- function(x, mName,
   if (.Platform$OS.type == "unix"){
     mcsim. <- paste0("mcsim.", mName)
   } else if (.Platform$OS.type == "windows"){ # Windows user but not MCSim under R
+    mName <- paste0(mName,".model")
     mcsim. <- paste0("mcsim.", mName, ".exe")
   }
 
-  mcsim. <- ifelse(file.exists(mcsim.) ,mcsim., paste0(mcsim., ".exe")) # Design for MCSim under R
-
   if(file.exists(mcsim.) == F){
-    stop(paste0("The ", mcsim., " doesn't exist."))
+    mcsim. <- ifelse(file.exists(mcsim.) ,mcsim., paste0(mcsim., ".exe")) # Design for MCSim under R
+    if(file.exists(mcsim.) == F){
+      stop(paste0("The ", mcsim., " doesn't exist."))
+    }
   }
 
   #
