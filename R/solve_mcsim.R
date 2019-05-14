@@ -104,7 +104,7 @@ solve_mcsim <- function(x, mName,
   }
 
   if(!is.null(condition)){
-    setpoint.data <- "setpoints.out"
+    setpoint.data <- "setpts.out"
   } else setpoint.data <- setpoint.name
 
   mcsim. <- paste0("mcsim.", mName)
@@ -198,7 +198,7 @@ generate_infile <- function(infile.name = NULL,
 
   if(is.null(infile.name)) infile.name <- "sim.in"
   if(is.null(outfile.name)) outfile.name <- "simmc.out"
-  setpoint.data <- "setpoints.out"
+  setpoint.data <- "setpts.out"
 
   #if(file.exists(paste0(infile.name)) == T){
   #  if(menu(c("Yes", "No"),
