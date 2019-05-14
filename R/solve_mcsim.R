@@ -109,6 +109,7 @@ solve_mcsim <- function(x, mName,
 
   mcsim. <- paste0("mcsim.", mName)
   mcsim. <- ifelse(file.exists(mcsim.) ,mcsim., paste0(mcsim., ".exe")) # Design for MCSim under R
+
   if(file.exists(mcsim.) == F){
     stop(paste0("The ", mcsim., " doesn't exist."))
   }
@@ -168,12 +169,15 @@ solve_mcsim <- function(x, mName,
 
   invisible(gc()); # clean memory
 
-  if (length(time) > 1) {
-    dimnames(y)[[3]] <- time
-    dimnames(y)[[4]] <- vars
-  } else {
+  if (length(time) == 1 && length(vars) == 1) {
     dimnames(y)[[3]] <- list(time)
     dimnames(y)[[4]] <- list(vars)
+  } else if (length(time) == 1 && length(vars) > 1){
+    dimnames(y)[[3]] <- list(time)
+    dimnames(y)[[4]] <- vars
+  } else {
+    dimnames(y)[[3]] <- time
+    dimnames(y)[[4]] <- vars
   }
 
   if (is.null(monte_carlo) && tell == T){
