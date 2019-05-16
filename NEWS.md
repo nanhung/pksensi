@@ -13,6 +13,7 @@
 
 ### Update function
 
+* mcsim_version() can work in MCSim_under_R
 * Stop the function when compile error in `compile_model()`
 * Revise the default name of output to "simmc.out" and "setpts.out" in `solve_mcsim()`
 
