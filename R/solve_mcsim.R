@@ -115,7 +115,7 @@ solve_mcsim <- function(x, mName,
   }
 
   if(file.exists(mcsim.) == F){
-    mcsim. <- ifelse(file.exists(mcsim.) ,mcsim., paste0(mcsim., ".exe")) # Design for MCSim under R
+    mcsim. <- ifelse(file.exists(mcsim.) ,mcsim., paste0(mName, ".exe")) # Design for MCSim under R
     if(file.exists(mcsim.) == F){
       stop(paste0("The ", mcsim., " doesn't exist."))
     }
