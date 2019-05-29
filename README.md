@@ -20,7 +20,7 @@ Through **pksensi**, you can:
 You can install the package via CRAN or GitHub:
 
 ```
-# To get pksensi from CRAN (current version 1.1.0):
+# To get pksensi from CRAN:
 install.packages('pksensi')
 
 # Or get the the development version from GitHub:
