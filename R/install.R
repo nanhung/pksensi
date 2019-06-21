@@ -37,12 +37,12 @@
 #' @export
 mcsim_install <- function(version = "6.1.0", directory = NULL, mxstep = 500) {
 
-#  if (.Platform$OS.type == "windows") {
-#    stop("The function haven't supprot Windows system")
-#  if (.Platform$OS.type == "windows") {
-#    if (!(devtools::find_rtools() == T)) {
-#      warning("The Rtools should be installed first")
-#    }}
+  #  if (.Platform$OS.type == "windows") {
+  #    stop("The function haven't supprot Windows system")
+  #  if (.Platform$OS.type == "windows") {
+  #    if (!(devtools::find_rtools() == T)) {
+  #      warning("The Rtools should be installed first")
+  #    }}
 
   message("Start install")
   version<-version
@@ -58,7 +58,7 @@ mcsim_install <- function(version = "6.1.0", directory = NULL, mxstep = 500) {
     } else if (Sys.info()[['sysname']] == "Linux") {
       exdir <- paste0("/home/", name)
     } else if (Sys.info()[['sysname']] == "Windows") {
-      exdir <- paste0("c:\\Users\\", name)
+      exdir <- paste0("c:/Users/", name)
     }
   } else {exdir <- directory}
 
@@ -76,7 +76,7 @@ mcsim_install <- function(version = "6.1.0", directory = NULL, mxstep = 500) {
     } else if (Sys.info()[['sysname']] == "Linux") {
       setwd(paste0("/home/", name, sprintf('/mcsim-%s', version)))
     } else if (Sys.info()[['sysname']] == "Windows") {
-      setwd(paste0("c:\\Users\\", name, sprintf('/mcsim-%s', version)))
+      setwd(paste0("c:/Users/", name, sprintf('/mcsim-%s', version)))
     }
   } else {setwd(paste0(directory, sprintf('/mcsim-%s', version)))}
 
@@ -103,22 +103,23 @@ mcsim_install <- function(version = "6.1.0", directory = NULL, mxstep = 500) {
       system("sudo -kS sh -c 'make install; ldconfig'", input=input)
     }
   } else if (.Platform$OS.type == "windows") {
-    Sys.setenv(PATH = paste("c:\\Rtools\\mingw_64\\bin", Sys.getenv("PATH"), sep=";"))
-    Sys.setenv(PATH = paste("c:\\MinGW\\bin", Sys.getenv("PATH"), sep=";"))
-    generate_config.h()
-    system("cp config.h ./mod/")
-    system("cp config.h ./sim/")
+    Sys.setenv(PATH = paste("c:/Rtools/mingw_64/bin", Sys.getenv("PATH"), sep=";"))
+    Sys.setenv(PATH = paste("c:/MinGW/bin", Sys.getenv("PATH"), sep=";"))
+    setwd(paste0(mcsim.directory,"/mod"))
+    pksensi:::generate_config.h()
+    setwd(paste0(mcsim.directory,"/sim"))
+    pksensi:::generate_config.h()
+    setwd(mcsim.directory)
     system(paste0("gcc -o ./mod/mod.exe ./mod/*.c"))
     if(file.exists("./mod/mod.exe")){
       cat(paste0("Created 'mod.exe'"))
     }
   }
-
   cat("\n")
   message(paste0("The MCSim " , sprintf('%s', version), " is installed. The sourced folder is under ", mcsim.directory))
   setwd(current.wd)
-
 }
+
 
 #' @export
 #' @describeIn mcsim Return the version number of GNU MCSim.
