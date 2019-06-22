@@ -3,15 +3,14 @@
 States  = { Agutlument, Acompartment, Ametabolized, AUC};
 Outputs = { Ccompartment };
 
-# Parameters
-vdist = 0;
-ke = 0;
-kgutabs = 1;
+kgutabs = 1;  # absorption rate constant (/h)
+vdist = 1;    # volume of distribution (L)
+ke = 1;       # elimination rate constant (/h)
 
 Dynamics {
   Ccompartment = Acompartment / vdist;
-  dt (Agutlument)  = - kgutabs * Agutlument;
-  dt (Acompartment)  = kgutabs * Agutlument - ke * Acompartment;
+  dt (Agutlument) = - kgutabs * Agutlument;
+  dt (Acompartment) = kgutabs * Agutlument - ke * Acompartment;
   dt (Ametabolized) = ke * Acompartment;
   dt (AUC) = Ccompartment;
 }
