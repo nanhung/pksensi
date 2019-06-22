@@ -69,7 +69,7 @@ compile_model <- function (mName, application = 'mcsim', use_model_file = TRUE, 
 
     } else if ((.Platform$OS.type == "windows")) {
       Sys.setenv(PATH = paste("c:/Rtools/mingw_64/bin", Sys.getenv("PATH"), sep=";"))
-      Sys.setenv(PATH = paste("c:/MinGW/bin", Sys.getenv("PATH"), sep=";"))
+      Sys.setenv(PATH = paste("c:/Rtools/bin", Sys.getenv("PATH"), sep=";"))
       system(paste0(mod, " ", mName, " ", mName, ".c"))
       system(paste0("gcc -O3 -I.. -I", sim, " -o mcsim.", mName, ".exe ", mName, ".c ", sim, "/*.c", " -lm "))
       if (file.exists(paste0("mcsim.", mName, ".exe"))){
@@ -80,6 +80,8 @@ compile_model <- function (mName, application = 'mcsim', use_model_file = TRUE, 
   } else if (application == "R"){
     if (.Platform$OS.type == "windows" && use_model_file == T){
       system(paste0(mod, " -R ", mName, ".model ", mName, ".c"))
+      Sys.setenv(PATH = paste("c:/Rtools/mingw_64/bin", Sys.getenv("PATH"), sep=";"))
+      Sys.setenv(PATH = paste("c:/Rtools/bin", Sys.getenv("PATH"), sep=";"))
     }
 
     system (paste0("R CMD SHLIB ", mName, ".c")) # create .o and .so (or .dll) files
