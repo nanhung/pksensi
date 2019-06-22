@@ -125,14 +125,27 @@ mcsim_install <- function(version = "6.1.0", directory = NULL, mxstep = 500) {
 #' @describeIn mcsim Return the version number of GNU MCSim.
 mcsim_version <- function(){
 
-  if(file.exists("MCSim/mod.exe")){ # for MCSim under R
-    invisible(system("./MCSim/mod.exe -h | tee mod.mcsim.txt", intern = TRUE))
-  } else invisible(system("mod -h | tee mod.mcsim.txt", intern = TRUE))
+  if (.Platform$OS.type == "unix"){
+    if(file.exists("MCSim/mod.exe")){ # for MCSim under R
+      invisible(system("./MCSim/mod.exe -h | tee mod.mcsim.txt", intern = TRUE))
+    } else {
+      invisible(system("mod -h | tee mod.mcsim.txt", intern = TRUE))
+    }
+    l <- readLines("mod.mcsim.txt")
+    invisible(file.remove("mod.mcsim.txt"))
+    version <- substr(l[4], 6, 10)
+    message("The current GNU MCSim version is ", version)
+  }
 
-  l <- readLines("mod.mcsim.txt")
-  invisible(file.remove("mod.mcsim.txt"))
-  version <- substr(l[4], 6, 10)
-  message("The current GNU MCSim version is ", version)
+  if (.Platform$OS.type == "windows") {
+    name <- Sys.info()[['user']]
+    exdir <- paste0("c:/Users/", name)
+    l <- list.files(path = exdir)
+    version <- l[grep("mcsim", l)]
+    if (class(version) == "character"){
+      message("The '", version, "' is found in ", exdir)
+    }
+  }
 }
 
 generate_config.h <- function(){
