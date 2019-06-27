@@ -55,7 +55,7 @@ solve_fun <- function(x, time = NULL, initParmsfun = "initParms", initState, dll
                       method ="lsode", rtol=1e-8, atol=1e-12,
                       model = NULL, lnparam = F, vars = NULL, tell = T, ...){
 
-  str.time <- Sys.time()
+  message(paste0("Starting time: ", Sys.time()))
 
   n <- length(x$s)
   no.params <- ifelse (class(x$params) == "character", length(x$params), x$params)
@@ -133,8 +133,7 @@ solve_fun <- function(x, time = NULL, initParmsfun = "initParms", initState, dll
     tell2(x, y)
   }
 
-  end.time <- Sys.time()
-  end.time - str.time
+  message(paste0("Ending time: ", Sys.time()))
 
   if (tell == T){
     return(x)

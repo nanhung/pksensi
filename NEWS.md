@@ -1,11 +1,9 @@
 # pksensi 1.1.2
 
+* Add timer in solve_fun
 * Update pksim(): Can customize xlab and ylab
 * Update pbtk1cpt model: Add body weight
-
-* Revise the display of timer
 * Revise the mcsim_version() for Windows OS
-
 * Fix bug: Create .dll in win10 through compile_model()
 
 # pksensi 1.1.1
