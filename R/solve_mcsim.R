@@ -74,7 +74,8 @@ solve_mcsim <- function(x, mName,
                         rtol = 1e-6, atol = 1e-6,
                         monte_carlo = NULL, dist = NULL, q.arg = NULL){
 
-  message(paste0("Starting time: ", Sys.time()))
+  #message(paste0("Starting time: ", Sys.time()))
+  str.time <- Sys.time()
   if(is.null(infile.name)) infile.name <- "sim.in"
   if(is.null(outfile.name)) outfile.name <- "simmc.out"
 
@@ -191,7 +192,9 @@ solve_mcsim <- function(x, mName,
   }
 
   #file.remove(setpoint.data)
-  message(paste0("Ending time: ", Sys.time()))
+  #message(paste0("Ending time: ", Sys.time()))
+  end.time <- Sys.time()
+  end.time - str.time
 
   if (is.null(monte_carlo) && tell == T){
     return(x)
