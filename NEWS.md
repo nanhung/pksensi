@@ -5,6 +5,7 @@
 * Update pbtk1cpt model: Add body weight
 * Revise the mcsim_version() for Windows OS
 * Fix bug: Create .dll in win10 through compile_model()
+* Fix bug: plot() cannot display variable name when using character
 
 # pksensi 1.1.1
 
