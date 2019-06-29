@@ -1,6 +1,7 @@
 # pksensi 1.1.2
 
 * Add timer in solve_fun
+* Add default MCSim version = '6.1.0' in compile_model()
 * Update pksim(): Can customize xlab and ylab
 * Update pbtk1cpt model: Add body weight
 * Revise the mcsim_version() for Windows OS

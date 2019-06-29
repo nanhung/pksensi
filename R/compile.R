@@ -16,7 +16,7 @@
 #' @param application a character to assign the specific methods (\code{mcsim} or \code{R})
 #' that will be applied to the numerical analysis (default is \code{mcsim}).
 #' @param version a character to assign the version of MCSim that had been installed.
-#' The version must be assigned for Windows user.
+#' The version must be assigned for Windows user (default is \code{6.1.0}).
 #'
 #' @return
 #' The default \code{application} is set to \code{'mcsim'}
@@ -27,7 +27,7 @@
 #'
 #'
 #' @export
-compile_model <- function (mName, application = 'mcsim', use_model_file = TRUE, version = NULL) {
+compile_model <- function (mName, application = 'mcsim', use_model_file = TRUE, version = '6.1.0') {
 
   if (application == 'mcsim' && .Platform$OS.type == "windows"){
     mName <- paste0(mName,".model")
