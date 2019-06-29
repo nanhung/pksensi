@@ -5,7 +5,7 @@
 \title{Model Compiler}
 \usage{
 compile_model(mName, application = "mcsim", use_model_file = TRUE,
-  version = NULL)
+  version = "6.1.0")
 }
 \arguments{
 \item{mName}{a string giving the name of the model or C file (without extension).}
@@ -17,7 +17,7 @@ that will be applied to the numerical analysis (default is \code{mcsim}).}
 the default is set to \code{TRUE} to assign the MCSim's model file in compiling.}
 
 \item{version}{a character to assign the version of MCSim that had been installed.
-The version must be assigned for Windows user.}
+The version must be assigned for Windows user (default is \code{6.1.0}).}
 }
 \value{
 The default \code{application} is set to \code{'mcsim'}

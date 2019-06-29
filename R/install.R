@@ -106,9 +106,9 @@ mcsim_install <- function(version = "6.1.0", directory = NULL, mxstep = 500) {
     Sys.setenv(PATH = paste("c:/Rtools/mingw_64/bin", Sys.getenv("PATH"), sep=";"))
     Sys.setenv(PATH = paste("c:/MinGW/bin", Sys.getenv("PATH"), sep=";"))
     setwd(paste0(mcsim.directory,"/mod"))
-    pksensi:::generate_config.h()
+    generate_config.h()
     setwd(paste0(mcsim.directory,"/sim"))
-    pksensi:::generate_config.h()
+    generate_config.h()
     setwd(mcsim.directory)
     system(paste0("gcc -o ./mod/mod.exe ./mod/*.c"))
     if(file.exists("./mod/mod.exe")){
