@@ -1,12 +1,13 @@
 # pksensi 1.1.2
 
-* Add timer in solve_fun
-* Add default MCSim version = '6.1.0' in compile_model()
-* Update pksim(): Can customize xlab and ylab
-* Update pbtk1cpt model: Add body weight
-* Revise the mcsim_version() for Windows OS
-* Fix bug: Create .dll in win10 through compile_model()
-* Fix bug: plot() cannot display variable name when using character
+* Add timer in `solve_fun()`
+* Add default MCSim `version = '6.1.0'` in `compile_model()`
+* Update `pksim()`: Can customize xlab and ylab
+* Update `pbtk1cpt model`: Add body weight
+* Update vignettes
+* Fix bug: Create `.dll` in win10 through `compile_model()`
+* Fix bug: `plot()` cannot display variable name when using character
+* Revise the `mcsim_version()` for Windows OS
 
 # pksensi 1.1.1
 

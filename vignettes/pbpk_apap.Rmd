@@ -22,14 +22,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Uncertainty and sensitivity analysis
-
 The aim of this section is to reproduce our previous published [@fphar201800588] result of global sensitivity analysis for acetaminophen PBPK model through `pksensi`. The model codes are included in this package and can be generated through `pbpk_apap_model()`. We applied the global sensitivity analysis workflow to the original published model with 21 model parameters [@s13318-015-0253-x]. The descriptions of each parameter and the sampling ranges are list in Table 1.
 
 ```r
 mcsim_install(mxstep = 5000) # Be sure to set the mxstep to 5000
 ```
-
 
 ```{r, echo=F, eval=F}
 #Nominal value
@@ -102,7 +99,7 @@ names(df) <- c("Parameter","Description", "Unit", "Min", "Max")
 
 ```
 
-Same as the example of one-compartment PBTK model. The model parameter and the corresponding sampling range should be defined to create the parameter matrix. Previously, the probability distributions of model parameters were set to either truncated normal or uniform distribution when the parameters have informative prior information or not. To rapidly reach the acceptance convergence, we apply uniform distribution for all testing parameters. The ranges of informative parameters are set to 1.96-times difference for single side (approximate 54.6 times difference between minimum and maximum) under log-scaled. The nominal values of informative model parameters were defined as:
+Same as the example of one-compartment PK model. The model parameter and the corresponding sampling range should be defined to create the parameter matrix. Previously, the probability distributions of model parameters were set to either truncated normal or uniform distribution when the parameters have informative prior information or not. To rapidly reach the acceptance convergence, we apply uniform distribution for all testing parameters. The ranges of informative parameters are set to 1.96-times difference for single side under log-scaled (approximate 54.6 times difference between minimum and maximum in natural scaled). The nominal values of informative model parameters were defined as:
 
 ```{r, eval=F}
 # Nominal value
@@ -121,9 +118,21 @@ Km_AS <- log(2.29e4)
 rng <- 1.96 
 ```
 
-Generally, The wide range of parameter value might cause the computational error in the solver. One of the effective ways to prevent this problem is to adjust the value of relative and absolute error tolerance to control the error appearance by resetting these parameters in a lower value. The `generate_infile()` provide the arguments of `rtol` and `atol` that can be adjusted to prevent the unwanted error. However, the modification will slow down the computational speed. Therefore, the alternative method to prevent the computational error is to detect the crucial parameter range that causes the problem. Also, setting the maximum number of (internally defined) steps to higher value instead of using the default value (500) can prevent this problem. The maximum number of step is set to 5000 in this case.
+Generally, wide range of parameter value might cause the computing error when solving the differentiial equation. One of the effective ways to prevent this problem is to adjust the value of relative and absolute error tolerance to control the error appearance by resetting these parameters in a lower value. The `generate_infile` and `solve_mcsim` provide the arguments of `rtol` and `atol` that adjust the error tolerance to prevent the unwanted error. However, the modification will decrease the computing speed. Therefore, the alternative method to prevent this issue is to detect the crucial parameter range that causes the problem. Also, setting the maximum number of steps to higher value instead of using the default value (500) in **GNU MCSim** can prevent this problem (internally defined). The maximum number of step is set to 5000 in this case. Here we seperate the global SA of APAP-PBPK model process to several steps.
 
-In this test case, we adjusted the range of `SULT_VmaxC` and `UGT_VmaxC` from U(0, 15) to U(0, 10). The relative and absolute error tolerance were set to 1e-7 and 1e-9, respectively, to prevent the computational error in MCSim,
+### Prepare and compile the model file
+
+The model code needs to be prepared in the following global SA workflow. After creating the `pbpk_apap.model` file in the working directory, the next step is to generate the executable program (`mcsim.pbpk_apap`) through `compile_model` function. 
+
+```{r, eval=F}
+mName <- "pbpk_apap"
+pbpk_apap_model()
+compile_model(mName, application = "mcsim")
+```
+
+### Define the parameter and its distribution 
+
+The 21 testing model parameters are defined in this part, including parameter name, probability distribution, and distributed parameter value. To prevent the computing error, the range of `SULT_VmaxC` and `UGT_VmaxC` need to adjust from $U(0, 15)$ [@s13318-015-0253-x] to $U(0, 10)$ [@fphar201800588]. The objects `q` and `dist` are set to the type of distribution that will use to generate the parameter matrix in **GNU MCSim** (for uncertainty analysis) and R (for SA).
 
 ```{r, eval=F}
 params <- c("lnTg", "lnTp", "lnCYP_Km","lnCYP_VmaxC",
@@ -131,112 +140,109 @@ params <- c("lnTg", "lnTp", "lnCYP_Km","lnCYP_VmaxC",
            "lnUGT_Km","lnUGT_Ki","lnUGT_Km_GA","lnUGT_VmaxC",
            "lnKm_AG","lnVmax_AG","lnKm_AS","lnVmax_AS",
            "lnkGA_syn","lnkPAPS_syn", "lnCLC_APAP","lnCLC_AG","lnCLC_AS")
-q <- "qunif"
-q.arg <-list(list(Tg-rng, Tg+rng),
-             list(Tp-rng, Tp+rng),
-             list(CYP_Km-rng, CYP_Km+rng),
-             list(-2., 5.),
+dist <- rep("Uniform", 21)
+q <- rep("qunif", 21)
+q.arg <-list(list(Tg-rng, Tg+rng), list(Tp-rng, Tp+rng), 
+             list(CYP_Km-rng, CYP_Km+rng), list(-2., 5.),
              list(SULT_Km_apap-rng, SULT_Km_apap+rng),
              list(SULT_Ki-rng, SULT_Ki+rng),
              list(SULT_Km_paps-rng, SULT_Km_paps+rng),
-             list(0, 10),
-             list(UGT_Km-rng, UGT_Km+rng),
+             list(0, 10), list(UGT_Km-rng, UGT_Km+rng),
              list(UGT_Ki-rng, UGT_Ki+rng),
              list(UGT_Km_GA-rng, UGT_Km_GA+rng),
-             list(0, 10),
-             list(Km_AG-rng, Km_AG+rng),
-             list(7., 15),
-             list(Km_AS-rng, Km_AS+rng),
-             list(7., 15),
-             list(0., 13),
-             list(0., 13),
-             list(-6., 1),
-             list(-6., 1),
-             list(-6., 1))
-
-times <- seq(from = 0.1, to = 12.1, by = 0.2)
-set.seed(1234)
-x <- rfast99(params = params, n = 1024, q = q, q.arg = q.arg, replicate = 5) # Used n = 8192 and rep = 10 in published papaer
+             list(0, 10), list(Km_AG-rng, Km_AG+rng),
+             list(7., 15), list(Km_AS-rng, Km_AS+rng),
+             list(7., 15), list(0., 13), list(0., 13),
+             list(-6., 1), list(-6., 1), list(-6., 1))
 ```
 
-After creating the `pbpk_apap.model` in the working directory, the next step is to generate the executable files (`mcsim.pbpk_apap`) through `compile_model()`. 
+### Define additional input condition and output time and variables
+
+To optimize the computing speed, this case only uses **GNU MCSim** to estimate the concentration of APAP and its metabolites glucuronide (APAP-G) and sulfate (APAP-S) in plasma. The setting oral dose of APAP is 20 mg/kg in this example. Generally, the input dosing method can be defined through the `condition` argument. Since the unit of the given dose is mg/kg, the `mgkg_flag` is set to 1. More definition of input schedule functions can be found in the section of input functions in **GNU MCSim** User’s Manual (https://www.gnu.org/software/mcsim/mcsim.html#Input-functions).
 
 ```{r, eval=F}
-mName <- "pbpk_apap"
-pbpk_apap_model()
-compile_model(mName, application = "mcsim", version = "6.1.0")
-```
-
-To improve the computational speed, this case only uses MCSim to estimate the concentration of acetaminophen (APAP) and its metabolites glucuronide (AG) and sulfate (AS) in plasma. The setting oral dose of APAP is 20 mg/kg in this example. Generally, the input dosing method can be defined through the `condition` argument. Since the unit of the given dose is mg/kg, the `mgkg_flag` is set to 1 to declare the statement. More definition of input can be found in the section of input functions in GNU MCSim User’s Manual (https://www.gnu.org/software/mcsim/mcsim.html#Input-functions).
-
-**NOTE:** The `mxstep` was set at `5000` to prevent the computational error. In addition, use `rtol = 1e-7` and `atol = 1e-9` in error tolerance.
-
-```{r, eval=F}
-vars <- c("lnCPL_APAP_mcgL", "lnCPL_AG_mcgL", "lnCPL_AS_mcgL")
 conditions <- c("mgkg_flag = 1",
                 "OralExp_APAP = NDoses(2, 1, 0, 0, 0.001)",
                 "OralDose_APAP_mgkg = 20.0")
-system.time(out <- solve_mcsim(x, mName = mName, 
-                             params = params,
-                             vars = vars,
-                             time = times,
-                             condition = conditions))
+vars <- c("lnCPL_APAP_mcgL", "lnCPL_AG_mcgL", "lnCPL_AS_mcgL")
+times <- seq(from = 0.1, to = 12.1, by = 0.2)
 ```
 
+### Uncertainty analysis
 
+We apply uncertainty analysis through the `solve_mcsim` and visualize the result by `pksim` function. Some example data are included in the **pksensi** with experiment time (h) and concentration (mg/L).
 
-The plotting function can output the result of time-dependent sensitivity measurement to determine the parameter impact on model output over time (Figure 1). 
-
-```{r, eval=F, fig.height=8, fig.width=8, fig.cap = 'Figure 1. '}
-plot(out, vars = "lnCPL_AG_mcgL")
+```{r, eval=F}
+head(APAP)
 ```
 
-The uncertainty analysis is a crucial step before model calibration. We can apply uncertainty analysis through the `pksim()` by the given name of output variables (Figure 2). Through this visualization approach, we can recognize whether the simulated outputs can accurately simulate the same concentration profile as the in-vivo experiment under the setting of parameter ranges. In Figure 2, all experiment points are included in the intervals, representing the acceptable set of the parameter range. 
+In the setting condition of simulation, The relative and absolute error tolerance (`rtol` & `atol`) were set to 1e-7 and 1e-9, respectively, to prevent the computating error. The Monte Carlo simulation is run for 1000 iteration as the assignment of `monte_carlo`. The input file ('sim.in') and output file ('simmc.out') will be generated under the standard ASCII format. 
 
-```{r, eval=F, fig.cap = 'Figure 2. The range of model simulation based on parameter distribution'}
-data(APAP)
-par(mfrow = c(2,2), mar = c(2,2,1,1), oma = c(2,2,1,1))
-pksim(out, vars = "lnCPL_APAP_mcgL")
-text(1, 15, "APAP",cex = 1.2)
+```{r, eval=F}
+set.seed(1111)
+out <- solve_mcsim(mName = mName, params = params, vars = vars,
+                   monte_carlo = 1000, dist = dist, q.arg = q.arg, 
+                   time = times, condition = conditions, 
+                   rtol = 1e-7, atol = 1e-9)
+```
+
+```{r, eval=F, fig.cap = '**Figure 1.** Coverage checks of prior PBPK model predictions with calibrated APAP data', fig.height=3.5, fig.width=9}
+par(mfrow = c(1,3), mar = c(4,4,1,1))
+pksim(out, xlab = "Time (h)", ylab = "Conc. (ug/L)", main = "APAP")
 points(APAP$Time, log(APAP$APAP * 1000))
-pksim(out, vars = "lnCPL_AG_mcgL", legend = F)
-text(1, 15, "AG",cex = 1.2)
+pksim(out, vars = "lnCPL_AG_mcgL", xlab = "Time (h)", main = "APAP-G", 
+      ylab = " ", legend = FALSE)
 points(APAP$Time, log(APAP$AG * 1000))
-pksim(out, vars = "lnCPL_AS_mcgL", legend = F)
-text(1, 15, "AS",cex = 1.2)
+pksim(out, vars = "lnCPL_AS_mcgL", xlab = "Time (h)", main = "APAP-S", 
+      ylab = " ", legend = FALSE)
 points(APAP$Time, log(APAP$AS * 1000))
-mtext("Time", SOUTH<-1, line=0.4, cex=1.2, outer=TRUE)
-mtext("Conc.", WEST<-2, line=0.4, cex=1.2, outer=TRUE)
 ```
 
-In addition, through using the `check()`, the parameter with sensitivity and convergence indices over the given condition can be easily detected for all output variables.
+For parent compound, all data points are located in the simulated interval of 25-75%. Through this result, we can determine that the simulated outputs can accurately generate the same concentration profile as the in-vivo experiment under the setting of parameter ranges for APAP. The simulated result of metabolites APAP-G shows the different pharmacokinetic profile with experiment data. However, all data points are located in the simulated interval.
+
+### Generate parameter matrix
+
+In global SA, we have to additionally generate the parameter matrix from the eFAST method. The current setting uses 512 sample size with 10 replication. 
 
 ```{r, eval=F}
-check(out)
+set.seed(1234)
+x <- rfast99(params = params, n = 512, q = q, q.arg = q.arg, replicate = 10) 
 ```
 
-The `check()` also provides some feasible argument to specify the target output or change the cut-off value.
+
+### Conduct the global SA
+
+To conduct the global SA with **GNU MCsim** and **pksensi**, the input file with given "setpoint" condition should be generated before modeling. The file can create by `generate_infile` function. The `solve_mcsim` can also automatically create the input file and compute the output.
 
 ```{r, eval=F}
-check(out, vars = "lnCPL_APAP_mcgL", SI.cutoff = 0.1, CI.cutoff = 0.1)
+out <- solve_mcsim(x, mName = mName,
+                   params = params, 
+                   time = times, 
+                   vars = vars,
+                   condition = conditions, 
+                   rtol = 1e-7, atol = 1e-9)
 ```
 
-## Heatmap visualization combined with an index “cut-off”
 
-Based on our previous study, we proposed the heatmap visualization approach to distinguish "influential" and "non-influential" parameters with a cut-off. Through the given argument `order`, we can select the specific order of sensitivity measurement that we're interested in (Figure 3 & 4). 
+### Visualization and decision
 
-```{r, eval=F, 'Figure 3: Heatmap of sensitivity index for interaction'}
-heat_check(out, order = "interaction")
+The plotting function can create the result of time-dependent sensitivity measurement to determine the parameter impact on model output over time. 
+
+```{r, eval=F, fig.cap = '**Figure 2.** Time-dependent SI of the plasma APAP concentration estimated from APAP-PBPK model during 12-hr time period post intake.', fig.height=8, fig.width=8}
+plot(out, vars = "lnCPL_APAP_mcgL")
 ```
 
-```{r, eval=F, 'Figure 4: Heatmap of convergence index for total order'}
+In addition, through using the `check`, the parameter with sensitivity and convergence indices over the given condition can be preliminary detected for all output variables. Based on our previous study, we proposed the heatmap visualization approach `heat_check` to distinguish "influential" and "non-influential" parameters with a "cut-off" point. Through the given argument `order`, we can select the specific order of sensitivity measurement that we're interested in. 
+
+```{r, eval=F, fig.cap = '**Figure 3.** Heat map representation of time-dependent total SI computed for global SA method', fig.height=5}
 heat_check(out, order = "total order")
 ```
 
-Also, adding the `index = "CI"` in the function can further investigate the convergence of the sensitivity index. Based on the current setting of sampling number, most parameters cannot reach the acceptable criteria of convergence. Therefore, the higher number of sampling is necessary.
+Adding the `index = "CI"` in the function can further investigate the convergence index. Based on the current setting of sampling size, most parameters cannot reach the acceptable criteria of convergence. Therefore, a higher number of sampling is necessary. The sample size of convergence in the current PBPK model is 8,192 [@fphar201800588]. However, based on the current sample size we still can find 6 parameters that can be an important parameter for the plasma APAP concentration.
 
-```{r, eval=F, fig.height=9, 'Figure 5: Heatmap of convergence index'}
-heat_check(out, index = "CI")
+```{r, eval=F, fig.cap = '**Figure 4.** Heat map representation of time-dependent total CI computed for global SA method', fig.height=5}
+heat_check(out, index = "CI", order = "total order")
 ```
+
 
 ## References
