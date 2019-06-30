@@ -120,7 +120,7 @@ rng <- 1.96
 
 Generally, wide range of parameter value might cause the computing error when solving the differentiial equation. One of the effective ways to prevent this problem is to adjust the value of relative and absolute error tolerance to control the error appearance by resetting these parameters in a lower value. The `generate_infile` and `solve_mcsim` provide the arguments of `rtol` and `atol` that adjust the error tolerance to prevent the unwanted error. However, the modification will decrease the computing speed. Therefore, the alternative method to prevent this issue is to detect the crucial parameter range that causes the problem. Also, setting the maximum number of steps to higher value instead of using the default value (500) in **GNU MCSim** can prevent this problem (internally defined). The maximum number of step is set to 5000 in this case. Here we seperate the global SA of APAP-PBPK model process to several steps.
 
-### Prepare and compile the model file
+## Prepare and compile the model file
 
 The model code needs to be prepared in the following global SA workflow. After creating the `pbpk_apap.model` file in the working directory, the next step is to generate the executable program (`mcsim.pbpk_apap`) through `compile_model` function. 
 
@@ -130,7 +130,7 @@ pbpk_apap_model()
 compile_model(mName, application = "mcsim")
 ```
 
-### Define the parameter and its distribution 
+## Define the parameter and its distribution 
 
 The 21 testing model parameters are defined in this part, including parameter name, probability distribution, and distributed parameter value. To prevent the computing error, the range of `SULT_VmaxC` and `UGT_VmaxC` need to adjust from $U(0, 15)$ [@s13318-015-0253-x] to $U(0, 10)$ [@fphar201800588]. The objects `q` and `dist` are set to the type of distribution that will use to generate the parameter matrix in **GNU MCSim** (for uncertainty analysis) and R (for SA).
 
@@ -156,7 +156,7 @@ q.arg <-list(list(Tg-rng, Tg+rng), list(Tp-rng, Tp+rng),
              list(-6., 1), list(-6., 1), list(-6., 1))
 ```
 
-### Define additional input condition and output time and variables
+## Define additional input condition and output time and variables
 
 To optimize the computing speed, this case only uses **GNU MCSim** to estimate the concentration of APAP and its metabolites glucuronide (APAP-G) and sulfate (APAP-S) in plasma. The setting oral dose of APAP is 20 mg/kg in this example. Generally, the input dosing method can be defined through the `condition` argument. Since the unit of the given dose is mg/kg, the `mgkg_flag` is set to 1. More definition of input schedule functions can be found in the section of input functions in **GNU MCSim** User’s Manual (https://www.gnu.org/software/mcsim/mcsim.html#Input-functions).
 
@@ -168,7 +168,7 @@ vars <- c("lnCPL_APAP_mcgL", "lnCPL_AG_mcgL", "lnCPL_AS_mcgL")
 times <- seq(from = 0.1, to = 12.1, by = 0.2)
 ```
 
-### Uncertainty analysis
+## Uncertainty analysis
 
 We apply uncertainty analysis through the `solve_mcsim` and visualize the result by `pksim` function. Some example data are included in the **pksensi** with experiment time (h) and concentration (mg/L).
 
@@ -200,7 +200,7 @@ points(APAP$Time, log(APAP$AS * 1000))
 
 For parent compound, all data points are located in the simulated interval of 25-75%. Through this result, we can determine that the simulated outputs can accurately generate the same concentration profile as the in-vivo experiment under the setting of parameter ranges for APAP. The simulated result of metabolites APAP-G shows the different pharmacokinetic profile with experiment data. However, all data points are located in the simulated interval.
 
-### Generate parameter matrix
+## Generate parameter matrix
 
 In global SA, we have to additionally generate the parameter matrix from the eFAST method. The current setting uses 512 sample size with 10 replication. 
 
@@ -210,7 +210,7 @@ x <- rfast99(params = params, n = 512, q = q, q.arg = q.arg, replicate = 10)
 ```
 
 
-### Conduct the global SA
+## Conduct the global SA
 
 To conduct the global SA with **GNU MCsim** and **pksensi**, the input file with given "setpoint" condition should be generated before modeling. The file can create by `generate_infile` function. The `solve_mcsim` can also automatically create the input file and compute the output.
 
@@ -224,7 +224,7 @@ out <- solve_mcsim(x, mName = mName,
 ```
 
 
-### Visualization and decision
+## Visualization and decision
 
 The plotting function can create the result of time-dependent sensitivity measurement to determine the parameter impact on model output over time. 
 

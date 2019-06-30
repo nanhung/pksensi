@@ -218,7 +218,7 @@ check(out, SI.cutoff = 0.05)
 
 Based on the sensitivity measurement of the total order, the result shows that `BW` has a relative lower measurement of SI. However, all parameters do not converge to the setting cut-off, which means the larger sample size is required in further sensitivity testing. Same as `plot` function that can assign specific output variable in the examination, the `check` function can also use the assignment (`vars`) to exam the given output.
 
-### Model implementation with GNU MCSim
+## Model implementation with GNU MCSim
 
 In addtion to use **deSolve** to solve differential equations in PK model, the **GNU MCSim** can provide better computational efficiency. To solve ODE through **GNU MCSim**, we need to change the argument to `application = mcsim` in `compile_model`. The computing time of using `solve_fun` in SA is estimated as,
 
