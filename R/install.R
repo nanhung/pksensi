@@ -35,7 +35,7 @@
 #' @rdname mcsim
 #'
 #' @export
-mcsim_install <- function(version = "6.1.0", directory = NULL, mxstep = 500) {
+mcsim_install <- function(version = "6.1.0", directory = NULL, mxstep = 5000) {
 
   #  if (.Platform$OS.type == "windows") {
   #    stop("The function haven't supprot Windows system")
