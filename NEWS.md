@@ -1,3 +1,8 @@
+# pksensi 1.1.3
+
+* Update `solve_fun()` to run deSolve with Pure R code
+* set default mxstep = 5000 in `mcsim_install()`
+
 # pksensi 1.1.2
 
 * Add timer in `solve_fun()`
