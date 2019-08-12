@@ -50,7 +50,7 @@
 #' \emph{J. Stat. Soft.}, 33:9
 #'
 #' @export
-solve_fun <- function(x, time = NULL, initParmsfun = "initParms", initState, dllname,
+solve_fun <- function(x, time = NULL, initParmsfun = "initParms", initState, dllname = NULL,
                       func = "derivs", initfunc = "initmod", outnames,
                       method ="lsode", rtol=1e-8, atol=1e-12,
                       model = NULL, lnparam = F, vars = NULL, tell = T, ...){
@@ -68,7 +68,7 @@ solve_fun <- function(x, time = NULL, initParmsfun = "initParms", initState, dll
   y <- array(dim = c(n * no.params, replicate, out, n.vars), NA)
   # c(Model Evaluations, replicates, time points, n.vars)
 
-  if (is.null(model) == TRUE){
+  if (is.null(model)){
 
     # Specific time or variable
     inputs = c(0, time) # NEED TIME AT ZERO
@@ -82,22 +82,17 @@ solve_fun <- function(x, time = NULL, initParmsfun = "initParms", initState, dll
           params[p] <- ifelse (lnparam == T,  exp(x$a[j,i,p]), x$a[j,i,p])
         }
 
-        if (!is.null(initParmsfun) == TRUE){
+        if (!is.null(dllname)){
           parms <- do.call(initParmsfun, list(params))
           # Use the initParms function from _inits.R file, if the file had defined
+          tmp <- deSolve::ode(initState, inputs, parms = parms, outnames = outnames, nout = length(outnames),
+                              dllname = dllname, func = func, initfunc = initfunc, method = method,
+                              rtol=rtol, atol=atol, ...)
         } else {
-          stop("The 'initParmsfun' must be defined")
-          #          parms <- .C("getParms", # "getParms" must actually named in c file
-          #                      as.double(parameters),
-          #                      parms=double(length(parameters)),
-          #                      as.integer(length(parameters)))$parms
-          #          names(parms) <- names(parameters)
+          parms <- params
+          tmp <- deSolve::ode(initState, inputs, parms = parms, outnames = outnames, nout = length(outnames),
+                              func = func, method = method, rtol=rtol, atol=atol, ...)
         }
-
-        # Integrate
-        tmp <- deSolve::ode(initState, inputs, parms = parms, outnames = outnames, nout = length(outnames),
-                            dllname = dllname, func = func, initfunc = initfunc, method = method,
-                            rtol=rtol, atol=atol, ...)
 
         for (l in 1:n.vars){
           for (k in 1 : dim(y)[3]) { # output time
@@ -139,3 +134,4 @@ solve_fun <- function(x, time = NULL, initParmsfun = "initParms", initState, dll
     return(x)
   } else return(y)
 }
+
