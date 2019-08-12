@@ -10,14 +10,14 @@ There were no ERRORs, WARNINGs and NOTE.
 
 ## r-hub builder results
 
-### pksensi 1.1.2: OK
+### pksensi 1.1.3: OK
 
-Build ID:	pksensi_1.1.2.tar.gz-bfe9da0c549d4fe08ced23fff281ca5a
+Build ID:	pksensi_1.1.3.tar.gz-971a966b30d34f91abe1d3cf32af4a78
 Platform:	Windows Server 2008 R2 SP1, R-devel, 32/64 bit
-Submitted:	3 minutes 59.2 seconds ago
-Build time:	3 minutes 34.6 seconds
+Submitted:	4 minutes 1.8 seconds ago
+Build time:	3 minutes 53 seconds
 
-Build ID:	pksensi_1.1.2.tar.gz-03b57ebe8ac646eba1595ddc6c80b67e
+Build ID:	pksensi_1.1.3.tar.gz-f8b2f85072fa4336ab3425d33127cdfc
 Platform:	Ubuntu Linux 16.04 LTS, R-release, GCC
-Submitted:	20 minutes 6.4 seconds ago
-Build time:	20 minutes 0.8 seconds
+Submitted:	12 minutes 34.8 seconds ago
+Build time:	12 minutes 31.7 seconds
