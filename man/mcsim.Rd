@@ -5,7 +5,7 @@
 \alias{mcsim_version}
 \title{Install MCSim}
 \usage{
-mcsim_install(version = "6.1.0", directory = NULL, mxstep = 500)
+mcsim_install(version = "6.1.0", directory = NULL, mxstep = 5000)
 
 mcsim_version()
 }

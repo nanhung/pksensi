@@ -5,7 +5,7 @@
 \title{Solve PK Model Through deSolve Package or Analytical Function}
 \usage{
 solve_fun(x, time = NULL, initParmsfun = "initParms", initState,
-  dllname, func = "derivs", initfunc = "initmod", outnames,
+  dllname = NULL, func = "derivs", initfunc = "initmod", outnames,
   method = "lsode", rtol = 1e-08, atol = 1e-12, model = NULL,
   lnparam = F, vars = NULL, tell = T, ...)
 }
