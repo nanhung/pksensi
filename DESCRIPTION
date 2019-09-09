@@ -24,8 +24,7 @@ RoxygenNote: 6.1.1
 Suggests:
     knitr,
     rmarkdown,
-    testthat,
-    viridis
+    testthat
 LazyData: true    
 BugReports: https://github.com/nanhung/pksensi/issues
 Encoding: UTF-8
