@@ -1,7 +1,7 @@
-#' Pharmacokinetics of Acetaminophen
+#' Pharmacokinetic Dataset of Acetaminophen
 #'
-#' The APAP dataset contains a human experiment of pharmacokinetic data
-#' for acetaminophen, and it's major metabolites.
+#' The Acetaminophen dataset contains a human experiment of pharmacokinetic data
+#' for acetaminophen and it's major metabolites acetaminophen-glucuronide and acetaminophen-sulfate.
 #'
 #' @references
 #' T. J. Zurlinden and B. Reisfeld, 2016,

@@ -3,7 +3,7 @@
 \docType{data}
 \name{APAP}
 \alias{APAP}
-\title{Pharmacokinetics of Acetaminophen}
+\title{Pharmacokinetic Dataset of Acetaminophen}
 \format{A data frame containing the following columns:
 \itemize{
   \item Wt: averaged weight of the study population (kg).
@@ -18,8 +18,8 @@
 APAP
 }
 \description{
-The APAP dataset contains a human experiment of pharmacokinetic data
-for acetaminophen, and it's major metabolites.
+The Acetaminophen dataset contains a human experiment of pharmacokinetic data
+for acetaminophen and it's major metabolites acetaminophen-glucuronide and acetaminophen-sulfate.
 }
 \references{
 T. J. Zurlinden and B. Reisfeld, 2016,

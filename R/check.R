@@ -1,18 +1,18 @@
 #' Check the Parameter Sensitivity
 #'
-#' Visualize and check the sensitivity (or convergence) measurement with a given result.
+#' Visualize and check the sensitivity (or convergence) measurement with the given result.
 #'
 #' The convergence of sensitivity indices for each parameter is using the approach proposed
 #' by Sarrazin et al. (2016).
 #' This method quantitatively assesses the convergence by computing the range of
-#' 95% confidence intervals of the sensitivity indices for each parameter across all data points (time and outputs).
-#' Using a global approach based on a heatmap visualization combined with an index "cut-off,"
+#' 95\% confidence intervals of the sensitivity indices for each parameter across all data points (time and outputs).
+#' Using the global approach based on the heatmap visualization combined with the index "cut-off,"
 #' can systematically distinguish between "influential" and "non-influential" parameters (Hsieh et al. 2018).
 #'
 #' @param x a list of storing information in the defined sensitivity function.
-#' @param order a vector of interested output index included \code{first order}, \code{interaction}, and \code{total order}.
-#' @param vars a logical value or character to specific the display variable in simulation.
-#' @param times a logical value or character to specific the display time in simulation.
+#' @param order a vector of interested output index, including \code{first order}, \code{interaction}, and \code{total order}.
+#' @param vars a logical value or character to specify the display variable in simulation.
+#' @param times a logical value or character to specify the display time in simulation.
 #' @param SI.cutoff a value or vector to set the cut-off for sensitivity index. The default is 0.05.
 #' @param CI.cutoff a value or vector to set the cut-off for convergence index. The default is 0.05.
 #' @param index a character to choose sensitivity index \code{SI} (default) or convergence index \code{CI}.
@@ -30,24 +30,25 @@
 #' @import dplyr
 #'
 #' @return The \code{print} function returns sensitivity and convergence indices
-#' with given time-step in console. The \code{check} method provides the summary of
+#' with given time-step in the console. The \code{check} method provides the summary of
 #' parameter sensitivity and convergence according to the given \code{SI.cutoff} and \code{CI.cutoff}.
 #' It can distinguish the influential and non-influential parameter by the providing value
 #' of \code{SI.cutoff}. The \code{plot} function can generate the
 #' time-course functional outputs of first order and interaction indices for each parameter.
 #' The default output is the first model variable. The \code{heat_check} provides a convenient way
 #' to visualize and distinguish the influential and non-influential parameter by the setting cut-off.
-#' The convergence index can examine the stability of sensitivity index.
+#' The convergence index can examine the stability of the sensitivity index.
 #' To check convergence, be sure to conduct the replication in \code{rfast99}.
 #'
 #' @references
-#' F Sarrazin, F Pianosi, T Wagener, 2016,
-#' Global sensitivity analysis of environmental models: convergence and validation,
-#' \emph{Environ. Model. Softw}, 79, 135–152.
+#' Sarrazin, F., Pianosi, F., & Wagener, T. (2016).
+#' Global Sensitivity Analysis of environmental models: Convergence and validation.
+#' \emph{Environmental Modelling & Software}, 79, 135–152.
 #'
-#' N-H Hsieh, B Reisfeld, FY Bois, WA, Chiu, 2018, Applying a global sensitivity analysis workflow
-#' to improve the computational efficiencies in physiologically-based pharmacokinetic modeling,
-#' \emph{Front. Pharmacol}, 9, 588.
+#' Hsieh, N. H., Reisfeld, B., Bois, F. Y., & Chiu, W. A. (2018).
+#' Applying a global sensitivity analysis workflow to improve the computational efficiencies
+#' in physiologically-based pharmacokinetic modeling.
+#' \emph{Frontiers in Pharmacology}, 9, 588.
 #'
 #' @examples
 #' q <- "qunif"
