@@ -1,7 +1,5 @@
 # pksensi <img src="man/figures/logo.png" height="200px" align="right" />
 
-
-
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![Dependencies](https://tinyverse.netlify.com/badge/pksensi)](https://cran.r-project.org/package=pksensi)
 [![Travis-CI Build Status](https://travis-ci.org/nanhung/pksensi.svg?branch=master)](https://travis-ci.org/nanhung/pksensi)
@@ -11,11 +9,11 @@
 [![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/pksensi)](https://cran.r-project.org/package=pksensi)
 [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/pksensi?color=orange)](https://CRAN.R-project.org/package=pksensi)
 
-**pksensi** implements the global sensitivity analysis workflow to investigate the parameter uncertainty and sensitivity in pharmacokinetic (PK) models, especially the physiologically based pharmacokinetic (PBPK) model with multivariate outputs. The package also provides some functions to check the convergence and sensitivity of model parameters.
+**pksensi** implements the global sensitivity analysis workflow to investigate the parameter uncertainty and sensitivity in physiologically based kinetic (PK) models, especially the physiologically based pharmacokinetic/toxicokinetic  model with multivariate outputs. The package also provides some functions to check the convergence and sensitivity of model parameters.
 
 Through **pksensi**, you can:
--	Run sensitivity analysis for pharmacokinetic models in R with script that were written in C or GNU MCSim.
--	Decision making. The output results and visualization tools can be used to easily determine which parameters have “non-influential” effects on the model output and can be fixed in model calibration.
+-	Run sensitivity analysis for PK models in R with script that were written in C or GNU MCSim.
+-	Decision support: The output results and visualization tools can be used to easily determine which parameters have "non-influential" effects on the model output and can be fixed in model calibration. 
 
 ## Installation
 
