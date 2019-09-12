@@ -1,3 +1,7 @@
+# pksensi 1.1.3.9000
+
+* Replace SE to NSE in `heat_check()`
+
 # pksensi 1.1.3
 
 * Update `solve_fun()` to run deSolve with Pure R code

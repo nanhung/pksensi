@@ -176,10 +176,10 @@ heat_check <- function(x,
 
   if (index ==  "SI"){
     X <- tidy_index(x, index = index) %>%
-      mutate_(level = ~cut(value, breaks=c(-Inf, paste(SI.cutoff), Inf), labels=SI.labels))
+      mutate(level = cut(.data$value, breaks=c(-Inf, paste(SI.cutoff), Inf), labels=SI.labels))
   } else if ((index == "CI")) {
     X <- tidy_index(x, index = index) %>%
-      mutate_(level = ~cut(value, breaks=c(-Inf, paste(CI.cutoff), Inf), labels=CI.labels))
+      mutate(level = cut(.data$value, breaks=c(-Inf, paste(CI.cutoff), Inf), labels=CI.labels))
   }
 
   colfunc <- colorRampPalette(c("red", "grey90"))
@@ -200,7 +200,7 @@ heat_check <- function(x,
   } else (times <- times)
 
 
-  X <- X %>% filter(order %in% !!(order)) %>% filter_(~variable %in% vars) %>% filter(time %in% times)
+  X <- X %>% filter(order %in% !!(order)) %>% filter(.data$variable %in% vars) %>% filter(time %in% times)
 
   if(length(times) < 16){
     X$time <- as.factor(X$time)
