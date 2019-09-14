@@ -15,11 +15,11 @@
 #' @param conf the confidence level for replication confidence intervals. The default is 0.95.
 #'
 #' @references
-#' A. Saltelli, S. Tarantola and K. Chan, 1999, A quantitative, model independent method for
-#' global sensitivity analysis of model output,
+#' Saltelli, A., Tarantola, S., & Chan, K. S. (1999).
+#' A quantitative model-independent method for global sensitivity analysis of model output.
 #' \emph{Technometrics}, 41, 39-56.
 #'
-#' R. I. Cukier, H. B. Levine and K. E. Schuler, 1978,
+#' Cukier, R. I., Levine, H. B., & Shuler, K. E. (1978).
 #' Nonlinear sensitivity analysis of multiparameter model systems.
 #' \emph{Journal of Computational Physics}, 26, 1–42.
 #'

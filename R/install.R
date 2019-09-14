@@ -15,8 +15,8 @@
 #' and \code{C:/Users/} (windows). To install MCSim in Windows, be sure to install Rtools or MinGW first.
 #'
 #' @references
-#' F.Y. Bois, and D. Maszle, 1997,
-#' MCSim: A Monte Carlo Simulation Program,
+#' Bois, F. Y., & Maszle, D. R. (1997).
+#' MCSim: a Monte Carlo simulation program.
 #' \emph{Journal of Statistical Software}, 2(9): 1–60.
 #'
 #' @param version a character of MCSim version number.

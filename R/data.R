@@ -4,10 +4,10 @@
 #' for acetaminophen and it's major metabolites acetaminophen-glucuronide and acetaminophen-sulfate.
 #'
 #' @references
-#' T. J. Zurlinden and B. Reisfeld, 2016,
-#' Physiologically based modeling of the pharmacokinetics of acetaminophen
-#' and its major metabolites in humans using a Bayesian population approach,
-#' \emph{European Journal of Drug Metabolism and Pharmacokinetics}, 79(4), 1-26.
+#' Zurlinden, T. J., & Reisfeld, B. (2016).
+#' Physiologically based modeling of the pharmacokinetics of acetaminophen and
+#' its major metabolites in humans using a Bayesian population approach.
+#' \emph{European journal of drug metabolism and pharmacokinetics}, 41(3), 267-280.
 #'
 #' @format A data frame containing the following columns:
 #' \itemize{

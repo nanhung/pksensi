@@ -22,8 +22,8 @@
 #' @param ... additional arguments for deSolve::ode method.
 #'
 #' @references
-#' S. Karline, T. Petzoldt and R. Setzer. 2010.
-#' Solving Differential Equations in R: Package deSolve.
+#' Soetaert, K. E., Petzoldt, T., & Setzer, R. W. (2010).
+#' Solving differential equations in R: package deSolve.
 #' \emph{Journal of Statistical Software}, 33(9), 1–25.
 #'
 #' @examples
@@ -44,10 +44,6 @@
 #'   pksim(y) # Visualize uncertainty of model output
 #'
 #' @seealso \code{\link{pksim}}
-#'
-#' @references
-#' K. Soetaert, T. Petzoldt, R.W. Setzer, 2010, Solving differential equations in R: package deSolve,
-#' \emph{J. Stat. Soft.}, 33:9
 #'
 #' @export
 solve_fun <- function(x, time = NULL, initParmsfun = "initParms", initState, dllname = NULL,

@@ -13,14 +13,14 @@
 #' @rdname models
 #'
 #' @references
-#' R. Pearce, R. Setzer, C. Strope, N. Sipes and J. Wambaugh, 2017,
-#' httk: R Package for High-Throughput Toxicokinetics,
+#' Pearce, R. G., Setzer, R. W., Strope, C. L., Wambaugh, J. F., & Sipes, N. S. (2017).
+#' httk: R package for high-throughput toxicokinetics.
 #' \emph{Journal of Statistical Software}, 79(4), 1-26.
 #'
-#' T. J. Zurlinden and B. Reisfeld, 2016,
-#' Physiologically based modeling of the pharmacokinetics of acetaminophen
-#' and its major metabolites in humans using a Bayesian population approach,
-#' \emph{European Journal of Drug Metabolism and Pharmacokinetics}, 79(4), 1-26.
+#' Zurlinden, T. J., & Reisfeld, B. (2016).
+#' Physiologically based modeling of the pharmacokinetics of acetaminophen and
+#' its major metabolites in humans using a Bayesian population approach.
+#' \emph{European journal of drug metabolism and pharmacokinetics}, 41(3), 267-280.
 #'
 #' @examples
 #' params <- c(F = 0.9, KA = 1.2, KE = 0.2, V = 1.5)
