@@ -66,12 +66,9 @@ through the imported deSolve function. It can be used to solve the function with
 
 }
 \references{
-S. Karline, T. Petzoldt and R. Setzer. 2010.
-Solving Differential Equations in R: Package deSolve.
+Soetaert, K. E., Petzoldt, T., & Setzer, R. W. (2010).
+Solving differential equations in R: package deSolve.
 \emph{Journal of Statistical Software}, 33(9), 1–25.
-
-K. Soetaert, T. Petzoldt, R.W. Setzer, 2010, Solving differential equations in R: package deSolve,
-\emph{J. Stat. Soft.}, 33:9
 }
 \seealso{
 \code{\link{pksim}}

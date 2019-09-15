@@ -9,8 +9,8 @@
 #' Using the global approach based on the heatmap visualization combined with the index "cut-off,"
 #' can systematically distinguish between "influential" and "non-influential" parameters (Hsieh et al. 2018).
 #'
-#' @param x a list of storing information in the defined sensitivity function.
-#' @param order a vector of interested output index, including \code{first order}, \code{interaction}, and \code{total order}.
+#' @param x a list of the storing information in the defined sensitivity function.
+#' @param order a vector of the interested output index, including \code{first order}, \code{interaction}, and \code{total order}.
 #' @param vars a logical value or character to specify the display variable in simulation.
 #' @param times a logical value or character to specify the display time in simulation.
 #' @param SI.cutoff a value or vector to set the cut-off for sensitivity index. The default is 0.05.

@@ -8,18 +8,18 @@
 #' You might need to follow the instruction of GNU MCSim and install it,
 #' manually: \url{https://www.gnu.org/software/mcsim/mcsim.html#Installation}
 #'
-#' The default \code{mxstp} is setting to 500.
+#' The default \code{mxstp} is setting to 5000.
 #' The user can increase \code{mxstp} to avoid possible error return.
 #' If you meet any error when conduct sensitivity analysis, you can this function to reinstall GNU MCSim and set the higher \code{mxstp}.
 #' The default \code{directory} to install MCSim is under \code{/home/username} (Linux), \code{/Users/username} (MacOS),
-#' and \code{C:/Users/} (windows). To install MCSim in Windows, be sure to install Rtools or MinGW first.
+#' and \code{C:/Users/} (windows). To install MCSim in Windows, be sure to install Rtools first.
 #'
 #' @references
 #' Bois, F. Y., & Maszle, D. R. (1997).
 #' MCSim: a Monte Carlo simulation program.
 #' \emph{Journal of Statistical Software}, 2(9): 1–60.
 #'
-#' @param version a character of MCSim version number.
+#' @param version a character of GNU MCSim version number.
 #' @param directory a character to assign the directory to put the GNU MCSim files.
 #' @param mxstep a numeric value to assign the maximum number of (internally defined) steps
 #' allowed during one call to the solver.

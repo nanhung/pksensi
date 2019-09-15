@@ -12,7 +12,7 @@
   \item APAP: concentration of acetaminophen in the sample (mg/L).
   \item AG: concentration of acetaminophen-glucuronide in the sample (mg/L).
   \item AS: concentration of acetaminophen-sulfate in the sample (mg/L).
-  \item Study: Sourced reference.
+  \item Study: sourced reference.
 }}
 \usage{
 APAP
@@ -22,9 +22,9 @@ The Acetaminophen dataset contains a human experiment of pharmacokinetic data
 for acetaminophen and it's major metabolites acetaminophen-glucuronide and acetaminophen-sulfate.
 }
 \references{
-T. J. Zurlinden and B. Reisfeld, 2016,
-Physiologically based modeling of the pharmacokinetics of acetaminophen
-and its major metabolites in humans using a Bayesian population approach,
-\emph{European Journal of Drug Metabolism and Pharmacokinetics}, 79(4), 1-26.
+Zurlinden, T. J., & Reisfeld, B. (2016).
+Physiologically based modeling of the pharmacokinetics of acetaminophen and
+its major metabolites in humans using a Bayesian population approach.
+\emph{European journal of drug metabolism and pharmacokinetics}, 41(3), 267-280.
 }
 \keyword{datasets}

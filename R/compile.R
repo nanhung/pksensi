@@ -1,17 +1,17 @@
 #' Model Compiler
 #'
-#' The \code{compile_model} is used to compile the C file or MCSim's model file
-#' to generate the executable file in numerical analysis.
+#' The \code{compile_model} is used to compile the model code that is written under C or GNU MCSim's format and
+#' generate the executable program in numerical analysis.
 #'
-#' Generally, the solving function through MCSim can provide faster speed than exporting C in R.
-#' Therefore, this function set \code{use_model_file = TRUE} and \code{application = 'mcsim'} as a default setting
-#' and suggest to use MCSim to solve the differential equation.
-#' To compile MCSim in Windows, be sure to install Rtools or MinGW first.
-#' For Windows user, to compile MCSim's model file,
+#' Generally, the solving function through GNU MCSim can provide faster speed than exporting C in R.
+#' Therefore, this function set \code{use_model_file = TRUE} and \code{application = 'mcsim'}
+#' as a default setting, suggesting to use GNU MCSim as main solver to solve the differential equation.
+#' To compile MCSim in Windows, be sure to install Rtools first.
+#' For Windows user, to compile GNU MCSim's model file,
 #' the \code{version} of MCSim should provide to conduct model compiling.
 #'
-#' @param mName a string giving the name of the model or C file (without extension).
-#' @param use_model_file a logical value to operate the compiler to use model or C file,
+#' @param mName a string giving the name of the GNU MCSim model file or C model code (without extension).
+#' @param use_model_file a logical value to operate the compiler to model or C file,
 #' the default is set to \code{TRUE} to assign the MCSim's model file in compiling.
 #' @param application a character to assign the specific methods (\code{mcsim} or \code{R})
 #' that will be applied to the numerical analysis (default is \code{mcsim}).
@@ -25,19 +25,12 @@
 #' the function will compile and create dynamic-link libraries (.dll) on Windows and
 #' shared objects (.so) on Unix-likes systems (e.g., Linux and MacOS).
 #'
-#'
 #' @export
 compile_model <- function (mName, application = 'mcsim', use_model_file = TRUE, version = '6.1.0') {
 
   if (application == 'mcsim' && .Platform$OS.type == "windows"){
     mName <- paste0(mName,".model")
   }
-
-#  if (.Platform$OS.type == "windows") {
-#    if (!(devtools::find_rtools() == T)) {
-#      warning("The Rtools should be installed first")
-#    }
-#  }
 
   if (use_model_file == T){ # Generate the ".c" file and "_inits.R" from model file
     if(file.exists(paste0(mName, ".model")) && .Platform$OS.type == "unix"){

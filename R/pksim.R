@@ -1,9 +1,8 @@
 #' Pharmacokinetic Simulation from Sampling Parameter
 #'
-#' Pharmacokinetic plot of the output results based on the given parameter (Uncertainty analysis).
-#' If the user define the multiple output in model, the generated result will based on
-#' first model variable (default). A pharmacokinetic plot with median and the range
-#' of min-max, 10%-90%, and 25%-75%.
+#' Create the pharmacokinetic profile of the output results based on the given parameter (uncertainty analysis).
+#' If there are multiple outputs in model, the generated result will be the first model variable (default).
+#' A pharmacokinetic plot is generated with median, 25\%-75\%, 10\%-90\%, and min-max.
 #'
 #' @param y a numeric array created from \code{solve_fun} or \code{solve_mcsim} function.
 #' @param vars a logical value or character to specific the display variable in simulation (default 1).

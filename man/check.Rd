@@ -18,7 +18,7 @@ heat_check(x, order = c("first order", "interaction", "total order"),
 \method{print}{rfast99}(x, ...)
 }
 \arguments{
-\item{x}{a list of storing information in the defined sensitivity function.}
+\item{x}{a list of the storing information in the defined sensitivity function.}
 
 \item{times}{a logical value or character to specify the display time in simulation.}
 
@@ -28,7 +28,7 @@ heat_check(x, order = c("first order", "interaction", "total order"),
 
 \item{CI.cutoff}{a value or vector to set the cut-off for convergence index. The default is 0.05.}
 
-\item{order}{a vector of interested output index, including \code{first order}, \code{interaction}, and \code{total order}.}
+\item{order}{a vector of the interested output index, including \code{first order}, \code{interaction}, and \code{total order}.}
 
 \item{index}{a character to choose sensitivity index \code{SI} (default) or convergence index \code{CI}.}
 

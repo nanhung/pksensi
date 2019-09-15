@@ -17,6 +17,6 @@
 #'   \item APAP: concentration of acetaminophen in the sample (mg/L).
 #'   \item AG: concentration of acetaminophen-glucuronide in the sample (mg/L).
 #'   \item AS: concentration of acetaminophen-sulfate in the sample (mg/L).
-#'   \item Study: Sourced reference.
+#'   \item Study: sourced reference.
 #' }
 "APAP"

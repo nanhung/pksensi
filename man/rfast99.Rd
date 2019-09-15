@@ -5,10 +5,11 @@
 \title{Extended Fourier Amplitude Sensitivity Test with Random Phase Shift}
 \usage{
 rfast99(params, n, M = 4, omega = NULL, q = NULL, q.arg = NULL,
-  replicate = 1, conf = 0.95)
+  replicate = 5, conf = 0.95)
 }
 \arguments{
-\item{params}{an integer for the giving number of parameters, or a vector of character strings giving their names.}
+\item{params}{an integer for the giving number of parameters,
+or a vector of character strings giving their names.}
 
 \item{n}{an integer for the sampling number.}
 
@@ -20,7 +21,7 @@ rfast99(params, n, M = 4, omega = NULL, q = NULL, q.arg = NULL,
 
 \item{q.arg}{a list of quantile functions parameters.}
 
-\item{replicate}{an integer to define the number of replication. The default is set to 1 turn off the replication.}
+\item{replicate}{an integer to define the number of replication. The default is 5.}
 
 \item{conf}{the confidence level for replication confidence intervals. The default is 0.95.}
 }
@@ -47,11 +48,11 @@ save(x, file = "input_parameters.rda")
 
 }
 \references{
-A. Saltelli, S. Tarantola and K. Chan, 1999, A quantitative, model independent method for
-global sensitivity analysis of model output,
+Saltelli, A., Tarantola, S., & Chan, K. S. (1999).
+A quantitative model-independent method for global sensitivity analysis of model output.
 \emph{Technometrics}, 41, 39-56.
 
-R. I. Cukier, H. B. Levine and K. E. Schuler, 1978,
+Cukier, R. I., Levine, H. B., & Shuler, K. E. (1978).
 Nonlinear sensitivity analysis of multiparameter model systems.
 \emph{Journal of Computational Physics}, 26, 1–42.
 }

@@ -5,13 +5,14 @@
 #'
 #' @importFrom stats runif fft var
 #'
-#' @param params an integer for the giving number of parameters, or a vector of character strings giving their names.
-#' @param n an integer for the sampling number.
+#' @param params an integer for the giving number of parameters,
+#' or a vector of character strings giving their names.
+#' @param n an integer for the sampling size.
 #' @param M an integer specifying the interference parameter. The default is 4.
 #' @param omega a vector giving the set of frequencies.
 #' @param q a vector of quantile functions names corresponding to wanted parameters distributions.
 #' @param q.arg a list of quantile functions parameters.
-#' @param replicate an integer to define the number of replication. The default is set to 1 turn off the replication.
+#' @param replicate an integer to define the number of replication. The default is 5.
 #' @param conf the confidence level for replication confidence intervals. The default is 0.95.
 #'
 #' @references
@@ -44,7 +45,7 @@
 #'
 #' @export
 rfast99 <- function(params, n, M = 4, omega = NULL,
-                    q = NULL, q.arg = NULL, replicate = 1, conf = 0.95) {
+                    q = NULL, q.arg = NULL, replicate = 5, conf = 0.95) {
 
   # params numbers and names
 
