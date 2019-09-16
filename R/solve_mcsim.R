@@ -1,25 +1,25 @@
-#' Solve PK Model Through MCSim
+#' Solve PK Model Through \pkg{GNU MCSim}
 #'
-#' The \code{solve_mcsim} can solve the differential equations of time-dependent quantity/concentration in different tissues/compartments
-#' through MCSim.
+#' Solve the differential equations of time-dependent quantity/concentration in different tissues/compartments
+#' through \pkg{GNU MCSim}.
 #'
 #' This function allows users to use external data file that assigned in \code{setpoint.name} as parameter matrix.
 #' If you want to use it, be sure to define \code{n} and \code{setpoint.name}.
 #'
 #' @param mName a string giving the name of the model or C file (without extension).
 #' @param x a list of storing information in the defined sensitivity function.
-#' @param monte_carlo a numeric to define the sample number in Monte Carlo simulaton.
-#' @param dist a vector of distribution names corresponding to \code{<distribution-name>} in MCSim.
+#' @param monte_carlo a numeric value to define the sample size in Monte Carlo simulaton.
+#' @param dist a vector of distribution names corresponding to \code{<distribution-name>} in \pkg{GNU MCSim}.
 #' @param q.arg a list of shape parameters in the sampling distribution (\code{dist}).
 #' @param infile.name a character to assign the name of input file.
 #' @param setpoint.name a character to assign the name of file for parameter matrix.
 #' @param outfile.name a character to assign the name of output file.
 #' @param params a character to assign the testing parameters.
 #' @param vars a character or a vector to assign the selected output(s).
-#' @param time a numeric to define the given time point(s).
+#' @param time a numeric vector to define the given time point(s).
 #' @param condition a character to set the specific parameter value in the input file.
 #' @param rtol an argument passed to the integrator (default 1e-6).
-#' @param atol an argument passed to the integrator (default 1e-9).
+#' @param atol an argument passed to the integrator (default 1e-6).
 #' @param generate.infile a logical value to automatically generate the input file.
 #' @param tell a logical value to automatically combine the result y to decoupling simulation x.
 #'
@@ -60,7 +60,7 @@
 #' }
 #'
 #' @export
-#' @describeIn solve_mcsim Numerical analysis for the PK model by MCSim.
+#' @describeIn solve_mcsim Numerical analysis for the PK model by \pkg{GNU MCSim}.
 solve_mcsim <- function(x, mName,
                         infile.name = NULL,
                         outfile.name = NULL,
@@ -200,7 +200,7 @@ solve_mcsim <- function(x, mName,
 }
 
 #' @export
-#' @describeIn solve_mcsim Generate the MCSim input file.
+#' @describeIn solve_mcsim Generate the \pkg{GNU MCSim} input file.
 generate_infile <- function(infile.name = NULL,
                             outfile.name = NULL,
                             params, vars, time,

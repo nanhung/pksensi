@@ -11,7 +11,7 @@ rfast99(params, n, M = 4, omega = NULL, q = NULL, q.arg = NULL,
 \item{params}{an integer for the giving number of parameters,
 or a vector of character strings giving their names.}
 
-\item{n}{an integer for the sampling number.}
+\item{n}{an integer for the sampling size.}
 
 \item{M}{an integer specifying the interference parameter. The default is 4.}
 

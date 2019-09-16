@@ -2,7 +2,7 @@
 % Please edit documentation in R/solve_fun.R
 \name{solve_fun}
 \alias{solve_fun}
-\title{Solve PK Model Through deSolve Package or Analytical Function}
+\title{Solve PK Model Through \pkg{deSolve} Package or Analytical Function}
 \usage{
 solve_fun(x, time = NULL, initParmsfun = "initParms", initState,
   dllname = NULL, func = "derivs", initfunc = "initmod", outnames,
@@ -27,11 +27,11 @@ that contains the compiled function.}
 
 \item{outnames}{the names of output variables calculated in the compiled function \code{func}.}
 
-\item{method}{method used by integrator (\pkg{desolve}).}
+\item{method}{method used by integrator (\pkg{deSolve}).}
 
-\item{rtol}{argument passed to integrator (\pkg{desolve}).}
+\item{rtol}{argument passed to integrator (\pkg{deSolve}).}
 
-\item{atol}{argument passed to integrator (\pkg{desolve}).}
+\item{atol}{argument passed to integrator (\pkg{deSolve}).}
 
 \item{model}{the defined analytical equation with functional output.}
 
@@ -41,11 +41,12 @@ that contains the compiled function.}
 
 \item{tell}{a logical value to automatically combine the result y to decoupling simulation x.}
 
-\item{...}{additional arguments for deSolve::ode method.}
+\item{...}{additional arguments for \code{deSolve::ode} method.}
 }
 \description{
-The \code{solve_fun} can solve time-dependent quantities/concentrations of different variables in PK model
-through the imported deSolve function. It can be used to solve the function with analytical solution.
+Solve time-dependent quantities/concentrations of different variables in PK model
+through the imported \code{ode} function in \pkg{deSolve} package.
+It can be used to solve the function with analytical solution.
 }
 \examples{
   q <- "qunif"

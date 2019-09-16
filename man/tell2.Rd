@@ -5,7 +5,7 @@
 \title{The Decoupling Simulations}
 \source{
 This function is based on \code{tell} function in \pkg{sensitivity} package,
-which is an S3 generic method to estimate sensitivity measures by combining sensitivity object (rfast99) and external simulation results.
+which is an S3 generic method to estimate sensitivity measures by combining sensitivity object (\code{rfast99}) and external simulation results.
 }
 \usage{
 tell2(x, y)

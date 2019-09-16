@@ -1,7 +1,8 @@
-#' Solve PK Model Through deSolve Package or Analytical Function
+#' Solve PK Model Through \pkg{deSolve} Package or Analytical Function
 #'
-#' The \code{solve_fun} can solve time-dependent quantities/concentrations of different variables in PK model
-#' through the imported deSolve function. It can be used to solve the function with analytical solution.
+#' Solve time-dependent quantities/concentrations of different variables in PK model
+#' through the imported \code{ode} function in \pkg{deSolve} package.
+#' It can be used to solve the function with analytical solution.
 #'
 #' @param x a list of storing information in the defined sensitivity function.
 #' @param time a vector to define the given time sequence.
@@ -12,14 +13,14 @@
 #' @param func the name of the function in the dynamically loaded shared library.
 #' @param initfunc the name of the initialization function (which initialises values of parameters), as provided in dllname.
 #' @param outnames the names of output variables calculated in the compiled function \code{func}.
-#' @param method method used by integrator (\pkg{desolve}).
-#' @param rtol argument passed to integrator (\pkg{desolve}).
-#' @param atol argument passed to integrator (\pkg{desolve}).
+#' @param method method used by integrator (\pkg{deSolve}).
+#' @param rtol argument passed to integrator (\pkg{deSolve}).
+#' @param atol argument passed to integrator (\pkg{deSolve}).
 #' @param model the defined analytical equation with functional output.
 #' @param lnparam a logical value that make the statement of the log-transformed parameter (default FALSE).
 #' @param vars a character for the selected output.
 #' @param tell a logical value to automatically combine the result y to decoupling simulation x.
-#' @param ... additional arguments for deSolve::ode method.
+#' @param ... additional arguments for \code{deSolve::ode} method.
 #'
 #' @references
 #' Soetaert, K. E., Petzoldt, T., & Setzer, R. W. (2010).

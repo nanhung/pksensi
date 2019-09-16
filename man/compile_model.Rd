@@ -8,33 +8,33 @@ compile_model(mName, application = "mcsim", use_model_file = TRUE,
   version = "6.1.0")
 }
 \arguments{
-\item{mName}{a string giving the name of the GNU MCSim model file or C model code (without extension).}
+\item{mName}{a string giving the name of the \pkg{GNU MCSim} model file or \proglang{C} model code (without extension).}
 
 \item{application}{a character to assign the specific methods (\code{mcsim} or \code{R})
 that will be applied to the numerical analysis (default is \code{mcsim}).}
 
-\item{use_model_file}{a logical value to operate the compiler to model or C file,
-the default is set to \code{TRUE} to assign the MCSim's model file in compiling.}
+\item{use_model_file}{a logical value to operate the compiler to model or \proglang{C} file,
+the default is set to \code{TRUE} to assign the \pkg{GNU MCSim}'s model file in compiling.}
 
-\item{version}{a character to assign the version of MCSim that had been installed.
+\item{version}{a character to assign the version of \pkg{GNU MCSim} that had been installed.
 The version must be assigned for Windows user (default is \code{6.1.0}).}
 }
 \value{
 The default \code{application} is set to \code{'mcsim'}
-to generate the executable file to solve differential equations by MCSim.
+to generate the executable file to solve differential equations by \pkg{GNU MCSim}.
 If \code{application = 'R'},
 the function will compile and create dynamic-link libraries (.dll) on Windows and
 shared objects (.so) on Unix-likes systems (e.g., Linux and MacOS).
 }
 \description{
-The \code{compile_model} is used to compile the model code that is written under C or GNU MCSim's format and
+The \code{compile_model} is used to compile the model code that is written under \proglang{C} or \pkg{GNU MCSim} format and
 generate the executable program in numerical analysis.
 }
 \details{
-Generally, the solving function through GNU MCSim can provide faster speed than exporting C in R.
+Generally, the solving function through \pkg{GNU MCSim} can provide faster speed than exporting \proglang{C} in \proglang{R}.
 Therefore, this function set \code{use_model_file = TRUE} and \code{application = 'mcsim'}
-as a default setting, suggesting to use GNU MCSim as main solver to solve the differential equation.
-To compile MCSim in Windows, be sure to install Rtools first.
-For Windows user, to compile GNU MCSim's model file,
-the \code{version} of MCSim should provide to conduct model compiling.
+as a default setting, suggesting to use \pkg{GNU MCSim} as main solver to solve the differential equation.
+To compile \pkg{GNU MCSim} in Windows, be sure to install Rtools first.
+For Windows user, to compile \pkg{GNU MCSim}'s model file,
+the \code{version} of \pkg{GNU MCSim} should provide to conduct model compiling.
 }

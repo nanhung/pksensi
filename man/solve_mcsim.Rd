@@ -3,7 +3,7 @@
 \name{solve_mcsim}
 \alias{solve_mcsim}
 \alias{generate_infile}
-\title{Solve PK Model Through MCSim}
+\title{Solve PK Model Through \pkg{GNU MCSim}}
 \usage{
 solve_mcsim(x, mName, infile.name = NULL, outfile.name = NULL,
   setpoint.name = NULL, params = NULL, vars = NULL, time = NULL,
@@ -29,7 +29,7 @@ generate_infile(infile.name = NULL, outfile.name = NULL, params, vars,
 
 \item{vars}{a character or a vector to assign the selected output(s).}
 
-\item{time}{a numeric to define the given time point(s).}
+\item{time}{a numeric vector to define the given time point(s).}
 
 \item{condition}{a character to set the specific parameter value in the input file.}
 
@@ -39,11 +39,11 @@ generate_infile(infile.name = NULL, outfile.name = NULL, params, vars,
 
 \item{rtol}{an argument passed to the integrator (default 1e-6).}
 
-\item{atol}{an argument passed to the integrator (default 1e-9).}
+\item{atol}{an argument passed to the integrator (default 1e-6).}
 
-\item{monte_carlo}{a numeric to define the sample number in Monte Carlo simulaton.}
+\item{monte_carlo}{a numeric value to define the sample size in Monte Carlo simulaton.}
 
-\item{dist}{a vector of distribution names corresponding to \code{<distribution-name>} in MCSim.}
+\item{dist}{a vector of distribution names corresponding to \code{<distribution-name>} in \pkg{GNU MCSim}.}
 
 \item{q.arg}{a list of shape parameters in the sampling distribution (\code{dist}).}
 }
@@ -52,8 +52,8 @@ The output result is the 4-dimension array with
 c(model evaluations, replications, time-points, output variables).
 }
 \description{
-The \code{solve_mcsim} can solve the differential equations of time-dependent quantity/concentration in different tissues/compartments
-through MCSim.
+Solve the differential equations of time-dependent quantity/concentration in different tissues/compartments
+through \pkg{GNU MCSim}.
 }
 \details{
 This function allows users to use external data file that assigned in \code{setpoint.name} as parameter matrix.
@@ -61,9 +61,9 @@ If you want to use it, be sure to define \code{n} and \code{setpoint.name}.
 }
 \section{Functions}{
 \itemize{
-\item \code{solve_mcsim}: Numerical analysis for the PK model by MCSim.
+\item \code{solve_mcsim}: Numerical analysis for the PK model by \pkg{GNU MCSim}.
 
-\item \code{generate_infile}: Generate the MCSim input file.
+\item \code{generate_infile}: Generate the \pkg{GNU MCSim} input file.
 }}
 
 \examples{
