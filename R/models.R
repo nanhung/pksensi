@@ -1,12 +1,13 @@
 #' Example PK Model for Sensitivity Analysis
 #'
+#' The example PK model that were used in sensitivity testing.
 #' Three examples are included: Flip-flop pharmacokinetic model,
 #' one-compartment toxicokinetic model from \pkg{httk} (Pearce et al. 2017),
 #' and acetaminophen pharmacokinetic model (Zurlinden et al. 2016).
 #'
-#' @param time the given time-points.
-#' @param params a parameter matrix containing the input sample.
-#' @param dose a given dose.
+#' @param time a numeric vector to define the given time point(s).
+#' @param params a numeric vector to define the input parameter value.
+#' @param dose a numeric value to define the given dose in flip-flop model.
 #'
 #' @name models
 #' @aliases models

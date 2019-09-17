@@ -14,13 +14,14 @@ pbtk1cpt_model()
 pbpk_apap_model()
 }
 \arguments{
-\item{params}{a parameter matrix containing the input sample.}
+\item{params}{a numeric vector to define the input parameter value.}
 
-\item{time}{the given time-points.}
+\item{time}{a numeric vector to define the given time point(s).}
 
-\item{dose}{a given dose.}
+\item{dose}{a numeric value to define the given dose in flip-flop model.}
 }
 \description{
+The example PK model that were used in sensitivity testing.
 Three examples are included: Flip-flop pharmacokinetic model,
 one-compartment toxicokinetic model from \pkg{httk} (Pearce et al. 2017),
 and acetaminophen pharmacokinetic model (Zurlinden et al. 2016).

@@ -1,8 +1,9 @@
 #' PK Simulation from Sampling Parameter
 #'
 #' Create the PK profile of the output results based on the given parameter (uncertainty analysis).
+#' This function is used to visualize the corresponding output PK profile from the input parameters in sensitivity analysis.
 #' If there are multiple outputs in model, the generated result will be the first model variable (default).
-#' A PK plot is generated with median, 25\%-75\%, 10\%-90\%, and min-max.
+#' A PK plot is generated with median, 25\%-75\%, 10\%-90\%, and minimum-maximum.
 #'
 #' @param y a numeric array created from \code{solve_fun} or \code{solve_mcsim} function.
 #' @param vars a logical value or character to specific the display variable in simulation (default 1).

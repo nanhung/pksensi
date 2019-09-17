@@ -5,8 +5,8 @@
 #'
 #' This function aims to help users install \pkg{GNU MCSim} more easily.
 #' However, if you can not install it through this function.
-#' You might need to follow the instruction of \pkg{GNU MCSim} and install it,
-#' manually: \url{https://www.gnu.org/software/mcsim/mcsim.html#Installation}
+#' The additional way is to follow the instruction of \pkg{GNU MCSim} and install it manually:
+#' \url{https://www.gnu.org/software/mcsim/mcsim.html#Installation}
 #'
 #' The default \code{mxstp} is setting to 5000.
 #' The user can increase \code{mxstp} to avoid possible error return.
@@ -22,7 +22,7 @@
 #' \emph{Journal of Statistical Software}, 2(9): 1–60.
 #'
 #' @param version a character of \pkg{GNU MCSim} version number.
-#' @param directory a character to assign the directory to put the \pkg{GNU MCSim} files.
+#' @param directory a character to assign the installed directory to put the \pkg{GNU MCSim} files.
 #' @param mxstep a numeric value to assign the maximum number of (internally defined) steps
 #' allowed during one call to the solver.
 #'

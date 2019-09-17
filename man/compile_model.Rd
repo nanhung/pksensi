@@ -21,20 +21,20 @@ The version must be assigned for Windows user (default is \code{6.1.0}).}
 }
 \value{
 The default \code{application} is set to \code{'mcsim'}
-to generate the executable file to solve differential equations by \pkg{GNU MCSim}.
+to generate the executable program to solve differential equations by \pkg{GNU MCSim}.
 If \code{application = 'R'},
 the function will compile and create dynamic-link libraries (.dll) on Windows and
-shared objects (.so) on Unix-likes systems (e.g., Linux and MacOS).
+shared objects (.so) on Unix-likes systems (e.g., Linux and MacOS) that can link with \pkg{deSolve} solver.
 }
 \description{
 The \code{compile_model} is used to compile the model code that is written under \proglang{C} or \pkg{GNU MCSim} format and
 generate the executable program in numerical analysis.
 }
 \details{
-Generally, the solving function through \pkg{GNU MCSim} can provide faster speed than exporting \proglang{C} in \proglang{R}.
+Generally, the solving function through \pkg{GNU MCSim} can provide faster computing speed than exporting \proglang{C} in \proglang{R}.
 Therefore, this function set \code{use_model_file = TRUE} and \code{application = 'mcsim'}
 as a default setting, suggesting to use \pkg{GNU MCSim} as main solver to solve the differential equation.
-To compile \pkg{GNU MCSim} in Windows, be sure to install Rtools first.
-For Windows user, to compile \pkg{GNU MCSim}'s model file,
+To compile \pkg{GNU MCSim} model code in Windows, be sure to install Rtools first.
+Also, to compile \pkg{GNU MCSim}'s model file in Windows,
 the \code{version} of \pkg{GNU MCSim} should provide to conduct model compiling.
 }
