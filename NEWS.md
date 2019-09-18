@@ -1,6 +1,7 @@
-# pksensi 1.1.3.9000
+# pksensi 1.1.4
 
 * Replace SE to NSE in `heat_check()`
+* Update manual
 
 # pksensi 1.1.3
 
