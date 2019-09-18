@@ -1,7 +1,7 @@
 #' Extended Fourier Amplitude Sensitivity Test with Random Phase Shift
 #'
-#' Applying the extended Fourier amplitude sensitivity Ttest algorithm to create the numeric sequances for each parameter (Saltelli et al. 1999).
-#' Each sequance is random generated based on the random phase shift approach.
+#' Applying the extended Fourier amplitude sensitivity Test algorithm to create the numeric sequences for each parameter (Saltelli et al. 1999).
+#' Each sequence is random generated based on the random phase shift approach.
 #' It is an extension based on the \code{fast99} function in \pkg{sensitivity} package.
 #'
 #' @importFrom stats runif fft var

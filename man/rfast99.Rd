@@ -30,8 +30,8 @@ The returned parameter value will be stored in an array with
 c(model evaluation, replication, parameters).
 }
 \description{
-Applying the extended Fourier amplitude sensitivity Ttest algorithm to create the numeric sequances for each parameter (Saltelli et al. 1999).
-Each sequance is random generated based on the random phase shift approach.
+Applying the extended Fourier amplitude sensitivity Test algorithm to create the numeric sequences for each parameter (Saltelli et al. 1999).
+Each sequence is random generated based on the random phase shift approach.
 It is an extension based on the \code{fast99} function in \pkg{sensitivity} package.
 }
 \examples{

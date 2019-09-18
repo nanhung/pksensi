@@ -8,7 +8,7 @@
 #'
 #' @param mName a string giving the name of the model or C file (without extension).
 #' @param x a list of storing information in the defined sensitivity function.
-#' @param monte_carlo a numeric value to define the sample size in Monte Carlo simulaton.
+#' @param monte_carlo a numeric value to define the sample size in Monte Carlo simulation.
 #' @param dist a vector of distribution names corresponding to \code{<distribution-name>} in \pkg{GNU MCSim}.
 #' @param q.arg a list of shape parameters in the sampling distribution (\code{dist}).
 #' @param infile.name a character to assign the name of input file.

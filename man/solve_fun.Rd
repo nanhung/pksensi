@@ -46,7 +46,7 @@ that contains the compiled function.}
 \description{
 Solve time-dependent quantities/concentrations of different variables in PK model
 through the imported \code{ode} function in \pkg{deSolve} package.
-It can be used to solve the function with analytical solution.
+It can also be used to solve the function with analytical solution.
 }
 \examples{
   q <- "qunif"

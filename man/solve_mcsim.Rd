@@ -41,7 +41,7 @@ generate_infile(infile.name = NULL, outfile.name = NULL, params, vars,
 
 \item{atol}{an argument passed to the integrator (default 1e-6).}
 
-\item{monte_carlo}{a numeric value to define the sample size in Monte Carlo simulaton.}
+\item{monte_carlo}{a numeric value to define the sample size in Monte Carlo simulation.}
 
 \item{dist}{a vector of distribution names corresponding to \code{<distribution-name>} in \pkg{GNU MCSim}.}
 

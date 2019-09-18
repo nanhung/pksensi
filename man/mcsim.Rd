@@ -10,9 +10,9 @@ mcsim_install(version = "6.1.0", directory = NULL, mxstep = 5000)
 mcsim_version()
 }
 \arguments{
-\item{version}{a character of \pkg{GNU MCSim} version number.}
+\item{version}{a character of version number.}
 
-\item{directory}{a character to assign the installed directory to put the \pkg{GNU MCSim} files.}
+\item{directory}{a character to assign the installed directory.}
 
 \item{mxstep}{a numeric value to assign the maximum number of (internally defined) steps
 allowed during one call to the solver.}
@@ -24,20 +24,20 @@ Download the latest or specific version of \pkg{GNU MCSim} from the official web
 \details{
 This function aims to help users install \pkg{GNU MCSim} more easily.
 However, if you can not install it through this function.
-The additional way is to follow the instruction of \pkg{GNU MCSim} and install it manually:
+The additional way is to follow the instruction and install it manually:
 \url{https://www.gnu.org/software/mcsim/mcsim.html#Installation}
 
 The default \code{mxstp} is setting to 5000.
 The user can increase \code{mxstp} to avoid possible error return.
 If you meet any error when conduct sensitivity analysis,
 you can this function to reinstall \pkg{GNU MCSim} and set the higher \code{mxstp}.
-The default \code{directory} to install \pkg{GNU MCSim} is under \code{/home/username} (Linux),
+The default installed \code{directory} is under \code{/home/username} (Linux),
 \code{/Users/username} (MacOS),
 and \code{C:/Users/} (windows). To install \pkg{GNU MCSim} in Windows, be sure to install Rtools first.
 }
 \section{Functions}{
 \itemize{
-\item \code{mcsim_version}: Return the version number of \pkg{GNU MCSim}.
+\item \code{mcsim_version}: Return the version number.
 }}
 
 \examples{
