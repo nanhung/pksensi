@@ -108,6 +108,8 @@ solve_mcsim <- function(x, mName,
     setpoint.data <- "setpts.out"
   } else setpoint.data <- setpoint.name
 
+  mStr <- strsplit(mName, "/")
+  mName <- mStr[[1]][length(mStr[[1]])]
   if (.Platform$OS.type == "unix"){
     mcsim. <- paste0("mcsim.", mName)
   } else if (.Platform$OS.type == "windows"){ # Windows user but not MCSim under R
