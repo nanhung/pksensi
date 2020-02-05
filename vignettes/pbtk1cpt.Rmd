@@ -18,7 +18,7 @@ library(pksensi)
 
 knitr::opts_chunk$set(
   collapse = TRUE,
-  eval = TRUE,
+  eval = F,
     fig.height=4, 
   fig.width=7,
   comment = "#>"
