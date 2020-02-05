@@ -18,24 +18,18 @@ library(pksensi)
 
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  fig.height=4, 
-  fig.width=7
+  eval = TRUE,
+    fig.height=4, 
+  fig.width=7,
+  comment = "#>"
 )
-
-fn = local({ # not used function for fig caption
-  i = 0
-  function(x) {
-    i <<- i + 1
-    paste('Figure ', i, ': ', x, sep = '')
-  }
-})
-
 ```
+
+In this example, we use a generic, one-compartment PK model from **httk** package [@JSSv079i04] to demonstrate how **pksensi** can be applied to pharmacokinetic studies. 
 
 ## Equations
 
-In this example, We use a simple, one-compartment PK model from `httk` package [@JSSv079i04] to demonstrate how `pksensi` can be applied to pharmacokinetic studies. The differential equations for the one-compartment pharmacokinetic model can be written as:
+The differential equations for the one-compartment PK model can be written as:
 
 $$\frac{dA_{gutlumen}}{dt} = -k_{gutabs} \cdot A_{gutlumen} + g(t)$$
 $$\frac{dC_{rest}}{dt} = \frac{k_{gutabs}}{V_{dist}}-k_{elim} \cdot C_{rest}$$
@@ -48,98 +42,91 @@ $$ C_{rest} = A_{rest} / V_{dist} \cdot BW$$
 
 where $V_{dist}$ is the volume of distribution (L/kg BW) and $BW$ is the body weight (kg). The $C_{rest}$ can also be seen as the chemical concentration in plasma that can be further used to compare with observed results in a pharmacokinetic experiment. The bioavailability is assumed to be 100% in this model.
 
-## Model implementations with R deSolve package
+## Model implementations with **deSolve** solving engine
 
-To start, we implemented the one-compartment PK model in R by compiling the file written under the **GNU MCSim**'s model format. **pksensi** allows users select the preferred method to solve the pharmacokinetic model, either with the **deSolve** [@JSSv033i09] package or with **GNU MCSim** [@JSSv002i09] through the compile function. Running model under **GNU MCSim** native code can have a faster speed to obtain the model outputs. This section mainly focus on how to conduct global SA with **deSolve** package. Then compare the computing time with **GNU MCSim**.
+To start, we implemented the one-compartment PK model in R. The **pksensi** allows users select the preferred method to solve the PK model, either with the **deSolve** [@JSSv033i09] package or with **GNU MCSim** [@JSSv002i09] through the compile function. This section will show how to conduct global SA with pure R and GNU MCSim model code. 
 
-The following R script will download the one-compartment PK model from https://github.com/nanhung/pksensi/blob/master/tests/pbtk1cpt.model. The model mainly includes two state variables that are the quantity of compound in the gut lumen (`Agutlument`) and the rest of body (`Acompartmant`). The `Ametabolized` is the quantity of compound transform and metabolize through hepatic clearance. The `AUC` is the calculated area under the curve of the rest body ($mg \cdot h/L$).
+### Pure R model code
 
-```{r, eval=F}
-pbtk1cpt_model()
-cat(readLines("pbtk1cpt.model"), sep = "\n")
+The one-compartment PK model can describe the quantity of compound in the gut lumen (`Agutlument`) and the rest of body (`Acompartmant`). The `Ametabolized` is the quantity of compound transform and metabolize through hepatic clearance. The model mainly includes two state variables that are the quantity of compound in the gut lumen (`Agutlument`) and the rest of body (`Acompartmant`). The `Ametabolized` is the quantity of compound transform and metabolize through hepatic clearance.
+
+```{r}
+pbtk1cpt <- function(t, state, parameters) {
+  with(as.list(c(state, parameters)), {
+    dAgutlument = - kgutabs * Agutlument
+    dAcompartment = kgutabs * Agutlument - ke * Acompartment
+    dAmetabolized = ke * Acompartment
+    Ccompartment = Acompartment / vdist * BW;
+    list(c(dAgutlument, dAcompartment, dAmetabolized), 
+         "Ccompartment" = Ccompartment) 
+  })
+}
 ```
 
-The code must first be compiled to run the model. After create the model file, we can use `compile_model` to generate the file that has dynamic-link library (DLL) or share object (SO) extention and can be linked dynamically into an R session (`pbtk1cpt.dll` on Windows or `pbtk1cpt.so` on other systems) and R file (`pbtk1cpt_inits.R`) with default input parameters and initial state settings with the definition of `application = "R"`.
 
-```{r eval=F, message=FALSE, warning=FALSE}
-mName <- "pbtk1cpt"
-compile_model(mName, application = "R")
+The parameter values and initial states need to be assigned to specific values before simulation. Here, we use the corresponding parameter value of acetaminophen in this example. These model parameters are derived from the *in-vivo* or *in-vitro* experiment results. The parameter value can be generated from `parameterize_1comp` function in **httk** package as: 
+
+```{r, warning=F}
+library(httk)
+pars1comp <- (parameterize_1comp(chem.name = "acetaminophen"))
+unlist(pars1comp)
 ```
 
-The `pbtk1cpt_inits.R` file includes `initParms` and `initStates` functions and `Outputs` variable. The created function have default value of model parameters and initial conditions that can further use to customize in the simulation.  
-
-```{r, eval=F}
-source(paste0(mName, "_inits.R"))
-```
-
-The parameter values and initial states can be customized to the specific condition. It can also schedule for the given dosing scenario. In the current setting, we assumed the initial condition of the intake dose to be 1000 mg. We can use `initParms` and `initStates` functions to customize the parameter values and the initial state that will be used in the following modeling and SA. These additional functions are generated when compiling the model file. 
-
-We used the corresponding parameter value of  (APAP) in this example. The parameter value can be generated from `parameterize_1comp` function in \pkg{httk} package, which includes physico-chemical properties for over 500 chemicals. The given value of `vdist`, `ke`, and `kgutabs` in \pkg{httk} are 1.1 (L/kg BW), 0.23 (/h), and 2.18 (/h), respectively. The body weight is assumed to be 70 (kg).
-
-```{r, eval=F}
-parms <- initParms()
-parms["vdist"] <- 1.1
-parms["ke"] <- 0.23
-parms["kgutabs"] <- 2.18
-parms["BW"] <- 70
-initState <- initStates(parms=parms)
-initState["Agutlument"] <- 10
-```
-
-Here shows the given parameter value (`parms`), initial state condition (`initStat`), and the output variable (`Outputs`) that need to specify in model solving.
-
-```{r, eval=F}
+```{r}
+parms <- c(vdist = pars1comp$Vdist, 
+           ke = pars1comp$kelim, 
+           kgutabs = pars1comp$kgutabs, 
+           BW = pars1comp$BW)
+initState <- c(Agutlument = 10, Acompartment = 0, Ametabolized = 0)
 parms
 ```
 
-```{r, eval=F}
-initState
-```
+The given value of `vdist`, `ke`, and `kgutabs` in **httk** are 1.1 (L/kg BW), 0.23 (/h), and 2.18 (/h), respectively. The body weight is assumed to be 70 (kg).
 
-```{r, eval=F}
-Outputs
-```
+Here shows the given parameter value (`parms`) and initial state condition (`initState`) that need to specify in model solving. Both `parms` and `initState` are "numeric variables" that contain the value of parameter and initial state condition.
 
-Using the `ode` function in **deSolve** package, we can visualize the pharmacokinetic profile according to the given parameter baseline and the time points (`t`):
+Using the `ode()` function in **deSolve** package, we can visualize the PK profile according to the given parameter baseline and the time points (`t`). 
 
-```{r, eval=F}
+```{r}
+library(deSolve)
 t <- seq(from = 0.01, to = 24.01, by = 1)
-y <- deSolve::ode(initState, t, func = "derivs", parms = parms, 
-         dllname = mName, initfunc = "initmod", 
-         nout = 1, outnames = Outputs)
+y <- ode(y = initState, times = t, func = pbtk1cpt, parms = parms)
 ```
 
-```{r, eval=F, fig.cap = '**Figure 1.** Simulation results of one-compartment PK model.'}
+```{r, fig.height=6, fig.width=6}
 plot(y)
 ```
 
-We conduct global SA for the four parameters in one-compartment PK model to investigate the parameter impact on the plasma concentration during the 24-hr time period post intake. The distribution of parameter is taken to be uniform with bounds corresponding to 50% and 200% of the nominal value. Therefore, the parameter ranges are assumed to be 0.55 and 2.2 L/kg BW for `vdist`. The `ke` are ranged from 0.12 to 0.46 /h, corresponding to half-times of 1.5 and 5.8 hr. The `ka` are ranged 1.09 to 4.36 /h, corresponding to half-times of 0.32 and 0.64 hr. The `BW` is assumed to a normal distribution with mean = 60 kg and sd = 5 kg. The number of sample size determines the robustness of the result of SA. Higher number of sample size lead to narrower confidence intervals for sensitivity measurements across different replications. However, it will take a longer time in computation. Here we use a sample size of 200 with 20 replications.
+Setting up the parameter distributions. The distribution of parameter is taken to be uniform with bounds corresponding to 50% and 200% of the nominal value. 
 
-```{r, eval=F}
-q <- c("qunif", "qunif", "qunif", "qnorm")
-q.arg <- list(list(min = parms["vdist"] / 2, max = parms["vdist"] * 2),
-             list(min = parms["ke"] / 2, max = parms["ke"] * 2), 
-             list(min = parms["kgutabs"] / 2, max = parms["kgutabs"] * 2),
-             list(mean = parms["BW"], sd = 5)) 
+```{r}
 params <- c("vdist", "ke", "kgutabs", "BW")
+q <- c("qunif", "qunif", "qunif", "qnorm")
+q.arg <- list(list(min = pars1comp$Vdist / 2, max = pars1comp$Vdist * 2),
+              list(min = pars1comp$kelim / 2, max = pars1comp$kelim * 2),
+              list(min = pars1comp$kgutabs / 2, max = pars1comp$kgutabs * 2),
+              list(mean = pars1comp$BW, sd = 5))
+q.arg
 ```
 
-Through `rfast99` function, a S3 object with class 'rfast99' will be created. The `set.seed` can use to reproduce the same parameter matrix in the random sampling. 
+The parameter ranges are assumed to be 0.55 and 2.2 L/kg BW for `vdist`. The `ke` are ranged from 0.12 to 0.47 /h, corresponding to half-times of 1.5 and 5.8 hr. The `ka` are ranged 1.09 to 4.36 /h. The `BW` is assumed to a normal distribution with mean = 70 kg and sd = 5 kg. 
 
-```{r, eval=F}
+Here, we set a sample size of 200 with 10 replications. Through `rfast99()` function, a S3 object with class `rfast99` will be created. The `set.seed()` can use to reproduce the same parameter matrix in the random sampling. The sample size determines the robustness of the result of SA. Higher number of sample size lead to narrower confidence intervals for sensitivity measurements across different replications. However, it will take a longer time in computation.
+
+```{r}
 set.seed(1234)
-x <- rfast99(params, n = 200, q = q, q.arg = q.arg, replicate = 20)
+x <- rfast99(params, n = 200, q = q, q.arg = q.arg, replicate = 10)
 ```
 
-The generated parameters are stored as a 3-D array under the named `a`, with the dimension of sample size, number of replication, and number of parameter, respectively.
+The generated parameters are stored as a 3-D array under the named `a`, with the dimension of sample size, the number of replications, and the number of parameters, respectively.
 
-```{r, eval=F}
+```{r}
 dim(x$a)
 ```
 
-The sample number is 200 with 4 model parameters, which generates 800 model evaluations. The replication is set to 20. Therefore, the totol of 16,000 parameter sequence will be used to compute the corresponding outputs. 
+The sample number is 200, with 4 model parameters, which generates 800 model evaluations. The replication is set to 10. Therefore, the total of 8,000 parameter sequence will be used to compute the corresponding outputs. Figure \ref{fig:rep-sampl} plotted the sampling process for each parameter from the first 3 replications. The search curves show the different intensity of sampling patterns in each segment.
 
-```{r, eval=F, fig.cap = '**Figure 2.** The parameter search curve generated by eFAST method. The x-axis is the sample number and y-axis is the parameter value for `vdist`, \`ke`, `kgutabs`, and \`BW` (top to down), respectively. The bar plot shows the distribution of sampling parameter.', fig.height=5}
+```{r, fig.height=5}
 par(mfrow=c(4,4),mar=c(0.8,0.8,0.8,0),oma=c(4,4,2,1), pch =".")
 for (j in c("vdist", "ke", "kgutabs", "BW")) {
   if ( j == "BW") {
@@ -157,35 +144,34 @@ for (j in c("vdist", "ke", "kgutabs", "BW")) {
 mtext("Model evaluation", SOUTH<-1, line=2, outer=TRUE)
 ```
 
-Because the PK model is being used to describe a continuous process for the chemical concentration over time, the sensitivity measurements, therefore, have the time-dependent relationships for each model parameter. Here we define the output time points (`t`) to examine the change of the parameter sensitivity over time. To solve the model through **deSolve**, we need to provide the details of the argument, which include time (`t`), initial  conditions of state variable (`initState`), output variables (`outnames`), and name of the shared library (`mName`, without extension). To create the time-dependent sensitivity measurement, we set the time duration from 0.01 to 24.01 hours with the time segment of 1 hour as the above definition in `ode` function in this example. The initial time point should avoid 0 to prevent computational error in misconduct. The `outnames`, `dllname`, are based on the arguments from the `ode` function in **deSolve** package. The details of the model structure and these arguments are defined in `pbtk1comp.c`. and `pbtk1comp_inits.R` files.
+Because the PK model is being used to describe a continuous process for the chemical concentration over time, the sensitivity measurements, therefore, have the time-dependent relationships for each model parameter. Here we use the defined output time points (`t`) to examine the change of the parameter sensitivity over time. To solve the model through **deSolve**, we need to provide the details of the argument, which include time (`t`), initial  conditions of state variable (`initState`), output variables (`outnames`), and name of the model function (`func`). To create the time-dependent sensitivity measurement, we set the time duration from 0.01 to 24.01 hours with the time segment of 1 hour as the above definition in `ode()` function in this example. The initial time point should avoid 0 to prevent computational error in misconduct. The `outnames` is based on the arguments from the `ode()` function in **deSolve** package. 
 
-```{r, eval=F}
+```{r}
 outputs <- c("Ccompartment", "Ametabolized")
-out <- solve_fun(x, time = t, initState = initState, 
-                 outnames = outputs, dllname = mName)
+out <- solve_fun(x, time = t, func = pbtk1cpt, initState = initState, outnames = outputs)
 ```
 
-The output result `out` is an S3 object of `rfast99` as well, which can link with `print`, `plot`, and `check` method to examine the sensitivity measurements. The `print` function gives the sensitivity and convergence indices for main, interaction, and total order at each time point. In addition to print out the result of SA, the more efficient way to distinguish the influence of model parameter is to visualize these indices. 
+The output result `out` is an S3 object of `rfast99()` as well, which can link with `print()`, `plot()`, and `check()` method to examine the sensitivity measurements. The `print()` function gives the sensitivity and convergence indices for main, interaction, and total order at each time point. In addition to print out the result of SA, the more efficient way to distinguish the influence of model parameter is to visualize these indices. 
 
-```{r, eval=F, fig.cap = '**Figure 3.** Time-dependent SI of the plasma concentration estimated from one-compartment PK model during 24-hr time period intake. The solid line represent the total (black) and first (red) order SI with 95\\% confidence interval (polygon). The dash line is the cut-off with default value of 0.05.'}
+```{r}
 plot(out)
 ```
 
-The SI has computed range from 0 (no impact) to 1 (high impact) and represent the contribution percentage of output variance under the given parameter distributions.
+The SI has computed range from 0 (no impact) to 1 (high impact) and represents the contribution percentage of output variance under the given parameter distributions. The solid line represents the total (black) and first (red) order SI with 95% confidence interval (polygon). The dashed line is the cut-off with the default value of 0.05.
 
-Here, we can see that `vdist` and `ke` are dominating the plasma concentration before and after 5-hr post chemical intake, respectively. Besides, the `kgutabs` only plays a crucial role to determine the plasma concentration in the first hour. However, the current result is only based on the setting distribution of model parameters for APAP. The different given input conditions (e.g., range of parameter uncertainty, chemical dependent parameter value) can change the result (result not shown).
+Here, we can see that `vdist` and `ke` dominate the plasma concentration before and after 5-hr post chemical intake, respectively. The parameter `kgutabs` only plays a crucial role to determine the plasma concentration in the first hour. However, the current result only based on the distribution of model parameters for APAP. Given different input conditions (e.g., range of parameter uncertainty, chemical-dependent parameter value) the result can of course change (result not shown).
 
-The default output in the plotting is setting at the first variable. To exam the time-sependent SI of other variables, such as `Ametabolized` in this case, we need to assign the variable name `vars = "Ametabolized"` in `plot` function.
+The default output in the plotting is setting at the first variable. To exam the time-dependent SI of other variables, such as `Ametabolized` in this case, we need to assign the variable name `vars = "Ametabolized"` in `plot()` function.
 
-```{r, eval=F, fig.cap = '**Figure 4.** Time-dependent SI of the plasma concentration estimated from one-compartment PK model during 24-hr time period intake.'}
+```{r}
 plot(out, vars = "Ametabolized")
 ```
 
-The amount of metabolized is also determined by parameter `ke`. Same as `Ccompartment`, the `kgutabs` contribute about 30 - 40% variation of model output in the first hour. The `BW` is the least important parameter in the current analysis, and therefore can be fixed in the model fitting to data and additional applications.
+The amount of metabolized is also determined by parameter `ke`. Same as `Ccompartment`, the `kgutabs` contribute about 30 - 40% variation of model output in the first hour. The `BW` is the least important parameter in the current analysis, and therefore, can be fixed in the model fitting to data and additional applications.
 
-In addition to use time-SI profile to investigate the parameter impact on model output, we can construct the relationship between parameter and the corresponding value of model output in the examination. 
+In addition to using the time-SI profile to investigate the parameter impact on model output, we can directly examine the relationship between parameters and model output graphically. 
 
-```{r, eval=F, fig.cap = '**Figure 5.** The relationship between model parameter and estimated concentration at times 0.01, 2.01, 6.01, and 24.01 hr (top to bottom), respectively.'}
+```{r, fig.height=5}
 par(mfcol=c(4,4),mar=c(0.8,0.8,0,0),oma=c(4,4,2,1), pch = ".")
 plot(x$a[,1,"vdist"], out$y[,1,"0.01",1], xaxt="n", main = "\nvdist")
 plot(x$a[,1,"vdist"], out$y[,1,"2.01",1], xaxt="n")
@@ -204,44 +190,138 @@ mtext("Parameter", SOUTH<-1, line=2, outer=TRUE)
 mtext("Ccompartment", WEST<-2, line=2, outer=TRUE)
 ```
 
-The output variable `out` containing all the input arguments detailed before and the calculated SI of first order (`mSI`), interaction (`iSI`), and total order (`tSI`). The convergence indices are also stored in the list named `mCI`, `iCI`, and `tCI`. The output are formated as 4-D array in `y` with the dimension name of model evaluation, number of replications, number of time points, and number of output variables, respectively.
+Here shows the relationship between the concentration of the rest of the body (`Ccompartment`) and the model parameters at times 0.01, 2.01, 6.01, and 24.01 hr (top to bottom), respectively. We can find that `kgutabs` and `vdist` have higher correlation with `Ccompartment` in the beginning (t = 0.01 h) of post-intake duration compared with other parameters, suggesting that the parameters have high impact on the modeling result. The `ke` shows a high correlation at the later time period (t = 24.01 h). The parameter `BW` does not show any obvious relationship with `Ccompartment`.
 
-```{r, eval=F}
+The output variable `out` containing all the input arguments detailed above and the calculated SI of first order (`mSI`), interaction (`iSI`), and total order (`tSI`). Convergence indices are also stored in the list named `mCI`, `iCI`, and `tCI`. The outputs are formatted as 4-D array in `y` with the dimension name of model evaluation, number of replications, number of time points, and number of output variables, respectively.
+
+```{r}
 dim(out$y)
 ```
 
-Some functions in **pksensi** provide a efficient way to check the result from global SA. The `check` can determine which parameters have relatively lower sensitivity measurement across the given time points and model outputs, and therefore can be applied parameter fixing in model calibration. The `check` also provides some feasible argument to specify the target output or change the cut-off value. The argument of `SI.cutoff` is setting at 0.05 to detect the relative non-influential parameters as default. 
+Some functions in **pksensi** provide efficient ways to check the result from global SA. The `check()` can determine which parameters have relatively lowered sensitivity measurement across the given time points and model outputs, and therefore can be applied parameter fixing in model calibration. The `check()` also provides an argument to specify the target output or change the cut-off value. The argument of `SI.cutoff` set for example at 0.05, is used to detect the relative non-influential parameters as default, in this case representing a 5% change of the output is contributed from the specific parameter variation. 
 
-```{r, eval=F}
+```{r}
 check(out, SI.cutoff = 0.05)
 ```
 
-Based on the sensitivity measurement of the total order, the result shows that `BW` has a relative lower measurement of SI. However, all parameters do not converge to the setting cut-off, which means the larger sample size is required in further sensitivity testing. Same as `plot` function that can assign specific output variable in the examination, the `check` function can also use the assignment (`vars`) to exam the given output.
+Based on the sensitivity measurement of the total order, the result shows that `BW` has a relative lower measurement of SI. However, all parameters do not converge to the setting cut-off, which means the larger sample size is required in further sensitivity testing. Similar to the `plot()` function that can assign specific output variable in the examination, the `check()` function can also use the assignment (`vars`) to examine a given output.
 
-## Model implementation with GNU MCSim
+### GNU MCSim model code
 
-In addtion to use **deSolve** to solve differential equations in PK model, the **GNU MCSim** can provide better computational efficiency. To solve ODE through **GNU MCSim**, we need to change the argument to `application = mcsim` in `compile_model`. The computing time of using `solve_fun` in SA is estimated as,
+Running model under **GNU MCSim** native code can have a faster speed to obtain the model outputs. This subsection will show how to conduct global SA with **deSolve** package with **GNU MCSim** model code.
 
-```{r, eval=F}
-system.time(out<-solve_fun(x, t, initState = initState, 
-                           outnames = Outputs, dllname = mName))
+```{r}
+pbtk1cpt_model()
+cat(readLines("pbtk1cpt.model"), sep = "\n")
+```
+
+The code must first be compiled to run the model. After create the model file, we can use `compile_model()` function to generate the file that has dynamic-link library (DLL) or share object (SO) extention and can be linked dynamically into an R session (`pbtk1cpt.dll` on Windows or `pbtk1cpt.so` on other systems) and R file (`pbtk1cpt_inits.R`) with default input parameters and initial state settings with the definition of `application = "R"`.
+
+```{r, message=FALSE, warning=FALSE}
+mName <- "pbtk1cpt"
+compile_model(mName, application = "R")
+```
+
+The `pbtk1cpt_inits.R` file includes `initParms` and `initStates` functions and `Outputs` variable. The created function have default value of model parameters and initial conditions that can further use to customize in the simulation.  
+
+```{r}
+source(paste0(mName, "_inits.R"))
+```
+
+The parameter values and initial states can be customized to the specific condition. It can also schedule for the given dosing scenario. In the current setting, we assumed the initial condition of the intake dose to be 1000 mg. We can use `initParms` and `initStates` functions to customize the parameter values and the initial state that will be used in the following modeling and SA. These additional functions are generated when compiling the model file. We used the the same parameter values in this section. 
+
+```{r}
+parms <- initParms()
+parms["vdist"] <- pars1comp$Vdist
+parms["ke"] <- pars1comp$kelim
+parms["kgutabs"] <- pars1comp$kgutabs
+parms["BW"] <- pars1comp$BW
+initState <- initStates(parms=parms)
+initState["Agutlument"] <- 10
+```
+
+Here shows the given parameter value (`parms`), initial state condition (`initStat`), and the output variable (`Outputs`) that need to specify in model solving.
+
+```{r}
+parms
+```
+
+```{r}
+initState
+```
+
+```{r}
+Outputs
+```
+
+Using the `ode()` function in **deSolve** package. Unlike above example, we have to asign additional arguments, such as `dllname`, `initfunc`, `nout`, and `outnames`.
+
+```{r}
+t <- seq(from = 0.01, to = 24.01, by = 1)
+y <- ode(y = initState, times = t, func = "derivs", parms = parms, 
+         dllname = mName, initfunc = "initmod", 
+         nout = 1, outnames = Outputs)
+```
+
+```{r, fig.height=6, fig.width=6}
+plot(y)
+```
+
+Same as above, use the following code to define the parameter distributions and generate parameter matrix. 
+
+```{r}
+# Define parameter distribution
+q <- c("qunif", "qunif", "qunif", "qnorm")
+q.arg <- list(list(min = parms["vdist"] / 2, max = parms["vdist"] * 2),
+             list(min = parms["ke"] / 2, max = parms["ke"] * 2), 
+             list(min = parms["kgutabs"] / 2, max = parms["kgutabs"] * 2),
+             list(mean = parms["BW"], sd = 5)) 
+params <- c("vdist", "ke", "kgutabs", "BW")
+
+# Generate parameter matrix
+set.seed(1234)
+x <- rfast99(params, n = 200, q = q, q.arg = q.arg, replicate = 20)
+```
+
+Run simulation and check result.
+
+```{r}
+outputs <- c("Ccompartment", "Ametabolized")
+out <- solve_fun(x, time = t, initState = initState, outnames = outputs, dllname = mName)
+check(out)
+```
+
+The simulation time had huge improvement when using **GNU MCSim** model code.
+
+## Model Implementation with **GNU MCSim** solving engine
+
+In addtion to use **deSolve** to solve differential equations in PK model, the **GNU MCSim** can provide better computational efficiency. To solve ODE through **GNU MCSim**, we need to change the argument to `application = mcsim` in `compile_model()` function. The computing time of using `solve_fun()` function in SA is estimated as,
+
+```{r}
+system.time(out<-solve_fun(x, t, initState = initState, outnames = Outputs, dllname = mName))
 ```
 
 Then, before we conduct the SA through **GNU MCSim**, The following code is used to compile the **GNU MCSim** model code to the exexutable program.
 
-```{r, eval=F, message=F, warning=F}
+```{r, message=F, warning=F}
 compile_model(mName, application = "mcsim")
 ```
 
-Similar to `solve_fun` function that can define the initial value of parameter and state variable through generated functions, the `solve_mcsim` also has a `condition` argument that can be used to give the specific input value such as exposure dose, fixed parameter value or initial condition of state variable.
+Similar to `solve_fun()` function that can define the initial value of parameter and state variable through generated functions, the `solve_mcsim()` also has a `condition` argument that can be used to give the specific input value such as exposure dose, fixed parameter value or initial condition of state variable.
 
-```{r, eval=F}
+```{r}
 conditions <- c("Agutlument = 10") 
 system.time(out <- solve_mcsim(x, mName = mName, params = params, 
                                vars = Outputs, time = t, 
                                condition = conditions))
 ```
 
-After solving the equations under the same given condition, we can find that **GNU MCSim** has about 4 - 5 times faster in computing performance than using **deSolve**. In this case, we only focus on performing the global SA alone for generic PK model without additonal comparison with experiment data. The next example will display and reproduce our previous published result [@fphar201800588] with full global SA workflow.
+After solving the equations under the same given condition, we can find that **GNU MCSim** provide faster speed in computing performance than using **deSolve**. In this case, we only focus on performing the global SA alone for generic PK model without additonal comparison with experiment data. The PBPK example will display and reproduce our previous published result [@fphar201800588] with full global SA workflow.
+
+## Session Info
+
+```{r, eval=T}
+sessionInfo()
+```
 
 ## References
