@@ -1,16 +1,16 @@
 #' Model Compiler
 #'
-#' The \code{compile_model} is used to compile the model code that is written under \proglang{C} or \pkg{GNU MCSim} format and
+#' The \code{compile_model} is used to compile the model code that is written under C or \pkg{GNU MCSim} format and
 #' generate the executable program in numerical analysis.
 #'
-#' Generally, the solving function through \pkg{GNU MCSim} can provide faster computing speed than exporting \proglang{C} in \proglang{R}.
+#' Generally, the solving function through \pkg{GNU MCSim} can provide faster computing speed than exporting C in R.
 #' Therefore, this function set \code{use_model_file = TRUE} and \code{application = 'mcsim'}
 #' as a default setting, suggesting to use \pkg{GNU MCSim} as main solver to solve the differential equation.
 #' To compile model code in Windows, be sure to install Rtools first.
 #' In addition, the \code{version} of \pkg{GNU MCSim} should provide to conduct model compiling in Windows.
 #'
 #' @param mName a string giving the name of the model code (without extension).
-#' @param use_model_file a logical value to operate the compiler to model or \proglang{C} file,
+#' @param use_model_file a logical value to operate the compiler to model or C file,
 #' the default is set to \code{TRUE} to assign the \pkg{GNU MCSim}'s model file in compiling.
 #' @param application a character to assign the specific methods (\code{mcsim} or \code{R})
 #' that will be applied to the numerical analysis (default is \code{mcsim}).

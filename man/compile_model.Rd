@@ -13,7 +13,7 @@ compile_model(mName, application = "mcsim", use_model_file = TRUE,
 \item{application}{a character to assign the specific methods (\code{mcsim} or \code{R})
 that will be applied to the numerical analysis (default is \code{mcsim}).}
 
-\item{use_model_file}{a logical value to operate the compiler to model or \proglang{C} file,
+\item{use_model_file}{a logical value to operate the compiler to model or C file,
 the default is set to \code{TRUE} to assign the \pkg{GNU MCSim}'s model file in compiling.}
 
 \item{version}{a character to assign the version of \pkg{GNU MCSim} that had been installed.
@@ -27,11 +27,11 @@ the function will compile and create dynamic-link libraries (.dll) on Windows an
 shared objects (.so) on Unix-likes systems (e.g., Linux and MacOS) that can link with \pkg{deSolve} solver.
 }
 \description{
-The \code{compile_model} is used to compile the model code that is written under \proglang{C} or \pkg{GNU MCSim} format and
+The \code{compile_model} is used to compile the model code that is written under C or \pkg{GNU MCSim} format and
 generate the executable program in numerical analysis.
 }
 \details{
-Generally, the solving function through \pkg{GNU MCSim} can provide faster computing speed than exporting \proglang{C} in \proglang{R}.
+Generally, the solving function through \pkg{GNU MCSim} can provide faster computing speed than exporting C in R.
 Therefore, this function set \code{use_model_file = TRUE} and \code{application = 'mcsim'}
 as a default setting, suggesting to use \pkg{GNU MCSim} as main solver to solve the differential equation.
 To compile model code in Windows, be sure to install Rtools first.

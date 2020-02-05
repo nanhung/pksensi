@@ -5,7 +5,8 @@ date: "`r Sys.Date()`"
 bibliography: references.bib
 output: 
   rmarkdown::html_vignette:
-  fig_caption: yes
+    toc: true
+    toc_depth: 3
 vignette: >
   %\VignetteIndexEntry{One-compartment PK model}
   %\VignetteEngine{knitr::rmarkdown}
@@ -17,10 +18,13 @@ library(pksensi)
 #mcsim_install()
 
 knitr::opts_chunk$set(
-  collapse = TRUE,
   eval = F,
-    fig.height=4, 
-  fig.width=7,
+  dev = "png",
+  dpi = 200,
+  fig.align = "center",
+  fig.width = 7,
+  out.width = "90%",
+  fig.height = 4,
   comment = "#>"
 )
 ```
@@ -93,7 +97,7 @@ t <- seq(from = 0.01, to = 24.01, by = 1)
 y <- ode(y = initState, times = t, func = pbtk1cpt, parms = parms)
 ```
 
-```{r, fig.height=6, fig.width=6}
+```{r, fig.height=6, fig.width=5}
 plot(y)
 ```
 
@@ -254,7 +258,7 @@ initState
 Outputs
 ```
 
-Using the `ode()` function in **deSolve** package. Unlike above example, we have to asign additional arguments, such as `dllname`, `initfunc`, `nout`, and `outnames`.
+Using the `ode()` function in **deSolve** package. Unlike above example, we have to assign additional arguments, such as `dllname`, `initfunc`, `nout`, and `outnames`.
 
 ```{r}
 t <- seq(from = 0.01, to = 24.01, by = 1)
@@ -263,8 +267,8 @@ y <- ode(y = initState, times = t, func = "derivs", parms = parms,
          nout = 1, outnames = Outputs)
 ```
 
-```{r, fig.height=6, fig.width=6}
-plot(y)
+```{r}
+head(y)
 ```
 
 Same as above, use the following code to define the parameter distributions and generate parameter matrix. 
@@ -295,13 +299,13 @@ The simulation time had huge improvement when using **GNU MCSim** model code.
 
 ## Model Implementation with **GNU MCSim** solving engine
 
-In addtion to use **deSolve** to solve differential equations in PK model, the **GNU MCSim** can provide better computational efficiency. To solve ODE through **GNU MCSim**, we need to change the argument to `application = mcsim` in `compile_model()` function. The computing time of using `solve_fun()` function in SA is estimated as,
+In addition to use **deSolve** to solve differential equations in PK model, the **GNU MCSim** can provide better computational efficiency. To solve ODE through **GNU MCSim**, we need to change the argument to `application = mcsim` in `compile_model()` function. The computing time of using `solve_fun()` function in SA is estimated as,
 
 ```{r}
 system.time(out<-solve_fun(x, t, initState = initState, outnames = Outputs, dllname = mName))
 ```
 
-Then, before we conduct the SA through **GNU MCSim**, The following code is used to compile the **GNU MCSim** model code to the exexutable program.
+Then, before we conduct the SA through **GNU MCSim**, The following code is used to compile the **GNU MCSim** model code to the executable program.
 
 ```{r, message=F, warning=F}
 compile_model(mName, application = "mcsim")
@@ -320,7 +324,7 @@ After solving the equations under the same given condition, we can find that **G
 
 ## Session Info
 
-```{r, eval=T}
+```{r}
 sessionInfo()
 ```
 

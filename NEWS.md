@@ -1,3 +1,8 @@
+# pksensi 1.1.5
+
+* `solve_mcsim()`: extense the flexible for the model in subfolder 
+* Update the vignettes (add deSolve modeling example)
+
 # pksensi 1.1.4
 
 * Replace SE to NSE in `heat_check()`
