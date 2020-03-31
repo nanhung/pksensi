@@ -4,8 +4,16 @@
 \alias{rfast99}
 \title{Extended Fourier Amplitude Sensitivity Test with Random Phase Shift}
 \usage{
-rfast99(params, n, M = 4, omega = NULL, q = NULL, q.arg = NULL,
-  replicate = 5, conf = 0.95)
+rfast99(
+  params,
+  n,
+  M = 4,
+  omega = NULL,
+  q = NULL,
+  q.arg = NULL,
+  replicate = 5,
+  conf = 0.95
+)
 }
 \arguments{
 \item{params}{an integer for the giving number of parameters,

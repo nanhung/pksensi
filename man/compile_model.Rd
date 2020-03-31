@@ -4,8 +4,12 @@
 \alias{compile_model}
 \title{Model Compiler}
 \usage{
-compile_model(mName, application = "mcsim", use_model_file = TRUE,
-  version = "6.1.0")
+compile_model(
+  mName,
+  application = "mcsim",
+  use_model_file = TRUE,
+  version = "6.1.0"
+)
 }
 \arguments{
 \item{mName}{a string giving the name of the model code (without extension).}
