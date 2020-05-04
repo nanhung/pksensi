@@ -18,7 +18,8 @@ heat_check(
   CI.cutoff = c(0.05, 0.1),
   index = "SI",
   level = T,
-  text = F
+  text = F,
+  show.all = FALSE
 )
 
 \method{plot}{rfast99}(x, vars = 1, SI.cutoff = 0.1, ...)
@@ -45,6 +46,8 @@ heat_check(
 \item{level}{a logical value to use continuous or discrete (default) output.}
 
 \item{text}{a logical value to display the calculated indices in the plot.}
+
+\item{show.all}{a logical value to show all testing parameters in the heatmap. The default is set to \code{FALSE} to show only the influential parameters.}
 
 \item{...}{additional arguments to customize the graphical parameters.}
 }

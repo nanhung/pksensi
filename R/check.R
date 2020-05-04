@@ -19,6 +19,7 @@
 #' @param level a logical value to use continuous or discrete (default) output.
 #' @param text a logical value to display the calculated indices in the plot.
 #' @param out a logical value to print the checking result to the console.
+#' @param show.all a logical value to show all testing parameters in the heatmap. The default is set to \code{FALSE} to show only the influential parameters.
 #' @param ... additional arguments to customize the graphical parameters.
 #'
 #' @importFrom reshape melt
@@ -160,7 +161,7 @@ heat_check <- function(x,
                        order = c("first order", "interaction", "total order"),
                        vars = NULL, times = NULL,
                        SI.cutoff = c(0.05, 0.1), CI.cutoff = c(0.05, 0.1),
-                       index = "SI", level = T, text = F){
+                       index = "SI", level = T, text = F, show.all = FALSE){
 
   nSI <- length(SI.cutoff)
   SI.labels<-rep(NA, nSI+1)
@@ -183,6 +184,12 @@ heat_check <- function(x,
   if (index ==  "SI"){
     X <- tidy_index(x, index = index) %>%
       mutate(level = cut(.data$value, breaks=c(-Inf, paste(SI.cutoff), Inf), labels=SI.labels))
+
+    if (!(show.all == TRUE)) {
+      check.out <- check.rfast99(x, out = F)
+      X <- X %>% filter(.data$parameter %in% check.out$tSI)
+    }
+
   } else if ((index == "CI")) {
     X <- tidy_index(x, index = index) %>%
       mutate(level = cut(.data$value, breaks=c(-Inf, paste(CI.cutoff), Inf), labels=CI.labels))
@@ -213,7 +220,7 @@ heat_check <- function(x,
   }
 
   #if (order == F){
-    p <- ggplot(X, aes_string("time", "parameter"))
+     p <- ggplot(X, aes_string("time", "parameter"))
   #} else if (order == T) {
   #  p <- ggplot(X, aes_string("time", "reorder(parameter, value)"))
   #}
