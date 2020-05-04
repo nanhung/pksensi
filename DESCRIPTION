@@ -20,7 +20,7 @@ Imports:
 Description: Applying the global sensitivity analysis workflow to investigate the parameter uncertainty and sensitivity in physiologically based kinetic (PK) models, especially the physiologically based pharmacokinetic/toxicokinetic model with multivariate outputs. The package also provides some functions to check the convergence and sensitivity of model parameters.   
 License: GPL-3 | file LICENSE
 URL: https://github.com/nanhung/pksensi, https://nanhung.rbind.io/pksensi
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Suggests:
     knitr,
     rmarkdown,
