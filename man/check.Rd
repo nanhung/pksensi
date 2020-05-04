@@ -7,7 +7,7 @@
 \alias{print.rfast99}
 \title{Check the Parameter Sensitivity}
 \usage{
-check(x, times, vars, SI.cutoff, CI.cutoff)
+check(x, times, vars, SI.cutoff, CI.cutoff, out)
 
 heat_check(
   x,
@@ -35,6 +35,8 @@ heat_check(
 \item{SI.cutoff}{a value or vector to set the cut-off for sensitivity index. The default is 0.05.}
 
 \item{CI.cutoff}{a value or vector to set the cut-off for convergence index. The default is 0.05.}
+
+\item{out}{a logical value to print the checking result to the console.}
 
 \item{order}{a vector of the interested output index, including \code{first order}, \code{interaction}, and \code{total order}.}
 
