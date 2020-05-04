@@ -1,3 +1,8 @@
+# pksensi 1.1.6
+
+* Improved `heat_check()` to only show influential parameters as default
+* Updated `check()` to return the SI and CI in a list
+
 # pksensi 1.1.5
 
 * `solve_mcsim()`: extense the flexible for the model in subfolder 

@@ -242,10 +242,10 @@ plot(out, vars = "lnCPL_APAP_mcgL")
 In addition, through using the `check`, the parameter with sensitivity and convergence indices over the given condition can be preliminary detected for all output variables. Based on our previous study, we proposed the heatmap visualization approach `heat_check` to distinguish "influential" and "non-influential" parameters with a "cut-off" point. Through the given argument `order`, we can select the specific order of sensitivity measurement that we're interested in. 
 
 ```{r, fig.height=5}
-heat_check(out, order = "total order")
+heat_check(out, order = "total order", show.all = T)
 ```
 
-Adding the `index = "CI"` in the function can further investigate the convergence index. Based on the current setting of sampling size, most parameters cannot reach the acceptable criteria of convergence. Therefore, a higher number of sampling is necessary. The sample size of convergence in the current PBPK model is 8,192 [@fphar201800588]. However, based on the current sample size we still can find 6 parameters that can be an important parameter for the plasma APAP concentration.
+In the default setting, the `heat_check` can only show the influential parameters. The argument `show.all` is used to show all results. Adding the `index = "CI"` in the function can further investigate the convergence index. Based on the current setting of sampling size, most parameters cannot reach the acceptable criteria of convergence. Therefore, a higher number of sampling is necessary. The sample size of convergence in the current PBPK model is 8,192 [@fphar201800588]. However, based on the current sample size we still can find 6 parameters that can be an important parameter for the plasma APAP concentration.
 
 ```{r, fig.height=5}
 heat_check(out, index = "CI", order = "total order")
