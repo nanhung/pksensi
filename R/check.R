@@ -186,7 +186,7 @@ heat_check <- function(x,
       mutate(level = cut(.data$value, breaks=c(-Inf, paste(SI.cutoff), Inf), labels=SI.labels))
 
     if (!(show.all == TRUE)) {
-      check.out <- check.rfast99(x, out = F)
+      check.out <- check.rfast99(x, SI.cutoff = min(SI.cutoff), out = F)
       X <- X %>% filter(.data$parameter %in% check.out$tSI)
     }
 

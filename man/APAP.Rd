@@ -4,7 +4,8 @@
 \name{APAP}
 \alias{APAP}
 \title{Pharmacokinetic Dataset of Acetaminophen}
-\format{A data frame containing the following columns:
+\format{
+A data frame containing the following columns:
 \itemize{
   \item Wt: averaged weight of the study population (kg).
   \item Dose: given oral dose of acetaminophen administered (mg/kg).
@@ -13,7 +14,8 @@
   \item AG: concentration of acetaminophen-glucuronide in the sample (mg/L).
   \item AS: concentration of acetaminophen-sulfate in the sample (mg/L).
   \item Study: sourced reference.
-}}
+}
+}
 \usage{
 APAP
 }
