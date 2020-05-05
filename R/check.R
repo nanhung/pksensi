@@ -71,7 +71,7 @@
 #' # Check results of sensitivity measures
 #' check(out)
 #' plot(out)
-#' heat_check(out, show.all = T)
+#' heat_check(out, show.all = TRUE)
 #' heat_check(out, index = "CI")
 #'
 #' @seealso \code{\link{tell2}}
