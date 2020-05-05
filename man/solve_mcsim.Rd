@@ -21,7 +21,8 @@ solve_mcsim(
   atol = 1e-06,
   monte_carlo = NULL,
   dist = NULL,
-  q.arg = NULL
+  q.arg = NULL,
+  parallel = FALSE
 )
 
 generate_infile(
@@ -70,6 +71,8 @@ generate_infile(
 \item{dist}{a vector of distribution names corresponding to \code{<distribution-name>} in \pkg{GNU MCSim}.}
 
 \item{q.arg}{a list of shape parameters in the sampling distribution (\code{dist}).}
+
+\item{parallel}{a logical value to apply parallel computing to improve speed (currently can only run under 4 cores setting).}
 }
 \value{
 The output result is the 4-dimension array with

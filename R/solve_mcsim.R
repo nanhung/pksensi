@@ -22,9 +22,15 @@
 #' @param atol an argument passed to the integrator (default 1e-6).
 #' @param generate.infile a logical value to automatically generate the input file.
 #' @param tell a logical value to automatically combine the result y to decoupling simulation x.
+#' @param parallel a logical value to apply parallel computing to improve speed (currently can only run under 4 cores setting).
 #'
-#' @importFrom utils write.table
 #' @importFrom data.table fread
+#' @importFrom data.table fwrite
+#' @importFrom foreach foreach
+#' @importFrom foreach %dopar%
+#' @importFrom parallel makeCluster
+#' @importFrom parallel stopCluster
+#' @importFrom doParallel registerDoParallel
 #'
 #' @return The output result is the 4-dimension array with
 #' c(model evaluations, replications, time-points, output variables).
@@ -61,18 +67,23 @@
 #'
 #' @export
 #' @describeIn solve_mcsim Numerical analysis for the PK model by \pkg{GNU MCSim}.
-solve_mcsim <- function(x, mName,
+solve_mcsim <- function(x,
+                        mName,
                         infile.name = NULL,
                         outfile.name = NULL,
                         setpoint.name = NULL,
                         params = NULL,
-                        vars  = NULL,
-                        time  = NULL,
-                        condition  = NULL,
+                        vars = NULL,
+                        time = NULL,
+                        condition = NULL,
                         generate.infile = T,
                         tell = T,
-                        rtol = 1e-6, atol = 1e-6,
-                        monte_carlo = NULL, dist = NULL, q.arg = NULL){
+                        rtol = 1e-06,
+                        atol = 1e-06,
+                        monte_carlo = NULL,
+                        dist = NULL,
+                        q.arg = NULL,
+                        parallel = FALSE) {
 
   message(paste0("Starting time: ", Sys.time()))
 
@@ -145,17 +156,65 @@ solve_mcsim <- function(x, mName,
   #
   if (is.null(monte_carlo)){ # Remember to define n if used external parameter matrix
     X <- cbind(1, apply(x$a, 3L, c))
-    write.table(X, file=setpoint.data, row.names=F, sep="\t")
+
+    if (parallel) {
+      cores <- 4
+      for (i in 1:cores) {
+        # input data
+        suppressMessages(data.table::fwrite(X[(1+(i-1)*nrow(X)/cores):(i*nrow(X)/cores),],
+                                            file = paste0("p", i, ".", setpoint.data), row.names=F, sep="\t"))
+        # input file
+        tx  <- readLines(infile.name)
+        tx2 <- gsub(pattern = setpoint.data, replacement = paste0("p", i, ".", setpoint.data), x = tx)
+        tx3 <- gsub(pattern = outfile.name, replacement = paste0("p", i, ".", outfile.name), x = tx2)
+        writeLines(tx3, con = paste0("p", i, ".", infile.name))
+      }
+    } else suppressMessages(data.table::fwrite(X, file=setpoint.data, row.names=F, sep="\t"))
   }
 
 
   if(file.exists(mcsim.) == T){
     if(length(mStr[[1]]) == 1){
+
       message(paste0("Execute: ", "./", mcsim., " ", infile.name))
-      system(paste0("./", mcsim., " ", infile.name))
+      if (parallel) {
+        cl <- makeCluster(cores)
+        registerDoParallel(cl)
+        out <- foreach(i = 1:cores) %dopar%
+          {
+            system( paste0("./", mcsim., " ", paste0("p", i, ".", infile.name)) )
+            file.remove(paste0("p", i, ".", infile.name))
+            file.remove(paste0("p", i, ".", setpoint.data))
+          }
+        stopCluster(cl)
+      } else {
+        system(paste0("./", mcsim., " ", infile.name))
+      }
     } else {
+
       message(paste0("Execute: ", mcsim., " ", infile.name))
-      system(paste0(mcsim., " ", infile.name))
+      if (parallel) {
+        cl <- makeCluster(cores)
+        registerDoParallel(cl)
+        out <- foreach(i = 1:cores) %dopar%
+          {
+            system( paste0(mcsim., " ", paste0("p", i, ".", infile.name)) )
+            file.remove(paste0("p", i, ".", infile.name))
+            file.remove(paste0("p", i, ".", setpoint.data))
+          }
+        stopCluster(cl)
+      } else {
+        system(paste0(mcsim., " ", infile.name))
+
+      }
+    }
+  }
+
+  if (parallel) {
+    p.list <- list()
+    for (i in 1:cores) {
+      p.list[[i]] <- data.table::fread(paste0("p", i, ".", outfile.name), head = T)
+      file.remove(paste0("p", i, ".", outfile.name))
     }
   }
 
@@ -164,7 +223,10 @@ solve_mcsim <- function(x, mName,
   invisible(gc()); # clean memory
 
   str <- n.factors + 2
-  df <- as.data.frame(data.table::fread(outfile.name, head = T))
+
+  if (parallel) {
+    df <- as.data.frame( do.call(rbind, list(p.list[[1]], p.list[[2]], p.list[[3]], p.list[[4]])) )
+  } else df <- as.data.frame(data.table::fread(outfile.name, head = T))
 
   invisible(gc()); # clean memory
 
@@ -263,6 +325,6 @@ generate_infile <- function(infile.name = NULL,
     cat("Print (", paste(vars[i], collapse = ", "), ", ", paste(time, collapse=", "), ");\n",
         file = infile.name, append=TRUE, sep = "")
   }
-  cat("}", "END.", file = infile.name, append = TRUE)
+  cat("}", "END.\n", file = infile.name, append = TRUE)
   message(paste('* Created input file "', infile.name, '".', sep =""))
 }
