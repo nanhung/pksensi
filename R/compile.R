@@ -6,7 +6,7 @@
 #' Generally, the solving function through \pkg{GNU MCSim} can provide faster computing speed than exporting C in R.
 #' Therefore, this function set \code{use_model_file = TRUE} and \code{application = 'mcsim'}
 #' as a default setting, suggesting to use \pkg{GNU MCSim} as main solver to solve the differential equation.
-#' To compile model code in Windows, be sure to install Rtools first.
+#' To compile model code in Windows, be sure to install Rtools (rtools40) first.
 #' In addition, the \code{version} of \pkg{GNU MCSim} should provide to conduct model compiling in Windows.
 #'
 #' @param mName a string giving the name of the model code (without extension).
@@ -60,8 +60,8 @@ compile_model <- function (mName, application = 'mcsim', use_model_file = TRUE, 
       } else stop("* Error in model compilation.")
 
     } else if ((.Platform$OS.type == "windows")) {
-      Sys.setenv(PATH = paste("c:/Rtools/mingw_64/bin", Sys.getenv("PATH"), sep=";"))
-      Sys.setenv(PATH = paste("c:/Rtools/bin", Sys.getenv("PATH"), sep=";"))
+      Sys.setenv(PATH = paste("C:\\rtools40\\mingw64\\bin", Sys.getenv("PATH"), sep=";"))
+      Sys.setenv(PATH = paste("C:\\rtools40\\bin", Sys.getenv("PATH"), sep=";"))
       system(paste0(mod, " ", mName, " ", mName, ".c"))
       system(paste0("gcc -O3 -I.. -I", sim, " -o mcsim.", mName, ".exe ", mName, ".c ", sim, "/*.c", " -lm "))
       if (file.exists(paste0("mcsim.", mName, ".exe"))){
@@ -72,8 +72,8 @@ compile_model <- function (mName, application = 'mcsim', use_model_file = TRUE, 
   } else if (application == "R"){
     if (.Platform$OS.type == "windows" && use_model_file == T){
       system(paste0(mod, " -R ", mName, ".model ", mName, ".c"))
-      Sys.setenv(PATH = paste("c:/Rtools/mingw_64/bin", Sys.getenv("PATH"), sep=";"))
-      Sys.setenv(PATH = paste("c:/Rtools/bin", Sys.getenv("PATH"), sep=";"))
+      Sys.setenv(PATH = paste("C:\\rtools40\\mingw64\\bin", Sys.getenv("PATH"), sep=";"))
+      Sys.setenv(PATH = paste("C:\\rtools40\\bin", Sys.getenv("PATH"), sep=";"))
     }
 
     system (paste0("R CMD SHLIB ", mName, ".c")) # create .o and .so (or .dll) files

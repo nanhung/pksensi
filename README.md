@@ -29,7 +29,9 @@ remotes::install_github('nanhung/pksensi')
 
 - This package includes a function that can help you install GNU MCsim more easily through the function `mcsim_install()`.
 
-- All updated details can be found in [NEWS.md](https://github.com/nanhung/pksensi/blob/master/NEWS.md)
+- All updated details can be found in [NEWS.md](https://github.com/nanhung/pksensi/blob/master/NEWS.md).
+
+- **NOTE** Windows users need to install [Rtools40](https://cran.r-project.org/bin/windows/Rtools/) to compile the model code.
 
 ## Workflow
 

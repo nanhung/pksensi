@@ -1,7 +1,8 @@
 ## Test environments
-* Local Windows 10, R 3.6.2
-* Local Ubuntu 18.04 LTS, R 4.0.0
-* Ubuntu 16.04.6 LTS (on travis-ci), R 4.0.0
+* Windows 10 (local), R 3.6.2
+* elementary OS 5.1.4 Hera (local), R 4.0.0
+* Ubuntu 16.04 LTS (RStudio Cloud), R 3.6.0
+* Ubuntu 16.04.6 LTS (travis-ci), R 4.0.0
 * Windows Server 2012 R2 x64 (build 9600; appveyor), R 4.0.0
 
 ## R CMD check results
