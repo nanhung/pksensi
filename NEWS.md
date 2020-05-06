@@ -3,6 +3,7 @@
 * Suggested to use Rtools40
 * Added parallel method in `solve_mcsim()`
 * Fixed bug in `heat_check()`
+* Added message of display info in `heat_check()` function
 
 # pksensi 1.1.6
 

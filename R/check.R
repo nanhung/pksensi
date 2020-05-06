@@ -220,7 +220,7 @@ heat_check <- function(x,
   }
 
   #if (order == F){
-     p <- ggplot(X, aes_string("time", "parameter"))
+  p <- ggplot(X, aes_string("time", "parameter"))
   #} else if (order == T) {
   #  p <- ggplot(X, aes_string("time", "reorder(parameter, value)"))
   #}
@@ -257,9 +257,14 @@ heat_check <- function(x,
     p <- p + labs(title="Convergence index", x="time", y="parameters")
   }
 
+  if(!(show.all == TRUE)){
+    message(paste0("Display ", length(check.out$tSI), " influential parameters from all ", dim(x$a)[3], " examined parameters."))
+  }
+
   if (text == T){
     p + geom_text(aes_string(label = "ifelse(value < 0.01, '', round(value, 2))"), size = 2.5)
   } else p
+
 }
 
 tidy_index <- function (x, index = "SI") {
