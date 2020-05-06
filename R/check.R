@@ -188,6 +188,7 @@ heat_check <- function(x,
     if (!(show.all == TRUE)) {
       check.out <- check.rfast99(x, vars = vars, SI.cutoff = min(SI.cutoff), out = F)
       X <- X %>% filter(.data$parameter %in% check.out$tSI)
+      message(paste0("Display ", length(check.out$tSI), " influential parameters from all ", dim(x$a)[3], " examined parameters."))
     }
 
   } else if ((index == "CI")) {
@@ -255,10 +256,6 @@ heat_check <- function(x,
     p <- p + labs(title="Sensitivity index", x="time", y="parameters")
   } else if ((index == "CI")) {
     p <- p + labs(title="Convergence index", x="time", y="parameters")
-  }
-
-  if(!(show.all == TRUE && index == "SI")){
-    message(paste0("Display ", length(check.out$tSI), " influential parameters from all ", dim(x$a)[3], " examined parameters."))
   }
 
   if (text == T){
