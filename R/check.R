@@ -257,7 +257,7 @@ heat_check <- function(x,
     p <- p + labs(title="Convergence index", x="time", y="parameters")
   }
 
-  if(!(show.all == TRUE)){
+  if(!(show.all == TRUE && index == "SI")){
     message(paste0("Display ", length(check.out$tSI), " influential parameters from all ", dim(x$a)[3], " examined parameters."))
   }
 
