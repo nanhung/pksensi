@@ -259,9 +259,12 @@ heat_check <- function(x,
   }
 
   if (text == T){
-    p + geom_text(aes_string(label = "ifelse(value < 0.01, '', round(value, 2))"), size = 2.5)
+    if (index ==  "SI"){
+      p + geom_text(aes_string(label = "ifelse(value < min(SI.cutoff), '', round(value, 2))"), size = 2.5)
+    } else if ((index == "CI")) {
+      p + geom_text(aes_string(label = "ifelse(value < min(CI.cutoff), '', round(value, 2))"), size = 2.5)
+    }
   } else p
-
 }
 
 tidy_index <- function (x, index = "SI") {
