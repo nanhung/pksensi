@@ -11,15 +11,15 @@ There were no ERRORs, WARNINGs and NOTE.
 
 ## r-hub builder results
 
-Build ID:	pksensi_1.1.6.tar.gz-8f760fc57340484e9c6209fa575331ea
+Build ID:	pksensi_1.1.7.tar.gz-dd4b9799104049159f250145a181e250
 Platform:	Ubuntu Linux 16.04 LTS, R-release, GCC
-Submitted:	34 minutes 46.7 seconds ago
-Build time:	34 minutes 45.2 seconds
+Submitted:	38 minutes 16.7 seconds ago
+Build time:	38 minutes 14.1 seconds
 
-Build ID:	pksensi_1.1.6.tar.gz-6419c4762c084716bbb51f4fe828384b
+Build ID:	pksensi_1.1.7.tar.gz-6c7f2c72685947c6b0425478ba3196f7
 Platform:	Fedora Linux, R-devel, clang, gfortran
-Submitted:	45 minutes 21.5 seconds ago
-Build time:	45 minutes 20.5 seconds
+Submitted:	50 minutes 29.8 seconds ago
+Build time:	50 minutes 25.9 seconds
 
-### pksensi 1.1.6: OK
+### pksensi 1.1.7: OK
 
