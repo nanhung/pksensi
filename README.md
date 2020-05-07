@@ -31,7 +31,7 @@ remotes::install_github('nanhung/pksensi')
 
 - All updated details can be found in [NEWS.md](https://github.com/nanhung/pksensi/blob/master/NEWS.md).
 
-- **NOTE** Windows users need to install [Rtools40](https://cran.r-project.org/bin/windows/Rtools/) to compile the model code.
+- **NOTE:** Windows users need to install [Rtools40](https://cran.r-project.org/bin/windows/Rtools/) to compile the model code.
 
 ## Workflow
 
