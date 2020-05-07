@@ -8,7 +8,7 @@ Authors@R: c(
     person("Weihsueh A.", "Chiu", role = "aut", comment = c(ORCID = "0000-0002-7575-2368"))
     )
 Depends: 
-    R (>= 3.5)
+    R (>= 3.6)
 Imports:
     ggplot2,
     data.table,

@@ -38,6 +38,6 @@ generate the executable program in numerical analysis.
 Generally, the solving function through \pkg{GNU MCSim} can provide faster computing speed than exporting C in R.
 Therefore, this function set \code{use_model_file = TRUE} and \code{application = 'mcsim'}
 as a default setting, suggesting to use \pkg{GNU MCSim} as main solver to solve the differential equation.
-To compile model code in Windows, be sure to install Rtools first.
+To compile model code in Windows, be sure to install Rtools (rtools40) first.
 In addition, the \code{version} of \pkg{GNU MCSim} should provide to conduct model compiling in Windows.
 }
