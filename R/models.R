@@ -39,15 +39,19 @@ FFPK <- function(params, time, dose = 1){
 #' @export
 #' @describeIn models Download pbtk1cpt.model file.
 pbtk1cpt_model = function(){
-  url = "https://raw.githubusercontent.com/nanhung/pksensi/master/tests/pbtk1cpt.model"
-  destfile = paste0(getwd(),"/pbtk1cpt.model")
-  download.file(url, destfile)
+  #url = "https://raw.githubusercontent.com/nanhung/pksensi/master/tests/pbtk1cpt.model"
+  #destfile = paste0(getwd(),"/pbtk1cpt.model")
+  #download.file(url, destfile)
+  mpath <- system.file("models", "pbtk1cpt.model", package="pksensi")
+  file.copy(mpath, getwd())
 }
 
 #' @export
 #' @describeIn models Download pbpk_apap.model file.
 pbpk_apap_model = function(){
-  url = "https://raw.githubusercontent.com/nanhung/pksensi/master/tests/pbpk_apap.model"
-  destfile = paste0(getwd(),"/pbpk_apap.model")
-  download.file(url, destfile)
+  #url = "https://raw.githubusercontent.com/nanhung/pksensi/master/tests/pbpk_apap.model"
+  #destfile = paste0(getwd(),"/pbpk_apap.model")
+  #download.file(url, destfile)
+  mpath <- system.file("models", "pbpk_apap.model", package="pksensi")
+  file.copy(mpath, getwd())
 }
