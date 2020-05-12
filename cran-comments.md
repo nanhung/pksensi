@@ -1,5 +1,6 @@
 ## Test environments
 * Windows 10 (local), R 4.0.0
+* (wsl)
 * elementary OS 5.1.4 Hera (local), R 4.0.0
 * Ubuntu 20.04 LTS (local VM), R 4.0.0
 * Ubuntu 16.04 LTS (RStudio Cloud), R 3.6.0
