@@ -5,7 +5,7 @@
 \alias{mcsim_version}
 \title{Install \pkg{GNU MCSim}}
 \usage{
-mcsim_install(version = "6.1.0", directory = NULL, mxstep = 5000)
+mcsim_install(version = "6.2.0", directory = NULL, mxstep = 5000)
 
 mcsim_version()
 }
@@ -41,7 +41,7 @@ and \code{C:/Users/} (windows). To install \pkg{GNU MCSim} in Windows, be sure t
 }}
 
 \examples{
-\dontrun{mcsim_install(version = 6.1.0, mxstep = 10000)}
+\dontrun{mcsim_install(version = 6.2.0, mxstep = 10000)}
 
 }
 \references{

@@ -1,6 +1,7 @@
 # pksensi 1.1.8
 
 * update the route to load example model
+* update the default MCSim version to 6.2.0
 
 # pksensi 1.1.7
 
