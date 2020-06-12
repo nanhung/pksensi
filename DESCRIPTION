@@ -32,6 +32,6 @@ BugReports: https://github.com/nanhung/pksensi/issues
 Author: Nan-Hung Hsieh [aut, cre] (<https://orcid.org/0000-0003-0163-2766>),
   Brad Reisfeld [aut],
   Weihsueh A. Chiu [aut] (<https://orcid.org/0000-0002-7575-2368>)
-Maintainer: Nan-Hung Hsieh <nhsieh@cvm.tamu.edu>
+Maintainer: Nan-Hung Hsieh <d99622005@gmail.com>
 Encoding: UTF-8
 VignetteBuilder: knitr

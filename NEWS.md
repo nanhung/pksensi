@@ -2,6 +2,7 @@
 
 * update the route to load example model
 * update the default MCSim version to 6.2.0
+* Switch the contact mail to d99622005@gmail.com
 
 # pksensi 1.1.7
 
