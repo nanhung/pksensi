@@ -1,8 +1,8 @@
 Package: pksensi
 Title: Global Sensitivity Analysis in Physiologically Based Kinetic Modeling
-Version: 1.1.7.9000
+Version: 1.2.0
 Authors@R: c(
-    person("Nan-Hung", "Hsieh", role = c("aut", "cre"), email = "nhsieh@cvm.tamu.edu", comment = c(ORCID = "0000-0003-0163-2766")),
+    person("Nan-Hung", "Hsieh", role = c("aut", "cre"), email = "d99622005@ntu.edu.tw", comment = c(ORCID = "0000-0003-0163-2766")),
     person("Brad", "Reisfeld", role = "aut"),
     person("Weihsueh A.", "Chiu", role = "aut", comment = c(ORCID = "0000-0002-7575-2368"))
     )
@@ -32,6 +32,6 @@ BugReports: https://github.com/nanhung/pksensi/issues
 Author: Nan-Hung Hsieh [aut, cre] (<https://orcid.org/0000-0003-0163-2766>),
   Brad Reisfeld [aut],
   Weihsueh A. Chiu [aut] (<https://orcid.org/0000-0002-7575-2368>)
-Maintainer: Nan-Hung Hsieh <d99622005@gmail.com>
+Maintainer: Nan-Hung Hsieh <d99622005@ntu.edu.tw>
 Encoding: UTF-8
 VignetteBuilder: knitr
