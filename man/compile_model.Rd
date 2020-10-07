@@ -8,7 +8,7 @@ compile_model(
   mName,
   application = "mcsim",
   use_model_file = TRUE,
-  version = "6.1.0"
+  version = "6.2.0"
 )
 }
 \arguments{
@@ -21,7 +21,7 @@ that will be applied to the numerical analysis (default is \code{mcsim}).}
 the default is set to \code{TRUE} to assign the \pkg{GNU MCSim}'s model file in compiling.}
 
 \item{version}{a character to assign the version of \pkg{GNU MCSim} that had been installed.
-The version must be assigned for Windows user (default is \code{6.1.0}).}
+The version must be assigned for Windows user (default is \code{6.2.0}).}
 }
 \value{
 The default \code{application} is set to \code{'mcsim'}
