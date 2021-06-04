@@ -43,7 +43,7 @@ test_that("rfast99 class", {
 
   #heat_check(out, text = TRUE)
   #heat_check(out, level = F)
-  #heat_check(out, index = "CI")
+  #cheat_check(out, index = "CI")
 
   expect_silent(pksim(out, log = TRUE))
   expect_silent(plot(out))
