@@ -12,3 +12,4 @@
 ^README\.md$
 cran-comments.md
 docs/*
+^README\.Rmd$
