@@ -26,11 +26,14 @@ pharmacokinetic/toxicokinetic model with multivariate outputs. The
 package also provides some functions to check the convergence and
 sensitivity of model parameters.
 
-Through **pksensi**, you can: - Run sensitivity analysis for PK models
-in R with script that were written in C or GNU MCSim. - Decision
-support: The output results and visualization tools can be used to
-easily determine which parameters have “non-influential” effects on the
-model output and can be fixed in model calibration.
+Through **pksensi**, you can:
+
+-   Run sensitivity analysis for PK models in R with script that were
+    written in C or GNU MCSim.
+
+-   Decision support: The output results and visualization tools can be
+    used to easily determine which parameters have “non-influential”
+    effects on the model output and can be fixed in model calibration.
 
 ## Installation
 
@@ -69,10 +72,9 @@ model:
 
 ``` r
 library(pksensi)
-## basic example code
 ```
 
-# Step 1. Construct 1-cpt pbtk model
+### Step 1. Construct 1-cpt pbtk model
 
 ``` r
 pbtk1cpt <- function(t, state, parameters) {
@@ -87,7 +89,7 @@ pbtk1cpt <- function(t, state, parameters) {
 }
 ```
 
-# Step 2. Define initial conditions, output time steps and variable
+### Step 2. Define initial conditions, output time steps and variable
 
 ``` r
 initState <- c(Agutlument = 10, Acompartment = 0, Ametabolized = 0)
@@ -95,9 +97,9 @@ t <- seq(from = 0.01, to = 24.01, by = 1)
 outputs <- c("Ccompartment")
 ```
 
-# Step 3. Generate parameter matrix
+### Step 3. Generate parameter matrix
 
-## 3.1. (Optional) Extract parameter value from httk package
+#### 3.1. (Optional) Extract parameter value from httk package
 
 ``` r
 library(httk)
@@ -105,7 +107,7 @@ pars1comp <- (parameterize_1comp(chem.name = "acetaminophen"))
 #> Human volume of distribution returned in units of L/kg BW.
 ```
 
-## 3.2. Set parameter distributions
+#### 3.2. Set parameter distributions
 
 ``` r
 q <- c("qunif", "qunif", "qunif", "qnorm")
@@ -115,7 +117,7 @@ q.arg <- list(list(min = pars1comp$Vdist / 2, max = pars1comp$Vdist * 2),
               list(mean = pars1comp$BW, sd = 5))
 ```
 
-## 3.3. Create parameter matrix
+#### 3.3. Create parameter matrix
 
 ``` r
 set.seed(1234)
@@ -123,15 +125,15 @@ params <- c("vdist", "ke", "kgutabs", "BW")
 x <- rfast99(params, n = 200, q = q, q.arg = q.arg, replicate = 1)
 ```
 
-# Step 4. Conduct simulation (will take few minutes)
+### Step 4. Conduct simulation (will take few minutes with more replications)
 
 ``` r
 out <- solve_fun(x, time = t, func = pbtk1cpt, initState = initState, outnames = outputs)
-#> Starting time: 2021-06-04 15:50:47
-#> Ending time: 2021-06-04 15:50:58
+#> Starting time: 2021-06-04 16:09:51
+#> Ending time: 2021-06-04 16:10:02
 ```
 
-# Step 5. Uncertainty analysis
+### Step 5. Uncertainty analysis
 
 ``` r
 pksim(out)  # Use to compare with "real" data (if any)
@@ -139,7 +141,7 @@ pksim(out)  # Use to compare with "real" data (if any)
 
 <img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
 
-# Step 6. Check and visualize the result of sensitivity analysis
+### Step 6. Check and visualize the result of sensitivity analysis
 
 ``` r
 plot(out)   # Visualize result
@@ -211,3 +213,9 @@ Hsieh NH, Reisfeld B, Chiu WA. [pksensi: an R package to apply
 sensitivity analysis in pharmacokinetic
 modeling](https://nanhung.rbind.io/poster/2019-SOT.pdf). 58th SOT Annual
 Meeting, Baltimore, USA, March 10–14, 2019.
+
+Deepika D, et al. [Risk Assessment of Perfluorooctane Sulfonate (PFOS)
+using Dynamic Age Dependent Physiologically based Pharmacokinetic Model
+(PBPK) across human
+lifetime](https://doi.org/10.1016/j.envres.2021.111287). Environmental
+Research (2021): 111287.
