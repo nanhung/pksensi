@@ -41,11 +41,11 @@ test_that("rfast99 class", {
   check(out)
   print(out)
 
-  heat_check(out, text = T)
-  heat_check(out, level = F)
-  heat_check(out, index = "CI")
+  #heat_check(out, text = TRUE)
+  #heat_check(out, level = F)
+  #heat_check(out, index = "CI")
 
-  expect_silent(pksim(out, log = T))
+  expect_silent(pksim(out, log = TRUE))
   expect_silent(plot(out))
   expect_that(x, is_a("rfast99"))
   expect_equal(x$M, 4)
@@ -110,7 +110,7 @@ test_that("rfast99 rep2", {
              rep = 20, conf = 0.95)
 
   time <- c(0.5, 1)
-  out<-solve_fun(x, model = FFPK, time = time, vars = "output", lnparam = T)
+  out<-solve_fun(x, model = FFPK, time = time, vars = "output", lnparam = TRUE)
   check(out, time = 1)
   print(out)
 
