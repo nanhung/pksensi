@@ -13,3 +13,7 @@
 cran-comments.md
 docs/*
 ^README\.Rmd$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$

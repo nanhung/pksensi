@@ -20,10 +20,11 @@ knitr::opts_chunk$set(
 [![Dependencies](https://tinyverse.netlify.com/badge/pksensi)](https://cran.r-project.org/package=pksensi)
 [![Travis-CI Build Status](https://travis-ci.org/nanhung/pksensi.svg?branch=master)](https://travis-ci.org/nanhung/pksensi)
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/nanhung/pksensi?branch=master&svg=true)](https://ci.appveyor.com/project/nanhung/pksensi)
-[![Coverage Status](https://codecov.io/gh/nanhung/pksensi/branch/master/graph/badge.svg)](https://codecov.io/gh/nanhung/pksensi?branch=master)  
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version-last-release/pksensi)](https://cran.r-project.org/package=pksensi)
 [![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/pksensi)](https://cran.r-project.org/package=pksensi)
 [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/pksensi?color=orange)](https://CRAN.R-project.org/package=pksensi)
+[![Codecov test coverage](https://codecov.io/gh/nanhung/pksensi/branch/master/graph/badge.svg)](https://codecov.io/gh/nanhung/pksensi?branch=master)
+[![R-CMD-check](https://github.com/nanhung/pksensi/workflows/R-CMD-check/badge.svg)](https://github.com/nanhung/pksensi/actions)
 <!-- badges: end -->
 
 **pksensi** implements the global sensitivity analysis workflow to investigate the parameter uncertainty and sensitivity in physiologically based kinetic (PK) models, especially the physiologically based pharmacokinetic/toxicokinetic  model with multivariate outputs. The package also provides some functions to check the convergence and sensitivity of model parameters.
