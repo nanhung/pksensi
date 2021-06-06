@@ -11,12 +11,13 @@
 Status](https://travis-ci.org/nanhung/pksensi.svg?branch=master)](https://travis-ci.org/nanhung/pksensi)
 [![AppVeyor build
 status](https://ci.appveyor.com/api/projects/status/github/nanhung/pksensi?branch=master&svg=true)](https://ci.appveyor.com/project/nanhung/pksensi)
-[![Coverage
-Status](https://codecov.io/gh/nanhung/pksensi/branch/master/graph/badge.svg)](https://codecov.io/gh/nanhung/pksensi?branch=master)  
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version-last-release/pksensi)](https://cran.r-project.org/package=pksensi)
 [![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/pksensi)](https://cran.r-project.org/package=pksensi)
 [![Total
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/pksensi?color=orange)](https://CRAN.R-project.org/package=pksensi)
+[![Codecov test
+coverage](https://codecov.io/gh/nanhung/pksensi/branch/master/graph/badge.svg)](https://codecov.io/gh/nanhung/pksensi?branch=master)
+[![R-CMD-check](https://github.com/nanhung/pksensi/workflows/R-CMD-check/badge.svg)](https://github.com/nanhung/pksensi/actions)
 <!-- badges: end -->
 
 **pksensi** implements the global sensitivity analysis workflow to
@@ -129,8 +130,8 @@ x <- rfast99(params, n = 200, q = q, q.arg = q.arg, replicate = 1)
 
 ``` r
 out <- solve_fun(x, time = t, func = pbtk1cpt, initState = initState, outnames = outputs)
-#> Starting time: 2021-06-04 16:09:51
-#> Ending time: 2021-06-04 16:10:02
+#> Starting time: 2021-06-06 07:17:08
+#> Ending time: 2021-06-06 07:17:19
 ```
 
 ### Step 5. Uncertainty analysis
