@@ -7,8 +7,6 @@
 
 [![lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![Dependencies](https://tinyverse.netlify.com/badge/pksensi)](https://cran.r-project.org/package=pksensi)
-[![Travis-CI Build
-Status](https://travis-ci.org/nanhung/pksensi.svg?branch=master)](https://travis-ci.org/nanhung/pksensi)
 [![AppVeyor build
 status](https://ci.appveyor.com/api/projects/status/github/nanhung/pksensi?branch=master&svg=true)](https://ci.appveyor.com/project/nanhung/pksensi)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version-last-release/pksensi)](https://cran.r-project.org/package=pksensi)
@@ -130,8 +128,8 @@ x <- rfast99(params, n = 200, q = q, q.arg = q.arg, replicate = 1)
 
 ``` r
 out <- solve_fun(x, time = t, func = pbtk1cpt, initState = initState, outnames = outputs)
-#> Starting time: 2021-06-06 07:17:08
-#> Ending time: 2021-06-06 07:17:19
+#> Starting time: 2021-06-06 07:33:04
+#> Ending time: 2021-06-06 07:33:15
 ```
 
 ### Step 5. Uncertainty analysis
