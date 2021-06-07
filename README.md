@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# pksensi
+# pksensi <img src="man/figures/logo.png" height="200px" align="right" />
 
 <!-- badges: start -->
 
@@ -128,8 +128,8 @@ x <- rfast99(params, n = 200, q = q, q.arg = q.arg, replicate = 1)
 
 ``` r
 out <- solve_fun(x, time = t, func = pbtk1cpt, initState = initState, outnames = outputs)
-#> Starting time: 2021-06-06 07:33:04
-#> Ending time: 2021-06-06 07:33:15
+#> Starting time: 2021-06-07 11:33:16
+#> Ending time: 2021-06-07 11:33:26
 ```
 
 ### Step 5. Uncertainty analysis
@@ -181,23 +181,22 @@ check(out)  # Print result to console
 ## Citation
 
 
-    To cite pksensi in publications use:
+    To cite package 'pksensi' in publications use:
 
-      Hsieh, N-H., Reisfeld B., and Chiu W.A., (2018). pksensi: An R
-      package to apply global sensitivity analysis in physiologically based
-      kinetic modeling SoftwareX, 12, 100609.
-      https://doi.org/10.1016/j.softx.2020.100609
+      Nan-Hung Hsieh, Brad Reisfeld and Weihsueh A. Chiu (2020). pksensi:
+      Global Sensitivity Analysis in Physiologically Based Kinetic
+      Modeling. R package version 1.2.0.
+      https://CRAN.R-project.org/package=pksensi
 
     A BibTeX entry for LaTeX users is
 
-      @Article{,
-        title = {{pksensi}: An R package to apply global sensitivity analysis in physiologically based kinetic modeling},
+      @Manual{,
+        title = {pksensi: Global Sensitivity Analysis in Physiologically Based Kinetic
+    Modeling},
         author = {Nan-Hung Hsieh and Brad Reisfeld and Weihsueh A. Chiu},
-        journal = {SoftwareX},
         year = {2020},
-        volume = {12},
-        pages = {100609},
-        doi = {10.1016/j.softx.2020.100609},
+        note = {R package version 1.2.0},
+        url = {https://CRAN.R-project.org/package=pksensi},
       }
 
 ## Reference

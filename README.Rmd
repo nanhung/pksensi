@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# pksensi
+# pksensi <img src="man/figures/logo.png" height="200px" align="right" />
 
 <!-- badges: start -->
 [![lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#experimental)
