@@ -22,14 +22,12 @@ pksim <- function(y, vars = 1, log = F, legend = T, ...){
     y <- y$y
   }
   times <- as.numeric(colnames(y[, 1, , vars]))
-  if (dim(y)[3] == 1)
-    stop("The time point must greater than 1")
-  if (dim(y)[2] == 1) {
-    quantY <- apply(y[, , , vars], 2, quantile, c(0.5, 0,
-                                                  1, 0.1, 0.9, 0.25, 0.75), na.rm = TRUE)
-  }
-  else quantY <- apply(y[, , , vars], 3, quantile, c(0.5, 0,
-                                                     1, 0.1, 0.9, 0.25, 0.75), na.rm = TRUE)
+  if (dim(y)[3] == 1) stop("The time point must greater than 1")
+
+  if (dim(y)[2] == 1) { quantY <- apply(y[, , , vars], 2, quantile, c(0.5, 0, 1, 0.1, 0.9, 0.25, 0.75),
+                                        na.rm = TRUE)
+  } else quantY <- apply(y[, , , vars], 3, quantile, c(0.5, 0, 1, 0.1, 0.9, 0.25, 0.75), na.rm = TRUE)
+
   ytck <- pretty(c(min(quantY, na.rm = TRUE), max(quantY, na.rm = TRUE)))
   if (log == T) {
     quantY[quantY <= 0] <- NA
