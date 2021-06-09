@@ -1,6 +1,6 @@
 context("test-rfast99.R")
 
-test_that("rfast99 single_timepoint_no_replication ", {
+test_that("rfast99 single_timepoint_no_replication", {
 
   FFPK <- pksensi::FFPK
 
