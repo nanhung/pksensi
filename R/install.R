@@ -150,6 +150,15 @@ mcsim_version <- function(){
   }
 }
 
+mcsim_makemod <- function(){
+  moddir <- system.file("mod", package = "pksensi")
+  system(paste0("gcc -o ", moddir, "/mod.exe ", moddir, "/*.c"))
+  modpath <- paste0(moddir, "/mod.exe")
+  if (file.exists(modpath)) {
+    cat(paste0("Created 'mod.exe'"))
+  }
+}
+
 generate_config.h <- function(){
   cat("#define HAVE_DLFCN_H 1 \n",
       "#define HAVE_ERFC 1 \n",
