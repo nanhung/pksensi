@@ -56,8 +56,8 @@ compile_model <- function (mName, application = 'mcsim', use_model_file = TRUE, 
 
       exec <- paste0("mcsim.", mName)
       if (file.exists(exec)){
-        cat(paste0("* Created executable file 'mcsim.", mName, "'."))
-      } else stop("* Error in model compilation.")
+        cat(paste0("* Created executable file 'mcsim.", mName, "'.\n"))
+      } else stop("* Error in model compilation.\n")
 
     } else if ((.Platform$OS.type == "windows")) {
       Sys.setenv(PATH = paste("C:\\rtools40\\mingw64\\bin", Sys.getenv("PATH"), sep=";"))
