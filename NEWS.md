@@ -1,3 +1,7 @@
+# pksensi 1.2.1
+
+* Add local approach to compile model without additionally download MCSim (`mcsim_makemod`)
+
 # pksensi 1.2.0
 
 * update the route to load example model
