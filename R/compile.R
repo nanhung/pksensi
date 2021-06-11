@@ -93,3 +93,38 @@ compile_model <- function (mName, application = 'mcsim', use_model_file = TRUE, 
     source(paste0(mName, "_inits.R"))
   }
 }
+
+compile_model_pkg <- function(mName, application = 'mcsim'){
+
+  if (.Platform$OS.type == "unix"){
+    exe_file <- paste0("mcsim.", mName)
+  } else if (.Platform$OS.type == "windows") exe_file <- paste0("mcsim.", mName, ".exe")
+
+  moddir <- system.file("mod", package = "pksensi")
+  simdir <- system.file("sim", package = "pksensi")
+  modpath <- paste0(moddir, "/mod.exe")
+
+  if (file.exists(modpath) == F) compile_model_makemod()
+
+  if (application == 'R'){
+    system(paste0(modpath, " -R ", mName, ".model ", mName, ".c"))
+    system (paste0("R CMD SHLIB ", mName, ".c")) # create *.dll files
+    dyn.load(paste(mName, .Platform$dynlib.ext, sep="")) # load *.dll
+    source(paste0(mName,"_inits.R"))
+  } else if (application == 'mcsim') {
+    system(paste0(modpath, " ", mName, ".model ", mName, ".c"))
+    message(paste0("Compiling..."))
+    system(paste0("gcc -O3 -I.. -I", simdir, " -o ", exe_file, " ", mName, ".c ", simdir, "/*.c -lm "))
+    invisible(file.remove(paste0(mName, ".c")))
+    if(file.exists(exe_file)) message(paste0("* Created executable program '", exe_file, "'."))
+  }
+}
+
+compile_model_makemod <- function(){
+  moddir <- system.file("mod", package = "pksensi")
+  system(paste0("gcc -o ", moddir, "/mod.exe ", moddir, "/*.c"))
+  modpath <- paste0(moddir, "/mod.exe")
+  if (file.exists(modpath)) {
+    cat(paste0("Created 'mod.exe'"))
+  }
+}
