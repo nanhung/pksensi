@@ -1,0 +1,29 @@
+#!/bin/bash
+
+rm -f model.c
+rm -f $2
+
+echo "Creating model.c file from $1 ..."
+mod $1
+
+shopt -s extglob
+
+if test $2; 
+ then target=$2;
+ else target=mcsim.${1%.mod?('el')};
+fi;
+
+if test -f model.c; then \
+
+	echo; \
+	echo "Compiling and linking model for debugging ..."; \
+	@CC@ -DDEBUG -g -I@prefix@/include model.c @prefix@/share/mcsim/sim/*.c -o $target @LIBS@ -Wall; \
+
+fi;
+
+if test -f $target; then \
+
+	echo "Created executable $target with debugging symbols"; \
+	echo; \
+
+fi;
