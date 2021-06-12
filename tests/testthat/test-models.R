@@ -3,8 +3,10 @@ context("test-models.R")
 test_that("models pbtk1cpt_model", {
 
   pbtk1cpt_model()
-  expect_true(file.exists("pbtk1cpt.model"))
+  mName <- "pbtk1cpt"
+  pksensi:::compile_model_pkg(mName)
 
+  expect_true(file.exists("pbtk1cpt.model"))
 })
 
 test_that("models pbtk1cpt_model", {
