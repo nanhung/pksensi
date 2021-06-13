@@ -4,7 +4,7 @@ test_that("models pbtk1cpt_model", {
 
   pbtk1cpt_model()
   mName <- "pbtk1cpt"
-  pksensi:::compile_model_pkg(mName)
+  #pksensi:::compile_model_pkg(mName)
 
   expect_true(file.exists("pbtk1cpt.model"))
 })
