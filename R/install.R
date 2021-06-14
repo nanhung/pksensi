@@ -11,7 +11,7 @@
 #' The default \code{mxstp} is setting to 5000.
 #' The user can increase \code{mxstp} to avoid possible error return.
 #' If you meet any error when conduct sensitivity analysis,
-#' you can this function to reinstall \pkg{GNU MCSim} and set the higher \code{mxstp}.
+#' you can this function to re-install \pkg{GNU MCSim} and set the higher \code{mxstp}.
 #' The default installed \code{directory} is under \code{/home/username} (Linux),
 #' \code{/Users/username} (MacOS),
 #' and \code{C:/Users/} (windows). To install \pkg{GNU MCSim} in Windows, be sure to install Rtools first.
@@ -38,13 +38,6 @@
 #'
 #' @export
 mcsim_install <- function(version = "6.2.0", directory = NULL, mxstep = 5000) {
-
-  #  if (.Platform$OS.type == "windows") {
-  #    stop("The function haven't supprot Windows system")
-  #  if (.Platform$OS.type == "windows") {
-  #    if (!(devtools::find_rtools() == T)) {
-  #      warning("The Rtools should be installed first")
-  #    }}
 
   message("Start install")
   version<-version
@@ -120,6 +113,30 @@ mcsim_install <- function(version = "6.2.0", directory = NULL, mxstep = 5000) {
   cat("\n")
   message(paste0("The MCSim " , sprintf('%s', version), " is installed. The sourced folder is under ", mcsim.directory))
   setwd(current.wd)
+}
+
+mcsim_install_pkg <- function(version = "6.2.0"){
+
+  current_wd <- getwd()
+  mcsim_directory <- system.file("mcsim", package = "pksensi")
+  mcsim_wd <- setwd(mcsim_directory)
+
+  message("Start install")
+  version<-version
+  URL <- sprintf('http://ftp.gnu.org/gnu/mcsim/mcsim-%s.tar.gz', version)
+  tf <- tempfile()
+  download.file(URL, tf, mode = "wb")
+  utils::untar(tf)
+
+  setwd(paste0(mcsim_directory, "/mcsim-", version, "/mod"))
+  generate_config.h()
+  system(paste0("gcc -o ./mod.exe *.c"))
+  if(file.exists("mod.exe")){
+    cat(paste0("Created 'mod.exe'"))
+  }
+  setwd(paste0(mcsim_directory, "/mcsim-", version, "/sim"))
+  generate_config.h()
+  setwd(current_wd)
 }
 
 

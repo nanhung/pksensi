@@ -104,7 +104,7 @@ compile_model_pkg <- function(mName, application = 'mcsim'){
   simdir <- system.file("sim", package = "pksensi")
   modpath <- paste0(moddir, "/mod.exe")
 
-  if (file.exists(modpath) == F) compile_model_makemod()
+  if (file.exists(modpath) == F) mcsim_install_pkg()
 
   if (application == 'R'){
     system(paste0(modpath, " -R ", mName, ".model ", mName, ".c"))
@@ -120,11 +120,4 @@ compile_model_pkg <- function(mName, application = 'mcsim'){
   }
 }
 
-compile_model_makemod <- function(){
-  moddir <- system.file("mod", package = "pksensi")
-  system(paste0("gcc -o ", moddir, "/mod.exe ", moddir, "/*.c"))
-  modpath <- paste0(moddir, "/mod.exe")
-  if (file.exists(modpath)) {
-    cat(paste0("Created 'mod.exe'"))
-  }
-}
+

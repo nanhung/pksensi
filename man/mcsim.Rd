@@ -30,7 +30,7 @@ The additional way is to follow the instruction and install it manually:
 The default \code{mxstp} is setting to 5000.
 The user can increase \code{mxstp} to avoid possible error return.
 If you meet any error when conduct sensitivity analysis,
-you can this function to reinstall \pkg{GNU MCSim} and set the higher \code{mxstp}.
+you can this function to re-install \pkg{GNU MCSim} and set the higher \code{mxstp}.
 The default installed \code{directory} is under \code{/home/username} (Linux),
 \code{/Users/username} (MacOS),
 and \code{C:/Users/} (windows). To install \pkg{GNU MCSim} in Windows, be sure to install Rtools first.
