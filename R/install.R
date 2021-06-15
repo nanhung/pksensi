@@ -132,7 +132,7 @@ mcsim_install_pkg <- function(version = "6.2.0"){
   generate_config.h()
   system(paste0("gcc -o ./mod.exe *.c"))
   if(file.exists("mod.exe")){
-    cat(paste0("Created 'mod.exe'"))
+    cat(paste0("Created 'mod.exe'\n"))
   }
   setwd(paste0(mcsim_directory, "/mcsim-", version, "/sim"))
   generate_config.h()
