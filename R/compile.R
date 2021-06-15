@@ -94,17 +94,18 @@ compile_model <- function (mName, application = 'mcsim', use_model_file = TRUE, 
   }
 }
 
-compile_model_pkg <- function(mName, application = 'mcsim'){
+compile_model_pkg <- function(mName, application = 'mcsim', version = '6.2.0'){
 
   if (.Platform$OS.type == "unix"){
     exe_file <- paste0("mcsim.", mName)
   } else if (.Platform$OS.type == "windows") exe_file <- paste0("mcsim.", mName, ".exe")
 
-  moddir <- system.file("mod", package = "pksensi")
-  simdir <- system.file("sim", package = "pksensi")
+  mcsimdir <- system.file("mcsim", package = "pksensi")
+  moddir <- paste0(mcsimdir, "/mcsim-", version, "/mod")
+  simdir <- paste0(mcsimdir, "/mcsim-", version, "/sim")
   modpath <- paste0(moddir, "/mod.exe")
 
-  if (file.exists(modpath) == F) mcsim_install_pkg()
+  if (file.exists(modpath) == F) mcsim_install_pkg(version = version)
 
   if (application == 'R'){
     system(paste0(modpath, " -R ", mName, ".model ", mName, ".c"))
