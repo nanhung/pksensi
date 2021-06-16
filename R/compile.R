@@ -105,7 +105,7 @@ compile_model_pkg <- function(mName, application = 'mcsim', version = '6.2.0'){
   simdir <- paste0(mcsimdir, "/mcsim-", version, "/sim")
   modpath <- paste0(moddir, "/mod.exe")
 
-  if (file.exists(modpath) == F) mcsim_install_pkg(version = version)
+  if (file.exists(modpath) == F) mcsim_pkg(version = version)
 
   if (application == 'R'){
     system(paste0(modpath, " -R ", mName, ".model ", mName, ".c"))

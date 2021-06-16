@@ -1,4 +1,4 @@
-#' Install \pkg{GNU MCSim}
+#' Download and install \pkg{GNU MCSim}
 #'
 #' Download the latest or specific version of \pkg{GNU MCSim} from the official website
 #' (\url{https://www.gnu.org/software/mcsim/}) and install it to the system directory.
@@ -15,6 +15,7 @@
 #' The default installed \code{directory} is under \code{/home/username} (Linux),
 #' \code{/Users/username} (MacOS),
 #' and \code{C:/Users/} (windows). To install \pkg{GNU MCSim} in Windows, be sure to install Rtools first.
+#' The Rtools can install through installr::install.rtools()
 #'
 #' @references
 #' Bois, F. Y., & Maszle, D. R. (1997).
@@ -115,7 +116,10 @@ mcsim_install <- function(version = "6.2.0", directory = NULL, mxstep = 5000) {
   setwd(current.wd)
 }
 
-mcsim_install_pkg <- function(version = "6.2.0"){
+#' @export
+#' @describeIn mcsim Download and generate the portable MCSim into the package folder (no installation).
+#' The mod.exe program that is used to compile the model code will be generated after the file download.
+mcsim_pkg <- function(version = "6.2.0"){
 
   current_wd <- getwd()
   mcsim_directory <- system.file("mcsim", package = "pksensi")
@@ -128,6 +132,11 @@ mcsim_install_pkg <- function(version = "6.2.0"){
   download.file(URL, tf, mode = "wb")
   utils::untar(tf)
 
+  if (.Platform$OS.type == "windows") {
+    Sys.setenv(PATH = paste("c:/Rtools/mingw_64/bin", Sys.getenv("PATH"), sep=";"))
+    Sys.setenv(PATH = paste("c:/MinGW/bin", Sys.getenv("PATH"), sep=";"))
+    }
+
   setwd(paste0(mcsim_directory, "/mcsim-", version, "/mod"))
   generate_config.h()
   system(paste0("gcc -o ./mod.exe *.c"))
@@ -137,8 +146,9 @@ mcsim_install_pkg <- function(version = "6.2.0"){
   setwd(paste0(mcsim_directory, "/mcsim-", version, "/sim"))
   generate_config.h()
   setwd(current_wd)
+  cat("\n")
+  message(paste0("The MCSim " , sprintf('%s', version), " is installed. The sourced folder is under ", mcsim_directory))
 }
-
 
 #' @export
 #' @describeIn mcsim Return the version number.
