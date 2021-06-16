@@ -1,6 +1,8 @@
 # pksensi 1.2.1
 
-* Add local approach to compile model without additionally download MCSim (`mcsim_makemod`)
+* Add `mcsim_pkg()` to downlaod and run portable MCSim
+* Change the sute location to https://nanhung.github.io
+* Improve coverage
 
 # pksensi 1.2.0
 
