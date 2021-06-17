@@ -3,7 +3,7 @@
 #' Download the latest or specific version of \pkg{GNU MCSim} from the official website
 #' (\url{https://www.gnu.org/software/mcsim/}) and install it to the system directory.
 #'
-#' This function aims to help users install \pkg{GNU MCSim} more easily.
+#' This function aims to help users download (source: https://ftp.gnu.org/gnu/mcsim/) and install \pkg{GNU MCSim} more easily.
 #' However, if you can not install it through this function.
 #' The additional way is to follow the instruction and install it manually:
 #' \url{https://www.gnu.org/software/mcsim/mcsim.html#Installation}
@@ -118,19 +118,27 @@ mcsim_install <- function(version = "6.2.0", directory = NULL, mxstep = 5000) {
 
 #' @export
 #' @describeIn mcsim Download and generate the portable MCSim into the package folder (no installation).
-#' The mod.exe program that is used to compile the model code will be generated after the file download.
+#' The model generator program 'mod.exe' is used to compile the model code will be generated after the file download.
+# The function can only use for version greater than 5.3.0.
 mcsim_pkg <- function(version = "6.2.0"){
 
   current_wd <- getwd()
   mcsim_directory <- system.file("mcsim", package = "pksensi")
   mcsim_wd <- setwd(mcsim_directory)
 
+  files_before <- list.files()
+
   message("Start install")
-  version<-version
+  version <- version
   URL <- sprintf('http://ftp.gnu.org/gnu/mcsim/mcsim-%s.tar.gz', version)
   tf <- tempfile()
   download.file(URL, tf, mode = "wb")
   utils::untar(tf)
+
+  files_after <- list.files()
+
+  file_name <- setdiff(files_after, files_before)
+  if(file_name == "mcsim") file.rename("mcsim", paste0("mcsim-", version))
 
   if (.Platform$OS.type == "windows") {
     Sys.setenv(PATH = paste("c:/Rtools/mingw_64/bin", Sys.getenv("PATH"), sep=";"))
@@ -141,13 +149,15 @@ mcsim_pkg <- function(version = "6.2.0"){
   generate_config.h()
   system(paste0("gcc -o ./mod.exe *.c"))
   if(file.exists("mod.exe")){
-    cat(paste0("Created 'mod.exe'\n"))
-  }
+    cat(paste0("Created model generator program 'mod.exe'\n"))
+    message(paste0("The MCSim " , sprintf('%s', version), " is downloaded. The sourced folder is under ", mcsim_directory, "\n"))
+  } else
+    message(paste0("The MCSim " , sprintf('%s', version), " is downloaded; But have problem to generate model generator program 'mod.exe'\n"))
+
   setwd(paste0(mcsim_directory, "/mcsim-", version, "/sim"))
   generate_config.h()
   setwd(current_wd)
   cat("\n")
-  message(paste0("The MCSim " , sprintf('%s', version), " is installed. The sourced folder is under ", mcsim_directory))
 }
 
 #' @export
