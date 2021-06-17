@@ -59,6 +59,8 @@ devtools::install_github("nanhung/pksensi")
 
 ![](https://i.ibb.co/tqpDLrk/sensitivity-workflow.png)
 
+**Note:** The parameter correlation (e.g., V~max~ and K~M~ in metabolism) might be an issue in the global sensitivity analysis. If you have experiment data, suggest using small datasets as a sample in Markov Chain Monte Carlo Simulation. Then, check correlation before conducting the sensitivity analysis. The issue will try to address in the future version. 
+
 ## Example
 
 This is a basic example of applying **pksensi** in one-compartment pbtk model:
