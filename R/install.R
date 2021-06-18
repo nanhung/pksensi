@@ -99,8 +99,12 @@ mcsim_install <- function(version = "6.2.0", directory = NULL, mxstep = 5000) {
       system("sudo -kS sh -c 'make install; ldconfig'", input=input)
     }
   } else if (.Platform$OS.type == "windows") {
-    Sys.setenv(PATH = paste("c:/Rtools/mingw_64/bin", Sys.getenv("PATH"), sep=";"))
-    Sys.setenv(PATH = paste("c:/MinGW/bin", Sys.getenv("PATH"), sep=";"))
+
+    if(Sys.which("gcc") == ""){ # echo $PATH
+      PATH = "C:\\rtools40\\mingw64\\bin; C:\\rtools40\\usr\\bin"
+      Sys.setenv(PATH = paste(PATH, Sys.getenv("PATH"), sep=";"))
+    } # PATH=$PATH:/c/Rtools/mingw_32/bin; export PATH
+
     setwd(paste0(mcsim.directory,"/mod"))
     generate_config.h()
     setwd(paste0(mcsim.directory,"/sim"))
@@ -140,10 +144,14 @@ mcsim_pkg <- function(version = "6.2.0"){
   file_name <- setdiff(files_after, files_before)
   if(file_name == "mcsim") file.rename("mcsim", paste0("mcsim-", version))
 
-  if (.Platform$OS.type == "windows") {
-    Sys.setenv(PATH = paste("c:/Rtools/mingw_64/bin", Sys.getenv("PATH"), sep=";"))
-    Sys.setenv(PATH = paste("c:/MinGW/bin", Sys.getenv("PATH"), sep=";"))
-    }
+
+  if (Sys.info()[['sysname']] == "Windows") {
+    if(Sys.which("gcc") == ""){ # echo $PATH
+      PATH = "C:\\rtools40\\mingw64\\bin; C:\\rtools40\\usr\\bin"
+      Sys.setenv(PATH = paste(PATH, Sys.getenv("PATH"), sep=";"))
+    } # PATH=$PATH:/c/Rtools/mingw_32/bin; export PATH
+  } # PATH=$PATH:/c/MinGW/msys/1.0/local/bin
+
 
   setwd(paste0(mcsim_directory, "/mcsim-", version, "/mod"))
   generate_config.h()
