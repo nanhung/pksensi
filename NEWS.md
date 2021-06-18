@@ -1,7 +1,7 @@
 # pksensi 1.2.1
 
 * Add `mcsim_pkg()` to downlaod and run portable MCSim
-* Change the sute location to https://nanhung.github.io
+* Change the site location to https://nanhung.github.io
 * Improve coverage
 
 # pksensi 1.2.0

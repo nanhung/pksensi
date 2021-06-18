@@ -1,11 +1,32 @@
 Package: pksensi
 Title: Global Sensitivity Analysis in Physiologically Based Kinetic Modeling
-Version: 1.2.0.9000
-Authors@R: c(
-    person("Nan-Hung", "Hsieh", role = c("aut", "cre"), email = "d99622005@ntu.edu.tw", comment = c(ORCID = "0000-0003-0163-2766")),
-    person("Brad", "Reisfeld", role = "aut"),
-    person("Weihsueh A.", "Chiu", role = "aut", comment = c(ORCID = "0000-0002-7575-2368"))
-    )
+Version: 1.2.1
+Authors@R: 
+    c(person(given = "Nan-Hung", 
+             family = "Hsieh", 
+             role = c("aut", "cre"),
+             email = "d99622005@ntu.edu.tw",
+             comment = c(ORCID = "0000-0003-0163-2766")),
+      person(given = "Brad", 
+             family = "Reisfeld",
+             role = "ctb", 
+             comment = c(ORCID = "0000-0003-1310-1495")),
+      person(given = "Weihsueh A.", 
+             family =  "Chiu", 
+             role = "ctb", 
+             comment = c(ORCID = "0000-0002-7575-2368")))
+Description: Applying the global sensitivity analysis workflow to investigate 
+    the parameter uncertainty and sensitivity in physiologically based 
+    kinetic (PK) models, especially the physiologically based 
+    pharmacokinetic/toxicokinetic model with multivariate outputs. 
+    The package also provides some functions to check the convergence 
+    and sensitivity of model parameters. The workflow was first mentioned 
+    in Hsieh et al., (2018) <doi:10.3389/fphar.2018.00588>, then further 
+    refined (Hsieh et al., 2020 <doi:10.1016/j.softx.2020.100609>).                
+License: GPL-3 | file LICENSE    
+URL: https://github.com/nanhung/pksensi, 
+    https://nanhung.github.io/pksensi/
+BugReports: https://github.com/nanhung/pksensi/issues
 Depends: 
     R (>= 3.6)
 Imports:
@@ -19,20 +40,15 @@ Imports:
     parallel,
     doParallel,
     reshape
-Description: Applying the global sensitivity analysis workflow to investigate the parameter uncertainty and sensitivity in physiologically based kinetic (PK) models, especially the physiologically based pharmacokinetic/toxicokinetic model with multivariate outputs. The package also provides some functions to check the convergence and sensitivity of model parameters. The workflow was first mentioned in Hsieh et al., (2018) <doi:10.3389/fphar.2018.00588>, then further refined (Hsieh et al., 2020 <doi:10.1016/j.softx.2020.100609>).   
-License: GPL-3 | file LICENSE
-URL: https://github.com/nanhung/pksensi, https://nanhung.rbind.io/pksensi
-RoxygenNote: 7.1.1
 Suggests:
     covr,
     knitr,
     rmarkdown,
     testthat
-LazyData: true    
-BugReports: https://github.com/nanhung/pksensi/issues
-Author: Nan-Hung Hsieh [aut, cre] (<https://orcid.org/0000-0003-0163-2766>),
-  Brad Reisfeld [aut],
-  Weihsueh A. Chiu [aut] (<https://orcid.org/0000-0002-7575-2368>)
-Maintainer: Nan-Hung Hsieh <d99622005@ntu.edu.tw>
+VignetteBuilder: 
+    knitr
 Encoding: UTF-8
-VignetteBuilder: knitr
+LazyData: true
+RoxygenNote: 7.1.1
+Language: en-US
+Roxygen: list(markdown = TRUE)
