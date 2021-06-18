@@ -219,7 +219,7 @@ pbtk1cpt_model()
 cat(readLines("pbtk1cpt.model"), sep = "\n")
 ```
 
-The code must first be compiled to run the model. After create the model file, we can use `compile_model()` function to generate the file that has dynamic-link library (DLL) or share object (SO) extention and can be linked dynamically into an R session (`pbtk1cpt.dll` on Windows or `pbtk1cpt.so` on other systems) and R file (`pbtk1cpt_inits.R`) with default input parameters and initial state settings with the definition of `application = "R"`.
+The code must first be compiled to run the model. After create the model file, we can use `compile_model()` function to generate the file that has dynamic-link library (DLL) or share object (SO) extension and can be linked dynamically into an R session (`pbtk1cpt.dll` on Windows or `pbtk1cpt.so` on other systems) and R file (`pbtk1cpt_inits.R`) with default input parameters and initial state settings with the definition of `application = "R"`.
 
 ```{r, message=FALSE, warning=FALSE}
 mName <- "pbtk1cpt"
@@ -320,7 +320,7 @@ system.time(out <- solve_mcsim(x, mName = mName, params = params,
                                condition = conditions))
 ```
 
-After solving the equations under the same given condition, we can find that **GNU MCSim** provide faster speed in computing performance than using **deSolve**. In this case, we only focus on performing the global SA alone for generic PK model without additonal comparison with experiment data. The PBPK example will display and reproduce our previous published result [@fphar201800588] with full global SA workflow.
+After solving the equations under the same given condition, we can find that **GNU MCSim** provide faster speed in computing performance than using **deSolve**. In this case, we only focus on performing the global SA alone for generic PK model without additional comparison with experiment data. The PBPK example will display and reproduce our previous published result [@fphar201800588] with full global SA workflow.
 
 ## Session Info
 
