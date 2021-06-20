@@ -30,9 +30,6 @@
 #' @import getPass
 #' @importFrom utils download.file
 #'
-#' @examples
-#' \dontrun{mcsim_install(version = 6.2.0, mxstep = 10000)}
-#'
 #' @references \url{https://www.gnu.org/software/mcsim/}
 #'
 #' @rdname mcsim

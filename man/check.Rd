@@ -70,7 +70,7 @@ Visualize and check the sensitivity (or convergence) measurement with the given 
 The convergence of sensitivity indices for each parameter is using the approach proposed
 by Sarrazin et al. (2016).
 This method quantitatively assesses the convergence by computing the range of
-95\% confidence intervals of the sensitivity indices for each parameter across all data points (time and outputs).
+95\\% confidence intervals of the sensitivity indices for each parameter across all data points (time and outputs).
 Using the global approach based on the heatmap visualization combined with the index "cut-off,"
 can systematically distinguish between "influential" and "non-influential" parameters (Hsieh et al. 2018).
 }

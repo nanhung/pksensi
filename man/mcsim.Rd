@@ -25,7 +25,7 @@ Download the latest or specific version of \pkg{GNU MCSim} from the official web
 (\url{https://www.gnu.org/software/mcsim/}) and install it to the system directory.
 }
 \details{
-This function aims to help users install \pkg{GNU MCSim} more easily.
+This function aims to help users download (source: https://ftp.gnu.org/gnu/mcsim/) and install \pkg{GNU MCSim} more easily.
 However, if you can not install it through this function.
 The additional way is to follow the instruction and install it manually:
 \url{https://www.gnu.org/software/mcsim/mcsim.html#Installation}
@@ -42,15 +42,11 @@ The Rtools can install through installr::install.rtools()
 \section{Functions}{
 \itemize{
 \item \code{mcsim_pkg}: Download and generate the portable MCSim into the package folder (no installation).
-The mod.exe program that is used to compile the model code will be generated after the file download.
+The model generator program 'mod.exe' is used to compile the model code will be generated after the file download.
 
 \item \code{mcsim_version}: Return the version number.
 }}
 
-\examples{
-\dontrun{mcsim_install(version = 6.2.0, mxstep = 10000)}
-
-}
 \references{
 Bois, F. Y., & Maszle, D. R. (1997).
 MCSim: a Monte Carlo simulation program.
