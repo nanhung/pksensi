@@ -1,6 +1,6 @@
 Package: pksensi
 Title: Global Sensitivity Analysis in Physiologically Based Kinetic Modeling
-Version: 1.2.1
+Version: 1.2.1.9000
 Authors@R: 
     c(person(given = "Nan-Hung", 
              family = "Hsieh", 
@@ -52,3 +52,7 @@ LazyData: true
 RoxygenNote: 7.1.1
 Language: en-US
 Roxygen: list(markdown = TRUE)
+Author: Nan-Hung Hsieh [aut, cre] (<https://orcid.org/0000-0003-0163-2766>),
+  Brad Reisfeld [ctb] (<https://orcid.org/0000-0003-1310-1495>),
+  Weihsueh A. Chiu [ctb] (<https://orcid.org/0000-0002-7575-2368>)
+Maintainer: Nan-Hung Hsieh <d99622005@ntu.edu.tw>
