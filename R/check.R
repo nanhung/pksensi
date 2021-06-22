@@ -22,7 +22,7 @@
 #' @param show.all a logical value to show all testing parameters in the heatmap. The default is set to \code{FALSE} to show only the influential parameters.
 #' @param ... additional arguments to customize the graphical parameters.
 #'
-#' @importFrom reshape melt
+#' @importFrom reshape2 melt
 #' @importFrom magrittr %>%
 #' @importFrom stats time
 #' @importFrom grDevices colorRampPalette
@@ -270,14 +270,14 @@ heat_check <- function(x,
 tidy_index <- function (x, index = "SI") {
 
   if(index == "CI") {
-    m <- reshape::melt(x$mCI) %>% cbind(order = "first order")
-    i <- reshape::melt(x$iCI) %>% cbind(order = "interaction")
-    t <- reshape::melt(x$tCI) %>% cbind(order = "total order")
+    m <- reshape2::melt(x$mCI) %>% cbind(order = "first order")
+    i <- reshape2::melt(x$iCI) %>% cbind(order = "interaction")
+    t <- reshape2::melt(x$tCI) %>% cbind(order = "total order")
     X <- do.call(rbind, list(m, i, t))
   } else if (index == "SI") {
-    m <- reshape::melt(x$mSI) %>% cbind(order = "first order")
-    i <- reshape::melt(x$iSI) %>% cbind(order = "interaction")
-    t <- reshape::melt(x$tSI) %>% cbind(order = "total order")
+    m <- reshape2::melt(x$mSI) %>% cbind(order = "first order")
+    i <- reshape2::melt(x$iSI) %>% cbind(order = "interaction")
+    t <- reshape2::melt(x$tSI) %>% cbind(order = "total order")
     X <- do.call(rbind, list(m, i, t))
   }
   names(X) <- c("time", "parameter", "variable", "value", "order")

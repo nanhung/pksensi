@@ -39,7 +39,7 @@ Imports:
     foreach,
     parallel,
     doParallel,
-    reshape
+    reshape2
 Suggests:
     covr,
     knitr,
