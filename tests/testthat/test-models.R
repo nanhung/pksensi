@@ -3,8 +3,8 @@ context("test-models.R")
 test_that("models pbtk1cpt_model", {
 
   pbtk1cpt_model()
-  #mName <- "pbtk1cpt"
-  #pksensi:::compile_model_pkg(mName)
+  mName <- "pbtk1cpt"
+  pksensi:::compile_model_pkg(mName)
   #q <- c("qunif", "qunif", "qunif", "qnorm")
   #q.arg = list(list(min = 0.5, max = 1),
   #             list(min = 0.5, max = 1.5),
