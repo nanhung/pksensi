@@ -29,6 +29,7 @@
 #'
 #' @import getPass
 #' @importFrom utils download.file
+#' @importFrom xfun download.file
 #'
 #' @references \url{https://www.gnu.org/software/mcsim/}
 #'
@@ -133,7 +134,7 @@ mcsim_pkg <- function(version = "6.2.0"){
   version <- version
   URL <- sprintf('http://ftp.gnu.org/gnu/mcsim/mcsim-%s.tar.gz', version)
   tf <- tempfile()
-  download.file(URL, tf, mode = "wb")
+  xfun::download_file(URL, tf, mode = "wb")
   utils::untar(tf)
 
   files_after <- list.files()
