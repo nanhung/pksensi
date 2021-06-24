@@ -4,7 +4,7 @@ test_that("models pbtk1cpt_model", {
 
   pbtk1cpt_model()
   mName <- "pbtk1cpt"
-  mcsim_pkg()
+  #mcsim_pkg()
   #pksensi:::compile_model_pkg(mName)
   #q <- c("qunif", "qunif", "qunif", "qnorm")
   #q.arg = list(list(min = 0.5, max = 1),
