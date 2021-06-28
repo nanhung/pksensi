@@ -1,3 +1,8 @@
+# pksensi 1.2.2
+
+* Add more flexible parallel method (`solve_mcsim`)
+* Fix error in previous version
+
 # pksensi 1.2.1
 
 * Add `mcsim_pkg()` to download and run portable MCSim

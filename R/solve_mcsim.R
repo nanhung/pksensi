@@ -22,7 +22,7 @@
 #' @param atol an argument passed to the integrator (default 1e-6).
 #' @param generate.infile a logical value to automatically generate the input file.
 #' @param tell a logical value to automatically combine the result y to decoupling simulation x.
-#' @param parallel a logical value to apply parallel computing to improve speed (currently can only run under 4 cores setting).
+#' @param parallel a numeric value to assign the number of cores in parallel computing (default is set to 1).
 #'
 #' @importFrom data.table fread
 #' @importFrom data.table fwrite
@@ -83,7 +83,7 @@ solve_mcsim <- function(x,
                         monte_carlo = NULL,
                         dist = NULL,
                         q.arg = NULL,
-                        parallel = FALSE) {
+                        parallel = 1) {
 
   message(paste0("Starting time: ", Sys.time()))
 
@@ -154,11 +154,16 @@ solve_mcsim <- function(x,
   n.vars <- length(vars)
 
   #
+  is.natural <- function(x)
+  {
+    x>0 & identical(round(x), x)
+  }
+
   if (is.null(monte_carlo)){ # Remember to define n if used external parameter matrix
     X <- cbind(1, apply(x$a, 3L, c))
 
-    if (parallel) {
-      cores <- 4
+    if (is.natural(parallel) && parallel>1) {
+      cores <- parallel
       for (i in 1:cores) {
         # input data
         suppressMessages(data.table::fwrite(X[(1+(i-1)*nrow(X)/cores):(i*nrow(X)/cores),],
@@ -177,7 +182,7 @@ solve_mcsim <- function(x,
     if(length(mStr[[1]]) == 1){
 
       message(paste0("Execute: ", "./", mcsim., " ", infile.name))
-      if (parallel) {
+      if (is.natural(parallel) && parallel>1) {
         cl <- makeCluster(cores)
         registerDoParallel(cl)
         out <- foreach(i = 1:cores) %dopar%
@@ -210,7 +215,7 @@ solve_mcsim <- function(x,
     }
   }
 
-  if (parallel) {
+  if (is.natural(parallel) && parallel>1) {
     p.list <- list()
     for (i in 1:cores) {
       p.list[[i]] <- data.table::fread(paste0("p", i, ".", outfile.name), head = T)
@@ -224,7 +229,7 @@ solve_mcsim <- function(x,
 
   str <- n.factors + 2
 
-  if (parallel) {
+  if (is.natural(parallel) && parallel>1) {
     df <- as.data.frame( do.call(rbind, list(p.list[[1]], p.list[[2]], p.list[[3]], p.list[[4]])) )
   } else df <- as.data.frame(data.table::fread(outfile.name, head = T))
 

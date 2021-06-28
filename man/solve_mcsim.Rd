@@ -22,7 +22,7 @@ solve_mcsim(
   monte_carlo = NULL,
   dist = NULL,
   q.arg = NULL,
-  parallel = FALSE
+  parallel = 1
 )
 
 generate_infile(
@@ -72,7 +72,7 @@ generate_infile(
 
 \item{q.arg}{a list of shape parameters in the sampling distribution (\code{dist}).}
 
-\item{parallel}{a logical value to apply parallel computing to improve speed (currently can only run under 4 cores setting).}
+\item{parallel}{a numeric value to assign the number of cores in parallel computing (default is set to 1).}
 }
 \value{
 The output result is the 4-dimension array with
