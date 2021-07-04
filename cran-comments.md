@@ -11,15 +11,15 @@ There were no ERRORs, WARNINGs and NOTE.
 
 ## r-hub builder results
 
-Build ID: pksensi_1.2.1.tar.gz-c20d9dfc067949e09d9ba5404f490428
-Platform: Ubuntu Linux 20.04.1 LTS, R-release, GCC
-Submitted: 9 minutes 22.1 seconds ago
-Build time: 9 minutes 21.5 seconds
+Build ID:	pksensi_1.2.2.tar.gz-325aa4d417f7477ea763dbf0f0604337
+Platform:	Ubuntu Linux 20.04.1 LTS, R-release, GCC
+Submitted:	9 minutes 34.8 seconds ago
+Build time:	9 minutes 32.5 seconds
 
-Build ID: pksensi_1.2.1.tar.gz-db2aaada6e5441cf884eb63f967194c1
-Platform: Fedora Linux, R-devel, clang, gfortran
-Submitted: 9 minutes 55 seconds ago
-Build time: 9 minutes 54.6 seconds
+Build ID:	pksensi_1.2.2.tar.gz-5e406cc073ff42a490105bb6bd593a90
+Platform:	Fedora Linux, R-devel, clang, gfortran
+Submitted:	10 minutes 15.9 seconds ago
+Build time:	10 minutes 12.1 seconds
 
 NOTES:
 * checking CRAN incoming feasibility ... NOTE
