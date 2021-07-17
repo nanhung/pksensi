@@ -67,7 +67,7 @@ rfast99 <- function(params, n, M = 4, omega = NULL,
   }
   if (is.null(q.arg)) {
     stop("Please assign the arguments for defined distribution")
-  } else if (FALSE %in% sapply(q.arg, is.list)) {
+  } else if (FALSE %in% unlist(lapply(q.arg, is.list))) {
     q.arg <- rep(list(q.arg), p)
   }
 
@@ -84,7 +84,7 @@ rfast99 <- function(params, n, M = 4, omega = NULL,
     }
   }
 
-  # discretization of the s-space
+  # Discretization of the s-space
 
   s <- 2 * pi / n * (0 : (n - 1))
 
