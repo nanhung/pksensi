@@ -24,7 +24,7 @@ tell2 <- function(x, y){
 
   if (x$replicate == 1) {
     for (k in vars){ # variables
-      for ( i in 1:length(dimnames(y)[[3]])){  # time-points
+      for ( i in seq_along((dimnames(y)[[3]])) ){  # time-points
         X <- tell.rfast99(x, y[,,i,k])
         x$mSI[i,,k] <- X$S
         x$iSI[i,,k] <- X$I
@@ -33,7 +33,7 @@ tell2 <- function(x, y){
     }
   } else {
     for (k in vars){ # variables
-      for ( i in 1:length(dimnames(y)[[3]])){  # time-points
+      for ( i in seq_along((dimnames(y)[[3]])) ){  # time-points
         X <- tell.rfast99(x, y[,,i,k])
         x$mSI[i,,k] <- X$S[,"original"]
         x$iSI[i,,k] <- X$I[,"original"]
