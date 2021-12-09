@@ -149,14 +149,9 @@ citation(package = "pksensi")
 
 Hsieh NH, Reisfeld B, Bois FY, Chiu WA. [Applying a global sensitivity analysis workflow to improve the computational efficiencies in physiologically-based pharmacokinetic modeling](https://www.frontiersin.org/articles/10.3389/fphar.2018.00588/full). Frontiers in Pharmacology 2018 Jun; 9:588.
 
-Hsieh NH, Reisfeld B, Chiu WA. [pksensi: an R package to apply sensitivity analysis in pharmacokinetic modeling](https://nanhung.rbind.io/poster/2019-SOT.pdf). 58th SOT Annual Meeting, Baltimore, USA, March 10–14, 2019.
+Hsieh NH, Reisfeld B, Chiu WA. [pksensi: An R package to apply global sensitivity analysis in physiologically based kinetic modeling](https://doi.org/10.1016/j.softx.2020.100609). SoftwareX 2020 Jul; 12:100609.
 
-Deepika D, et al. [Risk Assessment of Perfluorooctane Sulfonate (PFOS) using Dynamic Age Dependent Physiologically based Pharmacokinetic Model (PBPK) across human lifetime](https://doi.org/10.1016/j.envres.2021.111287). Environmental Research (2021): 111287.
-
-
-
-
-
+Hsieh NH, Bois FY, Tsakalozou E, Ni Z, Yoon M, Sun W, Klein M, Reisfeld B, Chiu WA. [A Bayesian population physiologically based pharmacokinetic absorption modeling approach to support generic drug development: application to bupropion hydrochloride oral dosage forms](https://doi.org/10.1007/s10928-021-09778-5). Journal of Pharmacokinetics and Pharmacodynamics 2021 Sep; 22:1-6.
 
 
 
