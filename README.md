@@ -27,16 +27,17 @@ sensitivity of model parameters.
 
 Through **pksensi**, you can:
 
-  - Run sensitivity analysis for PK models in R with script that were
+-   Run sensitivity analysis for PK models in R with script that were
     written in C or GNU MCSim.
 
-  - Decision support: The output results and visualization tools can be
+-   Decision support: The output results and visualization tools can be
     used to easily determine which parameters have “non-influential”
-    effects on the model output and can be fixed in model calibration.
+    effects on the model output and can be fixed in following model
+    calibration.
 
 ## Installation
 
-You can install the released version of pksensi from
+You can install the released version of **pksensi** from
 [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
@@ -50,13 +51,13 @@ And the development version from [GitHub](https://github.com/) with:
 devtools::install_github("nanhung/pksensi")
 ```
 
-  - This package includes a function that can help you install GNU MCsim
+-   This package includes a function that can help you install GNU MCSim
     more easily through the function `mcsim_install()`.
 
-  - All updated details can be found in
+-   All updated details can be found in
     [NEWS.md](https://github.com/nanhung/pksensi/blob/master/NEWS.md).
 
-  - **NOTE:** Windows users need to install
+-   **NOTE:** Windows users need to install
     [Rtools40](https://cran.r-project.org/bin/windows/Rtools/) to
     compile the model code.
 
@@ -135,8 +136,8 @@ x <- rfast99(params, n = 200, q = q, q.arg = q.arg, replicate = 1)
 
 ``` r
 out <- solve_fun(x, time = t, func = pbtk1cpt, initState = initState, outnames = outputs)
-#> Starting time: 2021-12-09 13:40:20
-#> Ending time: 2021-12-09 13:40:31
+#> Starting time: 2022-01-13 09:47:44
+#> Ending time: 2022-01-13 09:47:52
 ```
 
 ### Step 5. Uncertainty analysis
@@ -187,27 +188,25 @@ check(out)  # Print result to console
 
 ## Citation
 
-``` 
 
-To cite pksensi in publications use:
+    To cite pksensi in publications use:
 
-  Hsieh, N-H., Reisfeld B., and Chiu W.A., (2018). pksensi: An R
-  package to apply global sensitivity analysis in physiologically based
-  kinetic modeling SoftwareX, 12, 100609.
-  https://doi.org/10.1016/j.softx.2020.100609
+      Hsieh, N-H., Reisfeld B., and Chiu W.A., (2020). pksensi: An R
+      package to apply global sensitivity analysis in physiologically based
+      kinetic modeling SoftwareX, 12, 100609.
+      https://doi.org/10.1016/j.softx.2020.100609
 
-A BibTeX entry for LaTeX users is
+    A BibTeX entry for LaTeX users is
 
-  @Article{,
-    title = {{pksensi}: An R package to apply global sensitivity analysis in physiologically based kinetic modeling},
-    author = {Nan-Hung Hsieh and Brad Reisfeld and Weihsueh A. Chiu},
-    journal = {SoftwareX},
-    year = {2020},
-    volume = {12},
-    pages = {100609},
-    doi = {10.1016/j.softx.2020.100609},
-  }
-```
+      @Article{,
+        title = {{pksensi}: An R package to apply global sensitivity analysis in physiologically based kinetic modeling},
+        author = {Nan-Hung Hsieh and Brad Reisfeld and Weihsueh A. Chiu},
+        journal = {SoftwareX},
+        year = {2020},
+        volume = {12},
+        pages = {100609},
+        doi = {10.1016/j.softx.2020.100609},
+      }
 
 ## Reference
 
