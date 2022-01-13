@@ -10,7 +10,7 @@ citEntry(
   pages    = "100609",
   doi      = "10.1016/j.softx.2020.100609",
   textVersion = paste(
-  paste("Hsieh, N-H., Reisfeld B., and Chiu W.A., (2018).",
+  paste("Hsieh, N-H., Reisfeld B., and Chiu W.A., (2020).",
         "pksensi: An R package to apply global sensitivity analysis in physiologically based kinetic modeling",
         "SoftwareX, 12, 100609.",
         "https://doi.org/10.1016/j.softx.2020.100609")
