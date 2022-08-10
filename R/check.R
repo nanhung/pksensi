@@ -84,7 +84,8 @@ check <- function(x, times, vars, SI.cutoff, CI.cutoff, out) UseMethod("check")
 #' @export
 check.rfast99 <- function(x, times = NULL, vars = NULL, SI.cutoff = 0.05, CI.cutoff = 0.05, out = TRUE){
 
-  if (is.null(times)) times <- dimnames(x$y)[[3]]
+  if (is.null(times)) times <- dimnames(x$y)[[3]] else
+    times <- as.character(times)
   if (is.null(vars)) vars <- dimnames(x$y)[[4]]
 
   if (length(times) == 1 && length(vars) == 1) {
