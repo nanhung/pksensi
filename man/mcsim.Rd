@@ -41,12 +41,12 @@ The Rtools can install through installr::install.rtools()
 }
 \section{Functions}{
 \itemize{
-\item \code{mcsim_pkg}: Download and generate the portable MCSim into the package folder (no installation).
+\item \code{mcsim_pkg()}: Download and generate the portable MCSim into the package folder (no installation).
 The model generator program 'mod.exe' is used to compile the model code will be generated after the file download.
 
-\item \code{mcsim_version}: Return the version number.
-}}
+\item \code{mcsim_version()}: Return the version number.
 
+}}
 \references{
 Bois, F. Y., & Maszle, D. R. (1997).
 MCSim: a Monte Carlo simulation program.

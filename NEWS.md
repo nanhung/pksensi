@@ -2,6 +2,7 @@
 
 * Syntax update (check & install)
 * Fix bug (check)
+* Fix MCSim installation issue (#9)
 
 # pksensi 1.2.2
 

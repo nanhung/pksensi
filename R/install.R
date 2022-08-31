@@ -27,7 +27,7 @@
 #' @param mxstep a numeric value to assign the maximum number of (internally defined) steps
 #' allowed during one call to the solver.
 #'
-#' @import getPass
+#' @import withr
 #' @importFrom utils download.file
 #'
 #' @references \url{https://www.gnu.org/software/mcsim/}
@@ -73,7 +73,7 @@ mcsim_install <- function(version = "6.2.0", directory = NULL, mxstep = 5000) {
     }
   } else {setwd(paste0(directory, sprintf('/mcsim-%s', version)))}
 
-  mcsim.directory <-getwd()
+  mcsim.directory <- getwd()
 
   if (mxstep != 500){
     file <- paste0(getwd(), "/sim/lsodes1.c")
@@ -84,17 +84,17 @@ mcsim_install <- function(version = "6.2.0", directory = NULL, mxstep = 5000) {
   }
 
   if (.Platform$OS.type == "unix"){
-    system("./configure")
+
+    system(paste0("./configure prefix=", mcsim.directory))
     system("make")
+    system("make install")
     system("make check")
 
-    input <- getPass::getPass("Authentication is required to install MCSim (Password): ")
+    bin_path <- paste0(mcsim.directory, "/bin")
+    Sys.setenv(PATH = paste(bin_path, Sys.getenv("PATH"), sep=":"))
+    Sys.setenv(LD_LIBRARY_PATH = paste(mcsim.directory, "/lib",
+                                       Sys.getenv("LD_LIBRARY_PATH"), sep=":"))
 
-    if (Sys.info()[['sysname']] == "Darwin"){
-      system("sudo -kS make install", input=input)
-    } else if (Sys.info()[['sysname']] == "Linux"){
-      system("sudo -kS sh -c 'make install; ldconfig'", input=input)
-    }
   } else if (.Platform$OS.type == "windows") {
 
     if(Sys.which("gcc") == ""){ # echo $PATH

@@ -26,4 +26,9 @@ Hsieh, N. H., Reisfeld, B., Bois, F. Y., & Chiu, W. A. (2018).
 Applying a global sensitivity analysis workflow to improve the computational efficiencies
 in physiologically-based pharmacokinetic modeling.
 \emph{Frontiers in Pharmacology}, 9, 588.
+
+Hsieh, N-H., Reisfeld B., and Chiu W.A., (2020).
+pksensi: An R package to apply global sensitivity analysis in physiologically based
+kinetic modeling
+\emph{SoftwareX}, 12, 100609.
 }

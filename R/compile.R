@@ -16,6 +16,8 @@
 #' that will be applied to the numerical analysis (default is \code{mcsim}).
 #' @param version a character to assign the version of \pkg{GNU MCSim} that had been installed.
 #' The version must be assigned for Windows user (default is \code{6.2.0}).
+#' @param directory a character to assign the location of MCSim directory
+#' (The default is set to home).
 #'
 #' @return
 #' The default \code{application} is set to \code{'mcsim'}
@@ -25,10 +27,20 @@
 #' shared objects (.so) on Unix-likes systems (e.g., Linux and MacOS) that can link with \pkg{deSolve} solver.
 #'
 #' @export
-compile_model <- function (mName, application = 'mcsim', use_model_file = TRUE, version = '6.2.0') {
+compile_model <- function (mName, application = 'mcsim', use_model_file = TRUE, version = '6.2.0', directory = NULL) {
 
   if (application == 'mcsim' && .Platform$OS.type == "windows"){
     mName <- paste0(mName,".model")
+  }
+
+  if (.Platform$OS.type == "unix"){
+  if (is.null(directory)) mcsim_directory <- paste0(Sys.getenv("HOME"), "/mcsim-", version)
+    else mcsim_directory <- paste0(directory, "/mcsim-", version)
+
+  bin_path <- paste0(mcsim_directory, "/bin")
+  Sys.setenv(PATH = paste(bin_path, Sys.getenv("PATH"), sep=":"))
+  Sys.setenv(LD_LIBRARY_PATH = paste(mcsim_directory, "/lib",
+                                     Sys.getenv("LD_LIBRARY_PATH"), sep=":"))
   }
 
   if (use_model_file == T){ # Generate the ".c" file and "_inits.R" from model file
@@ -52,12 +64,13 @@ compile_model <- function (mName, application = 'mcsim', use_model_file = TRUE, 
 
   if (application == "mcsim"){
     if (.Platform$OS.type == "unix"){
-      system(paste0("gcc -O3 -I/usr/local/include -L/usr/local/lib -g -O2 ", mName, ".c", " -lmcsim -o", " mcsim.", mName, " -lm -llapack -Wall"))
+      #system(paste0("gcc -O3 -I/usr/local/include -L/usr/local/lib -g -O2 ", mName, ".c", " -lmcsim -o", " mcsim.", mName, " -lm -llapack -Wall"))
+
+      makemcsim <- paste0("makemcsims ", mName, ".model")
+      system(makemcsim)
 
       exec <- paste0("mcsim.", mName)
-      if (file.exists(exec)){
-        cat(paste0("* Created executable file 'mcsim.", mName, "'.\n"))
-      } else stop("* Error in model compilation.\n")
+      if (!file.exists(exec)) stop("* Error in model compilation.\n")
 
     } else if ((.Platform$OS.type == "windows")) {
       Sys.setenv(PATH = paste("C:\\rtools40\\mingw64\\bin", Sys.getenv("PATH"), sep=";"))

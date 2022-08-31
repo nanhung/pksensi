@@ -8,7 +8,8 @@ compile_model(
   mName,
   application = "mcsim",
   use_model_file = TRUE,
-  version = "6.2.0"
+  version = "6.2.0",
+  directory = NULL
 )
 }
 \arguments{
@@ -22,6 +23,9 @@ the default is set to \code{TRUE} to assign the \pkg{GNU MCSim}'s model file in 
 
 \item{version}{a character to assign the version of \pkg{GNU MCSim} that had been installed.
 The version must be assigned for Windows user (default is \code{6.2.0}).}
+
+\item{directory}{a character to assign the location of MCSim directory
+(The default is set to home).}
 }
 \value{
 The default \code{application} is set to \code{'mcsim'}
