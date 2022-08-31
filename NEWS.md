@@ -1,3 +1,8 @@
+# pksensi 1.2.3
+
+* Syntax update (check & install)
+* Fix bug (check)
+
 # pksensi 1.2.2
 
 * Add more flexible parallel method (`solve_mcsim`)

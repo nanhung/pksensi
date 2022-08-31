@@ -186,7 +186,7 @@ mcsim_version <- function(){
     exdir <- paste0("c:/Users/", name)
     l <- list.files(path = exdir)
     version <- l[grep("mcsim", l)]
-    if (class(version) == "character"){
+    if (is.character(version)){
       message("The '", version, "' is found in ", exdir)
     }
   }

@@ -328,7 +328,7 @@ plot.rfast99 <- function(x, vars = 1, SI.cutoff = 0.1, ...){
       }
     }
 
-    if (class(vars) == "character") {vars <- which(dimnames(x$y)[[4]] == vars)}
+    if (is.character(vars)) {vars <- which(dimnames(x$y)[[4]] == vars)}
 
     variable <- dimnames(x$y)[[4]][vars]
     mtext(variable, NORTH<-3, line=0.4, adj=0, cex=1.5, outer=TRUE)
