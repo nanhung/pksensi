@@ -47,8 +47,8 @@ install.packages("pksensi")
 And the development version from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("nanhung/pksensi")
+# install.packages("remotes")
+remotes::install_github("nanhung/pksensi")
 ```
 
 -   This package includes a function that can help you install GNU MCSim
