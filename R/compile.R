@@ -34,8 +34,8 @@ compile_model <- function (mName, application = 'mcsim', use_model_file = TRUE, 
   }
 
   if (.Platform$OS.type == "unix"){
-  if (is.null(directory)) mcsim_directory <- paste0(Sys.getenv("HOME"), "/mcsim-", version)
-    else mcsim_directory <- paste0(directory, "/mcsim-", version)
+  if (is.null(directory)) mcsim_directory <- paste0(Sys.getenv("HOME"), "/mcsim")
+    else mcsim_directory <- paste0(directory, "/mcsim")
 
   bin_path <- paste0(mcsim_directory, "/bin")
   Sys.setenv(PATH = paste(bin_path, Sys.getenv("PATH"), sep=":"))

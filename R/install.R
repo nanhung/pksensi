@@ -45,6 +45,7 @@ mcsim_install <- function(version = "6.2.0", directory = NULL, mxstep = 5000) {
 
   name <- Sys.info()[['user']]
 
+  # Defined directory (exdir) to place mcsim source code
   if (is.null(directory)){
     if (Sys.info()[['sysname']] == "Darwin"){
       exdir <- paste0("/Users/", name)
@@ -57,14 +58,15 @@ mcsim_install <- function(version = "6.2.0", directory = NULL, mxstep = 5000) {
 
   utils::untar(tf, exdir = exdir)
 
-  current.wd <- getwd()
+  current.wd <- getwd() # the current working directory
 
+  # Defined MCSim directory
   if (is.null(directory)){
     if (Sys.info()[['sysname']] == "Darwin"){
       setwd(paste0("/Users/", name, sprintf('/mcsim-%s', version)))
 
       # The MacOS used clang as default compiler, the following command is used to switch to GCC
-      Sys.setenv(PATH = paste("/usr/local/bin", Sys.getenv("PATH"), sep=";"))
+      Sys.setenv(PATH = paste("/usr/local/bin", Sys.getenv("PATH"), sep=":"))
 
     } else if (Sys.info()[['sysname']] == "Linux") {
       setwd(paste0("/home/", name, sprintf('/mcsim-%s', version)))
@@ -83,21 +85,33 @@ mcsim_install <- function(version = "6.2.0", directory = NULL, mxstep = 5000) {
     cat(mxstp0, file=file, sep="\n")
   }
 
+  # Defined mcsim directory to place compiled files (e.g., bin, lib, etc)
   if (.Platform$OS.type == "unix"){
 
-    system(paste0("./configure prefix=", mcsim.directory))
+    if (is.null(directory)) {
+      mcsim_dir <- paste0(Sys.getenv("HOME"), "/mcsim")
+      } else mcsim_dir <- paste0(directory, "/mcsim")
+
+    if(!dir.exists(mcsim_dir)) dir.create(mcsim_dir)
+    system(paste0("./configure prefix=", paste0(home, "/mcsim")))
     system("make")
     system("make install")
     system("make check")
 
-    bin_path <- paste0(mcsim.directory, "/bin")
+    bin_path <- paste0(mcsim_dir, "/bin")
     Sys.setenv(PATH = paste(bin_path, Sys.getenv("PATH"), sep=":"))
-    Sys.setenv(LD_LIBRARY_PATH = paste(mcsim.directory, "/lib",
+    lib_path <- paste0(mcsim_dir, "/lib")
+    Sys.setenv(LD_LIBRARY_PATH = paste(lib_path,
                                        Sys.getenv("LD_LIBRARY_PATH"), sep=":"))
+
+    makemcsim <- paste0(bin_path, "/makemcsim")
+    if(Sys.which("makemcsim") == makemcsim)
+      message(paste0("The MCSim " , sprintf('%s', version), " is installed. The sourced folder is under ", mcsim.directory))
 
   } else if (.Platform$OS.type == "windows") {
 
     if(Sys.which("gcc") == ""){ # echo $PATH
+      # Suggest use Rtools40
       PATH = "C:\\rtools40\\mingw64\\bin; C:\\rtools40\\usr\\bin"
       Sys.setenv(PATH = paste(PATH, Sys.getenv("PATH"), sep=";"))
     } # PATH=$PATH:/c/Rtools/mingw_32/bin; export PATH
@@ -107,13 +121,19 @@ mcsim_install <- function(version = "6.2.0", directory = NULL, mxstep = 5000) {
     setwd(paste0(mcsim.directory,"/sim"))
     generate_config.h()
     setwd(mcsim.directory)
-    system(paste0("gcc -o ./mod/mod.exe ./mod/*.c"))
-    if(file.exists("./mod/mod.exe")){
-      cat(paste0("Created 'mod.exe'"))
-    }
+
+    if (is.null(directory)) {
+      mcsim_dir <- paste0("c:/Users/", name, "/mcsim")
+    } else mcsim_dir <- paste0(directory, "/mcsim")
+    if(!dir.exists(mcsim_dir)) dir.create(mcsim_dir)
+
+    mod <- paste0(mcsim_dir, "/mod.exe")
+    system(paste0("gcc -o ",  mod, " ./mod/*.c"))
+
+    if(file.exists(mod))
+      message(paste0("The MCSim " , sprintf('%s', version), " is installed. The sourced folder is under ", mcsim.directory))
   }
   cat("\n")
-  message(paste0("The MCSim " , sprintf('%s', version), " is installed. The sourced folder is under ", mcsim.directory))
   setwd(current.wd)
 }
 
