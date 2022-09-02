@@ -8,7 +8,6 @@ compile_model(
   mName,
   application = "mcsim",
   use_model_file = TRUE,
-  version = "6.2.0",
   directory = NULL
 )
 }
@@ -16,13 +15,11 @@ compile_model(
 \item{mName}{a string giving the name of the model code (without extension).}
 
 \item{application}{a character to assign the specific methods (\code{mcsim} or \code{R})
-that will be applied to the numerical analysis (default is \code{mcsim}).}
+that will be applied to the numerical analysis (default is \code{mcsim}).
+The version must be assigned for Windows user (default is \code{6.2.0}).}
 
 \item{use_model_file}{a logical value to operate the compiler to model or C file,
 the default is set to \code{TRUE} to assign the \pkg{GNU MCSim}'s model file in compiling.}
-
-\item{version}{a character to assign the version of \pkg{GNU MCSim} that had been installed.
-The version must be assigned for Windows user (default is \code{6.2.0}).}
 
 \item{directory}{a character to assign the location of MCSim directory
 (The default is set to home).}

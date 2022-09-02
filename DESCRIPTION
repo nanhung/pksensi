@@ -38,6 +38,7 @@ Imports:
     foreach,
     parallel,
     withr,
+    curl,
     doParallel,
     reshape2
 Suggests:
