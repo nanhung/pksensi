@@ -22,8 +22,7 @@
 #' @param show.all a logical value to show all testing parameters in the heatmap. The default is set to \code{FALSE} to show only the influential parameters.
 #' @param ... additional arguments to customize the graphical parameters.
 #'
-#' @importFrom reshape2 melt
-#' @importFrom magrittr %>%
+#' @importFrom data.table as.data.table
 #' @importFrom stats time
 #' @importFrom grDevices colorRampPalette
 #' @importFrom graphics barplot legend lines par abline plot.new
@@ -64,7 +63,7 @@
 #' set.seed(1234)
 #' x <- rfast99(params = params, n = 200, q = q, q.arg = q.arg, rep = 20)
 #'
-#' time <- seq(from = 0.25, to = 12.25, by = 0.5)
+#' time <- c(0.25, 0.5, 1, 2, 4, 6, 8, 12, 24)
 #' out <- solve_fun(x, model = FFPK, time = time, vars = "output")
 #'
 #'
@@ -183,17 +182,17 @@ heat_check <- function(x,
   CI.labels[nCI+1] <- paste0(" > ", CI.cutoff[nCI])
 
   if (index ==  "SI"){
-    X <- tidy_index(x, index = index) %>%
+    X <- tidy_index(x, index = index) |>
       mutate(level = cut(.data$value, breaks=c(-Inf, paste(SI.cutoff), Inf), labels=SI.labels))
 
     if (!(show.all == TRUE)) {
       check.out <- check.rfast99(x, vars = vars, times, SI.cutoff = min(SI.cutoff), out = F)
-      X <- X %>% filter(.data$parameter %in% check.out$tSI)
+      X <- X |> filter(.data$parameter %in% check.out$tSI)
       message(paste0("Display ", length(check.out$tSI), " influential parameters from all ", dim(x$a)[3], " examined parameters."))
     }
 
   } else if ((index == "CI")) {
-    X <- tidy_index(x, index = index) %>%
+    X <- tidy_index(x, index = index) |>
       mutate(level = cut(.data$value, breaks=c(-Inf, paste(CI.cutoff), Inf), labels=CI.labels))
   }
 
@@ -215,11 +214,11 @@ heat_check <- function(x,
   } else (times <- times)
 
 
-  X <- X %>% filter(order %in% !!(order)) %>% filter(.data$variable %in% vars) %>% filter(time %in% times)
+  X <- X |> filter(order %in% !!(order)) |> filter(.data$variable %in% vars) |> filter(time %in% times)
 
-  if(length(times) < 16){
-    X$time <- as.factor(X$time)
-  }
+  #if(length(times) < 16){
+  #  X$time <- as.factor(X$time)
+  #}
 
   #if (order == F){
   p <- ggplot(X, aes_string("time", "parameter"))
@@ -235,9 +234,10 @@ heat_check <- function(x,
       scale_fill_gradient(low = "white", high = "red", limits = c(-0.05,1.05))
   }
 
-  if(length(times) < 16){
-    p <- p + scale_x_discrete(expand=c(0,0))
-  } else p <- p + scale_x_continuous(expand=c(0,0))
+  p <- p + scale_x_discrete(expand=c(0,0))
+  #if(length(times) < 16){
+  #  p <- p + scale_x_discrete(expand=c(0,0))
+  #} else p <- p + scale_x_continuous(expand=c(0,0))
 
   if (length(order) == 1){
     p <- p + scale_y_discrete(expand=c(0,0)) +
@@ -271,14 +271,14 @@ heat_check <- function(x,
 tidy_index <- function (x, index = "SI") {
 
   if(index == "CI") {
-    m <- reshape2::melt(x$mCI) %>% cbind(order = "first order")
-    i <- reshape2::melt(x$iCI) %>% cbind(order = "interaction")
-    t <- reshape2::melt(x$tCI) %>% cbind(order = "total order")
+    m <- as.data.table(x$mCI) |> cbind(order = "first order")
+    i <- as.data.table(x$iCI) |> cbind(order = "interaction")
+    t <- as.data.table(x$tCI) |> cbind(order = "total order")
     X <- do.call(rbind, list(m, i, t))
   } else if (index == "SI") {
-    m <- reshape2::melt(x$mSI) %>% cbind(order = "first order")
-    i <- reshape2::melt(x$iSI) %>% cbind(order = "interaction")
-    t <- reshape2::melt(x$tSI) %>% cbind(order = "total order")
+    m <- as.data.table(x$mSI) |> cbind(order = "first order")
+    i <- as.data.table(x$iSI) |> cbind(order = "interaction")
+    t <- as.data.table(x$tSI) |> cbind(order = "total order")
     X <- do.call(rbind, list(m, i, t))
   }
   names(X) <- c("time", "parameter", "variable", "value", "order")

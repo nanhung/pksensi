@@ -3,6 +3,7 @@
 * Syntax update (check & install)
 * Fix bug (check)
 * Fix MCSim installation issue (#9)
+* Remove dependent: magrittr, reshape2
 
 # pksensi 1.2.2
 
