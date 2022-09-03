@@ -25,7 +25,7 @@
 #' \emph{Journal of Statistical Software}, 2(9): 1–60.
 #'
 #' @param version a character of version number.
-#' @param directory a character to assign the installed directory.
+#' @param install_dir a character to assign the installed directory.
 #' @param mxstep a numeric value to assign the maximum number of (internally defined) steps
 #' allowed during one call to the solver.
 #'
@@ -37,7 +37,7 @@
 #' @rdname mcsim
 #'
 #' @export
-mcsim_install <- function(version = "6.2.0", directory = NULL, mxstep = 5000) {
+mcsim_install <- function(version = "6.2.0", install_dir = NULL, mxstep = 5000) {
 
   message("Start install")
   version<-version
@@ -49,7 +49,7 @@ mcsim_install <- function(version = "6.2.0", directory = NULL, mxstep = 5000) {
   home_dir <- Sys.getenv("HOME")
 
   # Defined directory (exdir) to place mcsim source code
-  if (is.null(directory)){
+  if (is.null(install_dir)){
     if (Sys.info()[['sysname']] == "Darwin"){
       exdir <- paste0("/Users/", name)
     } else if (Sys.info()[['sysname']] == "Linux") {
@@ -57,14 +57,14 @@ mcsim_install <- function(version = "6.2.0", directory = NULL, mxstep = 5000) {
     } else if (Sys.info()[['sysname']] == "Windows") {
       exdir <- home_dir
     }
-  } else {exdir <- directory}
+  } else {exdir <- install_dir}
 
   utils::untar(tf, exdir = exdir)
 
   current.wd <- getwd() # the current working directory
 
   # Defined MCSim directory
-  if (is.null(directory)){
+  if (is.null(install_dir)){
     if (Sys.info()[['sysname']] == "Darwin"){
       setwd(paste0("/Users/", name, sprintf('/mcsim-%s', version)))
 
@@ -76,7 +76,7 @@ mcsim_install <- function(version = "6.2.0", directory = NULL, mxstep = 5000) {
     } else if (Sys.info()[['sysname']] == "Windows") {
       setwd(paste0(home_dir, sprintf('/mcsim-%s', version)))
     }
-  } else {setwd(paste0(directory, sprintf('/mcsim-%s', version)))}
+  } else {setwd(paste0(install_dir, sprintf('/mcsim-%s', version)))}
 
   mcsim.directory <- getwd()
 
@@ -91,11 +91,11 @@ mcsim_install <- function(version = "6.2.0", directory = NULL, mxstep = 5000) {
   # Defined mcsim directory to place compiled files (e.g., bin, lib, etc)
   if (.Platform$OS.type == "unix"){
 
-    if (is.null(directory)) {
+    if (is.null(install_dir)) {
       mcsim_dir <- paste0(home_dir, "/mcsim")
       system(paste0("./configure prefix=", home_dir))
       } else {
-        mcsim_dir <- paste0(directory, "/mcsim")
+        mcsim_dir <- paste0(install_dir, "/mcsim")
         system(paste0("./configure prefix=", dir))
       }
 
@@ -135,9 +135,9 @@ mcsim_install <- function(version = "6.2.0", directory = NULL, mxstep = 5000) {
     generate_config.h()
     sim_files <- list.files(mcsim_sim)
 
-    if (is.null(directory)) {
+    if (is.null(install_dir)) {
       mcsim_dir <- paste0(home_dir, "/mcsim")
-    } else mcsim_dir <- paste0(directory, "/mcsim")
+    } else mcsim_dir <- paste0(install_dir, "/mcsim")
     if(!dir.exists(mcsim_dir)) dir.create(mcsim_dir)
 
     mcsim_sim_dir <- paste0(mcsim_dir, "/sim")
