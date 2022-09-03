@@ -1,6 +1,6 @@
 Package: pksensi
 Title: Global Sensitivity Analysis in Physiologically Based Kinetic Modeling
-Version: 1.22.0.9000
+Version: 1.2.3
 Authors@R: 
     c(person(given = "Nan-Hung", 
              family = "Hsieh", 
