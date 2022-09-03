@@ -219,6 +219,7 @@ heat_check <- function(x,
   #if(length(times) < 16){
   #  X$time <- as.factor(X$time)
   #}
+  X$time <- as.factor(X$time)
 
   #if (order == F){
   p <- ggplot(X, aes_string("time", "parameter"))
