@@ -13,8 +13,8 @@
 #' @param order a vector of the interested output index, including \code{first order}, \code{interaction}, and \code{total order}.
 #' @param vars a logical value or character to specify the display variable in simulation.
 #' @param times a logical value or character to specify the display time in simulation.
-#' @param SI.cutoff a value or vector to set the cut-off for sensitivity index. The default is 0.05.
-#' @param CI.cutoff a value or vector to set the cut-off for convergence index. The default is 0.05.
+#' @param cutoff a value or vector to set the cut-off for sensitivity (or convergence) index.
+#' The default is 0.05 and 0.1.
 #' @param index a character to choose sensitivity index \code{SI} (default) or convergence index \code{CI}.
 #' @param level a logical value to use continuous or discrete (default) output.
 #' @param text a logical value to display the calculated indices in the plot.
@@ -160,26 +160,33 @@ check.rfast99 <- function(x, times = NULL, vars = NULL, SI.cutoff = 0.05, CI.cut
 heat_check <- function(x,
                        order = c("first order", "interaction", "total order"),
                        vars = NULL, times = NULL,
-                       SI.cutoff = c(0.05, 0.1), CI.cutoff = c(0.05, 0.1),
-                       index = "SI", level = T, text = F, show.all = FALSE){
+                       index = "SI", cutoff = c(0.05, 0.1),
+                       level = T, text = F, show.all = FALSE){
 
-  nSI <- length(SI.cutoff)
-  SI.labels<-rep(NA, nSI+1)
+  if (index ==  "SI"){
+    SI.cutoff <- cutoff
+    nSI <- length(SI.cutoff)
+    SI.labels<-rep(NA, nSI+1)
 
-  for(i in 1:nSI){
-    SI.labels[i+1] <- paste0(SI.cutoff[i]," - ",SI.cutoff[i+1])
+    for(i in 1:nSI){
+      SI.labels[i+1] <- paste0(SI.cutoff[i]," - ",SI.cutoff[i+1])
+    }
+    SI.labels[1] <- paste0("0 - ", SI.cutoff[1])
+    SI.labels[nSI+1] <- paste0(" > ", SI.cutoff[nSI])
   }
-  SI.labels[1] <- paste0("0 - ", SI.cutoff[1])
-  SI.labels[nSI+1] <- paste0(" > ", SI.cutoff[nSI])
 
-  nCI <- length(CI.cutoff)
-  CI.labels<-rep(NA, nCI+1)
+  if (index ==  "CI"){
+    CI.cutoff <- cutoff
+    nCI <- length(CI.cutoff)
+    CI.labels<-rep(NA, nCI+1)
 
-  for(i in 1:nCI){
-    CI.labels[i+1] <- paste0(CI.cutoff[i]," - ",CI.cutoff[i+1])
+    for(i in 1:nCI){
+      CI.labels[i+1] <- paste0(CI.cutoff[i]," - ",CI.cutoff[i+1])
+    }
+    CI.labels[1] <- paste0("0 - ", CI.cutoff[1])
+    CI.labels[nCI+1] <- paste0(" > ", CI.cutoff[nCI])
   }
-  CI.labels[1] <- paste0("0 - ", CI.cutoff[1])
-  CI.labels[nCI+1] <- paste0(" > ", CI.cutoff[nCI])
+
 
   if (index ==  "SI"){
     X <- tidy_index(x, index = index) |>
@@ -220,6 +227,7 @@ heat_check <- function(x,
   #  X$time <- as.factor(X$time)
   #}
   X$time <- as.factor(X$time)
+  X$time <- factor(X$time, levels = times)
 
   #if (order == F){
   p <- ggplot(X, aes_string("time", "parameter"))
@@ -236,9 +244,8 @@ heat_check <- function(x,
   }
 
   p <- p + scale_x_discrete(expand=c(0,0))
-  #if(length(times) < 16){
-  #  p <- p + scale_x_discrete(expand=c(0,0))
-  #} else p <- p + scale_x_continuous(expand=c(0,0))
+  #if(length(times) < 16) p <- p + scale_x_discrete(expand=c(0,0)) else
+  #  p <- p + scale_x_continuous(expand=c(0,0))
 
   if (length(order) == 1){
     p <- p + scale_y_discrete(expand=c(0,0)) +
