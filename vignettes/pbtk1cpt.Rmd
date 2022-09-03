@@ -284,7 +284,7 @@ params <- c("vdist", "ke", "kgutabs", "BW")
 
 # Generate parameter matrix
 set.seed(1234)
-x <- rfast99(params, n = 200, q = q, q.arg = q.arg, replicate = 20)
+x <- rfast99(params, n = 200, q = q, q.arg = q.arg, replicate = 10)
 ```
 
 Run simulation and check result.
