@@ -32,9 +32,9 @@
 #'
 #' @return The \code{print} function returns sensitivity and convergence indices
 #' with given time-step in the console. The \code{check} method provides the summary of
-#' parameter sensitivity and convergence according to the given \code{SI.cutoff} and \code{CI.cutoff}.
+#' parameter sensitivity and convergence according to the given \code{cutoff}.
 #' It can distinguish the influential and non-influential parameter by the providing value
-#' of \code{SI.cutoff}. The \code{plot} function can generate the
+#' of \code{cutoff}. The \code{plot} function can generate the
 #' time-course functional outputs of first order and interaction indices for each parameter.
 #' The default output is the first model variable. The \code{heat_check} provides a convenient way
 #' to visualize and distinguish the influential and non-influential parameter by the setting cut-off.
@@ -77,11 +77,13 @@
 #'
 #' @rdname check
 #' @export
-check <- function(x, times, vars, SI.cutoff, CI.cutoff, out) UseMethod("check")
+check <- function(x, times, vars, cutoff, out) UseMethod("check")
 
 #' @method check rfast99
 #' @export
-check.rfast99 <- function(x, times = NULL, vars = NULL, SI.cutoff = 0.05, CI.cutoff = 0.05, out = TRUE){
+check.rfast99 <- function(x, times = NULL, vars = NULL, cutoff = 0.05, out = TRUE){
+
+  SI.cutoff <- CI.cutoff <- cutoff
 
   if (is.null(times)) times <- dimnames(x$y)[[3]] else
     times <- as.character(times)
@@ -193,7 +195,7 @@ heat_check <- function(x,
       mutate(level = cut(.data$value, breaks=c(-Inf, paste(SI.cutoff), Inf), labels=SI.labels))
 
     if (!(show.all == TRUE)) {
-      check.out <- check.rfast99(x, vars = vars, times, SI.cutoff = min(SI.cutoff), out = F)
+      check.out <- check.rfast99(x, vars = vars, times, cutoff = min(SI.cutoff), out = F)
       X <- X |> filter(.data$parameter %in% check.out$tSI)
       message(paste0("Display ", length(check.out$tSI), " influential parameters from all ", dim(x$a)[3], " examined parameters."))
     }
@@ -296,7 +298,7 @@ tidy_index <- function (x, index = "SI") {
 #' @rdname check
 #' @method plot rfast99
 #' @export
-plot.rfast99 <- function(x, vars = 1, SI.cutoff = 0.1, ...){
+plot.rfast99 <- function(x, vars = 1, cutoff = 0.1, ...){
 
   mSI <- x$mSI[,,vars]
   iSI <- x$tSI[,,vars]
@@ -331,8 +333,8 @@ plot.rfast99 <- function(x, vars = 1, SI.cutoff = 0.1, ...){
       polygon(x = c(times, rev(times)),
               y =c(mSI[,i]-mCI[,i], rev(mSI[,i]+mCI[,i])),
               col = col.transp, border = col.transp)
-      if (is.numeric(SI.cutoff)){
-        abline(SI.cutoff, 0, lty = 2)
+      if (is.numeric(cutoff)){
+        abline(cutoff, 0, lty = 2)
       }
     }
 

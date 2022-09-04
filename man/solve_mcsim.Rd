@@ -88,11 +88,11 @@ If you want to use it, be sure to define \code{n} and \code{setpoint.name}.
 }
 \section{Functions}{
 \itemize{
-\item \code{solve_mcsim()}: Numerical analysis for the PK model by \pkg{GNU MCSim}.
+\item \code{solve_mcsim}: Numerical analysis for the PK model by \pkg{GNU MCSim}.
 
-\item \code{generate_infile()}: Generate the \pkg{GNU MCSim} input file.
-
+\item \code{generate_infile}: Generate the \pkg{GNU MCSim} input file.
 }}
+
 \examples{
 
 \dontrun{

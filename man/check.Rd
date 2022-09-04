@@ -7,22 +7,21 @@
 \alias{print.rfast99}
 \title{Check the Parameter Sensitivity}
 \usage{
-check(x, times, vars, SI.cutoff, CI.cutoff, out)
+check(x, times, vars, cutoff, out)
 
 heat_check(
   x,
   order = c("first order", "interaction", "total order"),
   vars = NULL,
   times = NULL,
-  SI.cutoff = c(0.05, 0.1),
-  CI.cutoff = c(0.05, 0.1),
   index = "SI",
+  cutoff = c(0.05, 0.1),
   level = T,
   text = F,
   show.all = FALSE
 )
 
-\method{plot}{rfast99}(x, vars = 1, SI.cutoff = 0.1, ...)
+\method{plot}{rfast99}(x, vars = 1, cutoff = 0.1, ...)
 
 \method{print}{rfast99}(x, ...)
 }
@@ -33,9 +32,8 @@ heat_check(
 
 \item{vars}{a logical value or character to specify the display variable in simulation.}
 
-\item{SI.cutoff}{a value or vector to set the cut-off for sensitivity index. The default is 0.05.}
-
-\item{CI.cutoff}{a value or vector to set the cut-off for convergence index. The default is 0.05.}
+\item{cutoff}{a value or vector to set the cut-off for sensitivity (or convergence) index.
+The default is 0.05 and 0.1.}
 
 \item{out}{a logical value to print the checking result to the console.}
 
@@ -54,9 +52,9 @@ heat_check(
 \value{
 The \code{print} function returns sensitivity and convergence indices
 with given time-step in the console. The \code{check} method provides the summary of
-parameter sensitivity and convergence according to the given \code{SI.cutoff} and \code{CI.cutoff}.
+parameter sensitivity and convergence according to the given \code{cutoff}.
 It can distinguish the influential and non-influential parameter by the providing value
-of \code{SI.cutoff}. The \code{plot} function can generate the
+of \code{cutoff}. The \code{plot} function can generate the
 time-course functional outputs of first order and interaction indices for each parameter.
 The default output is the first model variable. The \code{heat_check} provides a convenient way
 to visualize and distinguish the influential and non-influential parameter by the setting cut-off.
@@ -86,7 +84,7 @@ params <- c("F","KA","KE","V")
 set.seed(1234)
 x <- rfast99(params = params, n = 200, q = q, q.arg = q.arg, rep = 20)
 
-time <- seq(from = 0.25, to = 12.25, by = 0.5)
+time <- c(0.25, 0.5, 1, 2, 4, 6, 8, 12, 24)
 out <- solve_fun(x, model = FFPK, time = time, vars = "output")
 
 

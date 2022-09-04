@@ -5,14 +5,14 @@
 \alias{mcsim_version}
 \title{Download and install \pkg{GNU MCSim}}
 \usage{
-mcsim_install(version = "6.2.0", directory = NULL, mxstep = 5000)
+mcsim_install(version = "6.2.0", install_dir = NULL, mxstep = 5000)
 
 mcsim_version()
 }
 \arguments{
 \item{version}{a character of version number.}
 
-\item{directory}{a character to assign the installed directory.}
+\item{install_dir}{a character to assign the installed directory.}
 
 \item{mxstep}{a numeric value to assign the maximum number of (internally defined) steps
 allowed during one call to the solver.}
@@ -40,9 +40,9 @@ The current suggested Rtools version is 4.0.
 }
 \section{Functions}{
 \itemize{
-\item \code{mcsim_version()}: Return the version number.
-
+\item \code{mcsim_version}: Return the version number.
 }}
+
 \references{
 Bois, F. Y., & Maszle, D. R. (1997).
 MCSim: a Monte Carlo simulation program.
