@@ -40,7 +40,7 @@ mcsim_install <- function(version = "6.2.0", install_dir = NULL, mxstep = 5000) 
 
   message("Start install")
   version<-version
-  URL <- sprintf('https://ftp.gnu.org/gnu/mcsim/mcsim-%s.tar.gz', version)
+  URL <- sprintf('http://ftp.gnu.org/gnu/mcsim/mcsim-%s.tar.gz', version)
   tf <- tempfile()
   download.file(URL, tf, mode = 'wb')
 
