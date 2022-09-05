@@ -30,7 +30,6 @@
 #' allowed during one call to the solver.
 #'
 #' @import withr
-#' @import curl
 #'
 #' @references \url{https://www.gnu.org/software/mcsim/}
 #'
@@ -43,7 +42,7 @@ mcsim_install <- function(version = "6.2.0", install_dir = NULL, mxstep = 5000) 
   version<-version
   URL <- sprintf('https://ftp.gnu.org/gnu/mcsim/mcsim-%s.tar.gz', version)
   tf <- tempfile()
-  curl_download(URL, tf, quiet = F)
+  download.file(URL, tf, mode = 'wb')
 
   name <- Sys.info()[['user']]
   home_dir <- Sys.getenv("HOME")

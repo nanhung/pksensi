@@ -36,7 +36,6 @@ Imports:
     foreach,
     parallel,
     withr,
-    curl,
     doParallel
 Suggests:
     covr,

@@ -17,7 +17,7 @@ vignette: >
 library(pksensi)
 
 knitr::opts_chunk$set(
-  eval = T,
+  eval = F,
   dev = "png",
   dpi = 200,
   fig.align = "center",
