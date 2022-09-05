@@ -38,6 +38,12 @@
 #' @export
 mcsim_install <- function(version = "6.2.0", install_dir = NULL, mxstep = 5000) {
 
+  if (Sys.info()[['sysname']] == "Windows") {
+    if(Sys.which("gcc") == "") stop("Please check the installation of Rtools.")
+  } else if (Sys.info()[['sysname']] == "Linux") {
+    if(Sys.which("gcc") == "") stop("Please check the installation of gcc.")
+  }
+
   message("Start install")
   version<-version
   URL <- sprintf('http://ftp.gnu.org/gnu/mcsim/mcsim-%s.tar.gz', version)
@@ -147,9 +153,11 @@ mcsim_install <- function(version = "6.2.0", install_dir = NULL, mxstep = 5000) 
     message("\nChecking...")
     cat(Sys.which("mod"))
 
-    if(file.exists(mod))
+    if(file.exists(mod)){
       message(paste0("\nThe MCSim " , sprintf('%s', version), " is installed."))
       message(paste0("The sourced folder is under ", mcsim.directory))
+    } else stop("Cannot find mod.exe.")
+
   }
   cat("\n")
   setwd(current.wd)
