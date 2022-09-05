@@ -202,10 +202,10 @@ The output variable `out` containing all the input arguments detailed above and 
 dim(out$y)
 ```
 
-Some functions in **pksensi** provide efficient ways to check the result from global SA. The `check()` can determine which parameters have relatively lowered sensitivity measurement across the given time points and model outputs, and therefore can be applied parameter fixing in model calibration. The `check()` also provides an argument to specify the target output or change the cut-off value. The argument of `SI.cutoff` set for example at 0.05, is used to detect the relative non-influential parameters as default, in this case representing a 5% change of the output is contributed from the specific parameter variation. 
+Some functions in **pksensi** provide efficient ways to check the result from global SA. The `check()` can determine which parameters have relatively lowered sensitivity measurement across the given time points and model outputs, and therefore can be applied parameter fixing in model calibration. The `check()` also provides an argument to specify the target output or change the cut-off value. The argument of `cutoff` set for example at 0.05, is used to detect the relative non-influential parameters as default, in this case representing a 5% change of the output is contributed from the specific parameter variation. 
 
 ```{r}
-check(out, SI.cutoff = 0.05)
+check(out, cutoff = 0.05)
 ```
 
 Based on the sensitivity measurement of the total order, the result shows that `BW` has a relative lower measurement of SI. However, all parameters do not converge to the setting cut-off, which means the larger sample size is required in further sensitivity testing. Similar to the `plot()` function that can assign specific output variable in the examination, the `check()` function can also use the assignment (`vars`) to examine a given output.

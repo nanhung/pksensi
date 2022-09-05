@@ -15,10 +15,9 @@ vignette: >
 
 ```{r setup, include = FALSE}
 library(pksensi)
-#mcsim_install(version = "6.1.0")
 
 knitr::opts_chunk$set(
-  eval = F,
+  eval = T,
   dev = "png",
   dpi = 200,
   fig.align = "center",
@@ -31,8 +30,8 @@ knitr::opts_chunk$set(
 
 The aim of this vignette is to reproduce our previous published [@fphar201800588] result of global sensitivity analysis for acetaminophen PBPK model through **pksensi**. The model codes are included in this package and can be generated through `pbpk_apap_model()`. We applied the global sensitivity analysis workflow to the original published model with 21 model parameters [@s13318-015-0253-x]. The descriptions of each parameter and the sampling ranges are list in Table 1.
 
-```r
-mcsim_install(mxstep = 5000) # Be sure to set the mxstep to 5000
+```{r}
+mcsim_install(version = "6.1.0")
 ```
 
 ```{r, echo=F}

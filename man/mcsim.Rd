@@ -40,9 +40,9 @@ The current suggested Rtools version is 4.0.
 }
 \section{Functions}{
 \itemize{
-\item \code{mcsim_version}: Return the version number.
-}}
+\item \code{mcsim_version()}: Return the version number.
 
+}}
 \references{
 Bois, F. Y., & Maszle, D. R. (1997).
 MCSim: a Monte Carlo simulation program.

@@ -81,7 +81,7 @@ compile_model <- function (mName, application = 'mcsim', use_model_file = TRUE,
       if (is.null(mod_dir)) mod_c <- paste0(mod, " ", mName, " ", mName, ".c") else
         mod_c <- paste0(mod, " ", mod_dir, "/", mName, " ", mName, ".c")
       message("Creating model.c file...")
-      system(makemcsim)
+      system(mod_c)
       message("Creating modeling program...")
       makemcsim <- paste0("gcc -O3 -I.. -I", sim, " -o mcsim.", mName, ".exe ", mName, ".c ", sim, "/*.c", " -lm ")
       system(makemcsim)

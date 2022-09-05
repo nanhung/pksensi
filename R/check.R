@@ -28,7 +28,6 @@
 #' @importFrom graphics barplot legend lines par abline plot.new
 #' @importFrom stats runif fft
 #' @import ggplot2
-#' @import dplyr
 #'
 #' @return The \code{print} function returns sensitivity and convergence indices
 #' with given time-step in the console. The \code{check} method provides the summary of
@@ -191,18 +190,26 @@ heat_check <- function(x,
 
 
   if (index ==  "SI"){
-    X <- tidy_index(x, index = index) |>
-      mutate(level = cut(.data$value, breaks=c(-Inf, paste(SI.cutoff), Inf), labels=SI.labels))
+    X_index <- tidy_index(x, index = index)
+    X <- cbind(X_index,
+               cut(X_index$value, breaks=c(-Inf, paste(SI.cutoff), Inf), labels=SI.labels))
+    names(X)[6] <- "level"
 
     if (!(show.all == TRUE)) {
       check.out <- check.rfast99(x, vars = vars, times, cutoff = min(SI.cutoff), out = F)
-      X <- X |> filter(.data$parameter %in% check.out$tSI)
-      message(paste0("Display ", length(check.out$tSI), " influential parameters from all ", dim(x$a)[3], " examined parameters."))
+
+      X <- X[X$parameter %in% check.out$tSI, ]
+
+      message(paste0("Display ", length(check.out$tSI),
+                     " influential parameters from all ",
+                     dim(x$a)[3], " examined parameters."))
     }
 
   } else if ((index == "CI")) {
-    X <- tidy_index(x, index = index) |>
-      mutate(level = cut(.data$value, breaks=c(-Inf, paste(CI.cutoff), Inf), labels=CI.labels))
+    X_index <- tidy_index(x, index = index)
+    X <- cbind(X_index,
+               cut(X_index$value, breaks=c(-Inf, paste(CI.cutoff), Inf), labels=CI.labels))
+    names(X)[6] <- "level"
   }
 
   colfunc <- colorRampPalette(c("red", "grey90"))
@@ -222,8 +229,9 @@ heat_check <- function(x,
     times <- dimnames(x$y)[[3]]
   } else (times <- times)
 
-
-  X <- X |> filter(order %in% !!(order)) |> filter(.data$variable %in% vars) |> filter(time %in% times)
+  odr <- order
+  variable <- vars
+  X <- subset(X, order %in% odr & variable %in% vars & time %in% times)
 
   #if(length(times) < 16){
   #  X$time <- as.factor(X$time)

@@ -33,7 +33,6 @@ Imports:
     ggplot2,
     data.table,
     deSolve,
-    dplyr,
     foreach,
     parallel,
     withr,

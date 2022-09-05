@@ -28,11 +28,11 @@ and acetaminophen pharmacokinetic model (Zurlinden et al. 2016).
 }
 \section{Functions}{
 \itemize{
-\item \code{pbtk1cpt_model}: Download pbtk1cpt.model file.
+\item \code{pbtk1cpt_model()}: Download pbtk1cpt.model file.
 
-\item \code{pbpk_apap_model}: Download pbpk_apap.model file.
+\item \code{pbpk_apap_model()}: Download pbpk_apap.model file.
+
 }}
-
 \examples{
 params <- c(F = 0.9, KA = 1.2, KE = 0.2, V = 1.5)
 t <- seq(0, 12, 0.1)
