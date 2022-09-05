@@ -29,7 +29,7 @@
 #' @param mxstep a numeric value to assign the maximum number of (internally defined) steps
 #' allowed during one call to the solver.
 #'
-#' @import withr
+#' @importFrom utils download.file
 #'
 #' @references \url{https://www.gnu.org/software/mcsim/}
 #'
@@ -90,16 +90,11 @@ mcsim_install <- function(version = "6.2.0", install_dir = NULL, mxstep = 5000) 
   # Defined mcsim directory to place compiled files (e.g., bin, lib, etc)
   if (.Platform$OS.type == "unix"){
 
-    if (is.null(install_dir)) {
-      mcsim_dir <- paste0(home_dir, "/mcsim")
-      system(paste0("./configure prefix=", home_dir))
-      } else {
-        mcsim_dir <- paste0(install_dir, "/mcsim")
-        system(paste0("./configure prefix=", dir))
-      }
-
+    if (is.null(install_dir)) mcsim_dir <- paste0(home_dir, "/mcsim") else
+      mcsim_dir <- paste0(install_dir, "/mcsim")
     if(!dir.exists(mcsim_dir)) dir.create(mcsim_dir)
 
+    system(paste0("./configure prefix=", mcsim_dir))
     system("make")
     system("make install")
     system("make check")

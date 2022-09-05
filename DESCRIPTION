@@ -28,14 +28,13 @@ URL: https://github.com/nanhung/pksensi,
     https://nanhung.github.io/pksensi/
 BugReports: https://github.com/nanhung/pksensi/issues
 Depends: 
-    R (>= 4.0)
+    R (>= 4.1)
 Imports:
     ggplot2,
     data.table,
     deSolve,
     foreach,
     parallel,
-    withr,
     doParallel
 Suggests:
     covr,
