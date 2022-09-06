@@ -203,7 +203,8 @@ mod_compile <- function(mName, mcsim_dir = NULL, mod_dir = NULL,
   }
   system(makemcsim)
   mcsim_prog <- paste0("mcsim.", mName)
-  if (file.exists(mcsim_prog)) message("done.\n")
+  if (file.exists(mcsim_prog)) message("done.\n") else
+    stop (paste0("Cannot create ", mcsim_prog))
 
   # Attach inits info to output
   dyn.load(paste0(mName, .Platform$dynlib.ext))
