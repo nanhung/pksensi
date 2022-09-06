@@ -192,7 +192,7 @@ mod_compile <- function(mName, mcsim_dir = NULL, mod_dir = NULL,
 
     if(dir.exists(sim)) {
       message("\nRemake C model file...")
-      mod_c <- paste0(mod, " ", mName, ".model ", c_file) # create c file w/o -R flag
+      mod_c <- paste0(mod, " ", model_file , " ", c_file) # create c file w/o -R flag
       system(mod_c)
       makemcsim <- paste0("gcc -O3 -I.. -I", sim, " -o mcsim.", mName, " ",
                           c_file, " ",sim, "/*.c", " -lm ")
