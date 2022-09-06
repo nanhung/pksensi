@@ -289,13 +289,6 @@ generate_infile <- function(infile.name = NULL,
   if(is.null(outfile.name)) outfile.name <- "simmc.out"
   setpoint.data <- "setpts.out"
 
-  #if(file.exists(paste0(infile.name)) == T){
-  #  if(menu(c("Yes", "No"),
-  #          title=paste('The "', infile.name, '" is exist. Do you want to replace it?', sep ="")) == 2){
-  #    stop()
-  #  }
-  #}
-
   cat("#---------------------------------------- \n#",
       " ", infile.name , "\n#",
       " (Created by generate_infile)\n#",

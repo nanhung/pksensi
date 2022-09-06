@@ -4,10 +4,11 @@
 * Fix bug (check)
 * Fix MCSim installation issue (#9)
 * Remove dependent: magrittr, reshape2
+* Ne function: `set_rtools40_path()`
 
 # pksensi 1.2.2
 
-* Add more flexible parallel method (`solve_mcsim`)
+* Add more flexible parallel method (`solve_mcsim()`)
 * Fix error in previous version
 
 # pksensi 1.2.1

@@ -125,6 +125,7 @@ mcsim_install <- function(version = "6.2.0", install_dir = NULL, mxstep = 5000) 
       # Suggest use Rtools40
       PATH = "C:\\rtools40\\mingw64\\bin; C:\\rtools40\\usr\\bin"
       Sys.setenv(PATH = paste(PATH, Sys.getenv("PATH"), sep=";"))
+
     } # PATH=$PATH:/c/Rtools/mingw_32/bin; export PATH
 
     setwd(paste0(mcsim.directory,"/mod"))
@@ -188,6 +189,22 @@ mcsim_version <- function(){
       message("The '", version, "' is found in ", exdir)
     }
   }
+}
+
+#' @export
+#' @describeIn mcsim the function to set Rtools40 path
+set_rtools40_path <- function(){
+
+  if (.Platform$OS.type == "windows"){
+    PATH = "C:\\rtools40\\mingw64\\bin; C:\\rtools40\\usr\\bin"
+    Sys.setenv(PATH = paste(PATH, Sys.getenv("PATH"), sep=";"))
+
+    env.file <- ".Renviron"
+    if (!file.exists(env.file)) file.create(env.file)
+    path <- 'PATH="${RTOOLS40_HOME}\\usr\\bin;${RTOOLS40_HOME}\\mingw64\\bin;${PATH}"'
+    write(path, file = paste0(getwd(), "/.Renviron"), append = TRUE)
+  } else stop("You are not using Windows OS")
+
 }
 
 generate_config.h <- function(){

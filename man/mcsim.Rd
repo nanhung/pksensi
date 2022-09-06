@@ -3,11 +3,14 @@
 \name{mcsim_install}
 \alias{mcsim_install}
 \alias{mcsim_version}
+\alias{set_rtools40_path}
 \title{Download and install \pkg{GNU MCSim}}
 \usage{
 mcsim_install(version = "6.2.0", install_dir = NULL, mxstep = 5000)
 
 mcsim_version()
+
+set_rtools40_path()
 }
 \arguments{
 \item{version}{a character of version number.}
@@ -41,6 +44,8 @@ The current suggested Rtools version is 4.0.
 \section{Functions}{
 \itemize{
 \item \code{mcsim_version()}: Return the version number.
+
+\item \code{set_rtools40_path()}: the function to set Rtools40 path
 
 }}
 \references{
