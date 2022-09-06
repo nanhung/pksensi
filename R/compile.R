@@ -199,7 +199,7 @@ mod_compile <- function(mName, mcsim_dir = NULL, mod_dir = NULL,
       message("Create modeling program...")
     }
   } else if ((.Platform$OS.type == "unix")) {
-    makemcsim <- paste0("makemcsims ", model_file)
+    makemcsim <- paste0("makemcsims ", model_file, " mcsim." ,mName)
   }
   system(makemcsim)
   mcsim_prog <- paste0("mcsim.", mName)
