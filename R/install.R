@@ -136,11 +136,21 @@ mcsim_install <- function(version = "6.2.0", install_dir = NULL, mxstep = 5000) 
     generate_config.h()
     sim_files <- list.files(mcsim_sim)
 
+    # Create 'mcsim' directory
     if (is.null(install_dir)) {
       mcsim_dir <- paste0(home_dir, "/mcsim")
     } else mcsim_dir <- paste0(install_dir, "/mcsim")
 
-    if(dir.exists(mcsim_dir)) system(paste0("rm -rf ", mcsim_dir))
+    # Remove the previous installed version
+    if(dir.exists(mcsim_dir)) {
+      system(paste0("rm -rf ", mcsim_dir))
+    #  if (menu(c("Yes", "No"),
+    #           title = paste0("\nThe 'mcsim' directory is existed. ",
+    #                          "Do you want to replace it?")) == 1)
+    #    system(paste0("rm -rf ", mcsim_dir))
+    #  else return(invisible())
+    }
+
     dir.create(mcsim_dir)
 
     mcsim_sim_dir <- paste0(mcsim_dir, "/sim")
