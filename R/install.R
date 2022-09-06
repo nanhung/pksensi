@@ -139,10 +139,14 @@ mcsim_install <- function(version = "6.2.0", install_dir = NULL, mxstep = 5000) 
     if (is.null(install_dir)) {
       mcsim_dir <- paste0(home_dir, "/mcsim")
     } else mcsim_dir <- paste0(install_dir, "/mcsim")
-    if(!dir.exists(mcsim_dir)) dir.create(mcsim_dir)
+
+    if(dir.exists(mcsim_dir)) system(paste0("rm -rf ", mcsim_dir))
+    dir.create(mcsim_dir)
 
     mcsim_sim_dir <- paste0(mcsim_dir, "/sim")
     if(!dir.exists(mcsim_sim_dir)) dir.create(mcsim_sim_dir)
+
+
     file.copy(from = paste0(mcsim_sim, "/", sim_files),
               to = paste0(mcsim_sim_dir, "/", sim_files))
     setwd(mcsim.directory)
