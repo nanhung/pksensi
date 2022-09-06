@@ -30,6 +30,13 @@
 compile_model <- function (mName, application = 'mcsim', use_model_file = TRUE,
                            mcsim_dir = NULL, mod_dir = NULL) {
 
+
+  gStr <- grep(".model", mName) # remove .model extension if used in mName
+  if (gStr == 1) {
+    mStr <- strsplit(mName, ".model")
+    mName <- mStr[[1]]
+  }
+
   if (application == 'mcsim' && .Platform$OS.type == "windows"){
     mName <- paste0(mName,".model")
   }
@@ -115,14 +122,18 @@ compile_model <- function (mName, application = 'mcsim', use_model_file = TRUE,
   }
 }
 
-mod_compile <- function(mName, mcsim_dir = NULL, mod_dir = NULL, unused_remove = TRUE){
+mod_compile <- function(mName, mcsim_dir = NULL, mod_dir = NULL,
+                        unused_remove = TRUE) {
 
   # check model file
-  model_file <- paste0(mName, ".model")
-  if (!file.exists(model_file)) stop("Can not find model file")
+  ## remove .model extension if used in mName
+  mName <- sub(".model", "", mName)
+  if (is.null(mod_dir)) model_file <- paste0(mName, ".model") else
+    model_file <- paste0(mod_dir, "/", mName, ".model")
 
   # set mcsim directory
-  if (is.null(mcsim_dir)) mcsim_directory <- paste0(Sys.getenv("HOME"), "/mcsim") else
+  if (is.null(mcsim_dir))
+    mcsim_directory <- paste0(Sys.getenv("HOME"), "/mcsim") else
     mcsim_directory <- paste0(mcsim_dir, "/mcsim")
 
   # set PATH
@@ -132,29 +143,36 @@ mod_compile <- function(mName, mcsim_dir = NULL, mod_dir = NULL, unused_remove =
     Sys.setenv(LD_LIBRARY_PATH = paste(mcsim_directory, "/lib",
                                        Sys.getenv("LD_LIBRARY_PATH"), sep=":"))
 
-    if(Sys.which("makemcsim") == "") stop("Can not find 'makemcsim'. Be sure to install MCSim properly")
+    if(Sys.which("makemcsim") == "")
+      stop("Can not find 'makemcsim'. Be sure to install MCSim properly")
 
   } else if ((.Platform$OS.type == "windows")) { # windows
     if(Sys.which("gcc") == "") {
       ## Try to set rtools path
-      Sys.setenv(PATH = paste("C:\\rtools40\\mingw64\\bin", Sys.getenv("PATH"), sep=";"))
-      Sys.setenv(PATH = paste("C:\\rtools40\\bin", Sys.getenv("PATH"), sep=";"))
+      Sys.setenv(PATH = paste("C:\\rtools40\\mingw64\\bin",
+                              Sys.getenv("PATH"), sep=";"))
+      Sys.setenv(PATH = paste("C:\\rtools40\\bin",
+                              Sys.getenv("PATH"), sep=";"))
     }
-    if(Sys.which("gcc") == "") stop("Can not find 'gcc'. Be sure to install and set Rtools properly")
-    if(Sys.which("mod") == "") Sys.setenv(PATH = paste(mcsim_directory, Sys.getenv("PATH"), sep=";"))
+    if(Sys.which("gcc") == "")
+      stop("Can not find 'gcc'. Be sure to install and set Rtools properly")
+    if(Sys.which("mod") == "")
+      Sys.setenv(PATH = paste(mcsim_directory, Sys.getenv("PATH"), sep=";"))
   }
 
   # Check mod
-  if(Sys.which("mod") == "") stop("Can not find 'mod'. Be sure to install MCSim properly")
+  if(Sys.which("mod") == "")
+    stop("Can not find 'mod'. Be sure to install MCSim properly")
 
   # Generate c model file & R parameter initialization file
   c_file <- paste0(mName, ".c")
   message("Generating C model file...")
-
   if ((.Platform$OS.type == "windows")){
     mod <- paste0(mcsim_directory, "/mod.exe")
-    mod_c <- paste0(mod, " -R ", mName, ".model ", c_file)
-  } else if ((.Platform$OS.type == "linux")) mod_c <- paste0("mod -R ", mName, ".model ", c_file)
+    mod_c <- paste0(mod, " -R ", model_file, " ", c_file)
+  } else if (.Platform$OS.type == "unix") {
+    mod_c <- paste0("mod -R ", model_file, " ", c_file)
+  }
   system(mod_c)
 
   # Generate shared object/DLL
@@ -176,23 +194,26 @@ mod_compile <- function(mName, mcsim_dir = NULL, mod_dir = NULL, unused_remove =
       message("\nRemake C model file...")
       mod_c <- paste0(mod, " ", mName, ".model ", c_file) # create c file w/o -R flag
       system(mod_c)
-      makemcsim <- paste0("gcc -O3 -I.. -I", sim, " -o mcsim.", mName, " ", c_file, " ",sim, "/*.c", " -lm ")
+      makemcsim <- paste0("gcc -O3 -I.. -I", sim, " -o mcsim.", mName, " ",
+                          c_file, " ",sim, "/*.c", " -lm ")
       message("Create modeling program...")
-      system(makemcsim)
     }
+  } else if ((.Platform$OS.type == "unix")) {
+    makemcsim <- paste0("makemcsims ", model_file)
   }
-
+  system(makemcsim)
   mcsim_prog <- paste0("mcsim.", mName)
   if (file.exists(mcsim_prog)) message("done.\n")
 
+  # Attach inits info to output
   dyn.load(paste0(mName, .Platform$dynlib.ext))
-
   inits_r <- paste0(mName, "_inits.R")
   source(inits_r)
   out <- list()
   out$mName <- mName
   out$initParms <- initParms()
-  out$initStates <- initStates()
+  # out$initStates <- initStates()
+  # Error in as.list(parms) : argument "parms" is missing, with no default
   out$Outputs <- Outputs
   dyn.unload(paste0(mName, .Platform$dynlib.ext))
 
