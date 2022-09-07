@@ -252,3 +252,31 @@ generate_config.h <- function(){
       file = "config.h",
       sep = "")
 }
+
+set_permanent_path <- function(mcsim_dir=NULL){
+
+  if (.Platform$OS.type == "unix"){
+
+    if (Sys.getenv("SHELL")=="/usr/bin/zsh"){
+      zshrc <- paste0(Sys.getenv("HOME"), "/.zshrc")
+      cat('\n# Path to MCSim\n',
+          file = zshrc, append=TRUE)
+      if (is.null(mcsim_dir)){
+        cat('export PATH=$PATH:$HOME/mcsim/bin',
+            file = zshrc, append=TRUE)
+      } else cat(paste0('export PATH=$PATH:', mcsim_dir, '/mcsim/bin'),
+                 file = zshrc, append=TRUE)
+      message(paste0("Done. Please check the .zshrc file at ", zshrc))
+      } else if (Sys.getenv("SHELL")=="/bin/bash") {
+        bashrc <- paste0(Sys.getenv("HOME"), "/.bashrc")
+        cat('\n# Path to MCSim\n',
+            file = bashrc, append=TRUE)
+        if (is.null(mcsim_dir)){
+          cat('export PATH=$PATH:$HOME/mcsim/bin',
+              file = bashrc, append=TRUE)
+        } else cat(paste0('export PATH=$PATH:', mcsim_dir, '/mcsim/bin'),
+                   file = bashrc, append=TRUE)
+        message(paste0("Done. Please check the .bashrc file at ", zshrc))
+        }
+  } else stop("The function is design for 'unix' system")
+}
