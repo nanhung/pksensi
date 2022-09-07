@@ -31,11 +31,9 @@ compile_model <- function (mName, application = 'mcsim', use_model_file = TRUE,
                            mcsim_dir = NULL, mod_dir = NULL) {
 
 
-  gStr <- grep(".model", mName) # remove .model extension if used in mName
-  if (gStr == 1) {
-    mStr <- strsplit(mName, ".model")
-    mName <- mStr[[1]]
-  }
+  # remove .model extension if used in mName
+  mStr <- strsplit(mName, ".model")
+  mName <- mStr[[1]][1]
 
   if (application == 'mcsim' && .Platform$OS.type == "windows"){
     mName <- paste0(mName,".model")
