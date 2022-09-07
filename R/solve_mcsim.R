@@ -283,7 +283,7 @@ solve_mcsim <- function(x,
 generate_infile <- function(mod = NULL,
                             infile.name = NULL,
                             outfile.name = NULL,
-                            params, vars, times,
+                            params = NULL, vars, times,
                             condition, rtol = 1e-6, atol = 1e-6,
                             monte_carlo = NULL, dist = NULL, q.arg = NULL){ # Monte Carlo
 
@@ -300,7 +300,7 @@ generate_infile <- function(mod = NULL,
   cat("Integrate (Lsodes, ", rtol, ", ", atol, " , 1);", "\n\n",
       file=infile.name, append=TRUE, sep="")
 
-  if(is.numeric(monte_carlo)){
+  if(is.numeric(monte_carlo) & !is.null(params)) { ## Monte Carlo
     cat("MonteCarlo (", "\"", outfile.name, "\"", ",", monte_carlo , ",",
         sample(1:99999, 1), ");\n\n",
         file = infile.name, append = TRUE, sep = "")
@@ -309,13 +309,13 @@ generate_infile <- function(mod = NULL,
           paste(unlist(q.arg[i]), collapse = ","), ");", "\n",
           file = infile.name, append=TRUE, sep = "")
     }
-  } else if (is.null(monte_carlo) & !is.null(q.arg)) {
+  } else if (is.null(monte_carlo) & !is.null(params)) { ## sensitivity
     cat("SetPoints (", "\n",
         "\"", outfile.name, "\", \n\"", setpoint.data, "\",\n",
         "0, ", "\n",
         paste(params, collapse = ", "),");\n\n",
         file = infile.name, append = TRUE, sep = "")
-  }
+    }
 
   cat("\n#---------------------------------------- \n#",
       " Simulation scenario\n#",
@@ -324,7 +324,7 @@ generate_infile <- function(mod = NULL,
   cat("Simulation {", "\n\n", file = infile.name, append = TRUE)
 
   # Simple ODE simulation
-  if(is.null(monte_carlo) & is.null(q.arg)){
+  if(is.null(monte_carlo) & is.null(params)){
 
     if(is.null(mod)) stop("Please assign object 'mod'")
 

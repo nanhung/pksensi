@@ -29,7 +29,7 @@ generate_infile(
   mod = NULL,
   infile.name = NULL,
   outfile.name = NULL,
-  params,
+  params = NULL,
   vars,
   times,
   condition,
