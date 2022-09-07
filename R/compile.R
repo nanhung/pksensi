@@ -213,8 +213,7 @@ mod_compile <- function(mName, mcsim_dir = NULL, mod_dir = NULL,
   out <- list()
   out$mName <- mName
   out$initParms <- initParms()
-  # out$initStates <- initStates()
-  # Error in as.list(parms) : argument "parms" is missing, with no default
+  out$initStates <- initStates()
   out$Outputs <- Outputs
   dyn.unload(paste0(mName, .Platform$dynlib.ext))
 
