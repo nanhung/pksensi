@@ -41,12 +41,14 @@ plot(t, C, type = "l", xlab = "time", ylab = "concentration")
 
 }
 \references{
-Pearce, R. G., Setzer, R. W., Strope, C. L., Wambaugh, J. F., & Sipes, N. S. (2017).
+Pearce, R. G., Setzer, R. W., Strope, C. L.,
+Wambaugh, J. F., & Sipes, N. S. (2017).
 httk: R package for high-throughput toxicokinetics.
 \emph{Journal of Statistical Software}, 79(4), 1-26.
 
 Zurlinden, T. J., & Reisfeld, B. (2016).
 Physiologically based modeling of the pharmacokinetics of acetaminophen and
 its major metabolites in humans using a Bayesian population approach.
-\emph{European journal of drug metabolism and pharmacokinetics}, 41(3), 267-280.
+\emph{European journal of drug metabolism and pharmacokinetics},
+41(3), 267-280.
 }

@@ -8,6 +8,7 @@
 #'
 #' @param mName a string giving the name of the model or C file (without extension).
 #' @param x a list of storing information in the defined sensitivity function.
+#' @param mod a list of model and parameters information that is used in solving differential equation.
 #' @param monte_carlo a numeric value to define the sample size in Monte Carlo simulation.
 #' @param dist a vector of distribution names corresponding to \code{<distribution-name>} in \pkg{GNU MCSim}.
 #' @param q.arg a list of shape parameters in the sampling distribution (\code{dist}).
@@ -16,7 +17,7 @@
 #' @param outfile.name a character to assign the name of output file.
 #' @param params a character to assign the testing parameters.
 #' @param vars a character or a vector to assign the selected output(s).
-#' @param time a numeric vector to define the given time point(s).
+#' @param times a numeric vector to define the given time point(s).
 #' @param condition a character to set the specific parameter value in the input file.
 #' @param rtol an argument passed to the integrator (default 1e-6).
 #' @param atol an argument passed to the integrator (default 1e-6).
@@ -74,7 +75,7 @@ solve_mcsim <- function(x,
                         setpoint.name = NULL,
                         params = NULL,
                         vars = NULL,
-                        time = NULL,
+                        times = NULL,
                         condition = NULL,
                         generate.infile = T,
                         tell = T,
@@ -96,7 +97,7 @@ solve_mcsim <- function(x,
                       outfile.name = outfile.name,
                       params = params,
                       vars = vars,
-                      time = time,
+                      times = times,
                       rtol = rtol, atol = atol,
                       condition = condition)
     } else { # must be Monte Carlo
@@ -104,7 +105,7 @@ solve_mcsim <- function(x,
                       outfile.name = outfile.name,
                       params = params,
                       vars = vars,
-                      time = time,
+                      times = times,
                       rtol = rtol, atol = atol,
                       condition = condition,
                       monte_carlo = monte_carlo, dist = dist, q.arg = q.arg)
@@ -150,7 +151,7 @@ solve_mcsim <- function(x,
     n.factors <- ifelse(class(x$factors) == "character", length(x$factors), x$factors)
   }
 
-  n.time <- ifelse(is.null(time), 1, length(time))
+  n.time <- ifelse(is.null(times), 1, length(times))
   n.vars <- length(vars)
 
   #
@@ -254,14 +255,14 @@ solve_mcsim <- function(x,
 
   invisible(gc()); # clean memory
 
-  if (length(time) == 1 && length(vars) == 1) {
-    dimnames(y)[[3]] <- list(time)
+  if (length(times) == 1 && length(vars) == 1) {
+    dimnames(y)[[3]] <- list(times)
     dimnames(y)[[4]] <- list(vars)
-  } else if (length(time) == 1 && length(vars) > 1){
-    dimnames(y)[[3]] <- list(time)
+  } else if (length(times) == 1 && length(vars) > 1){
+    dimnames(y)[[3]] <- list(times)
     dimnames(y)[[4]] <- vars
   } else {
-    dimnames(y)[[3]] <- time
+    dimnames(y)[[3]] <- times
     dimnames(y)[[4]] <- vars
   }
 
@@ -279,9 +280,10 @@ solve_mcsim <- function(x,
 
 #' @export
 #' @describeIn solve_mcsim Generate the \pkg{GNU MCSim} input file.
-generate_infile <- function(infile.name = NULL,
+generate_infile <- function(mod = NULL,
+                            infile.name = NULL,
                             outfile.name = NULL,
-                            params, vars, time,
+                            params, vars, times,
                             condition, rtol = 1e-6, atol = 1e-6,
                             monte_carlo = NULL, dist = NULL, q.arg = NULL){ # Monte Carlo
 
@@ -289,40 +291,91 @@ generate_infile <- function(infile.name = NULL,
   if(is.null(outfile.name)) outfile.name <- "simmc.out"
   setpoint.data <- "setpts.out"
 
+  # Title
   cat("#---------------------------------------- \n#",
       " ", infile.name , "\n#",
       " (Created by generate_infile)\n#",
       "----------------------------------------", "\n\n",
       file = infile.name, sep = "")
-  cat("Integrate (Lsodes, ", rtol, ", ", atol, " , 1);", "\n\n", file=infile.name, append=TRUE, sep="")
-  if(is.null(monte_carlo)){
+  cat("Integrate (Lsodes, ", rtol, ", ", atol, " , 1);", "\n\n",
+      file=infile.name, append=TRUE, sep="")
+
+  if(is.numeric(monte_carlo)){
+    cat("MonteCarlo (", "\"", outfile.name, "\"", ",", monte_carlo , ",",
+        sample(1:99999, 1), ");\n\n",
+        file = infile.name, append = TRUE, sep = "")
+    for (i in 1 : length(params)){
+      cat("Distrib ( ", params[i], ",", dist[i], ",",
+          paste(unlist(q.arg[i]), collapse = ","), ");", "\n",
+          file = infile.name, append=TRUE, sep = "")
+    }
+  } else if (is.null(monte_carlo) & !is.null(q.arg)) {
     cat("SetPoints (", "\n",
         "\"", outfile.name, "\", \n\"", setpoint.data, "\",\n",
         "0, ", "\n",
         paste(params, collapse = ", "),");\n\n",
         file = infile.name, append = TRUE, sep = "")
-  } else {
-    cat("MonteCarlo (", "\"", outfile.name, "\"", ",", monte_carlo , ",", sample(1:99999, 1), ");\n\n",
-        file = infile.name, append = TRUE, sep = "")
-    for (i in 1 : length(params)){
-      cat("Distrib ( ", params[i], ",", dist[i], ",", paste(unlist(q.arg[i]), collapse = ","), ");", "\n",
-          file = infile.name, append=TRUE, sep = "")
-    }
   }
+
   cat("\n#---------------------------------------- \n#",
       " Simulation scenario\n#",
       "----------------------------------------", "\n\n",
       file = infile.name, append = TRUE, sep = "")
   cat("Simulation {", "\n\n", file = infile.name, append = TRUE)
-  # cat(paste(conditions, collapse=";"), ";", "\n\n", file = infile.name, append=TRUE, sep = "")
-  for (i in 1 : length(condition)){
-    cat(paste(condition[i], collapse = ";"), ";", "\n", file = infile.name, append = TRUE, sep = "")
+
+  # Simple ODE simulation
+  if(is.null(monte_carlo) & is.null(q.arg)){
+
+    if(is.null(mod)) stop("Please assign object 'mod'")
+
+    initStates <- mod$initStates
+    initParms <- mod$initParms
+    outs <- mod$outputs
+
+    # Set init states
+    cat("# Initial States ", "\n", file = infile.name, append = TRUE)
+    states_name <- names(initStates)
+    for (i in seq_len(length(states_name))){
+      states_value <- initStates[i]
+      cat(paste(states_name[i], "=", states_value), ";\n", file = infile.name,
+          append = TRUE, sep = "")
+    }
+
+    # Set parameter
+    cat("\n# Initial parameters ", "\n", file = infile.name, append = TRUE)
+    parms_name <- names(initParms)
+    for (i in seq_len(length(parms_name))){
+      parms_value <- initParms[i]
+      cat(paste(parms_name[i], "=", parms_value), ";\n", file = infile.name,
+          append = TRUE, sep = "")
+    }
+    cat("\n", file = infile.name, append = TRUE)
+
+    # set outs & times
+    for (i in seq_len(length(states_name))) {
+      cat("Print (", paste(states_name[i], collapse = ", "), ", ",
+          paste(times, collapse=", "), ");\n", file = infile.name,
+          append=TRUE, sep = "")
+    }
+
+    for (i in seq_len(length(outs))) {
+      cat("Print (", paste(outs[i], collapse = ", "), ", ",
+          paste(times, collapse=", "), ");\n", file = infile.name,
+          append=TRUE, sep = "")
+    }
+
+  } else { # Monte Carlo and sensitivity analysis
+
+    for (i in 1 : length(condition)){
+      cat(paste(condition[i], collapse = ";"), ";", "\n", file = infile.name, append = TRUE, sep = "")
+    }
+    cat("\n", file = infile.name, append = TRUE)
+    for (i in 1 : length(vars)) {
+      cat("Print (", paste(vars[i], collapse = ", "), ", ", paste(times, collapse=", "), ");\n",
+          file = infile.name, append=TRUE, sep = "")
+    }
   }
-  cat("\n", file = infile.name, append = TRUE)
-  for (i in 1 : length(vars)) {
-    cat("Print (", paste(vars[i], collapse = ", "), ", ", paste(time, collapse=", "), ");\n",
-        file = infile.name, append=TRUE, sep = "")
-  }
+
   cat("}", "END.\n", file = infile.name, append = TRUE)
   message(paste('* Created input file "', infile.name, '".', sep =""))
 }

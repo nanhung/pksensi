@@ -22,7 +22,7 @@ The version must be assigned for Windows user (default is \code{6.2.0}).}
 \item{use_model_file}{a logical value to operate the compiler to model or C file,
 the default is set to \code{TRUE} to assign the \pkg{GNU MCSim}'s model file in compiling.}
 
-\item{mcsim_dir}{a character to assign the location of MCSim directory
+\item{mcsim_dir}{a character to assign the installed location of MCSim directory
 (The default is set to home).}
 
 \item{mod_dir}{a character giving the name of the directory that is used to store the model file.}

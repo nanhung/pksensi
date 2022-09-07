@@ -192,7 +192,7 @@ mod_compile <- function(mName, mcsim_dir = NULL, mod_dir = NULL,
       message("\nRemake C model file...")
       mod_c <- paste0(mod, " ", model_file , " ", c_file) # create c file w/o -R flag
       system(mod_c)
-      makemcsim <- paste0("gcc -O3 -I.. -I", sim, " -o mcsim.", mName, " ",
+      makemcsim <- paste0("gcc -O3 -I.. -I", sim, " -o mcsim.", mName, ".exe ",
                           c_file, " ",sim, "/*.c", " -lm ")
       message("Create modeling program...")
     }
@@ -200,19 +200,25 @@ mod_compile <- function(mName, mcsim_dir = NULL, mod_dir = NULL,
     makemcsim <- paste0("makemcsims ", model_file, " mcsim." ,mName)
   }
   system(makemcsim)
-  mcsim_prog <- paste0("mcsim.", mName)
+
+  if ((.Platform$OS.type == "unix")) mcsim_prog <- paste0("mcsim.", mName) else
+    if ((.Platform$OS.type == "windows")) mcsim_prog <- paste0("mcsim.", mName)
+
   if (file.exists(mcsim_prog)) message("done.\n") else
     stop (paste0("Cannot create ", mcsim_prog))
 
   # Attach inits info to output
   dyn.load(paste0(mName, .Platform$dynlib.ext))
   inits_r <- paste0(mName, "_inits.R")
+  initStates <- initParms <- function(){}
+  Outputs <- NULL
   source(inits_r)
   out <- list()
+
   out$mName <- mName
-  out$initParms <- initParms()
   out$initStates <- initStates()
-  out$Outputs <- Outputs
+  out$initParms <- initParms()
+  out$outputs <- Outputs
   dyn.unload(paste0(mName, .Platform$dynlib.ext))
 
   # Remove unused files (keep mcsim. file only)

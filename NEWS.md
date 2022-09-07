@@ -4,7 +4,8 @@
 * Fix bug (check)
 * Fix MCSim installation issue (#9)
 * Remove dependent: magrittr, reshape2
-* Ne function: `set_rtools40_path()`
+* New function: `set_rtools40_path()`
+* Add feature to run simple simulation (`generate_infile()`)
 
 # pksensi 1.2.2
 

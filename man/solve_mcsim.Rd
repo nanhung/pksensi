@@ -13,7 +13,7 @@ solve_mcsim(
   setpoint.name = NULL,
   params = NULL,
   vars = NULL,
-  time = NULL,
+  times = NULL,
   condition = NULL,
   generate.infile = T,
   tell = T,
@@ -26,11 +26,12 @@ solve_mcsim(
 )
 
 generate_infile(
+  mod = NULL,
   infile.name = NULL,
   outfile.name = NULL,
   params,
   vars,
-  time,
+  times,
   condition,
   rtol = 1e-06,
   atol = 1e-06,
@@ -54,7 +55,7 @@ generate_infile(
 
 \item{vars}{a character or a vector to assign the selected output(s).}
 
-\item{time}{a numeric vector to define the given time point(s).}
+\item{times}{a numeric vector to define the given time point(s).}
 
 \item{condition}{a character to set the specific parameter value in the input file.}
 
@@ -73,6 +74,8 @@ generate_infile(
 \item{q.arg}{a list of shape parameters in the sampling distribution (\code{dist}).}
 
 \item{parallel}{a numeric value to assign the number of cores in parallel computing (default is set to 1).}
+
+\item{mod}{a list of model and parameters information that is used in solving differential equation.}
 }
 \value{
 The output result is the 4-dimension array with
