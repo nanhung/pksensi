@@ -1,0 +1,10 @@
+pandoc: 3.1.11
+pkgdown: 2.1.1
+pkgdown_sha: ~
+articles:
+  pbpk_apap: pbpk_apap.html
+  pbtk1cpt: pbtk1cpt.html
+last_built: 2024-11-27T17:34Z
+urls:
+  reference: https://nanhung.github.io/pksensi/reference
+  article: https://nanhung.github.io/pksensi/articles
