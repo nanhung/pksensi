@@ -1,8 +1,8 @@
 Package: pksensi
 Title: Global Sensitivity Analysis in Physiologically Based Kinetic Modeling
-Version: 1.2.3
-Authors@R: 
-    c(person(given = "Nan-Hung", 
+Version: 1.4.0.9000
+Authors@R: c(
+      person(given = "Nan-Hung", 
              family = "Hsieh", 
              role = c("aut", "cre"),
              email = "d99622005@ntu.edu.tw",
@@ -46,6 +46,6 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.1
+RoxygenNote: 7.3.2
 Language: en-US
 Roxygen: list(markdown = TRUE)

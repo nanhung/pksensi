@@ -1,7 +1,6 @@
 ## Test environments
 * Debian 11 (local) - release
 * Ubuntu 20.04 (actions) - 4.0, devel, release
-* OSX-latest (actions) - release
 * Windows-latest (actions) - 4.0, release
 * Windows (winbuilder) - devel
 

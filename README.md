@@ -1,21 +1,15 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# pksensi <img src="man/figures/logo.png" height="200px" align="right" />
+# pksensi <img src="man/figures/logo.png" height="200px" align="right" alt="pksensi logo" />
 
 <!-- badges: start -->
 
 [![lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![Dependencies](https://tinyverse.netlify.com/badge/pksensi)](https://cran.r-project.org/package=pksensi)
-[![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/nanhung/pksensi?branch=master&svg=true)](https://ci.appveyor.com/project/nanhung/pksensi)
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version-last-release/pksensi)](https://cran.r-project.org/package=pksensi)
-[![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/pksensi)](https://cran.r-project.org/package=pksensi)
-[![Total
-Downloads](https://cranlogs.r-pkg.org/badges/grand-total/pksensi?color=orange)](https://CRAN.R-project.org/package=pksensi)
+[![R-CMD-check](https://github.com/nanhung/pksensi/workflows/R-CMD-check/badge.svg)](https://github.com/nanhung/pksensi/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/nanhung/pksensi/branch/master/graph/badge.svg)](https://codecov.io/gh/nanhung/pksensi?branch=master)
-[![R-CMD-check](https://github.com/nanhung/pksensi/workflows/R-CMD-check/badge.svg)](https://github.com/nanhung/pksensi/actions)
+![CRAN downloads](https://cranlogs.r-pkg.org/badges/pksensi)
 <!-- badges: end -->
 
 **pksensi** implements the global sensitivity analysis workflow to
@@ -27,13 +21,13 @@ sensitivity of model parameters.
 
 Through **pksensi**, you can:
 
--   Run sensitivity analysis for PK models in R with script that were
-    written in C or GNU MCSim.
+- Run sensitivity analysis for PK models in R with script that were
+  written in C or GNU MCSim.
 
--   Decision support: The output results and visualization tools can be
-    used to easily determine which parameters have “non-influential”
-    effects on the model output and can be fixed in following model
-    calibration.
+- Decision support: The output results and visualization tools can be
+  used to easily determine which parameters have “non-influential”
+  effects on the model output and can be fixed in following model
+  calibration.
 
 ## Installation
 
@@ -51,19 +45,19 @@ And the development version from [GitHub](https://github.com/) with:
 remotes::install_github("nanhung/pksensi")
 ```
 
--   This package includes a function that can help you install GNU MCSim
-    more easily through the function `mcsim_install()`.
+- This package includes a function that can help you install GNU MCSim
+  more easily through the function `mcsim_install()`.
 
--   All updated details can be found in
-    [NEWS.md](https://github.com/nanhung/pksensi/blob/master/NEWS.md).
+- All updated details can be found in
+  [NEWS.md](https://github.com/nanhung/pksensi/blob/master/NEWS.md).
 
--   **NOTE:** Windows users need to install
-    [Rtools40](https://cran.r-project.org/bin/windows/Rtools/) to
-    compile the model code.
+- **NOTE:** Windows users need to install
+  [Rtools40](https://cran.r-project.org/bin/windows/Rtools/) to compile
+  the model code.
 
 ## Workflow
 
-![](https://i.ibb.co/tqpDLrk/sensitivity-workflow.png)
+<img src="man/figures/sensitivity-workflow.png" align="left" alt="Workflow of sensitivity analysis" />
 
 **Note:** The parameter correlation (e.g., V<sub>max</sub> and
 K<sub>M</sub> in metabolism) might be an issue in the global sensitivity
@@ -136,8 +130,8 @@ x <- rfast99(params, n = 200, q = q, q.arg = q.arg, replicate = 1)
 
 ``` r
 out <- solve_fun(x, time = t, func = pbtk1cpt, initState = initState, outnames = outputs)
-#> Starting time: 2022-01-13 09:47:44
-#> Ending time: 2022-01-13 09:47:52
+#> Starting time: 2024-11-27 07:07:16.85445
+#> Ending time: 2024-11-27 07:07:25.711756
 ```
 
 ### Step 5. Uncertainty analysis
@@ -146,7 +140,7 @@ out <- solve_fun(x, time = t, func = pbtk1cpt, initState = initState, outnames =
 pksim(out)  # Use to compare with "real" data (if any)
 ```
 
-<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-8-1.png" alt="pksim plot" width="100%" />
 
 ### Step 6. Check and visualize the result of sensitivity analysis
 
@@ -154,7 +148,7 @@ pksim(out)  # Use to compare with "real" data (if any)
 plot(out)   # Visualize result
 ```
 
-<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-9-1.png" alt="autoplot" width="100%" />
 
 ``` r
 check(out)  # Print result to console
@@ -187,7 +181,6 @@ check(out)  # Print result to console
 ```
 
 ## Citation
-
 
     To cite pksensi in publications use:
 

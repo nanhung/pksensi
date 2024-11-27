@@ -13,17 +13,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-# pksensi <img src="man/figures/logo.png" height="200px" align="right" />
+# pksensi <img src="man/figures/logo.png" height="200px" align="right" alt="pksensi logo" />
 
 <!-- badges: start -->
 [![lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![Dependencies](https://tinyverse.netlify.com/badge/pksensi)](https://cran.r-project.org/package=pksensi)
-[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/nanhung/pksensi?branch=master&svg=true)](https://ci.appveyor.com/project/nanhung/pksensi)
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version-last-release/pksensi)](https://cran.r-project.org/package=pksensi)
-[![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/pksensi)](https://cran.r-project.org/package=pksensi)
-[![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/pksensi?color=orange)](https://CRAN.R-project.org/package=pksensi)
-[![Codecov test coverage](https://codecov.io/gh/nanhung/pksensi/branch/master/graph/badge.svg)](https://codecov.io/gh/nanhung/pksensi?branch=master)
 [![R-CMD-check](https://github.com/nanhung/pksensi/workflows/R-CMD-check/badge.svg)](https://github.com/nanhung/pksensi/actions)
+[![Codecov test coverage](https://codecov.io/gh/nanhung/pksensi/branch/master/graph/badge.svg)](https://codecov.io/gh/nanhung/pksensi?branch=master)
+![CRAN downloads](https://cranlogs.r-pkg.org/badges/pksensi)
 <!-- badges: end -->
 
 **pksensi** implements the global sensitivity analysis workflow to investigate the parameter uncertainty and sensitivity in physiologically based kinetic (PK) models, especially the physiologically based pharmacokinetic/toxicokinetic  model with multivariate outputs. The package also provides some functions to check the convergence and sensitivity of model parameters.
@@ -57,7 +53,7 @@ remotes::install_github("nanhung/pksensi")
 
 ## Workflow
 
-![](https://i.ibb.co/tqpDLrk/sensitivity-workflow.png)
+<img src="man/figures/sensitivity-workflow.png" align="left" alt="Workflow of sensitivity analysis" />
 
 **Note:** The parameter correlation (e.g., V~max~ and K~M~ in metabolism) might be an issue in the global sensitivity analysis. If you have experiment data, suggest using small datasets as a sample in Markov Chain Monte Carlo Simulation. Then, check correlation before conducting the sensitivity analysis. The issue will try to address in the future version. 
 
@@ -127,13 +123,13 @@ out <- solve_fun(x, time = t, func = pbtk1cpt, initState = initState, outnames =
 
 ### Step 5. Uncertainty analysis
 
-```{r}
+```{r fig.alt="pksim plot"}
 pksim(out)  # Use to compare with "real" data (if any)
 ```
 
 ### Step 6. Check and visualize the result of sensitivity analysis
 
-```{r}
+```{r fig.alt="autoplot"}
 plot(out)   # Visualize result
 check(out)  # Print result to console
 ```
